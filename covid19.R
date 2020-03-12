@@ -1,5 +1,11 @@
 # Analizar datos de Coronavirus COVID-19 en España por Comunidad Autónoma 
 
+# Load libraries
+library(tidyverse)
+library(ggrepel) # for geom_text_repel to prevent overlapping
+library(RColorBrewer) # extends color paletter
+
+
 # Load world data --------
 # World data https://github.com/RamiKrispin/coronavirus-csv/blob/master/coronavirus_dataset.csv
 # world_data  <- read.delim("https://raw.githubusercontent.com/RamiKrispin/coronavirus-csv/master/coronavirus_dataset.csv",sep = ",")
@@ -52,7 +58,7 @@ ggplot() +
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de casos de COVID19 registrados en España",
+  labs(title = "Número de casos acumulados de COVID19 registrados en España",
        subtitle = "Por Comunidad Autónoma (escala lineal)",
        y = "casos",
        x = "fecha",
@@ -77,7 +83,43 @@ ggplot() +
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de casos de COVID19 registrados en España",
+  labs(title = "Número de casos acumulados de COVID19 registrados en España",
+       subtitle = "Por Comunidad Autónoma (escala logarítmica)",
+       y = "casos",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
+data_cases %>% filter( CCAA != "Total") %>%
+  ggplot() +
+  geom_line(aes(date,value,group=CCAA, color=CCAA) ) +
+  geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
+                  aes(date,value,label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=4,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#333333"
+                  # xlim  = c(as.Date(max(dates.count.barrio.room$fechab)),as.Date("2020-01-4"))
+  ) +
+  # scale_color_brewer(palette = "Dark2", type = "discrete") +
+  scale_y_log10( ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases$date), max(data_cases$date + 1.5)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de casos acumulados de COVID19 registrados en España",
        subtitle = "Por Comunidad Autónoma (escala logarítmica)",
        y = "casos",
        x = "fecha",
@@ -103,7 +145,7 @@ data_uci %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de personas en la UCI por COVID19 registrados en España",
+  labs(title = "Número de personas (acumulado) en la UCI por COVID19 registrados en España",
        subtitle = "Por Comunidad Autónoma (escala lineal)",
        y = "personas en UCI",
        x = "fecha",
@@ -128,7 +170,42 @@ data_uci %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de personas en la UCI por COVID19 registrados en España",
+  labs(title = "Número de personas (acumulado) en la UCI por COVID19 registrados en España",
+       subtitle = "Por Comunidad Autónoma (escala logarítmica)",
+       y = "personas en UCI",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
+data_uci %>% filter( CCAA != "Total") %>%
+  ggplot() +
+  geom_line(aes(date,value,group=CCAA, color=CCAA) ) +
+  geom_text_repel(data=filter( data_uci, date==max(data_uci$date),  CCAA != "Total"), 
+                  aes(date,value,label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=4,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#333333"
+  ) +
+  # scale_color_brewer(palette = "Dark2", type = "discrete") +
+  scale_y_log10( ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_uci$date), max(data_uci$date + 1.5)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de personas (acumulado) en la UCI por COVID19 registrados en España",
        subtitle = "Por Comunidad Autónoma (escala logarítmica)",
        y = "personas en UCI",
        x = "fecha",
@@ -154,7 +231,7 @@ data_death %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de fallecimientos de COVID19 registrados en España",
+  labs(title = "Número de fallecimientos acumulados por COVID19 registrados en España",
        subtitle = "Por Comunidad Autónoma (escala lineal)",
        y = "fallecidos",
        x = "fecha",
@@ -179,7 +256,42 @@ data_death %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de fallecimientos de COVID19 registrados en España",
+  labs(title = "Número de fallecimientos acumulados por COVID19 registrados en España",
+       subtitle = "Por Comunidad Autónoma (escala logarítmica)",
+       y = "fallecidos",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
+data_death %>% filter( CCAA != "Total") %>%
+  ggplot() +
+  geom_line(aes(date,value,group=CCAA, color=CCAA) ) +
+  geom_text_repel(data=filter( data_death, date==max(data_death$date),  CCAA != "Total"), 
+                  aes(date,value,label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=4,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#333333"
+  ) +
+  # scale_color_brewer(palette = "Dark2", type = "discrete") +
+  scale_y_log10( ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_death$date), max(data_death$date + 1.5)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de fallecimientos acumulados por COVID19 registrados en España",
        subtitle = "Por Comunidad Autónoma (escala logarítmica)",
        y = "fallecidos",
        x = "fecha",
