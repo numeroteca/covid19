@@ -96,7 +96,7 @@ data_death %>% filter( CCAA != "Total") %>%
   ) +
   labs(title = "Número de personas en la UCI por COVID19 registrados en España",
        subtitle = "Por Comunidad Autónoma (escala lineal)",
-       y = "casos",
+       y = "personas en UCI",
        x = "fecha",
        caption = caption)
 
@@ -119,7 +119,7 @@ data_death %>% filter( CCAA != "Total") %>%
   ) +
   labs(title = "Número de personas en la UCI por COVID19 registrados en España",
        subtitle = "Por Comunidad Autónoma (escala logarítmica)",
-       y = "casos",
+       y = "personas en UCI",
        x = "fecha",
        caption = caption)
 
@@ -150,7 +150,7 @@ data_death %>% filter( CCAA != "Total") %>%
   ) +
   labs(title = "Número de fallcimientos de COVID19 registrados en España",
        subtitle = "Por Comunidad Autónoma (escala lineal)",
-       y = "casos",
+       y = "fallecidos",
        x = "fecha",
        caption = caption)
 
@@ -173,6 +173,6 @@ data_death %>% filter( CCAA != "Total") %>%
   ) +
   labs(title = "Número de fallcimientos de COVID19registrados en España",
        subtitle = "Por Comunidad Autónoma (escala logarítmica)",
-       y = "casos",
+       y = "fallecidos",
        x = "fecha",
        caption = caption)
