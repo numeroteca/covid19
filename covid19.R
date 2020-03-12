@@ -39,7 +39,7 @@ caption <- "Gráfico: Numeroteca. Datos: Ministerio de Sanidad de España extra�
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-lineal.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
 ggplot() +
-  geom_step(aes(date,value,group=CCAA) ) +
+  geom_line(aes(date,value,group=CCAA) ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
                    date_labels = "%d"
@@ -63,7 +63,7 @@ dev.off()
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
 ggplot() +
-  geom_step(aes(date,value,group=CCAA) ) +
+  geom_line(aes(date,value,group=CCAA) ) +
   scale_y_log10( ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
@@ -90,7 +90,7 @@ dev.off()
 png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-lineal.png", sep = ""),width = 1000,height = 700)
 data_uci %>% filter( CCAA != "Total") %>%
   ggplot() +
-  geom_step(aes(date,value,group=CCAA) ) +
+  geom_line(aes(date,value,group=CCAA) ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d"
@@ -114,7 +114,7 @@ dev.off()
 png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-log.png", sep = ""),width = 1000,height = 700)
 data_uci %>% filter( CCAA != "Total") %>%
   ggplot() +
-  geom_step(aes(date,value,group=CCAA) ) +
+  geom_line(aes(date,value,group=CCAA) ) +
   scale_y_log10( ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
@@ -141,7 +141,7 @@ dev.off()
 png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-lineal.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
-  geom_step(aes(date,value,group=CCAA) ) +
+  geom_line(aes(date,value,group=CCAA) ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d"
@@ -165,7 +165,7 @@ dev.off()
 png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-log.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
-  geom_step(aes(date,value,group=CCAA) ) +
+  geom_line(aes(date,value,group=CCAA) ) +
   scale_y_log10( ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
