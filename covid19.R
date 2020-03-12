@@ -37,8 +37,8 @@ data_death <- select(data_death,-variable)
 
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
-caption <- "Gráfico: Numeroteca. Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
-
+caption <- "Gráfico: @numeroteca (montera34.com). Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
+period <- "2020.02.27 - 03.12"
 # Cases ------------
 
 # Escala lineal
@@ -59,7 +59,7 @@ ggplot() +
     # legend.position = "bottom"
   ) +
   labs(title = "Número de casos acumulados de COVID19 registrados en España",
-       subtitle = "Por Comunidad Autónoma (escala lineal)",
+       subtitle = paste0("Por Comunidad Autónoma (escala lineal). ",period),
        y = "casos",
        x = "fecha",
        caption = caption)
@@ -84,7 +84,7 @@ ggplot() +
     # legend.position = "bottom"
   ) +
   labs(title = "Número de casos acumulados de COVID19 registrados en España",
-       subtitle = "Por Comunidad Autónoma (escala logarítmica)",
+       subtitle = paste0("Por Comunidad Autónoma (escala logarítmica). ",period),
        y = "casos",
        x = "fecha",
        caption = caption)
@@ -93,11 +93,11 @@ dev.off()
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
-  geom_line(aes(date,value,group=CCAA, color=CCAA) ) +
+  geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
                   aes(date,value,label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
-                  size=4,
+                  size=5,
                   hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
@@ -120,7 +120,7 @@ data_cases %>% filter( CCAA != "Total") %>%
     legend.position = "none"
   ) +
   labs(title = "Número de casos acumulados de COVID19 registrados en España",
-       subtitle = "Por Comunidad Autónoma (escala logarítmica)",
+       subtitle = paste0("Por Comunidad Autónoma (escala logarítmica). ",period),
        y = "casos",
        x = "fecha",
        caption = caption)
@@ -146,7 +146,7 @@ data_uci %>% filter( CCAA != "Total") %>%
     # legend.position = "bottom"
   ) +
   labs(title = "Número de personas (acumulado) en la UCI por COVID19 registrados en España",
-       subtitle = "Por Comunidad Autónoma (escala lineal)",
+       subtitle = paste0("Por Comunidad Autónoma (escala lineal). ",period),
        y = "personas en UCI",
        x = "fecha",
        caption = caption)
@@ -171,7 +171,7 @@ data_uci %>% filter( CCAA != "Total") %>%
     # legend.position = "bottom"
   ) +
   labs(title = "Número de personas (acumulado) en la UCI por COVID19 registrados en España",
-       subtitle = "Por Comunidad Autónoma (escala logarítmica)",
+       subtitle = paste0("Por Comunidad Autónoma (escala logarítmica). ",period),
        y = "personas en UCI",
        x = "fecha",
        caption = caption)
@@ -180,11 +180,11 @@ dev.off()
 png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
 data_uci %>% filter( CCAA != "Total") %>%
   ggplot() +
-  geom_line(aes(date,value,group=CCAA, color=CCAA) ) +
+  geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
   geom_text_repel(data=filter( data_uci, date==max(data_uci$date),  CCAA != "Total"), 
                   aes(date,value,label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
-                  size=4,
+                  size=5,
                   hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
@@ -206,7 +206,7 @@ data_uci %>% filter( CCAA != "Total") %>%
     legend.position = "none"
   ) +
   labs(title = "Número de personas (acumulado) en la UCI por COVID19 registrados en España",
-       subtitle = "Por Comunidad Autónoma (escala logarítmica)",
+       subtitle = paste0("Por Comunidad Autónoma (escala logarítmica). ",period),
        y = "personas en UCI",
        x = "fecha",
        caption = caption)
@@ -232,7 +232,7 @@ data_death %>% filter( CCAA != "Total") %>%
     # legend.position = "bottom"
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID19 registrados en España",
-       subtitle = "Por Comunidad Autónoma (escala lineal)",
+       subtitle = paste0("Por Comunidad Autónoma (escala lineal). ",period),
        y = "fallecidos",
        x = "fecha",
        caption = caption)
@@ -257,7 +257,7 @@ data_death %>% filter( CCAA != "Total") %>%
     # legend.position = "bottom"
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID19 registrados en España",
-       subtitle = "Por Comunidad Autónoma (escala logarítmica)",
+       subtitle = paste0("Por Comunidad Autónoma (escala logarítmica). ",period),
        y = "fallecidos",
        x = "fecha",
        caption = caption)
@@ -266,11 +266,11 @@ dev.off()
 png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
-  geom_line(aes(date,value,group=CCAA, color=CCAA) ) +
+  geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
   geom_text_repel(data=filter( data_death, date==max(data_death$date),  CCAA != "Total"), 
                   aes(date,value,label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
-                  size=4,
+                  size=5,
                   hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
@@ -292,7 +292,7 @@ data_death %>% filter( CCAA != "Total") %>%
     legend.position = "none"
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID19 registrados en España",
-       subtitle = "Por Comunidad Autónoma (escala logarítmica)",
+       subtitle = paste0("Por Comunidad Autónoma (escala logarítmica). ",period),
        y = "fallecidos",
        x = "fecha",
        caption = caption)
