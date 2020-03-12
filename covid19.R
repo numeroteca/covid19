@@ -10,7 +10,7 @@ library(RColorBrewer) # extends color paletter
 # World data https://github.com/RamiKrispin/coronavirus-csv/blob/master/coronavirus_dataset.csv
 # world_data  <- read.delim("https://raw.githubusercontent.com/RamiKrispin/coronavirus-csv/master/coronavirus_dataset.csv",sep = ",")
 
-# COVID19 in Spain -----------
+# COVID-19 in Spain -----------
 # Data by Ministerio de Sanidad de España (published in PDF format https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm)
 # extracted by Datadista and published in this repository https://github.com/datadista/datasets/tree/master/COVID%2019
 # Spanish data https://github.com/datadista/datasets/tree/master/COVID%2019
@@ -58,7 +58,7 @@ ggplot() +
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de casos acumulados de COVID19 registrados en España",
+  labs(title = "Número de casos acumulados de COVID-19 registrados en España",
        subtitle = paste0("Por Comunidad Autónoma (escala lineal). ",period),
        y = "casos",
        x = "fecha",
@@ -83,7 +83,7 @@ ggplot() +
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de casos acumulados de COVID19 registrados en España",
+  labs(title = "Número de casos acumulados de COVID-19 registrados en España",
        subtitle = paste0("Por Comunidad Autónoma (escala logarítmica). ",period),
        y = "casos",
        x = "fecha",
@@ -119,7 +119,7 @@ data_cases %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de casos acumulados de COVID19 registrados en España",
+  labs(title = "Número de casos acumulados de COVID-19 registrados en España",
        subtitle = paste0("Por Comunidad Autónoma (escala logarítmica). ",period),
        y = "casos",
        x = "fecha",
@@ -145,7 +145,7 @@ data_uci %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de personas (acumulado) en la UCI por COVID19 registrados en España",
+  labs(title = "Número de personas (acumulado) en la UCI por COVID-19 registrados en España",
        subtitle = paste0("Por Comunidad Autónoma (escala lineal). ",period),
        y = "personas en UCI",
        x = "fecha",
@@ -170,7 +170,7 @@ data_uci %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de personas (acumulado) en la UCI por COVID19 registrados en España",
+  labs(title = "Número de personas (acumulado) en la UCI por COVID-19 registrados en España",
        subtitle = paste0("Por Comunidad Autónoma (escala logarítmica). ",period),
        y = "personas en UCI",
        x = "fecha",
@@ -205,7 +205,7 @@ data_uci %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de personas (acumulado) en la UCI por COVID19 registrados en España",
+  labs(title = "Número de personas (acumulado) en la UCI por COVID-19 registrados en España",
        subtitle = paste0("Por Comunidad Autónoma (escala logarítmica). ",period),
        y = "personas en UCI",
        x = "fecha",
@@ -231,7 +231,7 @@ data_death %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de fallecimientos acumulados por COVID19 registrados en España",
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
        subtitle = paste0("Por Comunidad Autónoma (escala lineal). ",period),
        y = "fallecidos",
        x = "fecha",
@@ -256,7 +256,7 @@ data_death %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de fallecimientos acumulados por COVID19 registrados en España",
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
        subtitle = paste0("Por Comunidad Autónoma (escala logarítmica). ",period),
        y = "fallecidos",
        x = "fecha",
@@ -291,7 +291,7 @@ data_death %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de fallecimientos acumulados por COVID19 registrados en España",
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
        subtitle = paste0("Por Comunidad Autónoma (escala logarítmica). ",period),
        y = "fallecidos",
        x = "fecha",
