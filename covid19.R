@@ -32,7 +32,10 @@ data_cases <- select(data_cases,-variable)
 # add population data
 data_cases <- merge( data_cases, select(ccaa_poblacion,id,poblacion), by.x = "cod_ine", by.y = "id"   )
 # calculate values per 
-data_cases$per_million <- round( data_cases$value / data_cases$poblacion * 1000000, digits = 1)
+data_cases$per_cienmil <- round( data_cases$value / data_cases$poblacion * 100000, digits = 1)
+
+write.csv(data_cases, file = "data/covid19-casos-registrados-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
+
 
 # Personas UCI registradas
 data_uci <- melt(data_uci_original, id.vars = c("CCAA"))
@@ -42,7 +45,10 @@ data_uci <- select(data_uci,-variable)
 # add population data
 data_uci <- merge( data_uci, data_cases %>% filter (date == as.Date("2020-02-27") ) %>% select(CCAA,poblacion), by.x = "CCAA", by.y = "CCAA" , all.x = TRUE  )
 # calculate values per 
-data_uci$per_million <- round( data_uci$value / data_uci$poblacion * 1000000, digits = 1)
+data_uci$per_cienmil <- round( data_uci$value / data_uci$poblacion * 100000, digits = 2)
+
+write.csv(data_uci, file = "data/covid19-ingresos-uci-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
+
 
 # Fallecimientos registrados
 data_death <- melt(data_death_original, id.vars = c("CCAA"))
@@ -52,8 +58,9 @@ data_death <- select(data_death,-variable)
 # add population data
 data_death <- merge( data_death, data_cases %>% filter (date == as.Date("2020-02-27") ) %>% select(CCAA,poblacion), by.x = "CCAA", by.y = "CCAA" , all.x = TRUE  )
 # calculate values per 
-data_death$per_million <- round( data_death$value / data_death$poblacion * 1000000, digits = 2)
+data_death$per_cienmil <- round( data_death$value / data_death$poblacion * 1000000, digits = 2)
 
+write.csv(data_death, file = "data/covid19-fallecimientos-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
 
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
@@ -114,11 +121,11 @@ ggplot() +
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-per-million-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
-  geom_line(aes(date,per_million,group=CCAA) ) +
-  geom_point(aes(date,per_million,group=CCAA), size = 0.5 ) +
+  geom_line(aes(date,per_cienmil,group=CCAA) ) +
+  geom_point(aes(date,per_cienmil,group=CCAA), size = 0.5 ) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
@@ -132,9 +139,9 @@ data_cases %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000"),
     axis.text.x = element_text(size = 9)
   ) +
-  labs(title = "Número de casos acumulados de COVID-19 registrados por millón de habitantes en España",
+  labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 de habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "casos registrados por millón de habitantes",
+       y = "casos registrados por 100.000 de habitantes",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -211,13 +218,13 @@ data_cases %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-per-million-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
-  geom_line(aes(date,per_million,group=CCAA, color=CCAA), size= 1 ) +
-  geom_point(aes(date,per_million, color=CCAA), size= 1.5 ) +
+  geom_line(aes(date,per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
+  geom_point(aes(date,per_cienmil, color=CCAA), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
-                  aes(date,per_million,label=paste(format(per_million, nsmall=1, big.mark="."),CCAA)),
+                  aes(date,per_cienmil,label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -241,9 +248,9 @@ data_cases %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de casos acumulados de COVID-19 registrados por millón de habitantes en España",
+  labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 de habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "casos registrados por millón habitantes",
+       y = "casos registrados por 100.000 habitantes",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -303,11 +310,11 @@ data_uci %>% filter( CCAA != "Total") %>%
 dev.off()
 
 # Escala logarítmica
-png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-per-million-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_uci %>% filter( CCAA != "Total") %>%
   ggplot() +
-  geom_line(aes(date,per_million,group=CCAA) ) +
-  geom_point(aes(date,per_million,group=CCAA), size = 0.5 ) +
+  geom_line(aes(date,per_cienmil,group=CCAA) ) +
+  geom_point(aes(date,per_cienmil,group=CCAA), size = 0.5 ) +
   scale_y_log10( ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
@@ -321,9 +328,9 @@ data_uci %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de personas (acumulado) en la UCI por COVID-19 registrados por millón de habitantes en España",
+  labs(title = "Número de personas (acumulado) en la UCI por COVID-19 registrados por 100.000 de habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "personas en UCI por millón de habitantes",
+       y = "personas en UCI por 100.000 de habitantes",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -399,13 +406,13 @@ data_uci %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-superpuesto-per-million-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_uci %>% filter( CCAA != "Total") %>%
   ggplot() +
-  geom_line(aes(date,per_million,group=CCAA, color=CCAA), size= 1 ) +
-  geom_point(aes(date,per_million,  color=CCAA), size= 1.5 ) +
+  geom_line(aes(date,per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
+  geom_point(aes(date,per_cienmil,  color=CCAA), size= 1.5 ) +
   geom_text_repel(data=filter( data_uci, date==max(data_uci$date),  CCAA != "Total"), 
-                  aes(date,per_million,label=paste(format(per_million, nsmall=1, big.mark="."),CCAA)),
+                  aes(date,per_cienmil,label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -428,9 +435,9 @@ data_uci %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de personas (acumulado) en la UCI por COVID-19 registrados por millón de habitantes en España",
+  labs(title = "Número de personas (acumulado) en la UCI por COVID-19 registrados por 100.000 de habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "personas en UCI por millón de habitantes",
+       y = "personas en UCI por 100.000 de habitantes",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -523,13 +530,13 @@ data_death %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-pe-rmillion-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
-  geom_line(aes(date,per_million,group=CCAA, color=CCAA), size= 1 ) +
-  geom_point(aes(date,per_million, color=CCAA), size= 1.5 ) +
+  geom_line(aes(date,per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
+  geom_point(aes(date,per_cienmil, color=CCAA), size= 1.5 ) +
   geom_text_repel(data=filter( data_death, date==max(data_death$date),  CCAA != "Total"), 
-                  aes(date,per_million,label=paste(format(per_million, nsmall=1, big.mark="."),CCAA)),
+                  aes(date,per_cienmil,label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -552,9 +559,9 @@ data_death %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por millón de habitantes en España",
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 de habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "fallecidos por millón de habitantes",
+       y = "fallecidos por 100.000 de habitantes",
        x = "fecha",
        caption = caption)
 dev.off()
