@@ -82,7 +82,7 @@ ggplot() +
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
-       y = "casos",
+       y = "casos registrados",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -108,12 +108,12 @@ ggplot() +
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "casos",
+       y = "casos registrados",
        x = "fecha",
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-per-million-log.png", sep = ""),width = 1000,height = 700)
+  png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-per-million-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,per_million,group=CCAA) ) +
@@ -133,7 +133,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados por millón de habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "casos por millón de habitantes",
+       y = "casos registrados por millón de habitantes",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -169,7 +169,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
-       y = "casos",
+       y = "casos registrados",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -205,7 +205,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "casos por millón de habitantes",
+       y = "casos registrados",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -242,7 +242,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados por millón de habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "casos por millón",
+       y = "casos registrados por millón habitantes",
        x = "fecha",
        caption = caption)
 dev.off()
