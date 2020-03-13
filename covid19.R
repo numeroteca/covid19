@@ -2,6 +2,7 @@
 
 # Load libraries -----------
 library(tidyverse)
+library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 # library(RColorBrewer) # extends color paletter
 
@@ -16,10 +17,10 @@ ccaa_poblacion <-  read.delim("data/ccaa-poblacion.csv",sep = ";")
 # Data by Ministerio de Sanidad de España (published in PDF format https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm)
 # extracted by Datadista and published in this repository https://github.com/datadista/datasets/tree/master/COVID%2019
 # Spanish data https://github.com/datadista/datasets/tree/master/COVID%2019
-data_cases_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/12-03-2020/casos_cccaa_12032020_covid19.csv",sep = ",")  #TODO fix Aragón problem in 2020-02-28
+data_cases_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_casos.csv",sep = ",")  #TODO fix Aragón problem in 2020-02-28
 # data_cases_original <- read.delim("../coronavirus-datadista/COVID 19/12-03-2020/casos_cccaa_12032020_covid19.csv",sep = ",") #TODO temp fix: loads local data to fix Aragón problem in 2020-02-28
-data_death_original <- read.delim("https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/12-03-2020/fallecidos_cccaa_12032020_covid19.csv",sep = ",")
-data_uci_original <- read.delim("https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/12-03-2020/uci_cccaa_12032020_covid19.csv",sep = ",")
+data_uci_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_uci.csv",sep = ",")
+data_death_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_fallecidos.csv",sep = ",")
 
 # Process data ------
 # Change to long format
@@ -57,7 +58,7 @@ data_death$per_million <- round( data_death$value / data_death$poblacion * 10000
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption <- "Gráfico: @numeroteca (montera34.com). Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
-period <- "2020.02.27 - 03.12"
+period <- "2020.02.27 - 03.13 13:00h"
 # Cases ------------
 
 # ----- Small multiple ------------
@@ -199,7 +200,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    panel.grid.minor.y = element_blank(),
+    # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
