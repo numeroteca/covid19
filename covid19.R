@@ -16,8 +16,8 @@ ccaa_poblacion <-  read.delim("data/ccaa-poblacion.csv",sep = ";")
 # Data by Ministerio de Sanidad de España (published in PDF format https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm)
 # extracted by Datadista and published in this repository https://github.com/datadista/datasets/tree/master/COVID%2019
 # Spanish data https://github.com/datadista/datasets/tree/master/COVID%2019
-# data_cases_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/12-03-2020/casos_cccaa_12032020_covid19.csv",sep = ",")
-data_cases_original <- read.delim("../coronavirus-datadista/COVID 19/12-03-2020/casos_cccaa_12032020_covid19.csv",sep = ",") #TODO loads local data to fix Aragón problem in 2020-02-28
+data_cases_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/12-03-2020/casos_cccaa_12032020_covid19.csv",sep = ",")  #TODO fix Aragón problem in 2020-02-28
+# data_cases_original <- read.delim("../coronavirus-datadista/COVID 19/12-03-2020/casos_cccaa_12032020_covid19.csv",sep = ",") #TODO temp fix: loads local data to fix Aragón problem in 2020-02-28
 data_death_original <- read.delim("https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/12-03-2020/fallecidos_cccaa_12032020_covid19.csv",sep = ",")
 data_uci_original <- read.delim("https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/12-03-2020/uci_cccaa_12032020_covid19.csv",sep = ",")
 
@@ -113,7 +113,7 @@ ggplot() +
        caption = caption)
 dev.off()
 
-  png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-per-million-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-per-million-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,per_million,group=CCAA) ) +
@@ -172,7 +172,7 @@ data_cases %>% filter( CCAA != "Total") %>%
        y = "casos registrados",
        x = "fecha",
        caption = caption)
-dev.off()
+  dev.off()
 
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
