@@ -18,7 +18,7 @@ Población por comunidades autónomas del INE: https://www.ine.es/jaxiT3/Datos.h
 
 ## Autoría
 
-Pablo Rey Mazón ([@numeroteca](https://twitter.com/numeroteca)) desde [montera34.com](https://montera34.com).
+Pablo Rey Mazón y Alfonso Sánchez Uzábal ([@numeroteca](https://twitter.com/numeroteca)) desde [montera34.com](https://montera34.com).
 
 En este post [Análisis de propagación de COVID-19 por comunidades autónomas en España](http://numeroteca.org/2020/03/12/covid19-comunidades-autonomas-espana/) recopilamos algunos resultados.
 
