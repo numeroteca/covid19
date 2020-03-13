@@ -101,7 +101,7 @@ data_cases %>% filter( CCAA != "Total") %>%
 ggplot() +
   geom_line(aes(date,value,group=CCAA) ) +
   geom_point(aes(date,value,group=CCAA), size = 0.5 ) +
-  scale_y_log10( ) +
+  scale_y_log10( minor_breaks = seq(0 , 2000, 200) ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d"
@@ -110,7 +110,7 @@ ggplot() +
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    panel.grid.minor.y = element_blank(),
+    # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     axis.text.x = element_text(size = 9)
   ) +
@@ -126,7 +126,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,per_cienmil,group=CCAA) ) +
   geom_point(aes(date,per_cienmil,group=CCAA), size = 0.5 ) +
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = seq(0 , 100, 10) ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d"
@@ -135,7 +135,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    panel.grid.minor.y = element_blank(),
+    # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     axis.text.x = element_text(size = 9)
   ) +
@@ -198,7 +198,7 @@ data_cases %>% filter( CCAA != "Total") %>%
                   segment.color="#333333"
                   # xlim  = c(as.Date(max(dates.count.barrio.room$fechab)),as.Date("2020-01-4"))
   ) +
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = seq(0 , 2000, 100) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_cases$date), max(data_cases$date + 1.5)) 
@@ -235,7 +235,7 @@ data_cases %>% filter( CCAA != "Total") %>%
                   # xlim  = c(as.Date(max(dates.count.barrio.room$fechab)),as.Date("2020-01-4"))
   ) +
   # scale_color_brewer(palette = "Dark2", type = "discrete") +
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = seq(0 , 100, 10) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_cases$date), max(data_cases$date + 1.5)) 
@@ -244,7 +244,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    panel.grid.minor.y = element_blank(),
+    # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
@@ -289,7 +289,7 @@ data_uci %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,value,group=CCAA) ) +
   geom_point(aes(date,value,group=CCAA), size = 0.5 ) +
-  scale_y_log10( ) +
+  scale_y_log10( minor_breaks = seq(0 , 2000, 10) ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d"
@@ -298,7 +298,7 @@ data_uci %>% filter( CCAA != "Total") %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    panel.grid.minor.y = element_blank(),
+    # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
@@ -315,7 +315,7 @@ data_uci %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,per_cienmil,group=CCAA) ) +
   geom_point(aes(date,per_cienmil,group=CCAA), size = 0.5 ) +
-  scale_y_log10( ) +
+  scale_y_log10( minor_breaks = seq(0 , 2000, 0.1)) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d"
@@ -324,7 +324,7 @@ data_uci %>% filter( CCAA != "Total") %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    panel.grid.minor.y = element_blank(),
+    # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
@@ -386,7 +386,7 @@ data_uci %>% filter( CCAA != "Total") %>%
                   segment.color="#333333"
   ) +
   # scale_color_brewer(palette = "Dark2", type = "discrete") +
-  scale_y_log10( ) +
+  scale_y_log10( minor_breaks = seq(0 , 2000, 10) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_uci$date), max(data_uci$date + 1.5)) 
@@ -395,7 +395,7 @@ data_uci %>% filter( CCAA != "Total") %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    panel.grid.minor.y = element_blank(),
+    # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
@@ -421,8 +421,7 @@ data_uci %>% filter( CCAA != "Total") %>%
                   segment.size = 0.1,
                   segment.color="#333333"
   ) +
-  # scale_color_brewer(palette = "Dark2", type = "discrete") +
-  scale_y_log10( ) +
+  scale_y_log10( minor_breaks = seq(0 , 2000, 0.1 ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_uci$date), max(data_uci$date + 1.5)) 
@@ -431,7 +430,7 @@ data_uci %>% filter( CCAA != "Total") %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    panel.grid.minor.y = element_blank(),
+    # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
@@ -474,7 +473,7 @@ png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonom
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,value,group=CCAA) ) +
-  scale_y_log10( ) +
+  scale_y_log10( minor_breaks = seq(0 , 2000, 10) ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d"
@@ -483,7 +482,7 @@ data_death %>% filter( CCAA != "Total") %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    panel.grid.minor.y = element_blank(),
+    # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
@@ -510,7 +509,7 @@ data_death %>% filter( CCAA != "Total") %>%
                   segment.size = 0.1,
                   segment.color="#333333"
   ) +
-  scale_y_log10( ) +
+  scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10)) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_death$date), max(data_death$date + 1.5)) 
@@ -519,7 +518,7 @@ data_death %>% filter( CCAA != "Total") %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    panel.grid.minor.y = element_blank(),
+    # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
@@ -545,8 +544,7 @@ data_death %>% filter( CCAA != "Total") %>%
                   segment.size = 0.1,
                   segment.color="#333333"
   ) +
-  # scale_color_brewer(palette = "Dark2", type = "discrete") +
-  scale_y_log10( ) +
+  scale_y_log10(  minor_breaks = seq(0 , 20, 1) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_death$date), max(data_death$date + 1.5)) 
@@ -555,7 +553,7 @@ data_death %>% filter( CCAA != "Total") %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    panel.grid.minor.y = element_blank(),
+    # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
