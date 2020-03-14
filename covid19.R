@@ -34,7 +34,7 @@ data_cases <- merge( data_cases, select(ccaa_poblacion,id,poblacion), by.x = "co
 # calculate values per 
 data_cases$per_cienmil <- round( data_cases$value / data_cases$poblacion * 100000, digits = 1)
 
-write.csv(data_cases, file = "data/covid19-casos-registrados-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
+write.csv(data_cases, file = "data/output/covid19-casos-registrados-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
 
 
 # Personas UCI registradas
@@ -47,8 +47,7 @@ data_uci <- merge( data_uci, data_cases %>% filter (date == as.Date("2020-02-27"
 # calculate values per 
 data_uci$per_cienmil <- round( data_uci$value / data_uci$poblacion * 100000, digits = 2)
 
-write.csv(data_uci, file = "data/covid19-ingresos-uci-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
-
+write.csv(data_uci, file = "data/output/covid19-ingresos-uci-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
 
 # Fallecimientos registrados
 data_death <- melt(data_death_original, id.vars = c("CCAA","cod_ine"))
@@ -60,7 +59,7 @@ data_death <- merge( data_death, data_cases %>% filter (date == as.Date("2020-02
 # calculate values per 
 data_death$per_cienmil <- round( data_death$value / data_death$poblacion * 1000000, digits = 2)
 
-write.csv(data_death, file = "data/covid19-fallecimientos-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
+write.csv(data_death, file = "data/output/covid19-fallecimientos-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
 
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
@@ -577,6 +576,40 @@ data_death %>% filter( CCAA != "Total") %>%
 dev.off()
 
 # ---------Fallecimientos superpuestos ----------
+png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1000,height = 700)
+data_death %>% filter( CCAA != "Total") %>%
+  ggplot() +
+  geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
+  geom_point(aes(date,value, color=CCAA), size= 1.5 ) +
+  geom_text_repel(data=filter( data_death, date==max(data_death$date),  CCAA != "Total"), 
+                  aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_death$date), max(data_death$date + 1.5)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       y = "fallecidos",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
 png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
@@ -592,7 +625,7 @@ data_death %>% filter( CCAA != "Total") %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
-  scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10)) ) +
+  scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_death$date), max(data_death$date + 1.5)) 
@@ -611,6 +644,42 @@ data_death %>% filter( CCAA != "Total") %>%
        x = "fecha",
        caption = caption)
 dev.off()
+
+png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
+data_death %>% filter( CCAA != "Total") %>%
+  ggplot() +
+  geom_line(aes(date,per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
+  geom_point(aes(date,per_cienmil, color=CCAA), size= 1.5 ) +
+  geom_text_repel(data=filter( data_death, date==max(data_death$date),  CCAA != "Total"), 
+                  aes(date,per_cienmil, color=CCAA, label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_death$date), max(data_death$date + 1.5)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       y = "fallecidos por 100.000 habitantes",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+
 
 png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
