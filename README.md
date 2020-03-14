@@ -9,6 +9,28 @@ Licencia: [GNU GPLv3](https://code.montera34.com:4443/numeroteca/covid19/-/blob/
 
 Si vas a publicar visualizaciones, antes lee este artículo [Ten Considerations Before You Create Another Chart About COVID-19] (https://medium.com/nightingale/ten-considerations-before-you-create-another-chart-about-covid-19-27d3bd691be8). Todo poder conlleva una gran responsabilidad.
 
+
+## File structure
+
+├── coronavirus.Rproj                             # R project
+├── covid19_italia.R
+├── covid19.R                                     # R script: process and create plots
+├── data
+│   ├── original                                  # original data
+│   │   └── ccaa-poblacion.csv 
+│   └── output                                    # processed data: by date and comunidad autónoma in Spain
+│       ├── covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv     # merge all cases
+│       ├── covid19-casos-registrados-por-ccaa-espana-por-dia-acumulado.csv   # registered cases accumulated
+│       ├── covid19-fallecimientos-por-ccaa-espana-por-dia-acumulado.csv      # deaths
+│       └── covid19-ingresos-uci-por-ccaa-espana-por-dia-acumulado.csv        # intensive care
+├── img
+│   ├── 20200312
+│   ├── 20200313                                  #previous plots
+│   ├── covid19_*.png                             # last plots
+├── LICENSE.md
+└── README.md
+
+
 ## Datos
 
 ### De COVID-19 en España:
