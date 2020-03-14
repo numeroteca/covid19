@@ -61,10 +61,11 @@ data_death$per_cienmil <- round( data_death$value / data_death$poblacion * 10000
 
 write.csv(data_death, file = "data/output/covid19-fallecimientos-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
 
-# join data sets
+# join data sets --------------
 data_all <- data_cases
 data_all$unique <- paste0(data_all$CCAA,data_all$date)
 colnames(data_all)[3] <- "cases"
+colnames(data_all)[6] <- "cases_per_cienmil"
 
 data_uci$unique <- paste0(data_uci$CCAA,data_uci$date)
 colnames(data_uci)[2] <- "uci"
@@ -734,3 +735,38 @@ data_death %>% filter( CCAA != "Total") %>%
 dev.off()
 
 
+# --------- Relaciones --------
+# png(filename=paste("img/covid19_ .png", sep = ""),width = 1000,height = 700)
+data_all %>% filter( CCAA != "Total") %>%
+ggplot() +
+  geom_line( aes(cases_per_cienmil,death_per_cienmil, group=CCAA, color=CCAA), size= 1 ) +
+  geom_point(aes(cases_per_cienmil,death_per_cienmil, color=CCAA), size= 2 ) +
+  geom_text(aes(cases_per_cienmil,death_per_cienmil+3, color=CCAA,label=paste( substr(date,7,10 ))), size= 3, color="#000000") +
+  geom_text_repel(data=filter( data_all, date==max(data_all[!is.na(data_all$date),]$date),  CCAA != "Total"),
+                  aes(cases_per_cienmil,death_per_cienmil, color=CCAA, label=CCAA),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  # scale_x_date(date_breaks = "1 day", 
+  #              date_labels = "%d",
+  #              limits=c( min(data_cases$date), max(data_cases$date + 1.5)) 
+  # ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de casos acumulados de COVID-19 registrados en España",
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       # y = "casos registrados",
+       # x = "fecha",
+       caption = caption)
+# dev.off()

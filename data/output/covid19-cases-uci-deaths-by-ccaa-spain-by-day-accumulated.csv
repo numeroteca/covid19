@@ -1,4 +1,4 @@
-"unique","cod_ine","CCAA","cases","date","poblacion","per_cienmil","uci","uci_per_cienmil","death","death_per_cienmil"
+"unique","cod_ine","CCAA","cases","date","poblacion","cases_per_cienmil","uci","uci_per_cienmil","death","death_per_cienmil"
 "Andalucía2020-02-27",1,"Andalucía",1,2020-02-27,8414240,0,NA,NA,NA,NA
 "Andalucía2020-02-28",1,"Andalucía",6,2020-02-28,8414240,0.1,NA,NA,NA,NA
 "Andalucía2020-03-02",1,"Andalucía",12,2020-03-02,8414240,0.1,NA,NA,NA,NA
