@@ -101,7 +101,7 @@ data_cases %>% filter( CCAA != "Total") %>%
 ggplot() +
   geom_line(aes(date,value,group=CCAA) ) +
   geom_point(aes(date,value,group=CCAA), size = 0.5 ) +
-  scale_y_log10( minor_breaks = seq(0 , 2000, 200) ) +
+  scale_y_log10( minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d"
@@ -126,7 +126,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,per_cienmil,group=CCAA) ) +
   geom_point(aes(date,per_cienmil,group=CCAA), size = 0.5 ) +
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = seq(0 , 100, 10) ) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) )) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d"
@@ -139,9 +139,9 @@ data_cases %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000"),
     axis.text.x = element_text(size = 9)
   ) +
-  labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 de habitantes en España",
+  labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "casos registrados por 100.000 de habitantes",
+       y = "casos registrados por 100.000 habitantes",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -198,7 +198,8 @@ data_cases %>% filter( CCAA != "Total") %>%
                   segment.color="#333333"
                   # xlim  = c(as.Date(max(dates.count.barrio.room$fechab)),as.Date("2020-01-4"))
   ) +
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = seq(0 , 2000, 100) ) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+                 minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_cases$date), max(data_cases$date + 1.5)) 
@@ -235,7 +236,8 @@ data_cases %>% filter( CCAA != "Total") %>%
                   # xlim  = c(as.Date(max(dates.count.barrio.room$fechab)),as.Date("2020-01-4"))
   ) +
   # scale_color_brewer(palette = "Dark2", type = "discrete") +
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = seq(0 , 100, 10) ) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+                 minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_cases$date), max(data_cases$date + 1.5)) 
@@ -248,7 +250,7 @@ data_cases %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 de habitantes en España",
+  labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
        y = "casos registrados por 100.000 habitantes",
        x = "fecha",
@@ -328,9 +330,9 @@ data_uci %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de personas (acumulado) en la UCI por COVID-19 registrados por 100.000 de habitantes en España",
+  labs(title = "Número de personas (acumulado) en la UCI por COVID-19 registrados por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "personas en UCI por 100.000 de habitantes",
+       y = "personas en UCI por 100.000 habitantes",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -386,7 +388,7 @@ data_uci %>% filter( CCAA != "Total") %>%
                   segment.color="#333333"
   ) +
   # scale_color_brewer(palette = "Dark2", type = "discrete") +
-  scale_y_log10( minor_breaks = seq(0 , 2000, 10) ) +
+  scale_y_log10( minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_uci$date), max(data_uci$date + 1.5)) 
@@ -421,7 +423,7 @@ data_uci %>% filter( CCAA != "Total") %>%
                   segment.size = 0.1,
                   segment.color="#333333"
   ) +
-  scale_y_log10( minor_breaks = seq(0 , 2000, 0.1 ) ) +
+  scale_y_log10( minor_breaks = c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_uci$date), max(data_uci$date + 1.5)) 
@@ -434,9 +436,9 @@ data_uci %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de personas (acumulado) en la UCI por COVID-19 registrados por 100.000 de habitantes en España",
+  labs(title = "Número de personas (acumulado) en la UCI por COVID-19 registrados por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "personas en UCI por 100.000 de habitantes",
+       y = "personas en UCI por 100.000 habitantes",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -473,7 +475,7 @@ png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonom
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,value,group=CCAA) ) +
-  scale_y_log10( minor_breaks = seq(0 , 2000, 10) ) +
+  scale_y_log10( minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) )) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d"
@@ -544,7 +546,7 @@ data_death %>% filter( CCAA != "Total") %>%
                   segment.size = 0.1,
                   segment.color="#333333"
   ) +
-  scale_y_log10(  minor_breaks = seq(0 , 20, 1) ) +
+  scale_y_log10(  minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_death$date), max(data_death$date + 1.5)) 
@@ -557,9 +559,9 @@ data_death %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 de habitantes en España",
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "fallecidos por 100.000 de habitantes",
+       y = "fallecidos por 100.000 habitantes",
        x = "fecha",
        caption = caption)
 dev.off()
