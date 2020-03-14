@@ -61,6 +61,25 @@ data_death$per_cienmil <- round( data_death$value / data_death$poblacion * 10000
 
 write.csv(data_death, file = "data/output/covid19-fallecimientos-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
 
+# join data sets
+data_all <- data_cases
+data_all$unique <- paste0(data_all$CCAA,data_all$date)
+colnames(data_all)[3] <- "cases"
+
+data_uci$unique <- paste0(data_uci$CCAA,data_uci$date)
+colnames(data_uci)[2] <- "uci"
+colnames(data_uci)[5] <- "uci_per_cienmil"
+
+data_all <- merge( data_all, select(data_uci,unique,uci,uci_per_cienmil ), by = "unique", all = TRUE  )
+
+data_death$unique <- paste0(data_death$CCAA,data_death$date)
+colnames(data_death)[3] <- "death"
+colnames(data_death)[6] <- "death_per_cienmil"
+
+data_all <- merge( data_all, select(data_death,unique,death,death_per_cienmil ), by = "unique", all = TRUE  )
+
+write.csv(data_all, file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv", row.names = FALSE)
+
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption <- "Gráfico: @numeroteca (montera34.com). Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
@@ -679,8 +698,6 @@ data_death %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-
-
 png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
@@ -715,3 +732,5 @@ data_death %>% filter( CCAA != "Total") %>%
        x = "fecha",
        caption = caption)
 dev.off()
+
+
