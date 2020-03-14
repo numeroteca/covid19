@@ -17,8 +17,8 @@ ccaa_poblacion <-  read.delim("data/ccaa-poblacion.csv",sep = ";")
 # Data by Ministerio de Sanidad de España (published in PDF format https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm)
 # extracted by Datadista and published in this repository https://github.com/datadista/datasets/tree/master/COVID%2019
 # Spanish data https://github.com/datadista/datasets/tree/master/COVID%2019
-data_cases_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_casos.csv",sep = ",")  #TODO fix Aragón problem in 2020-02-28
-# data_cases_original <- read.delim("../coronavirus-datadista/COVID 19/12-03-2020/casos_cccaa_12032020_covid19.csv",sep = ",") #TODO temp fix: loads local data to fix Aragón problem in 2020-02-28
+data_cases_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_casos.csv",sep = ",")  
+# data_cases_original <- read.delim("../coronavirus-datadista/COVID 19/12-03-2020/casos_cccaa_12032020_covid19.csv",sep = ",") #loads local data 
 data_uci_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_uci.csv",sep = ",")
 data_death_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_fallecidos.csv",sep = ",")
 
@@ -51,7 +51,7 @@ write.csv(data_uci, file = "data/covid19-ingresos-uci-por-ccaa-espana-por-dia-ac
 
 
 # Fallecimientos registrados
-data_death <- melt(data_death_original, id.vars = c("CCAA"))
+data_death <- melt(data_death_original, id.vars = c("CCAA","cod_ine"))
 data_death$date <- as.Date(substr(data_death$variable,2,12),"%d.%m.%Y")
 data_death <- select(data_death,-variable)
 
@@ -65,7 +65,7 @@ write.csv(data_death, file = "data/covid19-fallecimientos-por-ccaa-espana-por-di
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption <- "Gráfico: @numeroteca (montera34.com). Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
-period <- "2020.02.27 - 03.13 13:00h"
+period <- "2020.02.27 - 03.14 11:30h"
 # Cases ------------
 
 # ----- Small multiple ------------
@@ -101,7 +101,7 @@ data_cases %>% filter( CCAA != "Total") %>%
 ggplot() +
   geom_line(aes(date,value,group=CCAA) ) +
   geom_point(aes(date,value,group=CCAA), size = 0.5 ) +
-  scale_y_log10( minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
+  scale_y_log10( minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d"
@@ -121,12 +121,36 @@ ggplot() +
        caption = caption)
 dev.off()
 
+png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
+data_cases %>% filter( CCAA != "Total") %>%
+  ggplot() +
+  geom_line(aes(date,per_cienmil,group=CCAA) ) +
+  geom_point(aes(date,per_cienmil,group=CCAA), size = 0.5 ) +
+  facet_wrap( ~CCAA) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d"
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9)
+  ) +
+  labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España",
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       y = "casos registrados por 100.000 habitantes",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,per_cienmil,group=CCAA) ) +
   geom_point(aes(date,per_cienmil,group=CCAA), size = 0.5 ) +
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) )) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 3000, 100) )) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d"
@@ -153,15 +177,14 @@ data_cases %>% filter( CCAA != "Total") %>%
   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,value, color=CCAA), size= 2 ) +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
-                  aes(date,value,label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
+                  aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  hjust=0,
+                  # hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
-                  segment.color="#333333"
-                  # xlim  = c(as.Date(max(dates.count.barrio.room$fechab)),as.Date("2020-01-4"))
+                  segment.color="#777777"
   ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
@@ -180,7 +203,7 @@ data_cases %>% filter( CCAA != "Total") %>%
        y = "casos registrados",
        x = "fecha",
        caption = caption)
-  dev.off()
+dev.off()
 
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
@@ -188,7 +211,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,value,color=CCAA), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
-                  aes(date,value,label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
+                  aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -196,7 +219,6 @@ data_cases %>% filter( CCAA != "Total") %>%
                   direction="y",
                   segment.size = 0.1,
                   segment.color="#333333"
-                  # xlim  = c(as.Date(max(dates.count.barrio.room$fechab)),as.Date("2020-01-4"))
   ) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
@@ -225,7 +247,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   geom_line(aes(date,per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,per_cienmil, color=CCAA), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
-                  aes(date,per_cienmil,label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
+                  aes(date,per_cienmil, color=CCAA, label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -311,6 +333,31 @@ data_uci %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
+# Escala lineal
+png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
+data_uci %>% filter( CCAA != "Total") %>%
+  ggplot() +
+  geom_line(aes(date,per_cienmil,group=CCAA) ) +
+  geom_point(aes(date,per_cienmil,group=CCAA), size = 0.5 ) +
+  facet_wrap( ~CCAA) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d"
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000")
+    # legend.position = "bottom"
+  ) +
+  labs(title = "Número de personas (acumulado) en la UCI por COVID-19 registrados por 100.000 habitantes en España",
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       y = "personas en UCI por 100.000 habitantes",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
 # Escala logarítmica
 png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_uci %>% filter( CCAA != "Total") %>%
@@ -344,14 +391,14 @@ data_uci %>% filter( CCAA != "Total") %>%
   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,value, color=CCAA),size = 1.5 ) +
   geom_text_repel(data=filter( data_uci, date==max(data_uci$date),  CCAA != "Total"), 
-                  aes(date,value,label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
+                  aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  hjust=0,
+                  # hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
-                  segment.color="#333333"
+                  segment.color="#777777"
   ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
@@ -378,14 +425,14 @@ data_uci %>% filter( CCAA != "Total") %>%
   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,value, color=CCAA), size= 1.5 ) +
   geom_text_repel(data=filter( data_uci, date==max(data_uci$date),  CCAA != "Total"), 
-                  aes(date,value,label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
+                  aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  hjust=0,
+                  # hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
-                  segment.color="#333333"
+                  segment.color="#777777"
   ) +
   # scale_color_brewer(palette = "Dark2", type = "discrete") +
   scale_y_log10( minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
@@ -414,14 +461,14 @@ data_uci %>% filter( CCAA != "Total") %>%
   geom_line(aes(date,per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,per_cienmil,  color=CCAA), size= 1.5 ) +
   geom_text_repel(data=filter( data_uci, date==max(data_uci$date),  CCAA != "Total"), 
-                  aes(date,per_cienmil,label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
+                  aes(date,per_cienmil, color = CCAA, label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  hjust=0,
+                  # hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
-                  segment.color="#333333"
+                  segment.color="#777777"
   ) +
   scale_y_log10( minor_breaks = c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 day", 
@@ -502,14 +549,14 @@ data_death %>% filter( CCAA != "Total") %>%
   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,value, color=CCAA), size= 1.5 ) +
   geom_text_repel(data=filter( data_death, date==max(data_death$date),  CCAA != "Total"), 
-                  aes(date,value,label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
+                  aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  hjust=0,
+                  # hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
-                  segment.color="#333333"
+                  segment.color="#777777"
   ) +
   scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10)) ) +
   scale_x_date(date_breaks = "1 day", 
@@ -537,14 +584,14 @@ data_death %>% filter( CCAA != "Total") %>%
   geom_line(aes(date,per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,per_cienmil, color=CCAA), size= 1.5 ) +
   geom_text_repel(data=filter( data_death, date==max(data_death$date),  CCAA != "Total"), 
-                  aes(date,per_cienmil,label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
+                  aes(date,per_cienmil, color=CCAA, label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  hjust=0,
+                  # hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
-                  segment.color="#333333"
+                  segment.color="#777777"
   ) +
   scale_y_log10(  minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 day", 
