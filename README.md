@@ -12,6 +12,7 @@ Si vas a publicar visualizaciones, antes lee este artículo [Ten Considerations 
 
 ## File structure
 
+```
 ├── coronavirus.Rproj                             # R project
 ├── covid19_italia.R
 ├── covid19.R                                     # R script: process and create plots
@@ -29,7 +30,7 @@ Si vas a publicar visualizaciones, antes lee este artículo [Ten Considerations 
 │   ├── covid19_*.png                             # last plots
 ├── LICENSE.md
 └── README.md
-
+```
 
 ## Datos
 
