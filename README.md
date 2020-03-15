@@ -9,7 +9,7 @@ Licence: [GNU GPLv3](https://code.montera34.com:4443/numeroteca/covid19/-/blob/m
 
 ## Cómo usarlo / how to use it
 
-Si vas a publicar visualizaciones, antes lee este artículo [Ten Considerations Before You Create Another Chart About COVID-19] (https://medium.com/nightingale/ten-considerations-before-you-create-another-chart-about-covid-19-27d3bd691be8). Todo poder conlleva una gran responsabilidad.
+Si vas a publicar visualizaciones, antes lee este artículo [Ten Considerations Before You Create Another Chart About COVID-19](https://medium.com/nightingale/ten-considerations-before-you-create-another-chart-about-covid-19-27d3bd691be8). Todo poder conlleva una gran responsabilidad.
 
 
 ## File structure
@@ -55,7 +55,7 @@ Población por comunidades autónomas del INE: https://www.ine.es/jaxiT3/Datos.h
 
 ## Autoría
 
-Pablo Rey Mazón y Alfonso Sánchez Uzábal ([@numeroteca](https://twitter.com/numeroteca)) desde [montera34.com](https://montera34.com).
+Pablo Rey Mazón ([@numeroteca](https://twitter.com/numeroteca)) y Alfonso Sánchez Uzábal ([@skotperez](https://twitter.com/skotperez))  desde [montera34.com](https://montera34.com).
 
 En este post [Análisis de propagación de COVID-19 por comunidades autónomas en España](http://numeroteca.org/2020/03/12/covid19-comunidades-autonomas-espana/) recopilamos algunos resultados y reflexiones.
 
