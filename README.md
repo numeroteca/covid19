@@ -1,11 +1,13 @@
-COVID19 en España
+COVID19 en España e Italia / CODVID-19 in Spain and Italy
 =================
 
-Script de R para facilitar el análisis del COVID19 en España. Puedes ver los gráficos producidos en la web que hemos montado en montera34: https://lab.montera34.com/covid19
+Script de R para facilitar el análisis del COVID19 en España e Italia. Puedes ver los gráficos producidos en la web que hemos montado en montera34: https://lab.montera34.com/covid19
 
-Licencia: [GNU GPLv3](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/LICENSE.md)
+R script to anlyze COVID19 in Spain and Italy. WEbsite with upated plots: https://lab.montera34.com/covid19
 
-## Cómo usarlo
+Licence: [GNU GPLv3](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/LICENSE.md)
+
+## Cómo usarlo / how to use it
 
 Si vas a publicar visualizaciones, antes lee este artículo [Ten Considerations Before You Create Another Chart About COVID-19] (https://medium.com/nightingale/ten-considerations-before-you-create-another-chart-about-covid-19-27d3bd691be8). Todo poder conlleva una gran responsabilidad.
 
@@ -14,8 +16,8 @@ Si vas a publicar visualizaciones, antes lee este artículo [Ten Considerations 
 
 ```
 ├── coronavirus.Rproj                             # R project
-├── covid19_italia.R
-├── covid19.R                                     # R script: process and create plots
+├── covid19_italia.R                              # R script: process and create plots Italia
+├── covid19.R                                     # R script: process and create plots Spain
 ├── data
 │   ├── original                                  # original data
 │   │   └── ccaa-poblacion.csv 
@@ -32,11 +34,18 @@ Si vas a publicar visualizaciones, antes lee este artículo [Ten Considerations 
 └── README.md
 ```
 
-## Datos
+## Datos / Data 
 
-### De COVID-19 en España:
+### De COVID-19 
+
+#### España (Spain)
 
 Del respositorio de Datadista (https://github.com/datadista/datasets/tree/master/COVID%2019) que los extrae a su vez de las tablas de la situación diaria de la enfermedad por el coronavirus (COVID-19) en España que publica el Ministerio de Sanidad, Consumo y Bienestar Social (https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm) en incómodos PDF. Cita a Datadista como fuente de los datos extraídos. 
+
+#### Italia
+
+Italian data: https://github.com/pcm-dpc/COVID-19
+
 
 Los datos procesados listos para usarse (formato largo) están disponibles en el directorio [data/output](https://code.montera34.com:4443/numeroteca/covid19/-/tree/master/data/output).
 
