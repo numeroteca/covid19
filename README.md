@@ -42,12 +42,31 @@ Si vas a publicar visualizaciones, antes lee este artículo [Ten Considerations 
 
 Del respositorio de Datadista (https://github.com/datadista/datasets/tree/master/COVID%2019) que los extrae a su vez de las tablas de la situación diaria de la enfermedad por el coronavirus (COVID-19) en España que publica el Ministerio de Sanidad, Consumo y Bienestar Social (https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm) en incómodos PDF. Cita a Datadista como fuente de los datos extraídos. 
 
+Los datos procesados listos para usarse (formato largo) están disponibles en el directorio [data/output](https://code.montera34.com:4443/numeroteca/covid19/-/tree/master/data/output).
+
+Processed data are avilable (long format) in this directory [data/output](https://code.montera34.com:4443/numeroteca/covid19/-/tree/master/data/output).
+
+There is a file with all the data (registered cases, intensive care patients and deaths): [/data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv)
+
+Data structure:
+
+* `code_ine` INE code numeber for comunidad autónoma (region)
+* `comunidad_autonoma` Spanish region
+* `cases_registered` Number of registered cases
+* `date` Day
+* `population` population
+* `cases_per_100000` Number of registered cases per 100.000 people
+* `intensive_care` Number of intensive care patients
+* `intensive_care_per_1000000` Number of intensive care patients per 100.000 people
+* `deceassed` Number of deceassed
+* `deceassed_per_100000` Number of deceassed per 100.000 people
+
 #### Italia
 
 Italian data: https://github.com/pcm-dpc/COVID-19
 
 
-Los datos procesados listos para usarse (formato largo) están disponibles en el directorio [data/output](https://code.montera34.com:4443/numeroteca/covid19/-/tree/master/data/output).
+
 
 ### Población por comunidades autónomas (2019)
 

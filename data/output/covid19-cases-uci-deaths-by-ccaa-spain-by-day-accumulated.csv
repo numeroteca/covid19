@@ -1,4 +1,4 @@
-"code_ine","comunidad_autonoma","cases_registered","date","population","cases_per_100000","intensive_care","intensive_care_per_1000000","deads","deads_per_100000"
+"code_ine","comunidad_autonoma","cases_registered","date","population","cases_per_100000","intensive_care","intensive_care_per_1000000","deceassed","deceassed_per_100000"
 1,"Andalucía",1,2020-02-27,8414240,0,NA,NA,NA,NA
 1,"Andalucía",6,2020-02-28,8414240,0.1,NA,NA,NA,NA
 1,"Andalucía",12,2020-03-02,8414240,0.1,NA,NA,NA,NA
