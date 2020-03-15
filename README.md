@@ -61,6 +61,16 @@ Data structure:
 * `deceassed` Number of deceassed
 * `deceassed_per_100000` Number of deceassed per 100.000 people
 
+Example of observations:
+
+```
+13,"Madrid",1990,2020-03-13,6663394,29.9,180,2.7,81,12.16
+15,"Navarra",73,2020-03-12,654214,11.2,3,0.46,0,0
+13,"Madrid",2940,2020-03-14,6663394,44.1,NA,NA,86,12.91
+```
+
+When no data is available `NA` is indicated.
+
 #### Italia
 
 Italian data: https://github.com/pcm-dpc/COVID-19
