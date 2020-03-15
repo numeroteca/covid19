@@ -76,8 +76,6 @@ When no data is available `NA` is indicated.
 Italian data: https://github.com/pcm-dpc/COVID-19
 
 
-
-
 ### Población por comunidades autónomas (2019)
 
 Población por comunidades autónomas del INE: https://www.ine.es/jaxiT3/Datos.htm?t=2853#!tabs-tabla
@@ -88,3 +86,7 @@ Pablo Rey Mazón ([@numeroteca](https://twitter.com/numeroteca)) y Alfonso Sánc
 
 En este post [Análisis de propagación de COVID-19 por comunidades autónomas en España](http://numeroteca.org/2020/03/12/covid19-comunidades-autonomas-espana/) recopilamos algunos resultados y reflexiones.
 
+
+# This repository
+
+This repository lives at https://code.montera34.com:4443/numeroteca/covid19 and is mirrored in [Github](https://github.com/numeroteca/covid19).

@@ -82,7 +82,7 @@ data_all <- merge( data_all, select(data_death,unique,death,death_per_cienmil ),
 data_all_export <- select(data_all,  cod_ine , CCAA,  cases , date    ,poblacion  , cases_per_cienmil, uci,uci_per_cienmil, death, death_per_cienmil)
 
 names(data_all_export) <- c("code_ine" , "comunidad_autonoma",  "cases_registered" , "date"  ,"population"  , "cases_per_100000", "intensive_care",
-                            "intensive_care_per_1000000", "deads", "deads_per_100000")
+                            "intensive_care_per_1000000", "deceassed", "deceassed_per_100000")
 
 write.csv(data_all_export, file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv", row.names = FALSE)
 
