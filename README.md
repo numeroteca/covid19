@@ -11,13 +11,16 @@ Licence: [GNU GPLv3](https://code.montera34.com:4443/numeroteca/covid19/-/blob/m
 
 Si vas a publicar visualizaciones, antes lee este artículo [Ten Considerations Before You Create Another Chart About COVID-19](https://medium.com/nightingale/ten-considerations-before-you-create-another-chart-about-covid-19-27d3bd691be8). Todo poder conlleva una gran responsabilidad.
 
+When you go to any of the scripts you can run it and it will produce all the visualizations. Sometimes data directly takes them from the source some others are stored locally.
 
 ## File structure
 
 ```
 ├── coronavirus.Rproj                             # R project
-├── covid19_italia.R                              # R script: process and create plots Italia
-├── covid19.R                                     # R script: process and create plots Spain
+├── analysis
+│   ├── evolution_france.R                # R script: process and create plots France  
+│   ├── evolution_italia.R                # R script: process and create plots Italia  
+│   ├── evolution_spain.R                 # R script: process and create plots Spain
 ├── data
 │   ├── original                                  # original data
 │   │   └── ccaa-poblacion.csv 

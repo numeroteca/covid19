@@ -6,10 +6,6 @@ library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 # library(RColorBrewer) # extends color paletter
 
-# Load world data --------
-# World data https://github.com/RamiKrispin/coronavirus-csv/blob/master/coronavirus_dataset.csv
-# world_data  <- read.delim("https://raw.githubusercontent.com/RamiKrispin/coronavirus-csv/master/coronavirus_dataset.csv",sep = ",")
-
 # Population
 ccaa_poblacion <-  read.delim("data/ccaa-poblacion.csv",sep = ";")
 
@@ -32,7 +28,7 @@ data_cases <- select(data_cases,-variable)
 # add population data
 data_cases <- merge( data_cases, select(ccaa_poblacion,id,poblacion), by.x = "cod_ine", by.y = "id"   )
 # calculate values per 
-data_cases$per_cienmil <- round( data_cases$value / data_cases$poblacion * 100000, digits = 1)
+data_cases$per_cienmil <- round( data_cases$value / data_cases$poblacion * 100000, digits = 2)
 
 write.csv(data_cases, file = "data/output/covid19-casos-registrados-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
 
@@ -83,6 +79,8 @@ data_all_export <- select(data_all,  cod_ine , CCAA,  cases , date    ,poblacion
 
 names(data_all_export) <- c("code_ine" , "comunidad_autonoma",  "cases_registered" , "date"  ,"population"  , "cases_per_100000", "intensive_care",
                             "intensive_care_per_1000000", "deceassed", "deceassed_per_100000")
+
+data_all_export <- data_all_export %>% filter(!is.na(comunidad_autonoma))
 
 write.csv(data_all_export, file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv", row.names = FALSE)
 
