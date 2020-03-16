@@ -25,7 +25,7 @@ When you go to any of the scripts you can run it and it will produce all the vis
 │   ├── original                                  # original data
 │   │   └── Spain
 │   │       ├── ccaa-poblacion.csv            # population per region
-│   │       └── covid10_spain_provincias.csv  # covid19 data by province. Source https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/edit#gid=0
+│   │       └── covid10_spain_provincias.csv  # covid19 data by province. 
 │   └── output                                    # processed data: by date and comunidad autónoma in Spain
 │       ├── covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv     # merge all cases
 │       ├── covid19-casos-registrados-por-ccaa-espana-por-dia-acumulado.csv   # registered cases accumulated
@@ -44,6 +44,8 @@ When you go to any of the scripts you can run it and it will produce all the vis
 ### De COVID-19 
 
 #### España (Spain)
+
+##### Comunidades autónomas
 
 Del respositorio de Datadista (https://github.com/datadista/datasets/tree/master/COVID%2019) que los extrae a su vez de las tablas de la situación diaria de la enfermedad por el coronavirus (COVID-19) en España que publica el Ministerio de Sanidad, Consumo y Bienestar Social (https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm) en incómodos PDF. Cita a Datadista como fuente de los datos extraídos. 
 
@@ -74,6 +76,14 @@ Example of observations:
 13,"Madrid",2940,2020-03-14,6663394,44.1,NA,NA,86,12.91
 ```
 When no data is available `NA` is indicated. Intensive care patients data have not been published since March 13th.
+
+
+##### Provincias
+
+Working spreadsheet: https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/edit#gid=0
+Ayúdanos a completarla. Pide acceso.
+
+
 
 #### Italia
 
