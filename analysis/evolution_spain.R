@@ -331,6 +331,44 @@ data_cases %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
+# English
+png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log_en.png", sep = ""),width = 1000,height = 700)
+data_cases %>%
+  ggplot() +
+  geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
+  geom_point(aes(date,value,color=CCAA), size= 1.5 ) +
+  geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
+                  aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#333333"
+  ) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+                 minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases$date), max(data_cases$date + 1.5)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Confirmed accumulated COVID-19 registed cases in Spain",
+       subtitle = paste0("By region (log scale). ",period),
+       y = "registered cases (log scale)",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+
 # png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log_comparativa.png", sep = ""),width = 1000,height = 700)
 # data_cases %>% filter( CCAA != "Total") %>%
 #   ggplot() +
@@ -439,6 +477,45 @@ data_cases %>% filter( CCAA != "Total") %>%
   labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
        y = "casos registrados por 100.000 habitantes",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+# English
+png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log_en.png", sep = ""),width = 1000,height = 700)
+data_cases %>% filter( CCAA != "Total") %>%
+  ggplot() +
+  geom_line(aes(date,per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
+  geom_point(aes(date,per_cienmil, color=CCAA), size= 1.5 ) +
+  geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
+                  aes(date,per_cienmil, color=CCAA, label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#333333"
+                  # xlim  = c(as.Date(max(dates.count.barrio.room$fechab)),as.Date("2020-01-4"))
+  ) +
+  # scale_color_brewer(palette = "Dark2", type = "discrete") +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+                 minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases$date), max(data_cases$date + 1.5)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Confirmed accumulated COVID-19 registed cases in Spain by 100.000 inhabitants",
+       subtitle = paste0("By region (log scale). ",period),
+       y = "registered cases  by 100.000 inhabitants (log scale)",
        x = "fecha",
        caption = caption)
 dev.off()
