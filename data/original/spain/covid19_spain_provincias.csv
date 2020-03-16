@@ -1,0 +1,10 @@
+date,province,new_cases,intensive_care,decesassed,cases_accumulated,source,comments
+2020-03-13,Araba,51,131,9,310,https://twitter.com/osakidetzaEJGV/status/1238419189603414020,
+2020-03-13,Bizkaia,12,40,2,83,https://twitter.com/osakidetzaEJGV/status/1238419189603414020,
+2020-03-13,Gipuzkoa,8,8,3,24,https://twitter.com/osakidetzaEJGV/status/1238419189603414020,
+2020-03-14,Araba,50,153,13,360,https://twitter.com/osakidetzaEJGV/status/1238787965167579136,
+2020-03-14,Bizkaia,32,53,3,115,https://twitter.com/osakidetzaEJGV/status/1238787965167579136,
+2020-03-14,Gipuzkoa,22,16,3,46,https://twitter.com/osakidetzaEJGV/status/1238787965167579136,
+2020-03-15,Araba,49,172,16,409,https://twitter.com/osakidetzaEJGV/status/1239171785112903680,"Deceassed is marked as ""16 (+3)"". It could be 3 more deaths since yesterday"
+2020-03-15,Bizkaia,43,70,3,158,https://twitter.com/osakidetzaEJGV/status/1239171785112903680,
+2020-03-15,Gipuzkoa,17,20,3,63,https://twitter.com/osakidetzaEJGV/status/1239171785112903680,

@@ -23,7 +23,9 @@ When you go to any of the scripts you can run it and it will produce all the vis
 │   ├── evolution_spain.R                 # R script: process and create plots Spain
 ├── data
 │   ├── original                                  # original data
-│   │   └── ccaa-poblacion.csv 
+│   │   └── Spain
+│   │       ├── ccaa-poblacion.csv            # population per region
+│   │       └── covid10_spain_provincias.csv  # covid19 data by province. Source https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/edit#gid=0
 │   └── output                                    # processed data: by date and comunidad autónoma in Spain
 │       ├── covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv     # merge all cases
 │       ├── covid19-casos-registrados-por-ccaa-espana-por-dia-acumulado.csv   # registered cases accumulated
