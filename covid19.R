@@ -314,7 +314,7 @@ data_cases %>% filter( CCAA != "Total") %>%
                   aes(date,per_cienmil, color=CCAA, label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  hjust=0,
+                  # hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
@@ -348,7 +348,7 @@ data_cases %>% filter( CCAA != "Total") %>%
                   aes(date,per_cienmil, color=CCAA, label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  hjust=0,
+                  # hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,

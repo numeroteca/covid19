@@ -68,8 +68,7 @@ Example of observations:
 15,"Navarra",73,2020-03-12,654214,11.2,3,0.46,0,0
 13,"Madrid",2940,2020-03-14,6663394,44.1,NA,NA,86,12.91
 ```
-
-When no data is available `NA` is indicated.
+When no data is available `NA` is indicated. Intensive care patients data have not been published since March 13th.
 
 #### Italia
 
