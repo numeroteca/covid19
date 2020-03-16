@@ -7,7 +7,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # library(RColorBrewer) # extends color paletter
 
 # Population
-ccaa_poblacion <-  read.delim("data/ccaa-poblacion.csv",sep = ";")
+ccaa_poblacion <-  read.delim("data/original/spain/ccaa-poblacion.csv",sep = ";")
+provincias_poblacion <-  read.delim("data/original/spain/provincias-poblacion.csv",sep = ",")
 
 # COVID-19 in Spain -----------
 # Data by Ministerio de Sanidad de España (published in PDF format https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm)
@@ -86,13 +87,33 @@ data_all_export <- data_all_export %>% filter(!is.na(comunidad_autonoma))
 
 write.csv(data_all_export, file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv", row.names = FALSE)
 
-# By province
+# By province ----
+data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",") 
+# Create date variable
 data_cases_sp_provinces$date  <- as.Date(data_cases_sp_provinces$date)
 
+# add population data
+data_cases_sp_provinces <- merge( data_cases_sp_provinces, select(provincias_poblacion,provincia,poblacion), by.x = "province", by.y = "provincia"   )
+# calculate values per 
+data_cases_sp_provinces$cases_per_cienmil <- round( data_cases_sp_provinces$cases_accumulated / data_cases_sp_provinces$poblacion * 100000, digits = 2)
+
+
+# Create extra data ------
+
+# length(unique(data_cases$date)))
+
+test <- data.frame(qexp(1:100/100, rate = 22))
+names(test) <- "value"
+plot(test$value)
+# test$date <- unique(data_cases$date)
+plot(test$value)
+test$value_d <- test$value * 100
+plot(test$value_d)
 
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption <- "Gráfico: @numeroteca (montera34.com). Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
+caption_provincia <- "Gráfico: @numeroteca (montera34.com). Datos: Varias fuentes. Ver lab.montera34.com"
 period <- "2020.02.27 - 03.15"
 # Cases ------------
 
@@ -226,7 +247,7 @@ data_cases_sp_provinces %>%
        subtitle = paste0("Por provincia (escala lineal). ",period),
        y = "casos registrados",
        x = "fecha",
-       caption = caption)
+       caption = caption_provincia)
 dev.off()
 
 # Escala logarítmica
@@ -255,7 +276,7 @@ data_cases_sp_provinces %>%
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
        y = "casos registrados",
        x = "fecha",
-       caption = caption)
+       caption = caption_provincia)
 dev.off()
 
 # ---------- Superpuesto ---------------
@@ -265,6 +286,7 @@ png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpu
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
+  geom_line(data=test, aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,value, color=CCAA), size= 2 ) +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
                   aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
@@ -331,7 +353,7 @@ data_cases %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-# English
+# English ----
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log_en.png", sep = ""),width = 1000,height = 700)
 data_cases %>%
   ggplot() +
@@ -409,6 +431,7 @@ dev.off()
 #        caption = caption)
 # dev.off()
 
+# Por 100.000 --------
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
@@ -481,7 +504,7 @@ data_cases %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-# English
+# English ----------
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log_en.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
@@ -538,8 +561,8 @@ data_cases_sp_provinces %>%
   ) +
   ylim(0,max(data_cases_sp_provinces$cases_accumulated)) +
   scale_x_date(date_breaks = "1 day", 
-               date_labels = "%d"
-               # limits=c( min(data_cases$date), max(data_cases$date + 1.5)) 
+               date_labels = "%d",
+               limits=c( min(data_cases$date), max(data_cases$date + 1.5))
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -553,7 +576,7 @@ data_cases_sp_provinces %>%
        subtitle = paste0("Por provincia (escala lineal). ",period),
        y = "casos registrados",
        x = "fecha",
-       caption = caption)
+       caption = caption_provincia)
 dev.off()
 
 png(filename=paste("img/covid19_casos-registrados-por-provincia-superpuesto-log.png", sep = ""),width = 1000,height = 700)
@@ -565,7 +588,7 @@ data_cases_sp_provinces %>%
                   aes(date, cases_accumulated, color=province, label=paste(format(cases_accumulated, nsmall=1, big.mark="."), province)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  hjust=0,
+                  # hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
@@ -575,8 +598,8 @@ data_cases_sp_provinces %>%
                  limits = c(0.1,max(data_cases_sp_provinces$cases_accumulated)),
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
   scale_x_date(date_breaks = "1 day", 
-               date_labels = "%d"
-               # limits=c( min(data_cases$date), max(data_cases$date + 1.5)) 
+               date_labels = "%d",
+               limits=c( min(data_cases$date), max(data_cases$date + 1))
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -593,6 +616,43 @@ data_cases_sp_provinces %>%
        caption = caption)
 dev.off()
 
+png(filename=paste("img/covid19_casos-registrados-por-provincia-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
+data_cases_sp_provinces %>%
+  ggplot() +
+  geom_line(aes(date, cases_per_cienmil,group= province, color= province), size= 1 ) +
+  geom_point(aes(date,cases_per_cienmil, color=province), size= 1.5 ) +
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), 
+                  aes(date,cases_per_cienmil, color=province, label=paste(format(cases_per_cienmil, nsmall=1, big.mark="."), province)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#333333"
+                  # xlim  = c(as.Date(max(dates.count.barrio.room$fechab)),as.Date("2020-01-4"))
+  ) +
+  # scale_color_brewer(palette = "Dark2", type = "discrete") +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+                 minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 1)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España",
+       subtitle = paste0("Por provincia (escala logarítmica). ",period),
+       y = "casos registrados por 100.000 habitantes",
+       x = "fecha",
+       caption = caption_provincia)
+dev.off()
 
 # UCI (intensive care) -------------------
 

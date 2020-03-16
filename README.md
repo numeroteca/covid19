@@ -35,8 +35,10 @@ When you go to any of the scripts you can run it and it will produce all the vis
 │       ├── covid19-fallecimientos-por-ccaa-espana-por-dia-acumulado.csv      # deaths
 │       └── covid19-ingresos-uci-por-ccaa-espana-por-dia-acumulado.csv        # intensive care
 ├── img
-│   ├── 20200312
-│   ├── 20200313                                  #previous plots
+│   ├── france    # France plots
+│   ├── italia    # Ftaly plots
+│   ├── 20200312                                  # previous days plots
+│   ├── 20200313                                  # previous days plots
 │   ├── covid19_*.png                             # last plots generated
 ├── LICENSE.md
 └── README.md

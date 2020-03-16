@@ -1,10 +1,45 @@
-date,province,new_cases,intensive_care,decesassed,cases_accumulated,source,comments
-2020-03-13,Araba,51,131,9,310,https://twitter.com/osakidetzaEJGV/status/1238419189603414020,
-2020-03-13,Bizkaia,12,40,2,83,https://twitter.com/osakidetzaEJGV/status/1238419189603414020,
-2020-03-13,Gipuzkoa,8,8,3,24,https://twitter.com/osakidetzaEJGV/status/1238419189603414020,
-2020-03-14,Araba,50,153,13,360,https://twitter.com/osakidetzaEJGV/status/1238787965167579136,
-2020-03-14,Bizkaia,32,53,3,115,https://twitter.com/osakidetzaEJGV/status/1238787965167579136,
-2020-03-14,Gipuzkoa,22,16,3,46,https://twitter.com/osakidetzaEJGV/status/1238787965167579136,
-2020-03-15,Araba,49,172,16,409,https://twitter.com/osakidetzaEJGV/status/1239171785112903680,"Deceassed is marked as ""16 (+3)"". It could be 3 more deaths since yesterday"
-2020-03-15,Bizkaia,43,70,3,158,https://twitter.com/osakidetzaEJGV/status/1239171785112903680,
-2020-03-15,Gipuzkoa,17,20,3,63,https://twitter.com/osakidetzaEJGV/status/1239171785112903680,
+date,province,new_cases,intensive_care,deceased,cases_accumulated,recovered,source,comments
+2020-03-13,Araba/Álava,51,131,9,310,,https://twitter.com/osakidetzaEJGV/status/1238419189603414020,More info about this initiative at https://code.montera34.com:4443/numeroteca/covid19/-/tree/master
+2020-03-13,Bizkaia,12,40,2,83,,https://twitter.com/osakidetzaEJGV/status/1238419189603414020,Pide acceso para editar!
+2020-03-13,Gipuzkoa,8,8,3,24,,https://twitter.com/osakidetzaEJGV/status/1238419189603414020,
+2020-03-14,Araba/Álava,50,153,13,360,,https://twitter.com/osakidetzaEJGV/status/1238787965167579136,
+2020-03-14,Bizkaia,32,53,3,115,,https://twitter.com/osakidetzaEJGV/status/1238787965167579136,
+2020-03-14,Gipuzkoa,22,16,3,46,,https://twitter.com/osakidetzaEJGV/status/1238787965167579136,
+2020-03-15,Araba/Álava,49,172,16,409,,https://twitter.com/osakidetzaEJGV/status/1239171785112903680,"Deceassed is marked as ""16 (+3)"". It could be 3 more deaths since yesterday"
+2020-03-15,Bizkaia,43,70,3,158,,https://twitter.com/osakidetzaEJGV/status/1239171785112903680,
+2020-03-15,Gipuzkoa,17,20,3,63,,https://twitter.com/osakidetzaEJGV/status/1239171785112903680,
+2020-03-13,Almería,0,0,0,9,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
+2020-03-13,Cádiz,1,1,0,19,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
+2020-03-13,Córdoba,3,0,0,9,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
+2020-03-13,Granada,3,0,0,14,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
+2020-03-13,Huelva,0,0,0,2,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
+2020-03-13,Jaén,9,1,0,30,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
+2020-03-13,Málaga,39,9,0,111,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
+2020-03-13,Sevilla,3,1,0,25,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
+2020-03-14,Almería,0,0,0,14,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
+2020-03-14,Cádiz,7,1,0,29,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
+2020-03-14,Córdoba,4,1,0,35,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
+2020-03-14,Granada,11,5,0,43,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
+2020-03-14,Huelva,0,1,0,6,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
+2020-03-14,Jaén,5,0,1,38,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
+2020-03-14,Málaga,53,12,4,159,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
+2020-03-14,Sevilla,13,1,0,52,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
+2020-03-15,Almería,1,0,0,14,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
+2020-03-15,Cádiz,8,1,0,34,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
+2020-03-15,Córdoba,6,2,0,37,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
+2020-03-15,Granada,20,3,0,57,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
+2020-03-15,Huelva,0,0,0,6,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
+2020-03-15,Jaén,3,1,2,47,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
+2020-03-15,Málaga,81,12,4,180,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
+2020-03-15,Sevilla,15,4,0,62,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,,,
+,,,,,,1,,
