@@ -1,9 +1,12 @@
 COVID19 en España e Italia / CODVID-19 in Spain and Italy
 =================
 
+R script to anlyze COVID19 in Spain and Italy. WEbsite with upated plots: https://lab.montera34.com/covid19
+
 Script de R para facilitar el análisis del COVID19 en España e Italia. Puedes ver los gráficos producidos en la web que hemos montado en montera34: https://lab.montera34.com/covid19
 
-R script to anlyze COVID19 in Spain and Italy. WEbsite with upated plots: https://lab.montera34.com/covid19
+![Casos registrados por comunidad autónoma. España. COVIC-19](https://lab.montera34.com/covid19-r/img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log.png "Plot example")
+
 
 Licence: [GNU GPLv3](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/LICENSE.md)
 
@@ -34,7 +37,7 @@ When you go to any of the scripts you can run it and it will produce all the vis
 ├── img
 │   ├── 20200312
 │   ├── 20200313                                  #previous plots
-│   ├── covid19_*.png                             # last plots
+│   ├── covid19_*.png                             # last plots generated
 ├── LICENSE.md
 └── README.md
 ```
