@@ -6,11 +6,13 @@ library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 # library(RColorBrewer) # extends color paletter
 
-# Population
+
+# Load Data ---------
+# / Population -------------
 ccaa_poblacion <-  read.delim("data/original/spain/ccaa-poblacion.csv",sep = ";")
 provincias_poblacion <-  read.delim("data/original/spain/provincias-poblacion.csv",sep = ",")
 
-# COVID-19 in Spain -----------
+# / COVID-19 in Spain -----------
 # Data by Ministerio de Sanidad de España (published in PDF format https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm)
 # extracted by Datadista and published in this repository https://github.com/datadista/datasets/tree/master/COVID%2019
 # Spanish data https://github.com/datadista/datasets/tree/master/COVID%2019
@@ -19,7 +21,7 @@ data_cases_original <- read.delim("https://github.com/datadista/datasets/raw/mas
 data_uci_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_uci.csv",sep = ",")
 data_death_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_fallecidos.csv",sep = ",")
 
-# By province
+# / By province -----------
 data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")  
 
 # Process data ------
@@ -60,7 +62,7 @@ data_death$per_cienmil <- round( data_death$value / data_death$poblacion * 10000
 
 write.csv(data_death, file = "data/output/covid19-fallecimientos-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
 
-# join data sets and export --------------
+# / join data sets and export --------------
 data_all <- data_cases
 data_all$unique <- paste0(data_all$CCAA,data_all$date)
 colnames(data_all)[3] <- "cases"
@@ -87,7 +89,7 @@ data_all_export <- data_all_export %>% filter(!is.na(comunidad_autonoma))
 
 write.csv(data_all_export, file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv", row.names = FALSE)
 
-# By province ----
+# / By province ----
 data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",") 
 # Create date variable
 data_cases_sp_provinces$date  <- as.Date(data_cases_sp_provinces$date)
@@ -112,14 +114,16 @@ plot(test$value_d)
 
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
-caption <- "Gráfico: @numeroteca (montera34.com). Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
-caption_provincia <- "Gráfico: @numeroteca (montera34.com). Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 03.15"
-# Cases ------------
+caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
+caption_provincia <- "Gráfico: montera34.com | Datos: Varias fuentes. Ver lab.montera34.com"
+period <- "2020.02.27 - 03.16"
 
-# ----- Small multiple ------------
+# Plots
+# / Cases ------------
 
-# Comunidades autónomas small multiple --------------
+# // Small multiple ------------
+
+# /// Comunidades autónomas small multiple --------------
 
 # Escala lineal
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-lineal.png", sep = ""),width = 1000,height = 700)
@@ -222,7 +226,7 @@ data_cases %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-# Provincias small multiple --------------
+# /// Provincias small multiple --------------
 # Escala lineal
 png(filename=paste("img/covid19_casos-registrados-por-provincia-lineal.png", sep = ""),width = 1000,height = 700)
 data_cases_sp_provinces %>% 
@@ -279,11 +283,11 @@ data_cases_sp_provinces %>%
        caption = caption_provincia)
 dev.off()
 
-# ---------- Superpuesto ---------------
+# / Superpuesto ---------------
 
 # ------ CCAA Superpuesto ----------
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1000,height = 700)
-data_cases %>% filter( CCAA != "Total") %>%
+data_cases %>%
   ggplot() +
   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
   geom_line(data=test, aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
@@ -562,7 +566,7 @@ data_cases_sp_provinces %>%
   ylim(0,max(data_cases_sp_provinces$cases_accumulated)) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 1.5))
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 0.5))
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -599,7 +603,7 @@ data_cases_sp_provinces %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 1))
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 0.5))
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -637,7 +641,7 @@ data_cases_sp_provinces %>%
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 1)) 
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 0.5)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -653,7 +657,7 @@ data_cases_sp_provinces %>%
        x = "fecha",
        caption = caption_provincia)
 dev.off()
-
+  
 # UCI (intensive care) -------------------
 
 # -------- UCI Small multiple ----------
