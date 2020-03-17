@@ -77,6 +77,7 @@ Data structure:
 
 Example of observations:
 
+|            |                      |                    |            |              |                    |                  |                              |             |                        |         |                    | 
 |------------|----------------------|--------------------|------------|--------------|--------------------|------------------|------------------------------|-------------|------------------------|---------|--------------------| 
 | "code_ine" | "comunidad_autonoma" | "cases_registered" | "date"     | "population" | "cases_per_100000" | "intensive_care" | "intensive_care_per_1000000" | "deceassed" | "deceassed_per_100000" | "altas" | "altas_per_100000" | 
 | 1          | "Andalucía"          | 269                | 2020-03-14 | 8414240      | 3.2                | NA               | NA                           | 2           | 0.24                   | NA      | NA                 | 
@@ -95,6 +96,7 @@ Data are published in this file: [/data/original/spain/covid19_spain_provincias.
 
 Format:
 
+|            |                      |                    |            |              |                    |                  |                              |             |                        |         |                    | 
 |------------|------------------|-----------|----------------|----------|-------------------|-----------|---------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------| 
 | date       | province         | new_cases | intensive_care | deceased | cases_accumulated | recovered | source                                                                                            | comments                                                                                            | 
 | 2020-03-14 | Alicante/Alacant | 18        |                |          | 57                |           | http://www.san.gva.es/documents/151311/8476524/200314+NOTA+DE+PRENSA+CORONAVIRUS.pdf              |                                                                             | 
