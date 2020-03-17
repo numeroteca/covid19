@@ -315,6 +315,7 @@ data_cases %>%
   ggplot() +
   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,value, color=CCAA), size= 2 ) +
+  # geom_line(data = crec, aes(x = date, y = y35), linetype = 2, size = 1, color ="#444444") +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
                   aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
@@ -345,6 +346,91 @@ data_cases %>%
        caption = caption)
 dev.off()
 
+
+
+# calculates growth
+# data_cases <- data_cases %>% arrange(date)
+# df <- data_cases %>%
+#   # group_by(CCAA) %>%
+#   filter (CCAA == "Madrid") %>%
+#   # arrange(date) %>%
+#   # mutate( growth = 100 *(value - lag(value))/lag(value))
+#   mutate(Diff_date = date - lag(date),  # Difference in time (just in case there are gaps)
+#          Diff_growth = value - lag(value), # Difference in route between years
+#          Rate = round(Diff_growth / lag(value) * 100, digits = 1)
+#          ) 
+# 
+# crec <- crec %>%
+#   mutate(Diff_date = date - lag(date),  # Difference in time (just in case there are gaps)
+#          Diff_growth = y10 - lag(y10), # Difference in route between years
+#          Rate = round(Diff_growth / lag(y10) * 100, digits = 1)
+#   ) 
+
+# create growth ------------
+# Contribution by Lore 
+# create shorted dataframe
+data_cases2 <- data_cases %>% filter(date >= "2020-03-09") # sets starting day
+x <- seq_along(unique(data_cases2$date))
+# creates empty vectors
+y35 <- vector(length=length(x))
+y22 <- vector(length=length(x))
+y10 <- vector(length=length(x))
+y05 <- vector(length=length(x))
+# fill firs value
+y35[[1]] <- 469 # sets starting value
+y22[[1]] <- 469
+y10[[1]] <- 469
+y05[[1]] <- 469
+# create data series with certain % of growth
+for (i in 2:length(x)) {
+  y35[[i]] <- y35[[i-1]] + y35[[i-1]]*0.35 # grows 35%
+  y22[[i]] <- y22[[i-1]] + y22[[i-1]]*0.22 # grows 22%
+  y10[[i]] <- y10[[i-1]] + y10[[i-1]]*0.1 # grows 10%
+  y05[[i]] <- y10[[i-1]] + y10[[i-1]]*0.05 # grows 5%
+}
+# creates the data fame
+data_unique <- arrange(data_cases2, date) %>% select(date) %>% unique()
+crec <- data.frame(x = data_unique, y05 = y05, y10 = y10, y22 = y22, y35 = y35)
+
+png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log_with-curve.png", sep = ""),width = 1000,height = 700)
+data_cases2 %>%
+  ggplot(aes(x = unique(date))) +
+  geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
+  geom_point(aes(date,value,color=CCAA), size= 1.5 ) +
+  geom_text(data = crec[1,],aes(as.Date("2020-03-13"),1000,label="35% de crecimiento cada día"), size = 5, base_family = "Roboto Condensed") +
+  geom_line(data = crec, aes(y = y35), linetype = 2, size = 1, color ="#444444") +
+  geom_text_repel(data=filter( data_cases, date==max(data_cases$date)), 
+                  aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#333333"
+  ) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+                 minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases2$date), max(data_cases2$date + 1.5)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de casos acumulados de COVID-19 registrados en España",
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       y = "casos registrados",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+# continúa --------- 
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
