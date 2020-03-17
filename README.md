@@ -77,11 +77,14 @@ Data structure:
 
 Example of observations:
 
-```
-13,"Madrid",2940,2020-03-14,6663394,44.12,NA,NA,86,12.91,NA,NA
-13,"Madrid",3544,2020-03-15,6663394,53.19,NA,NA,213,31.97,NA,NA
-13,"Madrid",4165,2020-03-16,6663394,62.51,253,3.8,213,31.97,474,71.13
-```
+|            |                      |                    |            |              |                    |                  |                              |             |                        |         |                    | 
+|------------|----------------------|--------------------|------------|--------------|--------------------|------------------|------------------------------|-------------|------------------------|---------|--------------------| 
+| "code_ine" | "comunidad_autonoma" | "cases_registered" | "date"     | "population" | "cases_per_100000" | "intensive_care" | "intensive_care_per_1000000" | "deceassed" | "deceassed_per_100000" | "altas" | "altas_per_100000" | 
+| 1          | "Andalucía"          | 269                | 2020-03-14 | 8414240      | 3.2                | NA               | NA                           | 2           | 0.24                   | NA      | NA                 | 
+| 1          | "Andalucía"          | 437                | 2020-03-15 | 8414240      | 5.19               | NA               | NA                           | 6           | 0.71                   | NA      | NA                 | 
+| 1          | "Andalucía"          | 554                | 2020-03-16 | 8414240      | 6.58               | 11               | 0.13                         | 7           | 0.83                   | 0       | 0                  | 
+
+
 When no data is available `NA` is indicated. Intensive care patients data have not been published since March 13th.
 
 ##### Provincias
@@ -96,7 +99,6 @@ Format:
 |            |                  |           |                |          |                   |           |                                                                                                   |                                                                                                     | 
 |------------|------------------|-----------|----------------|----------|-------------------|-----------|---------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------| 
 | date       | province         | new_cases | intensive_care | deceased | cases_accumulated | recovered | source                                                                                            | comments                                                                                            | 
-| 2020-03-13 | Alicante/Alacant |           |                |          | 39                |           |                                                                                                   | More info about this initiative at https://code.montera34.com:4443/numeroteca/covid19/-/tree/master | 
 | 2020-03-14 | Alicante/Alacant | 18        |                |          | 57                |           | http://www.san.gva.es/documents/151311/8476524/200314+NOTA+DE+PRENSA+CORONAVIRUS.pdf              |                                                                             | 
 | 2020-03-15 | Alicante/Alacant | 94        |                |          | 151               |           | http://www.san.gva.es/documents/151311/8477533/20200315+NOTA+CORONAVIRUS                          |                                         | 
 | 2020-03-13 | Almería          | 0         | 0              | 0        | 9                 | 0         | https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html |                                                                                                     | 
