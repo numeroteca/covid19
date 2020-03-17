@@ -52,13 +52,15 @@ When you go to any of the scripts you can run it and it will produce all the vis
 
 #### Comunidades autónomas
 
+Data are extracted from official PDF sources by Datadista [in this repository](https://github.com/datadista/datasets/tree/master/COVID%2019).
+
 Del respositorio de Datadista (https://github.com/datadista/datasets/tree/master/COVID%2019) que los extrae a su vez de las tablas de la situación diaria de la enfermedad por el coronavirus (COVID-19) en España que publica el Ministerio de Sanidad, Consumo y Bienestar Social (https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm) en incómodos PDF. Cita a Datadista como fuente de los datos extraídos. 
 
 Los datos procesados listos para usarse (formato largo) están disponibles en el directorio [data/output](https://code.montera34.com:4443/numeroteca/covid19/-/tree/master/data/output).
 
-Processed data are avilable (long format) in this directory [data/output](https://code.montera34.com:4443/numeroteca/covid19/-/tree/master/data/output).
+Processed data are avilable (long format) in this directory.  [data/output](https://code.montera34.com:4443/numeroteca/covid19/-/tree/master/data/output).
 
-There is a file with all the data (registered cases, intensive care patients and deaths): [/data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv)
+There is a file with all the data (registered cases, intensive care patients and deaths), see data structure below: [/data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv)
 
 Data structure:
 
