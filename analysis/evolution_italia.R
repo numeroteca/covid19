@@ -252,6 +252,7 @@ data_i_cases %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_i_cases$date), max(data_i_cases$date + 1.5)) 
@@ -264,7 +265,7 @@ data_i_cases %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en Italia",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
        y = "fallecidos",
        x = "fecha",
@@ -286,7 +287,10 @@ data_i_cases %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
-  scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
+  scale_y_log10( 
+    limits = c(1,max(data_i_cases$deceduti)),
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_i_cases$date), max(data_i_cases$date + 1.5)) 
@@ -299,7 +303,7 @@ data_i_cases %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en Italia",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
        y = "fallecidos",
        x = "fecha",
