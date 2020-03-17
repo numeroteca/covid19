@@ -20,7 +20,8 @@ When you go to any of the scripts you can run it and it will produce all the vis
 
 ```
 ├── coronavirus.Rproj                             # R project
-├── analysis
+├── analysis                              # scripts to process data
+│   ├── evolution_compare.R               # R script: process and create plots compare countries
 │   ├── evolution_france.R                # R script: process and create plots France  
 │   ├── evolution_italia.R                # R script: process and create plots Italia  
 │   ├── evolution_spain.R                 # R script: process and create plots Spain
@@ -28,7 +29,8 @@ When you go to any of the scripts you can run it and it will produce all the vis
 │   ├── original                                  # original data
 │   │   └── Spain
 │   │       ├── ccaa-poblacion.csv            # population per region
-│   │       └── covid10_spain_provincias.csv  # covid19 data by province. 
+│   │       ├── provincias-poblacion.csv      # population per province
+│   │       └── covid10_spain_provincias.csv  # covid19 data by province.  
 │   └── output                                    # processed data: by date and comunidad autónoma in Spain
 │       ├── covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv     # merge all cases
 │       ├── covid19-casos-registrados-por-ccaa-espana-por-dia-acumulado.csv   # registered cases accumulated
@@ -46,11 +48,9 @@ When you go to any of the scripts you can run it and it will produce all the vis
 
 ## Datos / Data 
 
-### De COVID-19 
+### España (Spain)
 
-#### España (Spain)
-
-##### Comunidades autónomas
+#### Comunidades autónomas
 
 Del respositorio de Datadista (https://github.com/datadista/datasets/tree/master/COVID%2019) que los extrae a su vez de las tablas de la situación diaria de la enfermedad por el coronavirus (COVID-19) en España que publica el Ministerio de Sanidad, Consumo y Bienestar Social (https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm) en incómodos PDF. Cita a Datadista como fuente de los datos extraídos. 
 
@@ -77,7 +77,6 @@ Data structure:
 
 Example of observations:
 
-|            |                      |                    |            |              |                    |                  |                              |             |                        |         |                    | 
 |------------|----------------------|--------------------|------------|--------------|--------------------|------------------|------------------------------|-------------|------------------------|---------|--------------------| 
 | "code_ine" | "comunidad_autonoma" | "cases_registered" | "date"     | "population" | "cases_per_100000" | "intensive_care" | "intensive_care_per_1000000" | "deceassed" | "deceassed_per_100000" | "altas" | "altas_per_100000" | 
 | 1          | "Andalucía"          | 269                | 2020-03-14 | 8414240      | 3.2                | NA               | NA                           | 2           | 0.24                   | NA      | NA                 | 
@@ -87,7 +86,7 @@ Example of observations:
 
 When no data is available `NA` is indicated. Intensive care patients data have not been published since March 13th.
 
-##### Provincias
+#### Provincias
 
 Working spreadsheet: https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/edit#gid=0
 Ayúdanos a completarla. Pide acceso.
@@ -96,24 +95,29 @@ Data are published in this file: [/data/original/spain/covid19_spain_provincias.
 
 Format:
 
-|            |                  |           |                |          |                   |           |                                                                                                   |                                                                                                     | 
 |------------|------------------|-----------|----------------|----------|-------------------|-----------|---------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------| 
 | date       | province         | new_cases | intensive_care | deceased | cases_accumulated | recovered | source                                                                                            | comments                                                                                            | 
 | 2020-03-14 | Alicante/Alacant | 18        |                |          | 57                |           | http://www.san.gva.es/documents/151311/8476524/200314+NOTA+DE+PRENSA+CORONAVIRUS.pdf              |                                                                             | 
 | 2020-03-15 | Alicante/Alacant | 94        |                |          | 151               |           | http://www.san.gva.es/documents/151311/8477533/20200315+NOTA+CORONAVIRUS                          |                                         | 
 | 2020-03-13 | Almería          | 0         | 0              | 0        | 9                 | 0         | https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html |                                                                                                     | 
+#### Población por comunidades autónomas y provincias (2019)
+
+Población por comunidades autónomas del INE: https://www.ine.es/jaxiT3/Datos.htm?t=2853#!tabs-tabla
+
+Población por provincias del INE:  https://www.ine.es/jaxiT3/Datos.htm?t=2852#!tabs-tabla
 
 
-
-#### Italia
+### Italia
 
 Italian data: https://github.com/pcm-dpc/COVID-19
 
+### France
 
-### Población por comunidades autónomas (2019)
+Working on it. Meanwhile: data/original/france/covid19-france.csv
 
-Población por comunidades autónomas del INE: https://www.ine.es/jaxiT3/Datos.htm?t=2853#!tabs-tabla
-Población por provincias del INE:  https://www.ine.es/jaxiT3/Datos.htm?t=2852#!tabs-tabla
+Sources:
+
+* https://www.data.gouv.fr/fr/datasets/cas-confirmes-dinfection-au-covid-19-par-region/
 
 ## Autoría
 

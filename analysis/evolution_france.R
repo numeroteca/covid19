@@ -6,7 +6,8 @@ library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 
 # COVID-19 in Italy -----------
-data_f_cases_original <- read.delim("data/original/covid19-france.csv",sep = ",")  
+data_f_cases_original <- read.delim("data/original/france/covid19.csv",sep = ",")  
+data_f_cases_original <- read.delim("https://www.data.gouv.fr/fr/datasets/r/fa9b8fc8-35d5-4e24-90eb-9abe586b0fa5",sep = ",")  
 data_f_cases<- melt(data_f_cases_original) 
 
 names(data_f_cases) <- c("date","region","cases")
@@ -16,8 +17,8 @@ data_f_cases$date <-  as.Date(data_f_cases$date)
 
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
-caption_i <- "Gráfico: montera34.com. Datos:  (Francia)"
-periodo_i <- "2020.03.04 - 03.13"
+caption_i <- "Gráfico: montera34.com. Datos: data.gouv.fr"
+periodo_i <- "2020.03.04 - 03.16"
 # Cases ------------
 
 # ----- Small multiple ------------
