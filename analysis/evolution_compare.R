@@ -4,7 +4,7 @@
 
 
 png(filename=paste("img/compare/covid19_casos-registrados-superpuesto-countries-regions-log.png", sep = ""),width = 1500,height = 700)
-data_cases %>% filter(value > 100) %>%
+data_cases %>% 
   ggplot() +
   # Spain
   geom_line(aes(date,value,group=CCAA), size= 0.7, color="orange" ) +
