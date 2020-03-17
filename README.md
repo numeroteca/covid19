@@ -82,12 +82,10 @@ Example of observations:
 ```
 When no data is available `NA` is indicated. Intensive care patients data have not been published since March 13th.
 
-
 ##### Provincias
 
 Working spreadsheet: https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/edit#gid=0
 Ayúdanos a completarla. Pide acceso.
-
 
 
 #### Italia
@@ -98,6 +96,7 @@ Italian data: https://github.com/pcm-dpc/COVID-19
 ### Población por comunidades autónomas (2019)
 
 Población por comunidades autónomas del INE: https://www.ine.es/jaxiT3/Datos.htm?t=2853#!tabs-tabla
+Población por provincias del INE:  https://www.ine.es/jaxiT3/Datos.htm?t=2852#!tabs-tabla
 
 ## Autoría
 

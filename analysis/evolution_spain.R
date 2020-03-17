@@ -20,6 +20,7 @@ data_cases_original <- read.delim("https://github.com/datadista/datasets/raw/mas
 # data_cases_original <- read.delim("../coronavirus-datadista/COVID 19/12-03-2020/casos_cccaa_12032020_covid19.csv",sep = ",") #loads local data 
 data_uci_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_uci.csv",sep = ",")
 data_death_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_fallecidos.csv",sep = ",")
+data_altas_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_altas.csv",sep = ",")
 
 # / By province -----------
 data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")  
@@ -62,6 +63,16 @@ data_death$per_cienmil <- round( data_death$value / data_death$poblacion * 10000
 
 write.csv(data_death, file = "data/output/covid19-fallecimientos-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
 
+# altas
+data_altas <- melt(data_altas_original, id.vars = c("CCAA","cod_ine"))
+data_altas$date <- as.Date(substr(data_altas$variable,2,12),"%d.%m.%Y")
+data_altas <- select(data_altas,-variable)
+
+# add population data
+data_altas <- merge( data_altas, data_cases %>% filter (date == as.Date("2020-02-27") ) %>% select(CCAA,poblacion), by.x = "CCAA", by.y = "CCAA" , all.x = TRUE  )
+# calculate values per 
+data_altas$altas_per_cienmil <- round( data_altas$value / data_altas$poblacion * 1000000, digits = 2)
+
 # / join data sets and export --------------
 data_all <- data_cases
 data_all$unique <- paste0(data_all$CCAA,data_all$date)
@@ -80,10 +91,16 @@ colnames(data_death)[6] <- "death_per_cienmil"
 
 data_all <- merge( data_all, select(data_death,unique,death,death_per_cienmil ), by = "unique", all = TRUE  )
 
-data_all_export <- select(data_all,  cod_ine , CCAA,  cases , date    ,poblacion  , cases_per_cienmil, uci,uci_per_cienmil, death, death_per_cienmil)
+data_altas$unique <- paste0(data_altas$CCAA,data_altas$date)
+colnames(data_altas)[3] <- "altas"
+
+data_all <- merge( data_all, select(data_altas,unique,altas,altas_per_cienmil ), by = "unique", all = TRUE  )
+
+data_all_export <- select(data_all,  cod_ine , CCAA, cases, date ,poblacion, 
+                          cases_per_cienmil, uci,uci_per_cienmil, death, death_per_cienmil, altas,altas_per_cienmil )
 
 names(data_all_export) <- c("code_ine" , "comunidad_autonoma",  "cases_registered" , "date"  ,"population"  , "cases_per_100000", "intensive_care",
-                            "intensive_care_per_1000000", "deceassed", "deceassed_per_100000")
+                            "intensive_care_per_1000000", "deceassed", "deceassed_per_100000","altas","altas_per_100000")
 
 data_all_export <- data_all_export %>% filter(!is.na(comunidad_autonoma))
 
@@ -97,6 +114,8 @@ data_cases_sp_provinces$date  <- as.Date(data_cases_sp_provinces$date)
 data_cases_sp_provinces <- merge( data_cases_sp_provinces, select(provincias_poblacion,provincia,poblacion), by.x = "province", by.y = "provincia"   )
 # calculate values per 
 data_cases_sp_provinces$cases_per_cienmil <- round( data_cases_sp_provinces$cases_accumulated / data_cases_sp_provinces$poblacion * 100000, digits = 2)
+data_cases_sp_provinces$intensive_care_per_1000000 <- round( data_cases_sp_provinces$intensive_care / data_cases_sp_provinces$poblacion * 100000, digits = 2)
+data_cases_sp_provinces$deceassed_per_100000 <- round( data_cases_sp_provinces$deceased / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 
 
 # Create extra data ------
@@ -925,7 +944,7 @@ dev.off()
 
 # Fallecimientos ------------
 
-# ---------Fallecimientos Small multiple ----------
+# / Fallecimientos Small multiple ----------
 # Escala lineal
 png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-lineal.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
@@ -975,7 +994,8 @@ data_death %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-# ---------Fallecimientos superpuestos ----------
+# / Fallecimientos superpuestos ----------
+# // CCAA -------------------
 png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
@@ -1114,6 +1134,144 @@ data_death %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
+
+# // Provincias ----------------
+png(filename=paste("img/covid19_fallecimientos-registrados-por-provincia-superpuesto-lineal.png", sep = ""),width = 1000,height = 700)
+data_cases_sp_provinces %>%
+  ggplot() +
+  geom_line(aes(date, deceased,group=province, color=province), size= 1 ) +
+  geom_point(aes(date, deceased, color=province), size= 1.5 ) +
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), 
+                  aes(date, deceased, color=province, label=paste(format(deceased, nsmall=1, big.mark="."),province)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 1.5)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
+       subtitle = paste0("Por provincia (escala lineal). ",period),
+       y = "fallecidos",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+png(filename=paste("img/covid19_fallecimientos-registrados-por-provincia-superpuesto-log.png", sep = ""),width = 1000,height = 700)
+data_cases_sp_provinces %>%
+  ggplot() +
+  geom_line(aes(date, deceased,group=province, color=province), size= 1 ) +
+  geom_point(aes(date, deceased, color=province), size= 1.5 ) +
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), 
+                  aes(date, deceased, color=province, label=paste(format(deceased, nsmall=1, big.mark="."),province)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 1.5)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
+       subtitle = paste0("Por provincia (escala logarítmica). ",period),
+       y = "fallecidos",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+png(filename=paste("img/covid19_fallecimientos-registrados-por-provincia-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
+data_cases_sp_provinces %>%
+  ggplot() +
+  geom_line(aes(date, deceassed_per_100000,group=province, color=province), size= 1 ) +
+  geom_point(aes(date, deceassed_per_100000, color=province), size= 1.5 ) +
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), 
+                  aes(date, deceassed_per_100000, color=province, label=paste(format(deceassed_per_100000, nsmall=1, big.mark="."),province)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 1.5)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
+       subtitle = paste0("Por provincia (escala lineal). ",period),
+       y = "fallecidos por 100.000 habitantes",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+png(filename=paste("img/covid19_fallecimientos-registrados-por-provincia-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
+data_cases_sp_provinces %>%
+ggplot() +
+  geom_line(aes(date, deceassed_per_100000,group=province, color=province), size= 1 ) +
+  geom_point(aes(date, deceassed_per_100000, color=province), size= 1.5 ) +
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), 
+                  aes(date, deceassed_per_100000, color=province, label=paste(format(deceassed_per_100000, nsmall=1, big.mark="."),province)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_y_log10(  minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_death$date), max(data_death$date + 1.5)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
+       subtitle = paste0("Por provincia (escala logarítmica). ",period),
+       y = "fallecidos por 100.000 habitantes",
+       x = "fecha",
+       caption = caption)
+dev.off()
 
 # --------- Relaciones --------
 # png(filename=paste("img/covid19_ .png", sep = ""),width = 1000,height = 700)
