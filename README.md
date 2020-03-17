@@ -96,7 +96,7 @@ Data are published in this file: [/data/original/spain/covid19_spain_provincias.
 
 Format:
 
-|            |                      |                    |            |              |                    |                  |                              |             |                        |         |                    | 
+|            |                      |                    |            |              |                    |                  |                              |             |
 |------------|------------------|-----------|----------------|----------|-------------------|-----------|---------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------| 
 | date       | province         | new_cases | intensive_care | deceased | cases_accumulated | recovered | source                                                                                            | comments                                                                                            | 
 | 2020-03-14 | Alicante/Alacant | 18        |                |          | 57                |           | http://www.san.gva.es/documents/151311/8476524/200314+NOTA+DE+PRENSA+CORONAVIRUS.pdf              |                                                                             | 
