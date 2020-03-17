@@ -68,17 +68,19 @@ Data structure:
 * `date` Day
 * `population` population
 * `cases_per_100000` Number of registered cases per 100.000 people
-* `intensive_care` Number of intensive care patients
-* `intensive_care_per_1000000` Number of intensive care patients per 100.000 people
+* `intensive_care` Number of intensive care patients (UCI in Spanish)
+* `intensive_care_per_1000000` Number of intensive care patients per 100.000 people (UCI in Spanish)
 * `deceassed` Number of deceassed
 * `deceassed_per_100000` Number of deceassed per 100.000 people
+* `altas` Number of recovered
+* `altas_per_100000` Number of recovered per 100.000 people
 
 Example of observations:
 
 ```
-13,"Madrid",1990,2020-03-13,6663394,29.9,180,2.7,81,12.16
-15,"Navarra",73,2020-03-12,654214,11.2,3,0.46,0,0
-13,"Madrid",2940,2020-03-14,6663394,44.1,NA,NA,86,12.91
+13,"Madrid",2940,2020-03-14,6663394,44.12,NA,NA,86,12.91,NA,NA
+13,"Madrid",3544,2020-03-15,6663394,53.19,NA,NA,213,31.97,NA,NA
+13,"Madrid",4165,2020-03-16,6663394,62.51,253,3.8,213,31.97,474,71.13
 ```
 When no data is available `NA` is indicated. Intensive care patients data have not been published since March 13th.
 
@@ -86,6 +88,19 @@ When no data is available `NA` is indicated. Intensive care patients data have n
 
 Working spreadsheet: https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/edit#gid=0
 Ayúdanos a completarla. Pide acceso.
+
+Data are published in this file: [/data/original/spain/covid19_spain_provincias.csv](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/original/spain/covid19_spain_provincias.csv)
+
+Format:
+
+|            |                  |           |                |          |                   |           |                                                                                                   |                                                                                                     | 
+|------------|------------------|-----------|----------------|----------|-------------------|-----------|---------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------| 
+| date       | province         | new_cases | intensive_care | deceased | cases_accumulated | recovered | source                                                                                            | comments                                                                                            | 
+| 2020-03-13 | Alicante/Alacant |           |                |          | 39                |           |                                                                                                   | More info about this initiative at https://code.montera34.com:4443/numeroteca/covid19/-/tree/master | 
+| 2020-03-14 | Alicante/Alacant | 18        |                |          | 57                |           | http://www.san.gva.es/documents/151311/8476524/200314+NOTA+DE+PRENSA+CORONAVIRUS.pdf              |                                                                             | 
+| 2020-03-15 | Alicante/Alacant | 94        |                |          | 151               |           | http://www.san.gva.es/documents/151311/8477533/20200315+NOTA+CORONAVIRUS                          |                                         | 
+| 2020-03-13 | Almería          | 0         | 0              | 0        | 9                 | 0         | https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html |                                                                                                     | 
+
 
 
 #### Italia
