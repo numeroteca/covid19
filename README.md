@@ -135,3 +135,5 @@ En este post [Análisis de propagación de COVID-19 por comunidades autónomas e
 # This repository
 
 This repository lives at https://code.montera34.com:4443/numeroteca/covid19 and is mirrored in [Github](https://github.com/numeroteca/covid19).
+
+If you are using these scripts or data, please let us know at info@montera34.com
