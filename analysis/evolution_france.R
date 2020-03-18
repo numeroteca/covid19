@@ -18,7 +18,7 @@ data_f_cases$date <-  as.Date(data_f_cases$date)
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_i <- "Gráfico: montera34.com. Datos: data.gouv.fr"
-periodo_i <- "2020.03.04 - 03.16"
+periodo_i <- "2020.03.04 - 03.17"
 # Cases ------------
 
 # ----- Small multiple ------------
@@ -141,7 +141,7 @@ data_f_cases %>%
   ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_f_cases$date), max(data_f_cases$date + 1.5)) 
+               limits=c( min(data_f_cases$date), max(data_f_cases$date + 2.5)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -179,7 +179,7 @@ data_f_cases %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_f_cases$date), max(data_f_cases$date + 1.5)) 
+               limits=c( min(data_f_cases$date), max(data_f_cases$date + 2.5)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
