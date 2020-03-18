@@ -138,7 +138,7 @@ data_i_cases %>%
   scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date + 1.5)) 
+               limits=c( min(data_i_cases$date), max(data_i_cases$date + 4)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -171,12 +171,12 @@ data_i_cases %>%
                   segment.color="#777777"
   ) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
-                 limits = c(0.95,16000),
+                 limits = c(0.95,max(data_i_cases$totale_casi)),
                  breaks = c(1,10,100,1000,12000),
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date + 1.5)) 
+               limits=c( min(data_i_cases$date), max(data_i_cases$date +4)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -255,7 +255,7 @@ data_i_cases %>%
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date + 1.5)) 
+               limits=c( min(data_i_cases$date), max(data_i_cases$date + 3)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -293,7 +293,7 @@ data_i_cases %>%
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date + 1.5)) 
+               limits=c( min(data_i_cases$date), max(data_i_cases$date +3)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
