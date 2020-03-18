@@ -1059,8 +1059,8 @@ data_death %>% filter( CCAA != "Total") %>%
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000"),
-    legend.position = "none"
+    axis.ticks.x = element_line(color = "#000000")
+    # legend.position = "none"
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
