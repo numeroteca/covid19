@@ -55,7 +55,7 @@ data_death <- select(data_death,-variable)
 # add population data
 data_death <- merge( data_death, data_cases %>% filter (date == as.Date("2020-02-27") ) %>% select(CCAA,poblacion), by.x = "CCAA", by.y = "CCAA" , all.x = TRUE  )
 # calculate values per 
-data_death$per_cienmil <- round( data_death$value / data_death$poblacion * 1000000, digits = 2)
+data_death$per_cienmil <- round( data_death$value / data_death$poblacion * 100000, digits = 2)
 
 write.csv(data_death, file = "data/output/covid19-fallecimientos-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
 
@@ -123,7 +123,7 @@ plot(test$value_d)
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
-caption_en <- "By: lab.montera34.com/covid19 | Data: various official sources. Check website."
+caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: montera34.com | Datos: Varias fuentes. Ver lab.montera34.com"
 period <- "2020.02.27 - 03.18"
 
@@ -375,7 +375,7 @@ data_cases2 %>%
                   aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  # hjust=0,
+                  hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
@@ -385,7 +385,7 @@ data_cases2 %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases2$date), max(data_cases2$date + 1.5)) 
+               limits=c( min(data_cases2$date), max(data_cases2$date + 2)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -421,7 +421,7 @@ data_cases %>% filter( CCAA != "Total") %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 1.5)) 
+               limits=c( min(data_cases$date), max(data_cases$date + 3.5)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -448,7 +448,7 @@ data_cases %>%
                   aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  # hjust=0,
+                  hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
@@ -458,7 +458,7 @@ data_cases %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 1.5)) 
+               limits=c( min(data_cases$date), max(data_cases$date + 3.5)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -526,7 +526,7 @@ data_cases %>% filter( CCAA != "Total") %>%
                   aes(date,per_cienmil, color=CCAA, label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  # hjust=0,
+                  hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
@@ -534,7 +534,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 2.5)) 
+               limits=c( min(data_cases$date), max(data_cases$date + 3.5)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -560,7 +560,7 @@ data_cases %>% filter( CCAA != "Total") %>%
                   aes(date,per_cienmil, color=CCAA, label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  # hjust=0,
+                  hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
@@ -600,7 +600,7 @@ data_cases %>% filter( CCAA != "Total") %>%
                   aes(date,per_cienmil, color=CCAA, label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  # hjust=0,
+                  hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
@@ -1052,15 +1052,15 @@ data_death %>% filter( CCAA != "Total") %>%
   scale_y_log10(  minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits=c( min(data_death$date), max(data_death$date + 1.5))
+               limits=c( min(data_death$date), max(data_death$date + 2.5))
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
-    # legend.position = "none"
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
@@ -1068,6 +1068,7 @@ data_death %>% filter( CCAA != "Total") %>%
        x = "fecha",
        caption = caption)
 dev.off()
+
 
 # --------- Relaciones --------
 # png(filename=paste("img/covid19_ .png", sep = ""),width = 1000,height = 700)
