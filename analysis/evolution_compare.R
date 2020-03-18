@@ -7,11 +7,11 @@ png(filename=paste("img/compare/covid19_casos-registrados-superpuesto-countries-
 data_cases %>% 
   ggplot() +
   # Spain
-  geom_line(aes(date,value,group=CCAA), size= 0.7, color="orange" ) +
-  # geom_point(aes(date,value ), size= 0.5, color="orange"  ) +
+  geom_line(aes(date,value,group=CCAA), size= 0.7, color="#fc8d62" ) +
+  # geom_point(aes(date,value ), size= 0.5, color="#fc8d62"  ) +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  value > 100), 
                   aes(date,value, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
-                  color="orange",
+                  color="#fc8d62",
                   nudge_x = 5, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -21,12 +21,12 @@ data_cases %>%
                   segment.color="#777777"
   ) +
   # Italy
-  geom_line( data= data_i_cases, aes(date,totale_casi, group=denominazione_regione), size= 0.7, color="blue", alpha = 0.5  ) +
-  # geom_point( data= data_i_cases,aes(date,totale_casi), size = 0.5, color="blue", alpha = 0.3, opacity = 0.3 ) +
+  geom_line( data= data_i_cases, aes(date,totale_casi, group=denominazione_regione), size= 0.7, color="#8da0cb", alpha = 0.8  ) +
+  # geom_point( data= data_i_cases,aes(date,totale_casi), size = 0.5, color="#8da0cb", alpha = 0.3, opacity = 0.3 ) +
   geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date), totale_casi > 100 ), 
                   aes(date,totale_casi, 
                       label=paste(format(totale_casi, nsmall=1, big.mark="."),denominazione_regione)),
-                  color="blue", 
+                  color="#8da0cb", 
                   nudge_x = 1, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -36,11 +36,11 @@ data_cases %>%
                   segment.color="#777777"
   ) +
   # France
-  geom_line( data = data_f_cases, aes(date,cases, group=region), size= 0.7, color= "darkgreen", alpha = 0.8  ) +
-  # geom_point(data = data_f_cases, aes(date,cases), size = 0.5, color= "darkgreen", alpha = 0.8 ) +
+  geom_line( data = data_f_cases, aes(date,cases, group=region), size= 0.7, color= "#66c2a5", alpha = 0.8  ) +
+  # geom_point(data = data_f_cases, aes(date,cases), size = 0.5, color= "#66c2a5", alpha = 0.8 ) +
   geom_text_repel(data=filter( data_f_cases, date==max(data_f_cases$date), cases > 100), 
                   aes(date,cases, label=paste(format(cases, nsmall=1, big.mark="."),region)),
-                  color= "darkgreen",
+                  color= "#66c2a5",
                   nudge_x = 11.5, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,

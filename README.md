@@ -64,27 +64,29 @@ There is a file with all the data (registered cases, intensive care patients and
 
 Data structure:
 
-* `code_ine` INE code numeber for comunidad autónoma (region)
-* `comunidad_autonoma` Spanish region
-* `cases_registered` Number of registered cases
 * `date` Day
-* `population` population
+* `region_code` Region code (INE code number for comunidad autónoma)
+* `region` Spanish region (comunidad autónoma)
+* `country` COuntry the region belongs to
+* `population` population of the region
+* `cases_registered` Number of registered cases
 * `cases_per_100000` Number of registered cases per 100.000 people
 * `intensive_care` Number of intensive care patients (UCI in Spanish)
 * `intensive_care_per_1000000` Number of intensive care patients per 100.000 people (UCI in Spanish)
 * `deceassed` Number of deceassed
 * `deceassed_per_100000` Number of deceassed per 100.000 people
-* `altas` Number of recovered
-* `altas_per_100000` Number of recovered per 100.000 people
+* `recovered` Number of recovered
+* `recovered_per_100000` Number of recovered per 100.000 people
 
 Example of observations:
 
-|            |                      |                    |            |              |                    |                  |                              |             |                        |         |                    | 
-|------------|----------------------|--------------------|------------|--------------|--------------------|------------------|------------------------------|-------------|------------------------|---------|--------------------| 
-| "code_ine" | "comunidad_autonoma" | "cases_registered" | "date"     | "population" | "cases_per_100000" | "intensive_care" | "intensive_care_per_1000000" | "deceassed" | "deceassed_per_100000" | "altas" | "altas_per_100000" | 
-| 1          | "Andalucía"          | 269                | 2020-03-14 | 8414240      | 3.2                | NA               | NA                           | 2           | 0.24                   | NA      | NA                 | 
-| 1          | "Andalucía"          | 437                | 2020-03-15 | 8414240      | 5.19               | NA               | NA                           | 6           | 0.71                   | NA      | NA                 | 
-| 1          | "Andalucía"          | 554                | 2020-03-16 | 8414240      | 6.58               | 11               | 0.13                         | 7           | 0.83                   | 0       | 0                  | 
+| "date"       | "region\_code" | "region"    | "country" | "population" | "cases\_registered" | "cases\_per\_100000" | "intensive\_care" | "intensive\_care\_per\_1000000" | "deceassed" | "deceassed\_per\_100000" | "recovered" | "recovered\_per\_100000" |
+|--------------|----------------|-------------|-----------|--------------|---------------------|----------------------|-------------------|---------------------------------|-------------|--------------------------|-------------|--------------------------|
+| 2020\-03\-14 | 1              | "Andalucía" | "Spain"   | 8414240      | 269                 | 3\.2                 | NA                | NA                              | 2           | 0\.24                    | NA          | NA                       |
+| 2020\-03\-15 | 1              | "Andalucía" | "Spain"   | 8414240      | 437                 | 5\.19                | NA                | NA                              | 6           | 0\.71                    | NA          | NA                       |
+| 2020\-03\-16 | 1              | "Andalucía" | "Spain"   | 8414240      | 554                 | 6\.58                | 11                | 0\.13                           | 7           | 0\.83                    | 0           | 0                        |
+| 2020\-03\-17 | 1              | "Andalucía" | "Spain"   | 8414240      | 683                 | 8\.12                | 13                | 0\.15                           | 11          | 1\.31                    | 0           | 0                        |
+| 2020\-03\-18 | 1              | "Andalucía" | "Spain"   | 8414240      | 859                 | 10\.21               | 21                | 0\.25                           | 19          | 2\.26                    | 38          | 4\.52                    |
 
 
 When no data is available `NA` is indicated. Intensive care patients data have not been published since March 13th.
