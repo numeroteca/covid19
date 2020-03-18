@@ -24,29 +24,19 @@ compare_countries <- rbind(compare_countries, data_f_cases_to_bind)
 
 compare_countries$cases_registered[1] + compare_countries$cases_registered[3]
 
-# png(filename=paste("img/compare/covid19_casos-registrados-superpuesto-countries-regions-log_2.png", sep = ""),width = 1500,height = 700)
+library(plotly)
+
+# Cases compare -----------------
 p <- compare_countries %>%
 # compare_countries %>% # filter(region =="Lazio")  %>% #  filter(country !="Italy") %>%
   ggplot() +
-  # geom_point(aes(date, cases_registered), size= 0.7) +
-  geom_line(aes(date, cases_registered, group=region, color=country ), size= 0.7) +
-  # geom_text_repel( data=filter( data_cases, date==max(data_cases$date),  value > 100), 
-  #                 aes(date,value, color=country, label=paste(format(cases_registered, nsmall=1, big.mark="."),region)),
-  #                 color="orange",
-  #                 nudge_x = 5, # adjust the starting y position of the text label
-  #                 size=5,
-  #                 hjust=0,
-  #                 family = "Roboto Condensed",
-  #                 direction="y",
-  #                 segment.size = 0.1,
-  #                 segment.color="#777777"
-  # ) +
+  # geom_point(aes(date, cases_registered, color=country ), size= 0.7) +
+  geom_line(aes(date, cases_registered, group=region, color=country ), size= 0.5) +
   # Scales
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d"
-               # limits=c( min(data_cases$date), max(data_cases$date + 12)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -61,8 +51,6 @@ p <- compare_countries %>%
        y = "registered cases (log scale)",
        x = "date",
        caption = caption_en)
-# dev.off()
-library(plotly)
 
 fig <- ggplotly(p)
 
@@ -75,9 +63,45 @@ fig %>%
   )
 
 
+# Cases pero 100.000-----------------
+q <- compare_countries %>%
+  ggplot() +
+  # geom_point(aes(date, cases_registered, color=country ), size= 0.7) +
+  geom_line(aes(date, cases_per_100000, group=region, color=country ), size= 0.5) +
+  # Scales
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+                 minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d"
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000")
+    # legend.position = "none"
+  ) +
+  labs(title = "Confirmed accumulated COVID-19 registed cases in Spain, Italy and France by region",
+       subtitle = paste0("By region (log scale). ",period),
+       y = "registered cases (log scale)",
+       x = "date",
+       caption = caption_en)
 
+figq <- ggplotly(q)
+
+figq %>% 
+  layout(annotations = 
+           list(x = 1, y = -0.1, text = "lab.montera34.com/covid19 | Data: various official sources. Check website.", 
+                showarrow = F, xref='paper', yref='paper', 
+                xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                font=list(size=15, color="grey"))
+  )
+
+
+# plot cases ----------------
 png(filename=paste("img/compare/covid19_casos-registrados-superpuesto-countries-regions-log.png", sep = ""),width = 1500,height = 700)
-p <- data_cases %>%
+data_cases %>%
   ggplot() +
   # Spain
   geom_line(aes(date,value,group=CCAA), size= 0.7, color="orange" ) +
@@ -145,3 +169,36 @@ p <- data_cases %>%
 dev.off()
 
 
+# Deceassed per 100.000 interactive-----------------
+r <- compare_countries %>%
+  ggplot() +
+  geom_line(aes(date, deceassed_per_100000, group=region, color=country ), size= 0.5) +
+  # Scales
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+                 minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d"
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 14) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000")
+    # legend.position = "none"
+  ) +
+  labs(title = "Confirmed accumulated deceaassed by COVID-19 by 100.000 inhabitants in Spain and Italy by region",
+       subtitle = paste0("By region (log scale). ",period),
+       y = "deceassed by 100.000 inhabitants (log scale)",
+       x = "date",
+       caption = caption_en)
+
+figr <- ggplotly(r)
+
+figr %>% 
+  layout(annotations = 
+           list(x = 1, y = -0.1, text = "lab.montera34.com/covid19 | Data: various official sources. Check website.", 
+                showarrow = F, xref='paper', yref='paper', 
+                xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                font=list(size=15, color="grey"))
+  )
