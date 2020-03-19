@@ -49,7 +49,7 @@ data_i_cases$recovered_per_100000 <- round( data_i_cases$recovered / data_i_case
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_i <- "Gráfico: @numeroteca (montera34.com). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 03.17"
+periodo_i <- "2020.02.24 - 03.18"
 # 1. Cases ------------
 
 # ----- Small multiple ------------
