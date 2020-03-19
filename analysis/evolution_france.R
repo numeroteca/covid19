@@ -33,14 +33,20 @@ write.csv(data_f_cases, file = "data/output/france/covid19-cases-registered-regi
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_i <- "Gráfico: montera34.com. Datos: data.gouv.fr"
-periodo_i <- "2020.03.04 - 03.17"
+periodo_i <- "2020.03.04 - 03.18"
 # 1. Cases ------------
+
+# create temp dataframes to be able to plot all the values in small multiples
+data_f_cases_sm <-data_f_cases
+data_f_cases_sm$region_cp <- data_f_cases$region
 
 # ----- Small multiple ------------
 # Escala lineal
 png(filename=paste("img/france/covid19_casos-registrados-por-region-lineal.png", sep = ""),width = 1000,height = 700)
 data_f_cases %>%
   ggplot() +
+  geom_line(data = select(data_f_cases_sm,date,cases_registered,region_cp,-region),
+            aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
   geom_line(aes(date,cases_registered,group=region) ) +
   geom_point(aes(date,cases_registered,group=region), size = 0.5 ) +
   facet_wrap( ~region) +
@@ -67,6 +73,8 @@ dev.off()
 png(filename=paste("img/france/covid19_casos-registrados-por-region-log.png", sep = ""),width = 1000,height = 700)
 data_f_cases %>%
   ggplot() +
+  geom_line(data = select(data_f_cases_sm,date,cases_registered,region_cp,-region),
+            aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
   geom_line(aes(date,cases_registered,group=region) ) +
   geom_point(aes(date,cases_registered,group=region), size = 0.5 ) +
   scale_y_log10( minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
@@ -92,6 +100,8 @@ dev.off()
 png(filename=paste("img/france/covid19_casos-registrados-por-region-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
 data_f_cases %>%
   ggplot() +
+  geom_line(data = select(data_f_cases_sm,date,cases_per_100000,region_cp,-region),
+            aes(date,cases_per_100000,group=region_cp), color="#CACACA" ) +
   geom_line(aes(date,cases_per_100000,group=region) ) +
   geom_point(aes(date,cases_per_100000,group=region), size = 0.5 ) +
   facet_wrap( ~region) +
@@ -116,6 +126,8 @@ dev.off()
 png(filename=paste("img/france/covid19_casos-registrados-por-region-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_f_cases %>% 
   ggplot() +
+  geom_line(data = select(data_f_cases_sm,date,cases_per_100000,region_cp,-region),
+            aes(date,cases_per_100000,group=region_cp), color="#CACACA" ) +
   geom_line(aes(date,cases_per_100000,group=region) ) +
   geom_point(aes(date,cases_per_100000,group=region), size = 0.5 ) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 3000, 100) )) +
