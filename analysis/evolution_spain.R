@@ -134,10 +134,15 @@ period <- "2020.02.27 - 03.18"
 
 # /// Comunidades autónomas small multiple --------------
 
+# create temp dataframes to be able to plot all the values in small multiples
+data_cases_sm <-data_cases
+data_cases_sm$ccaa_cp <- data_cases_sm$CCAA
+
 # Escala lineal
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-lineal.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
 ggplot() +
+  geom_line(data = select(data_cases_sm,date,value,ccaa_cp,-CCAA),aes(date,value,group=ccaa_cp), color="#CACACA" ) +
   geom_line(aes(date,value,group=CCAA) ) +
   geom_point(aes(date,value,group=CCAA), size = 0.5 ) +
   facet_wrap( ~CCAA) +
@@ -165,6 +170,7 @@ dev.off()
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
 ggplot() +
+  geom_line(data = select(data_cases_sm,date,value,ccaa_cp,-CCAA),aes(date,value,group=ccaa_cp), color="#CACACA" ) +
   geom_line(aes(date,value,group=CCAA) ) +
   geom_point(aes(date,value,group=CCAA), size = 0.5 ) +
   scale_y_log10(
@@ -192,6 +198,8 @@ dev.off()
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
+  geom_line(data = select(data_cases_sm,date,per_cienmil,ccaa_cp,-CCAA),
+            aes(date,per_cienmil,group=ccaa_cp), color="#CACACA" ) +
   geom_line(aes(date,per_cienmil,group=CCAA) ) +
   geom_point(aes(date,per_cienmil,group=CCAA), size = 0.5 ) +
   facet_wrap( ~CCAA) +
@@ -216,9 +224,13 @@ dev.off()
 png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
+  geom_line(data = select(data_cases_sm,date,per_cienmil,ccaa_cp,-CCAA),
+            aes(date,per_cienmil,group=ccaa_cp), color="#CACACA" ) +
   geom_line(aes(date,per_cienmil,group=CCAA) ) +
   geom_point(aes(date,per_cienmil,group=CCAA), size = 0.5 ) +
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 3000, 100) )) +
+  scale_y_log10( 
+    limits = c(0.2,max(data_cases$per_cienmil)),
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 3000, 100) )) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d"
