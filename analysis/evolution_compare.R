@@ -130,7 +130,7 @@ data_cases %>%
                   aes(date,cases_registered, 
                       label=paste(format(cases_registered, nsmall=1, big.mark="."), region)),
                   color="blue", 
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  nudge_x = 1, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -157,7 +157,7 @@ data_cases %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 12))
+               limits=c( min(data_cases$date), max(data_cases$date + 14))
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -197,7 +197,7 @@ data_cases %>%
                   aes(date,cases_per_100000, 
                       label=paste(format(cases_per_100000, nsmall=1, big.mark=".", decimal.mark = ","), region)),
                   color="blue", 
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  nudge_x = 1, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -224,7 +224,7 @@ data_cases %>%
                  limits = c(0.5,max(data_i_cases$cases_per_100000)) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 14))
+               limits=c( min(data_cases$date), max(data_cases$date + 15))
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -243,18 +243,18 @@ dev.off()
 
 
 
-# Deceassed plot ONG ---------------------
+# Deceassed plot PNG ---------------------
 
 # Absolute
 png(filename=paste("img/compare/covid19_fallecimientos-superpuesto-countries-regions-log.png", sep = ""),width = 1500,height = 700)
-data_death %>%
+data_death %>% filter (CCAA != "Total") %>%
   ggplot() +
   # Spain
   geom_line(aes(date, death ,group=CCAA), size= 0.7, color="orange" ) +
-  geom_text_repel(data=filter(data_death, date==max(data_death$date)), 
+  geom_text_repel(data=filter(data_death, date==max(data_death$date) & CCAA != "Total"), 
                   aes(date, death, label=paste(format(death, nsmall=1, big.mark="."),CCAA)),
                   color="orange",
-                  nudge_x = 1, # adjust the starting y position of the text label
+                  nudge_x = 5, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -268,7 +268,7 @@ data_death %>%
                   aes(date,deceassed, 
                       label=paste(format(deceassed, nsmall=1, big.mark="."), region)),
                   color="blue", 
-                  nudge_x = 5, # adjust the starting y position of the text label
+                  nudge_x = 1, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -309,7 +309,7 @@ data_death %>%
   geom_text_repel(data=filter(data_death, date==max(data_death$date)), 
                   aes(date, death_per_cienmil, label=paste(format(death_per_cienmil, nsmall=1, big.mark="."),CCAA)),
                   color="orange",
-                  nudge_x = 1, # adjust the starting y position of the text label
+                  nudge_x = 5, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -323,7 +323,7 @@ data_death %>%
                   aes(date,deceassed_per_100000, 
                       label=paste(format(deceassed_per_100000, nsmall=1, big.mark="."), region)),
                   color="blue", 
-                  nudge_x = 5, # adjust the starting y position of the text label
+                  nudge_x = 1, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -346,12 +346,12 @@ data_death %>%
   # ) +
   # Scales
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
-                 minor_breaks = c(  seq(0.1 , 1, 0.1),seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ),
-                 limits = c(0.1,20)
+                 minor_breaks = c(  seq(0.1 , 1, 0.1),seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) )
+                 # limits = c(min(data_i_cases$deceassed_per_100000),max(data_i_cases$deceassed_per_100000))
                  ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 8))
+               limits=c(  min(data_i_cases$date), max(data_cases$date + 8))
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
