@@ -93,8 +93,11 @@ When no data is available `NA` is indicated. Intensive care patients data have n
 
 #### Provincias
 
+Llamamiento para colaborar en conseguir los datos de [@numeroteca](https://twitter.com/numeroteca/status/1239853592569425920) [@ProsumidorSoc](https://twitter.com/ProsumidorSoc/status/1240569799056461826) y 
 Working spreadsheet: https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/edit#gid=0
 Ayúdanos a completarla. Pide acceso.
+
+Fuentes: se han usado varias fuentes que se indican en cada una de los datos.
 
 Data are published in this file: [/data/original/spain/covid19_spain_provincias.csv](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/original/spain/covid19_spain_provincias.csv)
 
