@@ -1,9 +1,15 @@
 COVID19 en España e Italia / CODVID-19 in Spain and Italy
 =================
 
-R script to anlyze COVID19 in Spain and Italy. WEbsite with upated plots: https://lab.montera34.com/covid19
+This is a repository that hosts two different projects:
 
-Script de R para facilitar el análisis del COVID19 en España e Italia. Puedes ver los gráficos producidos en la web que hemos montado en montera34: https://lab.montera34.com/covid19
+ * R script to analyze COVID-19 in Spain and Italy. ebsite with upated charts: https://lab.montera34.com/covid19
+ * Spanish data of COVID-19 by province (collected from various data sources). [More info](#provincias).
+
+Este repositorio contiene dos proyectos diferentes:
+
+  * Script de R para facilitar el análisis del COVID19 en España e Italia. Puedes ver los gráficos producidos en la web que hemos montado en montera34: https://lab.montera34.com/covid19
+  * Los datos de COVID-19 por provincias. Una iniciativa ciudadana para recolectarlos de diferentes fuentes, en vista de que el gobierno no lo facilita. [Más información](#provincias).
 
 ![Casos registrados por comunidad autónoma. España. COVIC-19](https://lab.montera34.com/covid19-r/img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log.png "Plot example")
 
@@ -24,7 +30,8 @@ When you go to any of the scripts you can run it and it will produce all the vis
 │   ├── evolution_compare.R               # R script: process and create plots compare countries
 │   ├── evolution_france.R                # R script: process and create plots France  
 │   ├── evolution_italia.R                # R script: process and create plots Italia  
-│   ├── evolution_spain.R                 # R script: process and create plots Spain
+│   ├── evolution_spain.R                 # R script: process and create plots Spain by comunidades autonomas
+│   └── evolution_spain_provinces.R                 # R script: process and create plots Spain by provinces
 ├── data
 │   ├── original                                  # original data
 │   │   └── Spain
@@ -97,7 +104,11 @@ Llamamiento para colaborar en conseguir los datos de [@numeroteca](https://twitt
 Working spreadsheet: https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/edit#gid=0
 Ayúdanos a completarla. Pide acceso.
 
-Fuentes: se han usado varias fuentes que se indican en cada una de los datos.
+¿Cómo citar cuando lo utilices? POn link a este repositorio. Varias personas han colaborado en esta iniciativa ciudadana. Gracias a todas por colaborar.
+
+Lo más importante: quédate en casa para parar.
+
+Fuentes: se han usado varias fuentes que se indican en cada una de los datos por día y provincia.
 
 Data are published in this file: [/data/original/spain/covid19_spain_provincias.csv](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/original/spain/covid19_spain_provincias.csv)
 
@@ -130,7 +141,7 @@ Sources:
 
 ## Autoría
 
-Pablo Rey Mazón ([@numeroteca](https://twitter.com/numeroteca)) y Alfonso Sánchez Uzábal ([@skotperez](https://twitter.com/skotperez))  desde [montera34.com](https://montera34.com).
+Pablo Rey Mazón ([@numeroteca](https://twitter.com/numeroteca)) y Alfonso Sánchez Uzábal ([@skotperez](https://twitter.com/skotperez))desde [montera34.com](https://montera34.com).
 
 En este post [Análisis de propagación de COVID-19 por comunidades autónomas en España](http://numeroteca.org/2020/03/12/covid19-comunidades-autonomas-espana/) recopilamos algunos resultados y reflexiones.
 
