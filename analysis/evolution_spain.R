@@ -139,7 +139,7 @@ data_cases_sm <-data_cases
 data_cases_sm$ccaa_cp <- data_cases_sm$CCAA
 
 # Escala lineal
-png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-lineal.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
 ggplot() +
   geom_line(data = select(data_cases_sm,date,value,ccaa_cp,-CCAA),aes(date,value,group=ccaa_cp), color="#CACACA" ) +
@@ -167,7 +167,7 @@ ggplot() +
 dev.off()
 
 # Escala logarítmica
-png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
 ggplot() +
   geom_line(data = select(data_cases_sm,date,value,ccaa_cp,-CCAA),aes(date,value,group=ccaa_cp), color="#CACACA" ) +
@@ -195,7 +195,7 @@ ggplot() +
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(data = select(data_cases_sm,date,per_cienmil,ccaa_cp,-CCAA),
@@ -221,7 +221,7 @@ data_cases %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(data = select(data_cases_sm,date,per_cienmil,ccaa_cp,-CCAA),
@@ -302,7 +302,7 @@ crec <- data.frame(x = data_unique, y05 = y05, y10 = y10, y22 = y22, y32 = y32,y
 #   ) 
 
 # ------ CCAA  ----------
-png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1000,height = 700)
 data_cases %>%
   ggplot() +
   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
@@ -337,7 +337,7 @@ data_cases %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-lineal_con-curva.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-lineal_con-curva.png", sep = ""),width = 1000,height = 700)
 data_cases %>%
   ggplot() +
   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
@@ -375,7 +375,7 @@ data_cases %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log_with-curve.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log_with-curve.png", sep = ""),width = 1000,height = 700)
 data_cases2 %>%
   ggplot(aes(x = unique(date))) +
   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
@@ -414,7 +414,7 @@ data_cases2 %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
@@ -451,7 +451,7 @@ data_cases %>% filter( CCAA != "Total") %>%
 dev.off()
 
 # English ----
-png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log_en.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log_en.png", sep = ""),width = 1000,height = 700)
 data_cases %>%
   ggplot() +
   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
@@ -488,7 +488,7 @@ data_cases %>%
 dev.off()
 
 
-# png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log_comparativa.png", sep = ""),width = 1000,height = 700)
+# png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log_comparativa.png", sep = ""),width = 1000,height = 700)
 # data_cases %>% filter( CCAA != "Total") %>%
 #   ggplot() +
 #   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
@@ -529,7 +529,7 @@ dev.off()
 # dev.off()
 
 # Por 100.000 --------
-png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
@@ -563,7 +563,7 @@ data_cases %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
@@ -602,7 +602,7 @@ data_cases %>% filter( CCAA != "Total") %>%
 dev.off()
 
 # English ----------
-png(filename=paste("img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log_en.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log_en.png", sep = ""),width = 1000,height = 700)
 data_cases %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
@@ -649,7 +649,7 @@ data_uci_sm$ccaa_cp <- data_uci_sm$CCAA
 
 # // 2.1 UCI Small multiple ----------
 # Escala lineal
-png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-UCI-por-comunidad-autonoma-lineal.png", sep = ""),width = 1000,height = 700)
 data_uci %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(data = select(data_uci_sm %>% filter( CCAA != "Total"),date,uci,ccaa_cp,-CCAA),aes(date,uci,group=ccaa_cp), color="#CACACA" ) +
@@ -675,7 +675,7 @@ data_uci %>% filter( CCAA != "Total") %>%
 dev.off()
 
 # Escala logarítmica
-png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-UCI-por-comunidad-autonoma-log.png", sep = ""),width = 1000,height = 700)
 data_uci %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(data = select(data_uci_sm %>% filter( CCAA != "Total"),date,uci,ccaa_cp,-CCAA),aes(date,uci,group=ccaa_cp), color="#CACACA" ) +
@@ -702,7 +702,7 @@ data_uci %>% filter( CCAA != "Total") %>%
 dev.off()
 
 # Escala lineal
-png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-UCI-por-comunidad-autonoma-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
 data_uci %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(data = select(data_uci_sm %>% filter( CCAA != "Total"),date,uci_per_cienmil,ccaa_cp,-CCAA),
@@ -729,7 +729,7 @@ data_uci %>% filter( CCAA != "Total") %>%
 dev.off()
 
 # Escala logarítmica
-png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-UCI-por-comunidad-autonoma-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_uci %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(data = select(data_uci_sm %>% filter( CCAA != "Total"),date,uci_per_cienmil,ccaa_cp,-CCAA),
@@ -757,7 +757,7 @@ data_uci %>% filter( CCAA != "Total") %>%
 dev.off()
 
 # // 2.2 UCI Superpuesto -------------
-png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-UCI-por-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1000,height = 700)
 data_uci %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,uci,group=CCAA, color=CCAA), size= 1 ) +
@@ -791,7 +791,7 @@ data_uci %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-UCI-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
 data_uci %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,uci,group=CCAA, color=CCAA), size= 1 ) +
@@ -827,7 +827,7 @@ data_uci %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-UCI-por-comunidad-autonoma-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
 data_uci %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,uci_per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
@@ -861,7 +861,7 @@ data_uci %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_casos-registrados-UCI-por-comunidad-autonoma-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_casos-registrados-UCI-por-comunidad-autonoma-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_uci %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,uci_per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
@@ -904,7 +904,7 @@ data_death_sm$ccaa_cp <- data_death_sm$CCAA
 
 # // 3.1 Fallecimientos Small multiple ----------
 # Escala lineal
-png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-lineal.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(data = select(data_death_sm %>% filter( CCAA != "Total"),date,death,ccaa_cp,-CCAA),
@@ -931,7 +931,7 @@ data_death %>% filter( CCAA != "Total") %>%
 dev.off()
 
 # Escala logarítmica
-png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-log.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(data = select(data_death_sm %>% filter( CCAA != "Total"),date,death,ccaa_cp,-CCAA),
@@ -959,7 +959,7 @@ data_death %>% filter( CCAA != "Total") %>%
 dev.off()
 
 # Escala lineal
-png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(data = select(data_death_sm %>% filter( CCAA != "Total"),date,death_per_cienmil,ccaa_cp,-CCAA),
@@ -986,7 +986,7 @@ data_death %>% filter( CCAA != "Total") %>%
 dev.off()
 
 # Escala logarítmica
-png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(data = select(data_death_sm %>% filter( CCAA != "Total"),date,death_per_cienmil,ccaa_cp,-CCAA),
@@ -1015,7 +1015,7 @@ dev.off()
 
 # // 3.2 Fallecimientos superpuestos ----------
 # // CCAA -------------------
-png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,death,group=CCAA, color=CCAA), size= 1 ) +
@@ -1049,7 +1049,7 @@ data_death %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,death,group=CCAA, color=CCAA), size= 1 ) +
@@ -1084,7 +1084,7 @@ data_death %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,death_per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
@@ -1118,7 +1118,7 @@ data_death %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(aes(date,death_per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
@@ -1155,7 +1155,7 @@ dev.off()
 
 
 # --------- Relaciones --------
-# png(filename=paste("img/covid19_ .png", sep = ""),width = 1000,height = 700)
+# png(filename=paste("img/spain/regions/covid19_ .png", sep = ""),width = 1000,height = 700)
 data_all %>% filter( CCAA != "Total") %>%
 ggplot() +
   geom_line( aes(cases_per_cienmil,death_per_cienmil, group=CCAA, color=CCAA), size= 1 ) +

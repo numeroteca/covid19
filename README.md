@@ -28,7 +28,7 @@ When you go to any of the scripts you can run it and it will produce all the vis
 ## File structure
 
 ```
-├── coronavirus.Rproj                             # R project
+├── coronavirus.Rproj                     # R project
 ├── analysis                              # scripts to process data
 │   ├── evolution_compare.R               # R script: process and create plots compare countries
 │   ├── evolution_france.R                # R script: process and create plots France  
@@ -37,21 +37,24 @@ When you go to any of the scripts you can run it and it will produce all the vis
 │   └── evolution_spain_provinces.R                 # R script: process and create plots Spain by provinces
 ├── data
 │   ├── original                                  # original data
-│   │   └── Spain
+│   │   └── spain
 │   │       ├── ccaa-poblacion.csv            # population per region
 │   │       ├── provincias-poblacion.csv      # population per province
 │   │       └── covid10_spain_provincias.csv  # covid19 data by province.  
-│   └── output                                    # processed data: by date and comunidad autónoma in Spain
-│       ├── covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv     # merge all cases
+│   └── output                                # processed data: by date and comunidad autónoma in Spain
+│       ├── covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv     # merge all variables
 │       ├── covid19-casos-registrados-por-ccaa-espana-por-dia-acumulado.csv   # registered cases accumulated
-│       ├── covid19-fallecimientos-por-ccaa-espana-por-dia-acumulado.csv      # deaths
+│       ├── covid19-fallecimientos-por-ccaa-espana-por-dia-acumulado.csv      # deceassed
 │       └── covid19-ingresos-uci-por-ccaa-espana-por-dia-acumulado.csv        # intensive care
 ├── img
 │   ├── france    # France plots
 │   ├── italia    # Ftaly plots
-│   ├── 20200312                                  # previous days plots
-│   ├── 20200313                                  # previous days plots
-│   ├── covid19_*.png                             # last plots generated
+│   └── spain
+│       ├── regions                       # Comunidades autónomas (regions) charts
+│       │    ├── 20200312                 # previous days plots
+│       │    ├── 20200313                 # previous days plots
+│       │    ├── covid19_*.png            # last plots generated
+│       └── provinces                     # Provinces charts
 ├── LICENSE.md
 └── README.md
 ```
