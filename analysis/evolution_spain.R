@@ -125,7 +125,7 @@ plot(test$value_d)
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: montera34.com | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 03.19"
+period <- "2020.02.27 - 03.20"
 
 # Plots --------------------
 # 1. Cases ------------
@@ -579,9 +579,8 @@ data_cases %>% filter( CCAA != "Total") %>%
                   segment.color="#333333"
                   # xlim  = c(as.Date(max(dates.count.barrio.room$fechab)),as.Date("2020-01-4"))
   ) +
-  # scale_color_brewer(palette = "Dark2", type = "discrete") +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
-                 limits = c(1,max(data_cases$per_cienmil)),
+                 limits = c(0.1,max(data_cases$per_cienmil)),
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
@@ -979,9 +978,9 @@ data_death %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
-       y = "fallecidos",
+       y = "fallecidos por 100.000 habitantes ",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -1007,7 +1006,7 @@ data_death %>% filter( CCAA != "Total") %>%
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
        y = "fallecidos",
        x = "fecha",
