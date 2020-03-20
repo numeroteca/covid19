@@ -100,7 +100,7 @@ data_cases_sp_provinces %>%
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por comunidad autónoma [Cataluña sin desagregar, Canarias por islas] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña sin desagregar, Canarias por islas] (escala logarítmica). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -131,7 +131,7 @@ data_cases_sp_provinces %>%
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por comunidad autónoma [Cataluña sin desagregar, Canarias por islas] (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma y provincias [Cataluña sin desagregar, Canarias por islas] (escala logarítmica). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
