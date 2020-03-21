@@ -33,7 +33,7 @@ write.csv(data_f_cases, file = "data/output/france/covid19-cases-registered-regi
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_i <- "Gráfico: montera34.com. Datos: data.gouv.fr"
-periodo_i <- "2020.03.04 - 03.18"
+periodo_i <- "2020.03.04 - 03.20"
 # 1. Cases ------------
 
 # create temp dataframes to be able to plot all the values in small multiples
