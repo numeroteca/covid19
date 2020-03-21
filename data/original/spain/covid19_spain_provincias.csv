@@ -5,64 +5,56 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-16,Almería,Andalucía,3,,,1,0,26,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
 2020-03-17,Almería,Andalucía,3,,,,0,26,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
 2020-03-18,Almería,Andalucía,3,,,,0,30,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
-2020-03-18,Almería,Andalucía,7,,,,0,37,,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233441.html,
-2020-03-19,Almería,Andalucía,,37,,,0,37,"11,84",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-19,Almería,Andalucía,7,,,,0,37,"11,84",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-13,Cádiz,Andalucía,1,,,1,0,19,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
 2020-03-14,Cádiz,Andalucía,7,,,1,0,29,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
 2020-03-15,Cádiz,Andalucía,8,,,1,0,34,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
 2020-03-16,Cádiz,Andalucía,3,,,1,0,56,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
 2020-03-17,Cádiz,Andalucía,3,,,,0,56,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
 2020-03-18,Cádiz,Andalucía,3,,,,0,74,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
-2020-03-18,Cádiz,Andalucía,15,,,,0,84,,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233441.html,
-2020-03-19,Cádiz,Andalucía,,84,,,0,84,"11,84",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-19,Cádiz,Andalucía,15,,,,0,84,"11,84",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-13,Córdoba,Andalucía,3,,,0,0,9,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
 2020-03-14,Córdoba,Andalucía,4,,,1,0,35,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
 2020-03-15,Córdoba,Andalucía,6,,,2,0,37,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
 2020-03-16,Córdoba,Andalucía,18,,,5,0,68,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
 2020-03-17,Córdoba,Andalucía,18,,,,0,68,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
 2020-03-18,Córdoba,Andalucía,19,,,,0,78,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
-2020-03-18,Córdoba,Andalucía,26,,,,0,101,,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233441.html,
-2020-03-19,Córdoba,Andalucía,,101,,,0,101,"11,84",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-19,Córdoba,Andalucía,26,,,,0,101,"11,84",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-13,Granada,Andalucía,3,,,0,0,14,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
 2020-03-14,Granada,Andalucía,11,,,5,0,43,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
 2020-03-15,Granada,Andalucía,20,,,3,0,57,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
 2020-03-16,Granada,Andalucía,36,,,4,2,95,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
 2020-03-17,Granada,Andalucía,36,,,,2,95,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
 2020-03-18,Granada,Andalucía,29,,,,6,130,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
-2020-03-18,Granada,Andalucía,66,,,,7,176,,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233441.html,
-2020-03-19,Granada,Andalucía,,169,,,7,176,"11,84",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-19,Granada,Andalucía,66,,,,7,176,"11,84",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-13,Huelva,Andalucía,0,,,0,0,2,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
 2020-03-14,Huelva,Andalucía,0,,,1,0,6,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
 2020-03-15,Huelva,Andalucía,0,,,0,0,6,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
 2020-03-16,Huelva,Andalucía,1,,,1,0,8,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
 2020-03-17,Huelva,Andalucía,1,,,,0,8,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
 2020-03-18,Huelva,Andalucía,4,,,,0,14,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
-2020-03-18,Huelva,Andalucía,15,,,,0,23,,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233441.html,
-2020-03-19,Huelva,Andalucía,,23,,,0,23,"11,84",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-19,Huelva,Andalucía,15,,,,0,23,"11,84",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-13,Jaén,Andalucía,9,,,1,0,30,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
 2020-03-14,Jaén,Andalucía,5,,,0,1,38,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
 2020-03-15,Jaén,Andalucía,3,,,1,2,47,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
 2020-03-16,Jaén,Andalucía,8,,,0,2,52,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
 2020-03-17,Jaén,Andalucía,8,,,,2,52,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
 2020-03-18,Jaén,Andalucía,10,,,,2,77,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
-2020-03-18,Jaén,Andalucía,32,,,,2,88,,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233441.html,
-2020-03-19,Jaén,Andalucía,,85,,,2,87,"11,84",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-19,Jaén,Andalucía,32,,,,2,88,"11,84",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-13,Málaga,Andalucía,39,,,9,0,111,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
 2020-03-14,Málaga,Andalucía,53,,,12,4,159,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
 2020-03-15,Málaga,Andalucía,81,,,12,4,180,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
 2020-03-16,Málaga,Andalucía,97,,,13,6,278,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
 2020-03-17,Málaga,Andalucía,97,,,,6,278,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
 2020-03-18,Málaga,Andalucía,113,,,,10,333,,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
-2020-03-18,Málaga,Andalucía,93,,,,13,361,,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233441.html,
-2020-03-19,Málaga,Andalucía,,348,,,13,361,"11,84",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-19,Málaga,Andalucía,93,,,,13,361,"11,84",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-13,Sevilla,Andalucía,3,,,1,0,25,,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
 2020-03-14,Sevilla,Andalucía,13,,,1,0,52,,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
 2020-03-15,Sevilla,Andalucía,15,,,4,0,62,,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
 2020-03-16,Sevilla,Andalucía,34,,,9,1,100,,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
 2020-03-17,Sevilla,Andalucía,34,,,,1,100,,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
 2020-03-18,Sevilla,Andalucía,42,,,,1,123,,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
-2020-03-18,Sevilla,Andalucía,53,,,,1,138,,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233441.html,
-2020-03-19,Sevilla,Andalucía,,131,,,1,133,"11,84",1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-19,Sevilla,Andalucía,53,,,,1,138,"11,84",1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-19,Huesca,Aragón,,24,,,,24,"21,22",,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 6 casos más en la comunidad que no son residentes en Aragón.
 2020-03-19,Teruel,Aragón,,26,,,1,27,"21,22",,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 6 casos más en la comunidad que no son residentes en Aragón.
 2020-03-19,Zaragoza,Aragón,,210,,,14,224,"21,22",,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 6 casos más en la comunidad que no son residentes en Aragón.
@@ -414,3 +406,57 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-17,La Rioja,"Rioja, La",,,,13,5,355,,2,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
 2020-03-18,La Rioja,"Rioja, La",,,,13,5,419,,2,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
 2020-03-19,La Rioja,"Rioja, La",,461,,15,5,468,"144,26",2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 y https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
+2020-03-20,Almería,Andalucía,,49,,,0,49,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-20,Cádiz,Andalucía,,102,,,1,103,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-20,Córdoba,Andalucía,,123,,,2,125,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-20,Granada,Andalucía,,234,,,10,244,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-20,Huelva,Andalucía,,36,,,0,36,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-20,Jaén,Andalucía,,117,,,2,119,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-20,Málaga,Andalucía,,406,,,18,424,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-20,Sevilla,Andalucía,,188,,,1,190,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-20,Huesca,Aragón,,34,,,0,34,"26,83",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 8 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
+2020-03-20,Teruel,Aragón,,38,,,2,40,"26,83",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 8 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
+2020-03-20,Zaragoza,Aragón,,264,,,14,278,"26,83",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 8 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
+2020-03-20,Asturias,"Asturias, Principado de",,328,,,4,344,"33,14",12,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Baleares,"Balears, Illes",,189,,,4,203,"17,14",10,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,El Hierro,Canarias,,1,,,0,1,"12,82",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Fuerteventura,Canarias,,12,,,0,12,"12,82",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Gran Canaria,Canarias,,69,,,1,70,"12,82",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,La Gomera,Canarias,,1,,,0,3,"12,82",2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Lanzarote,Canarias,,3,,,0,3,"12,82",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,La Palma,Canarias,,7,,,0,7,"12,82",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Tenerife,Canarias,,185,,,3,192,"12,82",4,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Cantabria,Cantabria,,132,,,2,144,"23,06",10,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Albacete,Castilla - La Mancha,,291,,,28,327,"50,62",8,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Ciudad Real,Castilla - La Mancha,,364,,,28,400,"50,62",8,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Cuenca,Castilla - La Mancha,,84,,,5,94,"50,62",5,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Guadalajara,Castilla - La Mancha,,231,,,4,237,"50,62",2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Toledo,Castilla - La Mancha,,336,,,19,370,"50,62",15,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Ávila,Castilla y León,,55,,,4,63,"47,22",4,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Burgos,Castilla y León,,175,,,12,208,"47,22",21,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,León,Castilla y León,,156,,,5,164,"47,22",3,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Palencia,Castilla y León,,25,,,0,26,"47,22",1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Salamanca,Castilla y León,,180,,,13,203,"47,22",10,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Segovia,Castilla y León,,140,,,10,156,"47,22",6,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Soria,Castilla y León,,71,,,5,80,"47,22",4,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Valladolid,Castilla y León,,193,,,5,201,"47,22",3,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Zamora,Castilla y León,,42,,,1,46,"47,22",3,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Cataluña,Cataluña,,3185,,,82,3270,"42,29",3,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Ceuta,Ceuta,,5,,,0,5,"5,9",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Alicante/Alacant,Comunitat Valenciana,,348,,,17,372,"21,48",7,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
+2020-03-20,Castellón/Castelló,Comunitat Valenciana,,102,,,1,104,"21,48",1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
+2020-03-20,Valencia/València,Comunitat Valenciana,,600,,,15,627,"21,48",12,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
+2020-03-20,Badajoz,Extremadura,,86,,,0,91,"27,25",5,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Cáceres,Extremadura,,194,,,10,206,"27,25",2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,"Coruña, A",Galicia,,267,,,3,270,"21,30",5¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
+2020-03-20,Lugo,Galicia,,45,,,1,46,"21,30",5¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
+2020-03-20,Ourense,Galicia,,63,,,0,63,"21,30",5¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
+2020-03-20,Pontevedra,Galicia,,191,,,2,193,"21,30",5¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
+2020-03-20,Madrid,"Madrid, Comunidad de",,5351,,,628,7165,"105,47",1186,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Melilla,Melilla,,24,,,0,24,"27,75",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Murcia,Murcia,,213,,,1,215,"13,66",1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Navarra,"Navarra, Comunidad Foral de",,582,,,9,593,"84,22",2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Araba/Álava,País Vasco,,655,,,48,703,"64,32",21¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹El Gobierno Vasco no especifica el lugar de las altas.
+2020-03-20,Bizkaia,País Vasco,,522,,,17,539,"64,32",21¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹El Gobierno Vasco no especifica el lugar de las altas.
+2020-03-20,Gipuzkoa,País Vasco,,217,,,6,223,"64,32",21¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹El Gobierno Vasco no especifica el lugar de las altas.
+2020-03-20,La Rioja,"Rioja, La",,477,,,7,497,"147,73",13,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
