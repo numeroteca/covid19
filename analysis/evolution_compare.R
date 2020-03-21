@@ -26,85 +26,7 @@ compare_countries <- rbind(compare_countries, data_f_cases_to_bind)
 
 compare_countries$cases_registered[1] + compare_countries$cases_registered[3]
 
-
-
-# Cases compare -----------------
-p <- compare_countries %>%
-# compare_countries %>% # filter(region =="Lazio")  %>% #  filter(country !="Italy") %>%
-  ggplot() +
-  # geom_point(aes(date, cases_registered, color=country ), size= 0.7) +
-  geom_line(aes(date, cases_registered, group=region, color=country ), size= 0.5) +
-  # Scales
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
-                 minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
-  scale_x_date(date_breaks = "1 day", 
-               date_labels = "%d"
-  ) + 
-  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
-  theme(
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
-    # legend.position = "none"
-  ) +
-  labs(title = "Confirmed accumulated COVID-19 registed cases in Spain, Italy and France by region",
-       subtitle = paste0("By region (log scale). ",period),
-       y = "registered cases (log scale)",
-       x = "date",
-       caption = caption_en)
-
-fig <- ggplotly(p)
-
-# save to interactive/spain-italy-france_cases_regions-evolution.jtml
-fig %>% 
-  layout(annotations = 
-           list(x = 1, y = -0.1, text = "lab.montera34.com/covid19 | Data: various official sources. Check website.", 
-                showarrow = F, xref='paper', yref='paper', 
-                xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                font=list(size=15, color="grey"))
-  )
-
-
-# Cases per 100.000-----------------
-q <- compare_countries %>%
-  ggplot() +
-  # geom_point(aes(date, cases_registered, color=country ), size= 0.7) +
-  geom_line(aes(date, cases_per_100000, group=region, color=country ), size= 0.5) +
-  # Scales
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
-                 minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ),
-                 limits = c(1,max(compare_countries$cases_per_100000))
-                 ) +
-  scale_x_date(date_breaks = "1 day", 
-               date_labels = "%d"
-  ) + 
-  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
-  theme(
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
-    # legend.position = "none"
-  ) +
-  labs(title = "Confirmed accumulated COVID-19 registered cases in Spain, Italy and France by region per 100.000 inhabitants",
-       subtitle = paste0("By region ",period),
-       y = "cases per 100.000 inhabitants (log scale)",
-       x = "date",
-       caption = caption_en)
-
-figq <- ggplotly(q)
-
-# save to spain-italy-france_cases_regions-evolution-by-100000-inhabitans.html
-figq %>% 
-  layout(annotations = 
-           list(x = 1, y = -0.1, text = "lab.montera34.com/covid19 | Data: various official sources. Check website.", 
-                showarrow = F, xref='paper', yref='paper', 
-                xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                font=list(size=15, color="grey"))
-  )
-
-
+# 1. Print plots
 # plot cases ----------------
 png(filename=paste("img/compare/covid19_casos-registrados-superpuesto-countries-regions-log.png", sep = ""),width = 1500,height = 700)
 data_cases %>%
@@ -276,11 +198,11 @@ data_death %>% filter (CCAA != "Total") %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
-# Scales
-scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
-               minor_breaks = c(  seq(0.1 , 1, 0.1),seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ),
-               # limits = c(0.1,20)
-) +
+  # Scales
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+                 minor_breaks = c(  seq(0.1 , 1, 0.1),seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ),
+                 # limits = c(0.1,20)
+  ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_cases$date), max(data_cases$date + 8))
@@ -342,13 +264,13 @@ data_death %>%
   #                 family = "Roboto Condensed",
   #                 direction="y",
   #                 segment.size = 0.1,
-  #                 segment.color="#777777"
-  # ) +
-  # Scales
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
-                 minor_breaks = c(  seq(0.1 , 1, 0.1),seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) )
-                 # limits = c(min(data_i_cases$deceassed_per_100000),max(data_i_cases$deceassed_per_100000))
-                 ) +
+#                 segment.color="#777777"
+# ) +
+# Scales
+scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+               minor_breaks = c(  seq(0.1 , 1, 0.1),seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) )
+               # limits = c(min(data_i_cases$deceassed_per_100000),max(data_i_cases$deceassed_per_100000))
+) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c(  min(data_i_cases$date), max(data_cases$date + 8))
@@ -367,6 +289,85 @@ data_death %>%
        x = "date",
        caption = caption_en)
 dev.off()
+
+
+# 2. interactive -----------------------
+# Cases compare ----------------- 
+p <- compare_countries %>%
+# compare_countries %>% # filter(region =="Lazio")  %>% #  filter(country !="Italy") %>%
+  ggplot() +
+  # geom_point(aes(date, cases_registered, color=country ), size= 0.7) +
+  geom_line(aes(date, cases_registered, group=region, color=country ), size= 0.5) +
+  # Scales
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+                 minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d"
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000")
+    # legend.position = "none"
+  ) +
+  labs(title = "Confirmed accumulated COVID-19 registed cases in Spain, Italy and France by region",
+       subtitle = paste0("By region (log scale). ",period),
+       y = "registered cases (log scale)",
+       x = "date",
+       caption = caption_en)
+
+fig <- ggplotly(p)
+
+# save to interactive/spain-italy-france_cases_regions-evolution.jtml
+fig %>% 
+  layout(annotations = 
+           list(x = 1, y = -0.1, text = "lab.montera34.com/covid19 | Data: various official sources. Check website.", 
+                showarrow = F, xref='paper', yref='paper', 
+                xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                font=list(size=15, color="grey"))
+  )
+
+
+# Cases per 100.000-----------------
+q <- compare_countries %>%
+  ggplot() +
+  # geom_point(aes(date, cases_registered, color=country ), size= 0.7) +
+  geom_line(aes(date, cases_per_100000, group=region, color=country ), size= 0.5) +
+  # Scales
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+                 minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ),
+                 limits = c(1,max(compare_countries$cases_per_100000))
+                 ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d"
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000")
+    # legend.position = "none"
+  ) +
+  labs(title = "Confirmed accumulated COVID-19 registered cases in Spain, Italy and France by region per 100.000 inhabitants",
+       subtitle = paste0("By region ",period),
+       y = "cases per 100.000 inhabitants (log scale)",
+       x = "date",
+       caption = caption_en)
+
+figq <- ggplotly(q)
+
+# save to spain-italy-france_cases_regions-evolution-by-100000-inhabitans.html
+figq %>% 
+  layout(annotations = 
+           list(x = 1, y = -0.1, text = "lab.montera34.com/covid19 | Data: various official sources. Check website.", 
+                showarrow = F, xref='paper', yref='paper', 
+                xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                font=list(size=15, color="grey"))
+  )
+
 
 # deceassed total log ---------------------
 m <- compare_countries %>%
