@@ -891,16 +891,16 @@ dev.off()
 # Contribution by @lorezmt
 
 # create shorted dataframe
-data_death2 <- data_death%>% filter(date >= "2020-03-10") # sets starting day
+data_death2 <- data_death%>% filter(date >= "2020-03-16") # sets starting day
 
 xx <- seq_along(unique(data_death2$date))
 # creates empty vectors
 y_percent2 <- vector(length=length(xx))
 # fill firs value
-y_percent2[[1]] <- 21 # sets starting value
+y_percent2[[1]] <- 213 # sets starting value
 # create data series with certain % of growth
 for (i in 2:length(xx)) {
-  y_percent2[[i]] <- y_percent2[[i-1]] + y_percent2[[i-1]]*0.4 # grows n %
+  y_percent2[[i]] <- y_percent2[[i-1]] + y_percent2[[i-1]]*0.27 # grows n %
 }
 # creates the data fame
 data_unique2 <- arrange(data_death2, date) %>% select(date) %>% unique()
@@ -1057,14 +1057,14 @@ data_death %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-lineal-with-curve.png", sep = ""),width = 1200,height = 700)
+png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-lineal-with-curve-27.png", sep = ""),width = 1200,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
+  geom_line(data = crec2, aes(x = date, y = y_percent2), linetype = 2, size = 2, color ="#444444") +
+  geom_text(data = crec2[1,],aes(as.Date("2020-03-16"),740,label="curva: un 27% más de casos cada día"), 
+            size = 8, base_family = "Roboto Condensed") +
   geom_line(aes(date,death,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,death, color=CCAA), size= 1.5 ) +
-  geom_line(data = crec2, aes(x = date, y = y_percent2), linetype = 2, size = 1, color ="#444444") +
-  geom_text(data = crec2[1,],aes(as.Date("2020-03-8"),100,label="curva: un 41% más de casos cada día"), 
-            size = 8, base_family = "Roboto Condensed") +
   geom_text_repel(data=filter( data_death, date==max(data_death$date),  CCAA != "Total"),
                   aes(date,death, color=CCAA, label=paste(format(death, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
@@ -1129,14 +1129,14 @@ data_death %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-log-with-curve.png", sep = ""),width = 1200,height = 700)
+png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-log-with-curve-27.png", sep = ""),width = 1200,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
+  geom_line(data = crec2, aes(x = date, y = y_percent2), linetype = 2, size = 2, color ="#444444") +
+  geom_text(data = crec2[1,],aes(as.Date("2020-03-14"),750,label="línea: un 27% más de fallecimientos cada día"), 
+            size = 8, base_family = "Roboto Condensed") +
   geom_line(aes(date,death,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,death, color=CCAA), size= 1.5 ) +
-  geom_line(data = crec2, aes(x = date, y = y_percent2), linetype = 2, size = 1, color ="#444444") +
-  geom_text(data = crec2[1,],aes(as.Date("2020-03-8"),100,label="línea: un 41% más de casos cada día"), 
-            size = 8, base_family = "Roboto Condensed") +
   geom_text_repel(data=filter( data_death, date==max(data_death$date),  CCAA != "Total"),
                   aes(date,death, color=CCAA, label=paste(format(death, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
