@@ -33,7 +33,7 @@ data_cases_sp_provinces$deceassed_per_100000 <- round( data_cases_sp_provinces$d
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: montera34.com | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 03.20"
+period <- "2020.02.27 - 03.21"
 
 # Plots --------------------
 # / 1. Cases ------------

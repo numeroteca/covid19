@@ -268,7 +268,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-16,Badajoz,Extremadura,11,,,1,0,39,,3,https://www.elperiodicoextremadura.com/noticias/sociedad/extremadura-suma-128-casos-coronavirus-dos-focos-arroyo-malpartida-plasenca_1224497.html,
 2020-03-17,Badajoz,Extremadura,11,,,1,0,50,,3,https://www.hoy.es/extremadura/extremadura-registra-casos-20200317123937-nt.html,
 2020-03-18,Badajoz,Extremadura,11,,,1,0,61,,4,http://www.juntaex.es/comunicacion/noticia?idPub=29940#.XnOlYnJ7mM8,
-2020-03-19,Badajoz,Extremadura,,73,,,0,77,"22,01",4,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-19,Badajoz,Extremadura,16,73,11,1,0,77,"22,01",4,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,http://www.juntaex.es/comunicacion/noticia?idPub=29949#.XnYrdXJ7mM8
 2020-03-01,Cáceres,Extremadura,2,,,0,0,2,,0,https://www.hoy.es/extremadura/sanidad-confirma-coronavirus-20200301102100-nt.html,
 2020-03-02,Cáceres,Extremadura,0,,,0,0,2,,0,http://www.juntaex.es/comunicacion/noticia?idPub=29831#.XnOS0XJ7mM9,
 2020-03-03,Cáceres,Extremadura,0,,,0,0,2,,0,,
@@ -287,7 +287,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-16,Cáceres,Extremadura,22,,,1,3,89,,2,https://www.elperiodicoextremadura.com/noticias/sociedad/extremadura-suma-128-casos-coronavirus-dos-focos-arroyo-malpartida-plasenca_1224497.html,
 2020-03-17,Cáceres,Extremadura,14,,,2,5,103,,2,https://www.hoy.es/extremadura/extremadura-registra-casos-20200317123937-nt.html,
 2020-03-18,Cáceres,Extremadura,30,,,2,8,133,,2,http://www.juntaex.es/comunicacion/noticia?idPub=29940#.XnOlYnJ7mM8,
-2020-03-19,Cáceres,Extremadura,,153,,,9,164,"22,01",2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-19,Cáceres,Extremadura,31,153,24,2,9,164,"22,01",2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,http://www.juntaex.es/comunicacion/noticia?idPub=29949#.XnYrdXJ7mM8
 2020-03-19,"Coruña, A",Galicia,,219,,,3,222,"16,74",4¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
 2020-03-19,Lugo,Galicia,,36,,,0,36,"16,74",4¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
 2020-03-19,Ourense,Galicia,,46,,,0,46,"16,74",4¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
@@ -446,8 +446,8 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-20,Alicante/Alacant,Comunitat Valenciana,,348,,,17,372,"21,48",7,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
 2020-03-20,Castellón/Castelló,Comunitat Valenciana,,102,,,1,104,"21,48",1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
 2020-03-20,Valencia/València,Comunitat Valenciana,,600,,,15,627,"21,48",12,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
-2020-03-20,Badajoz,Extremadura,,86,,,0,91,"27,25",5,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
-2020-03-20,Cáceres,Extremadura,,194,,,10,206,"27,25",2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-20,Badajoz,Extremadura,14,86,12,1,0,91,"27,25",5,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,http://www.juntaex.es/comunicacion/noticia?idPub=29953#.XnYvbXJ7mM8
+2020-03-20,Cáceres,Extremadura,42,194,29,3,10,206,"27,25",2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,http://www.juntaex.es/comunicacion/noticia?idPub=29953#.XnYvbXJ7mM8
 2020-03-20,"Coruña, A",Galicia,,267,,,3,270,"21,30",5¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
 2020-03-20,Lugo,Galicia,,45,,,1,46,"21,30",5¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
 2020-03-20,Ourense,Galicia,,63,,,0,63,"21,30",5¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
@@ -460,3 +460,57 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-20,Bizkaia,País Vasco,,522,,,17,539,"64,32",21¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹El Gobierno Vasco no especifica el lugar de las altas.
 2020-03-20,Gipuzkoa,País Vasco,,217,,,6,223,"64,32",21¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹El Gobierno Vasco no especifica el lugar de las altas.
 2020-03-20,La Rioja,"Rioja, La",,477,,,7,497,"147,73",13,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Almería,Andalucía,,53,,,0,53,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-21,Cádiz,Andalucía,,126,,,0,126,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-21,Córdoba,Andalucía,,140,,,3,143,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-21,Granada,Andalucía,,276,,,13,289,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-21,Huelva,Andalucía,,37,,,0,37,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-21,Jaén,Andalucía,,136,,,2,138,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-21,Málaga,Andalucía,,464,,,20,484,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-21,Sevilla,Andalucía,,243,,,2,245,"15,05",72¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-21,Huesca,Aragón,,37,,,0,37,"26,83",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
+2020-03-21,Teruel,Aragón,,45,,,2,47,"26,83",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
+2020-03-21,Zaragoza,Aragón,,315,,,14,329,"26,83",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
+2020-03-21,Asturias,"Asturias, Principado de",,467,,,7,486,"33,14",12,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Baleares,"Balears, Illes",,246,,,4,246,"17,14",10¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹El Govern balear no especifica el lugar de los recuperados ni de las muertes.
+2020-03-21,El Hierro,Canarias,,1,,,0,1,"12,82",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Fuerteventura,Canarias,,13,,,0,13,"12,82",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Gran Canaria,Canarias,,96,,,1,97,"12,82",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,La Gomera,Canarias,,1,,,0,3,"12,82",2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Lanzarote,Canarias,,4,,,0,4,"12,82",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,La Palma,Canarias,,11,,,0,11,"12,82",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Tenerife,Canarias,,211,,,4,219,"12,82",4,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Cantabria,Cantabria,,200,,,4,215,"23,06",11,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Albacete,Castilla - La Mancha,,390,,,32,430,"50,62",8,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Ciudad Real,Castilla - La Mancha,,457,,,40,505,"50,62",8,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Cuenca,Castilla - La Mancha,,104,,,8,120,"50,62",8,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Guadalajara,Castilla - La Mancha,,257,,,4,263,"50,62",2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Toledo,Castilla - La Mancha,,451,,,28,501,"50,62",22,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Ávila,Castilla y León,,55,,,7,114,"47,22",14,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Burgos,Castilla y León,,175,,,14,269,"47,22",27,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,León,Castilla y León,,156,,,7,201,"47,22",3,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Palencia,Castilla y León,,25,,,0,41,"47,22",2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Salamanca,Castilla y León,,180,,,15,265,"47,22",13,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Segovia,Castilla y León,,140,,,13,157,"47,22",9,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Soria,Castilla y León,,71,,,6,119,"47,22",5,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Valladolid,Castilla y León,,193,,,10,241,"47,22",13,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Zamora,Castilla y León,,42,,,2,59,"47,22",3,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Cataluña,Cataluña,,4078,,,122,4203,"42,29",3,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Ceuta,Ceuta,,5,,,0,5,"5,9",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Alicante/Alacant,Comunitat Valenciana,,348,,,17,372,"21,48",7,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
+2020-03-21,Castellón/Castelló,Comunitat Valenciana,,102,,,1,104,"21,48",1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
+2020-03-21,Valencia/València,Comunitat Valenciana,,600,,,15,627,"21,48",12,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
+2020-03-21,Badajoz,Extremadura,,104,,,2,111,"27,25",5,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Cáceres,Extremadura,,231,,,10,243,"27,25",2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,"Coruña, A",Galicia,,326,,,3,329,"21,30",5¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
+2020-03-21,Lugo,Galicia,,53,,,1,54,"21,30",5¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
+2020-03-21,Ourense,Galicia,,74,,,0,74,"21,30",5¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
+2020-03-21,Pontevedra,Galicia,,262,,,2,264,"21,30",5¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
+2020-03-21,Madrid,"Madrid, Comunidad de",,6931,,,804,8921,"105,47",1186,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Melilla,Melilla,,25,,,0,25,"27,75",0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Murcia,Murcia,,213,,,1,215,"13,66",1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Navarra,"Navarra, Comunidad Foral de",,652,,,10,664,"84,22",2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-21,Araba/Álava,País Vasco,,746,,,55,801,"64,32",21¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹El Gobierno Vasco no especifica el lugar de las altas.
+2020-03-21,Bizkaia,País Vasco,,632,,,19,651,"64,32",21¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹El Gobierno Vasco no especifica el lugar de las altas.
+2020-03-21,Gipuzkoa,País Vasco,,262,,,11,273,"64,32",21¹,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹El Gobierno Vasco no especifica el lugar de las altas.
+2020-03-21,La Rioja,"Rioja, La",,536,,,15,564,"147,73",13,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
