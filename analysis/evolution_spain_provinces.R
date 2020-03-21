@@ -107,7 +107,7 @@ data_cases_sp_provinces %>%
 dev.off()
 
 
-png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-region-grouped-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-region-grouped-log.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
   geom_line(data = select(data_cases_sp_provinces_sm,date,cases_accumulated,province_cp,-province),
@@ -139,7 +139,7 @@ dev.off()
 
   # // 1.2 Superpuesto ---------------
 # ---- Provincias superpuesto -----
-png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-superpuesto-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-superpuesto-lineal.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
   geom_line(aes(date,cases_accumulated,group=province, color=province ), size = 1.0  ) +
@@ -181,7 +181,7 @@ data_cases_sp_provinces %>%
        caption = caption_provincia)
 dev.off()
 
-png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-superpuesto-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-superpuesto-log.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
   geom_line(aes(date,cases_accumulated,group=province, color=province ), size = 1 ) +
@@ -223,7 +223,7 @@ data_cases_sp_provinces %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-superpuesto-per-cienmil-log.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
   geom_line(aes(date, cases_per_cienmil,group= province, color= province), size= 1 ) +
@@ -276,7 +276,7 @@ dev.off()
 # // 3.1 Fallecimientos Small multiple ----------
 
 # // Provincias ----------------
-png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-lineal.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
   geom_line(aes(date, deceased,group=province, color=province), size= 1 ) +
@@ -310,7 +310,7 @@ data_cases_sp_provinces %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-log.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
   geom_line(aes(date, deceased,group=province, color=province), size= 1 ) +
@@ -345,7 +345,7 @@ data_cases_sp_provinces %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
   geom_line(aes(date, deceassed_per_100000,group=province, color=province), size= 1 ) +
@@ -380,7 +380,7 @@ data_cases_sp_provinces %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-per-cienmil-log.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
   geom_line(aes(date, deceassed_per_100000,group=province, color=province), size= 1 ) +
@@ -396,7 +396,9 @@ data_cases_sp_provinces %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
-  scale_y_log10(  minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
+  scale_y_log10(  
+    limits = c(0.05,max(data_cases_sp_provinces$deceassed_per_100000)),
+    minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_death$date), max(data_death$date + 5)) 
