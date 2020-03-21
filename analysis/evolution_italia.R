@@ -52,7 +52,7 @@ caption_i <- "Gráfico: @numeroteca (montera34.com). Datos: Protezione Civile (I
 periodo_i <- "2020.02.24 - 03.20"
 # 1. Cases ------------
 
-# create temp dataframes to be able to plot all the values in small multiples
+# create temp dataframes to be able to plot all the   values in small multiples
 data_i_cases_sm <-data_i_cases
 data_i_cases_sm$region_cp <- data_i_cases$region
 

@@ -57,7 +57,7 @@ dev.off()
 
 # Deceassed ------------------------
 
-umbral_d <- 10
+umbral_d <- 40
 
 # Select the date when a region had for the first time had n (umbral = n) or more deceasses
 data_s_offset_10deceassed <- data_all_export %>% filter( deceassed >= umbral_d) %>% group_by(region) %>% filter( row_number()==1 ) %>%

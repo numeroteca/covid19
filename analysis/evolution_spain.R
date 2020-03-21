@@ -1153,7 +1153,6 @@ data_death %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-
 # --------- Relaciones --------
 # png(filename=paste("img/spain/regions/covid19_ .png", sep = ""),width = 1000,height = 700)
 data_all %>% filter( CCAA != "Total") %>%
