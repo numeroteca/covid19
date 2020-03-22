@@ -223,6 +223,44 @@ data_cases_sp_provinces %>%
        caption = caption)
 dev.off()
 
+png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1200,height = 700)
+data_cases_sp_provinces %>%
+  ggplot() +
+  geom_line(aes(date, cases_per_cienmil,group= province, color= province), size= 1 ) +
+  geom_point(aes(date,cases_per_cienmil, color=province), size= 1.5 ) +
+  geom_text_repel(data=filter( data_cases_sp_provinces, 
+                               date==max(data_cases_sp_provinces$date) 
+  ), 
+  aes(date,cases_per_cienmil, color=province, label=paste(format(cases_per_cienmil, nsmall=1, big.mark=".", digits = 1), province)),
+          nudge_x = 3, # adjust the starting y position of the text label
+          size=5,
+          hjust=0,
+          family = "Roboto Condensed",
+          direction="y",
+          segment.size = 0.1,
+          segment.color="#333333"
+  ) +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".",small.mark = ",", scientific = FALSE),
+                 ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 6)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España",
+       subtitle = paste0("Por provincia [sin Cataluña y Canarias] (escala lineal). ",period),
+       y = "casos registrados por 100.000 habitantes",
+       x = "fecha",
+       caption = caption_provincia)
+dev.off()
+
 png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-superpuesto-per-cienmil-log.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
