@@ -349,10 +349,10 @@ test %>%
     axis.ticks.x = element_line(color = "#000000")
     # legend.position = "none"
   ) +
-  labs(title = paste0("Número de fallecimientos de COVID-19 registrados. Días desde ",umbral ," o más casos"),
+  labs(title = paste0("Número de fallecimientos de COVID-19 registrados. Días desde ",umbral ," o más fallecimientos"),
        subtitle = paste0("Por región en España e Italia (escala logarítmica). "),
-       y = "casos registrados",
-       x = paste0("días desde ", umbral , " o más casos"),
+       y = "fallecimientos registrados",
+       x = paste0("días desde ", umbral , " o más fallecimientos"),
        caption ="By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website.")
 dev.off()
 
