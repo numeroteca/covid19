@@ -11,7 +11,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: montera34.com | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 03.21"
+period <- "2020.02.27 - 03.22"
 
 # Load Data ---------
 # / Population -------------
@@ -147,7 +147,8 @@ ggplot() +
   facet_wrap( ~CCAA) +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "2 day", 
-                date_labels = "%d"
+                date_labels = "%d",
+               expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -177,7 +178,8 @@ ggplot() +
     minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d"
+               date_labels = "%d",
+               expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -203,7 +205,8 @@ data_cases %>% filter( CCAA != "Total") %>%
   geom_point(aes(date,per_cienmil,group=CCAA), size = 0.5 ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d"
+               date_labels = "%d",
+               expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -232,7 +235,8 @@ data_cases %>% filter( CCAA != "Total") %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 3000, 100) )) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d"
+               date_labels = "%d",
+               expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -255,16 +259,18 @@ dev.off()
 # Contribution by @lorezmt
 
 # create shorted dataframe
-data_cases2 <- data_cases %>% filter(date >= "2020-03-09") # sets starting day
+data_cases2 <- data_cases %>% filter(date >= "2020-03-14") # sets starting day
+
+slope <- 22
 
 x <- seq_along(unique(data_cases2$date))
 # creates empty vectors
 y_percent <- vector(length=length(x))
 # fill firs value
-y_percent[[1]] <- 469 # sets starting value
+y_percent[[1]] <- 2940 # sets starting value
 # create data series with certain % of growth
 for (i in 2:length(x)) {
-  y_percent[[i]] <- y_percent[[i-1]] + y_percent[[i-1]]*0.28 # grows n %
+  y_percent[[i]] <- y_percent[[i-1]] + y_percent[[i-1]]* (slope /100) # grows n %
 }
 # creates the data fame
 data_unique <- arrange(data_cases2, date) %>% select(date) %>% unique()
@@ -329,14 +335,14 @@ data_cases %>%
   ggplot() +
   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,value, color=CCAA), size= 2 ) +
-  geom_text(data = crec[1,],aes(as.Date("2020-03-6"),1500,label="curva: un 28% más de casos cada día"), 
+  geom_text(data = crec[1,],aes(as.Date("2020-03-6"),1500, label=paste0("curva: un ", slope, "% más de casos cada día")), 
             size = 8, base_family = "Roboto Condensed") +
   geom_line(data = crec, aes(x = date, y = y_percent), linetype = 2, size = 1, color ="#444444") +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
                   aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  # hjust=0,
+                  hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
@@ -369,7 +375,7 @@ data_cases2 %>%
   ggplot(aes(x = unique(date))) +
   geom_line(aes(date,value,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,value,color=CCAA), size= 1.5 ) +
-  geom_text(data = crec[1,],aes(as.Date("2020-03-15"),1050,label="línea: un 28% más de casos cada día"), 
+  geom_text(data = crec[1,],aes(as.Date("2020-03-15"),1050,label=paste0("línea: un ", slope, "% más de casos cada día")), 
             size = 5, base_family = "Roboto Condensed") +
   geom_line(data = crec, aes(y = y_percent), linetype = 2, size = 1, color ="#444444") +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date)), 
@@ -386,7 +392,7 @@ data_cases2 %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases2$date), max(data_cases2$date + 2)) 
+               limits=c( min(data_cases2$date), max(data_cases2$date + 3)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -646,7 +652,8 @@ data_uci %>% filter( CCAA != "Total") %>%
   geom_point(aes(date,uci),size = 0.5 ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d"
+               date_labels = "%d",
+               expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -673,7 +680,8 @@ data_uci %>% filter( CCAA != "Total") %>%
   scale_y_log10( minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d"
+               date_labels = "%d",
+               expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -700,7 +708,8 @@ data_uci %>% filter( CCAA != "Total") %>%
   geom_point(aes(date,uci_per_cienmil,group=CCAA), size = 0.5 ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d"
+               date_labels = "%d",
+               expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -728,7 +737,8 @@ data_uci %>% filter( CCAA != "Total") %>%
   scale_y_log10( minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) )) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d"
+               date_labels = "%d",
+               expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -763,7 +773,8 @@ data_uci %>% filter( CCAA != "Total") %>%
   ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_uci$date), max(data_uci$date + 1.5)) 
+               limits=c( min(data_uci$date), max(data_uci$date + 1.5)),
+               
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -921,7 +932,8 @@ data_death %>% filter( CCAA != "Total") %>%
   geom_point(aes(date,death), size=0.5 ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "2 day",
-               date_labels = "%d"
+               date_labels = "%d",
+               expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -949,7 +961,8 @@ data_death %>% filter( CCAA != "Total") %>%
   scale_y_log10( minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) )) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "2 day",
-               date_labels = "%d"
+               date_labels = "%d",
+               expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -976,7 +989,8 @@ data_death %>% filter( CCAA != "Total") %>%
   geom_point(aes(date,death_per_cienmil), size=0.5 ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "2 day",
-               date_labels = "%d"
+               date_labels = "%d",
+               expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1004,7 +1018,8 @@ data_death %>% filter( CCAA != "Total") %>%
   scale_y_log10( minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) )) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "2 day",
-               date_labels = "%d"
+               date_labels = "%d",
+               expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
