@@ -49,7 +49,7 @@ data_i_cases$recovered_per_100000 <- round( data_i_cases$recovered / data_i_case
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_i <- "Gráfico: @numeroteca (montera34.com). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 03.21"
+periodo_i <- "2020.02.24 - 03.22"
 # 1. Cases ------------
 
 # create temp dataframes to be able to plot all the   values in small multiples
@@ -511,7 +511,7 @@ data_i_cases %>%
   scale_y_log10( 
     limits = c(1,max(data_i_cases$deceassed)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
-    minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
+    minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
                limits=c( min(data_i_cases$date), max(data_i_cases$date +3.5)) 
@@ -547,7 +547,7 @@ data_i_cases %>%
                   segment.color="#777777"
   ) +
   scale_y_log10( 
-    # limits = c(min(data_i_cases$deceassed_per_100000),max(data_i_cases$deceassed_per_100000)),
+    limits = c(0.1,max(data_i_cases$deceassed_per_100000)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(seq(0.1 , 1, 0.1),seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
   scale_x_date(date_breaks = "2 day", 
