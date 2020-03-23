@@ -23,7 +23,10 @@ data_f_cases_to_bind$cases_per_100000 <- data_f_cases$cases_per_100000
 # Add France
 compare_countries <- rbind(compare_countries, data_f_cases_to_bind)
 
-compare_countries$cases_registered[1] + compare_countries$cases_registered[3]
+write.csv(compare_countries, file = "data/output/covid19-countries-regions-compile.csv", row.names = FALSE)
+
+
+# compare_countries$cases_registered[1] + compare_countries$cases_registered[3]
 
 # 1. Print plots ---------------
 # plot cases ----------------
@@ -293,7 +296,7 @@ dev.off()
 # setting 0 day -------------
 
 # compare_countries with "umbral" or more deceassed accumulated
-umbral <- 20
+umbral <- 5
 
 # Select the date when a region had for the first time had n (umbral = n) or more cases
 compare_countries_offset_ncases <- compare_countries %>% filter(deceassed >= umbral) %>% group_by(region) %>% arrange(date) %>% filter( row_number()==1 ) %>%
@@ -323,6 +326,7 @@ test %>%
                   segment.size = 0.1,
                   segment.color="#333333"
   ) +
+  # facet_grid(~country) +
   # Italia
   # geom_text_repel(data=filter( test, date==max(as.Date("2020-03-22")) & country == "Italia" ),
   #                 aes(days_since, deceassed, label=paste(format(deceassed, nsmall=1, big.mark="."), region)),
@@ -371,7 +375,7 @@ compare_countries_offset_ncases_per100 <- compare_countries %>% filter(deceassed
 
 test2 <- merge(compare_countries, select(compare_countries_offset_ncases_per100,region,offset ), by = "region" , all.x = TRUE)
 # calculate in numer of days since first evaluated, without date
-test2$days_since <- as.numeric(test2$date - min(compare_countries_offset_ncases_per100$date) ) - as.numeric(test$offset)
+test2$days_since <- as.numeric(test2$date - min(compare_countries_offset_ncases_per100$date) ) - as.numeric(test2$offset)
 
 
 png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-per-cienmil-log_since-", umbral ,"deceased.png"),width = 1000,height = 700)
@@ -380,8 +384,8 @@ test2 %>%
   geom_line(aes(days_since, deceassed_per_100000*10, group= region, color= country), size= 1 ) +
   geom_point(aes(days_since, deceassed_per_100000*10, color= country), size= 1.5 ) +
   # Spain
-  geom_text_repel(data=filter( test2,   date==max(as.Date("2020-03-22")) & country == "Spain"  |
-                                       date==max(as.Date("2020-03-20")) & country == "Italia"  ),
+  geom_text_repel(data=filter( test2,   date==max(as.Date("2020-03-23")) & country == "Spain"  |
+                                       date==max(as.Date("2020-03-22")) & country == "Italia"  ),
                   aes(days_since, deceassed_per_100000*10, label=paste(format(deceassed_per_100000*10, nsmall=1, big.mark="."), region)),
                   color= "#000000",
                   # nudge_x = 3, # adjust the starting y position of the text label
@@ -412,10 +416,10 @@ test2 %>%
        y = "fallecimientos registrados por 1.000.000 habitantes",
        x = paste0("días desde ", umbral , " o más fallecimientos"),
        caption ="By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website.")
-dev.off()
+  dev.off()
 
 
-# 2. interactive -----------------------
+  # 2. interactive -----------------------
 # Cases compare ----------------- 
 p <- compare_countries %>%
 # compare_countries %>% # filter(region =="Lazio")  %>% #  filter(country !="Italy") %>%
