@@ -261,7 +261,7 @@ dev.off()
 # create shorted dataframe
 data_cases2 <- data_cases %>% filter(date >= "2020-03-14") # sets starting day
 
-slope <- 22
+slope <- 18
 
 x <- seq_along(unique(data_cases2$date))
 # creates empty vectors
