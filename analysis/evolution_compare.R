@@ -22,7 +22,7 @@ data_f_cases_to_bind$cases_per_100000 <- data_f_cases$cases_per_100000
 
 # Add France
 compare_countries <- rbind(compare_countries, data_f_cases_to_bind)
-
+table(compare_countries$country)
 write.csv(compare_countries, file = "data/output/covid19-countries-regions-compile.csv", row.names = FALSE)
 
 
@@ -308,14 +308,16 @@ test <- merge(compare_countries, select(compare_countries_offset_ncases,region,o
 # calculate in numer of days since first evaluated, without date
 test$days_since <- as.numeric(test$date - min(compare_countries_offset_ncases$date) ) - as.numeric(test$offset)
 
+# png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased_en.png"),width = 1000,height = 700)
 png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased.png"),width = 1000,height = 700)
+# png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased-facet.png"),width = 1400,height = 700)
 test %>%
   ggplot() +
   geom_line(aes(days_since, deceassed, group= region, color= country), size= 1 ) +
   geom_point(aes(days_since, deceassed, color= country), size= 1.5 ) +
   # Spain
-  geom_text_repel(data=filter( test, date==max(as.Date("2020-03-22")) & country == "Spain" | 
-                                    date==as.Date("2020-03-22") & country == "Italia" ),
+  geom_text_repel(data=filter( test, date==max(as.Date("2020-03-23")) & country == "Spain" | 
+                                    date==as.Date("2020-03-23") & country == "Italia" ),
                   aes(days_since, deceassed, label=paste(format(deceassed, nsmall=1, big.mark="."), region)),
                   color= "#000000",
                   # nudge_x = 3, # adjust the starting y position of the text label
@@ -327,45 +329,40 @@ test %>%
                   segment.color="#333333"
   ) +
   # facet_grid(~country) +
-  # Italia
-  # geom_text_repel(data=filter( test, date==max(as.Date("2020-03-22")) & country == "Italia" ),
-  #                 aes(days_since, deceassed, label=paste(format(deceassed, nsmall=1, big.mark="."), region)),
-  #                 color= "#000000",
-  #                 # nudge_x = 3, # adjust the starting y position of the text label
-  #                 size=4,
-  #                 hjust=1,
-  #                 family = "Roboto Condensed",
-  #                 # direction="y",
-  #                 segment.size = 0.1,
-  #                 segment.color="#333333"
-  # ) +
   scale_y_log10(
     breaks = c(10,100,1000,2000,3000,4000),
     limits = c( umbral,max(test$deceassed)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
   scale_x_continuous(
+    breaks = c(0,5,10,15,20,25,30),
     limits=c( 0, max(test$days_since + 5))
   ) +
-  theme_minimal(base_family = "Roboto Condensed", base_size = 16) +
+  theme_minimal(base_family = "Roboto Condensed", base_size = 20) +
   theme(
     panel.grid.minor.x = element_blank(),
-    panel.grid.major.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
-    # legend.position = "none"
+    axis.ticks.x = element_line(color = "#000000"),
+    plot.caption = element_text( color="#777777",size = 14, hjust = 1),
+    legend.position = c(0.9,0.3)
   ) +
   labs(title = paste0("Número de fallecimientos de COVID-19 registrados. Días desde ",umbral ," o más fallecimientos"),
-       subtitle = paste0("Por región en España e Italia (22.03.2020) (escala logarítmica). "),
-       y = "fallecimientos registrados",
+       subtitle = paste0("Por región en España e Italia (23.03.2020) (escala logarítmica). "),
+       y = "fallecimientos registrados (escala log.)",
        x = paste0("días desde ", umbral , " o más fallecimientos"),
-       caption ="By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website.")
+       caption ="Por: @numeroteca (Montera34). lab.montera34.com/covid19 | Data: various official sources. Check website.")
+  # labs(title = paste0("Coronavirus (COVID-19) deaths in regions of Spain and Italy"),
+  #      subtitle = paste0("Cumulative number of deaths, by number of days since ",umbral ,"th death. Updated: 2020.03.23"),
+  #      y = "Number of deaths (log. scale)",
+  #      x = paste0("Days since ", umbral , "th or more cumulative deaths"),
+  #      caption ="By: @numeroteca (Montera34). https://lab.montera34.com/covid19 | Data: various official sources. Check website.")
 dev.off()
 
 # Per 100.000 inhabitants
 
 # compare_countries with "umbral" or more deceassed accumulated
-umbral2 <- 0.5
+umbral2 <- 0.5 # 0.5 deceassed per 100.00 inhab is 5 deceassed per million
 
 # Select the date when a region had for the first time had n (umbral = n) or more cases
 compare_countries_offset_ncases_per100 <- compare_countries %>% filter(deceassed_per_100000 >= umbral2) %>% group_by(region) %>% arrange(date) %>% filter( row_number()==1 ) %>%
@@ -385,7 +382,7 @@ test2 %>%
   geom_point(aes(days_since, deceassed_per_100000*10, color= country), size= 1.5 ) +
   # Spain
   geom_text_repel(data=filter( test2,   date==max(as.Date("2020-03-23")) & country == "Spain"  |
-                                       date==max(as.Date("2020-03-22")) & country == "Italia"  ),
+                                       date==max(as.Date("2020-03-23")) & country == "Italia"  ),
                   aes(days_since, deceassed_per_100000*10, label=paste(format(deceassed_per_100000*10, nsmall=1, big.mark="."), region)),
                   color= "#000000",
                   # nudge_x = 3, # adjust the starting y position of the text label
@@ -397,11 +394,11 @@ test2 %>%
                   segment.color="#333333"
   ) +
   scale_y_log10( 
-    limits = c( 3, max(test2$deceassed_per_100000*10)),
+    limits = c( umbral, max(test2$deceassed_per_100000*10)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
     minor_breaks = c(  seq(0.1 , 1, 0.1),  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
   scale_x_continuous(
-    limits=c( 0, max(test2$days_since + 5))
+    limits=c( 0, max(test2$days_since + 7))
   ) +
   theme_minimal(base_family = "Roboto Condensed", base_size = 16) +
   theme(
@@ -412,11 +409,11 @@ test2 %>%
     # legend.position = "none"
   ) +
   labs(title = paste0("Número de fallecimientos de COVID-19 registrados por 1.000.000 habitantes. Días desde ",umbral ," o más fallecimientos"),
-       subtitle = paste0("Por región en España e Italia (escala logarítmica). "),
+       subtitle = paste0("Por región en España e Italia (23.03.2020) (escala logarítmica). "),
        y = "fallecimientos registrados por 1.000.000 habitantes",
        x = paste0("días desde ", umbral , " o más fallecimientos"),
        caption ="By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website.")
-  dev.off()
+dev.off()
 
 
   # 2. interactive -----------------------
