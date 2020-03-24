@@ -7,7 +7,11 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 
 # COVID-19 in France-----------
 # data_f_cases_original <- read.delim("data/original/france/covid19.csv",sep = ",")  
-data_f_cases_original <- read.delim("https://www.data.gouv.fr/fr/datasets/r/fa9b8fc8-35d5-4e24-90eb-9abe586b0fa5",sep = ",")  
+# original source
+# data_f_cases_original <- read.delim("https://www.data.gouv.fr/fr/datasets/r/fa9b8fc8-35d5-4e24-90eb-9abe586b0fa5",sep = ",")
+# new source
+data_f_cases_original <- read.delim("https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.csv",sep = ",") %>% filter( granularite == "region")
+table(data_f_cases_original$source_nom)
 
 # Population
 population_f_region <- read.delim("data/original/france/ccaa-poblacion.csv",sep = ",")  

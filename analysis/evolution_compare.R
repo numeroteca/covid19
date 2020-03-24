@@ -400,19 +400,20 @@ test2 %>%
   scale_x_continuous(
     limits=c( 0, max(test2$days_since + 7))
   ) +
-  theme_minimal(base_family = "Roboto Condensed", base_size = 16) +
+  theme_minimal(base_family = "Roboto Condensed", base_size = 18) +
   theme(
     panel.grid.minor.x = element_blank(),
-    panel.grid.major.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
-    # legend.position = "none"
+    axis.ticks.x = element_line(color = "#000000"),
+    plot.caption = element_text( color="#777777",size = 14, hjust = 1),
+    legend.position = c(0.9,0.3)
   ) +
-  labs(title = paste0("Número de fallecimientos de COVID-19 registrados por 1.000.000 habitantes. Días desde ",umbral ," o más fallecimientos"),
-       subtitle = paste0("Por región en España e Italia (23.03.2020) (escala logarítmica). "),
-       y = "fallecimientos registrados por 1.000.000 habitantes",
-       x = paste0("días desde ", umbral , " o más fallecimientos"),
-       caption ="By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website.")
+  labs(title = paste0("Número de fallecimientos de COVID-19 registrados por 1.000.000 habitantes por región en España e Italia"),
+       subtitle = paste0("Muertes acumuladas desde ", umbral , " o más fallecimientos por millón de habitantes (23.03.2020). Escala logarítmica"),
+       y = "fallecimientos registrados por 1.000.000 habitantes (escala log)",
+       x = paste0("días desde ", umbral , " o más fallecimientos por 1.000.000 habitantes"),
+       caption ="Por: @numeroteca (Montera34). lab.montera34.com/covid19 | Data: various official sources. Check website.")
 dev.off()
 
 
