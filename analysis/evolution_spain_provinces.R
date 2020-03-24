@@ -33,7 +33,7 @@ data_cases_sp_provinces$deceassed_per_100000 <- round( data_cases_sp_provinces$d
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: montera34.com | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 03.21"
+period <- "2020.02.27 - 03.23"
 
 # Plots --------------------
 # / 1. Cases ------------
@@ -142,15 +142,15 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-superpuesto-lineal.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(aes(date,cases_accumulated,group=province, color=province ), size = 1.0  ) +
-  geom_point(aes(date,cases_accumulated,group=province, color=province), size = 1.5 ) +
+  geom_line(aes(date,cases_accumulated,group=province, color=ccaa ), size = 1.0  ) +
+  geom_point(aes(date,cases_accumulated,group=province, color=ccaa), size = 1.5 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, 
                                date==max(data_cases_sp_provinces$date) & cases_accumulated > 100
                                  # ( province == "Castellón/Castelló" & date==max(data_cases_sp_provinces$date -2) ) |
                                  # ( province == "Alicante/Alacant" & date==max(data_cases_sp_provinces$date -2) ) |
                                  # ( province == "Valencia/València" & date==max(data_cases_sp_provinces$date -2) )  
   ), 
-        aes(date, cases_accumulated, color=province, label=paste(format(cases_accumulated, nsmall=1, big.mark="."),province)),
+        aes(date, cases_accumulated, color=ccaa, label=paste(format(cases_accumulated, nsmall=1, big.mark="."),province)),
               nudge_x = 3, # adjust the starting y position of the text label
               size=5,
               hjust=0,
@@ -172,7 +172,7 @@ data_cases_sp_provinces %>%
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = "none"
+    legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
        subtitle = paste0("Por provincia [Cataluña sin desagregar, Canarias por islas] (escala lineal). ",period),
@@ -184,15 +184,15 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-superpuesto-log.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(aes(date,cases_accumulated,group=province, color=province ), size = 1 ) +
-  geom_point(aes(date,cases_accumulated,group=province, color=province), size = 1.5 ) +
+  geom_line(aes(date,cases_accumulated,group=province, color=ccaa ), size = 1 ) +
+  geom_point(aes(date,cases_accumulated,group=province, color=ccaa), size = 1.5 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, 
                                date==max(data_cases_sp_provinces$date) & cases_accumulated > 10
                                  # ( province == "Castellón/Castelló" & date==max(data_cases_sp_provinces$date -2) ) |
                                  # ( province == "Alicante/Alacant" & date==max(data_cases_sp_provinces$date -2) ) |
                                  # ( province == "Valencia/València" & date==max(data_cases_sp_provinces$date -2) )  
   ), 
-      aes(date, cases_accumulated, color=province, label=paste(format(cases_accumulated, nsmall=1, big.mark="."), province)),
+      aes(date, cases_accumulated, color=ccaa, label=paste(format(cases_accumulated, nsmall=1, big.mark="."), province)),
           nudge_x = 3, # adjust the starting y position of the text label
           size=5,
           hjust=0,
@@ -214,7 +214,7 @@ data_cases_sp_provinces %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = "none"
+    legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
        subtitle = paste0("Por comunidad autónoma [Cataluña sin desagregar, Canarias por islas] (escala logarítmica). ",period),
@@ -226,12 +226,12 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(aes(date, cases_per_cienmil,group= province, color= province), size= 1 ) +
-  geom_point(aes(date,cases_per_cienmil, color=province), size= 1.5 ) +
+  geom_line(aes(date, cases_per_cienmil,group= province, color= ccaa), size= 1 ) +
+  geom_point(aes(date,cases_per_cienmil, color=ccaa), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, 
                                date==max(data_cases_sp_provinces$date) 
   ), 
-  aes(date,cases_per_cienmil, color=province, label=paste(format(cases_per_cienmil, nsmall=1, big.mark=".", digits = 1), province)),
+  aes(date,cases_per_cienmil, color=ccaa, label=paste(format(cases_per_cienmil, nsmall=1, big.mark=".", digits = 1), province)),
           nudge_x = 3, # adjust the starting y position of the text label
           size=5,
           hjust=0,
@@ -252,7 +252,7 @@ data_cases_sp_provinces %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = "none"
+    legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España",
        subtitle = paste0("Por provincia [sin Cataluña y Canarias] (escala lineal). ",period),
@@ -264,15 +264,15 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-superpuesto-per-cienmil-log.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(aes(date, cases_per_cienmil,group= province, color= province), size= 1 ) +
-  geom_point(aes(date,cases_per_cienmil, color=province), size= 1.5 ) +
+  geom_line(aes(date, cases_per_cienmil,group= province, color= ccaa), size= 1 ) +
+  geom_point(aes(date,cases_per_cienmil, color=ccaa), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, 
                                date==max(data_cases_sp_provinces$date) 
                                  # ( province == "Castellón/Castelló" & date==max(data_cases_sp_provinces$date -1) ) |
                                  # ( province == "Alicante/Alacant" & date==max(data_cases_sp_provinces$date -1) ) |
                                  # ( province == "Valencia/València" & date==max(data_cases_sp_provinces$date -1) )  
                       ), 
-                      aes(date,cases_per_cienmil, color=province, label=paste(format(cases_per_cienmil, nsmall=1, big.mark=".", digits = 1), province)),
+                      aes(date,cases_per_cienmil, color=ccaa, label=paste(format(cases_per_cienmil, nsmall=1, big.mark=".", digits = 1), province)),
                       nudge_x = 3, # adjust the starting y position of the text label
                               size=5,
                               hjust=0,
@@ -295,7 +295,7 @@ data_cases_sp_provinces %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = "none"
+    legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España",
        subtitle = paste0("Por provincia [sin Cataluña y Canarias] (escala logarítmica). ",period),
@@ -317,10 +317,10 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-lineal.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(aes(date, deceased,group=province, color=province), size= 1 ) +
-  geom_point(aes(date, deceased, color=province), size= 1.5 ) +
+  geom_line(aes(date, deceased,group=province, color=ccaa), size= 1 ) +
+  geom_point(aes(date, deceased, color=ccaa), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & deceased > 0), 
-                  aes(date, deceased, color=province, label=paste(format(deceased, nsmall=1, big.mark="."),province)),
+                  aes(date, deceased, color=ccaa, label=paste(format(deceased, nsmall=1, big.mark="."),province)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -339,7 +339,7 @@ data_cases_sp_provinces %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = "none"
+    legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
        subtitle = paste0("Por provincia [Cataluña sin desagregar, Canarias por islas] (escala lineal). ",period),
@@ -351,10 +351,10 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-log.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(aes(date, deceased,group=province, color=province), size= 1 ) +
-  geom_point(aes(date, deceased, color=province), size= 1.5 ) +
+  geom_line(aes(date, deceased,group=province, color=ccaa), size= 1 ) +
+  geom_point(aes(date, deceased, color=ccaa), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & deceased > 0), 
-                  aes(date, deceased, color=province, label=paste(format(deceased, nsmall=1, big.mark="."),province)),
+                  aes(date, deceased, color=ccaa, label=paste(format(deceased, nsmall=1, big.mark="."),province)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -374,7 +374,7 @@ data_cases_sp_provinces %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = "none"
+    legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
        subtitle = paste0("Por provincia [Cataluña sin desagregar, Canarias por islas] (escala logarítmica). ",period),
@@ -386,12 +386,12 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(aes(date, deceassed_per_100000,group=province, color=province), size= 1 ) +
-  geom_point(aes(date, deceassed_per_100000, color=province), size= 1.5 ) +
+  geom_line(aes(date, deceassed_per_100000,group=province, color=ccaa), size= 1 ) +
+  geom_point(aes(date, deceassed_per_100000, color=ccaa), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & deceassed_per_100000 > 0), 
-                  aes(date, deceassed_per_100000, color=province, 
+                  aes(date, deceassed_per_100000, color=ccaa, 
                       label=paste(format(deceassed_per_100000, nsmall=1, big.mark="."),province)),
-                  nudge_x = 3, # adjust the starting y position of the text label
+                  nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -409,7 +409,7 @@ data_cases_sp_provinces %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = "none"
+    legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
        subtitle = paste0("Por provincia  [sin Cataluña y Canarias] (escala lineal). ",period),
@@ -421,10 +421,10 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-per-cienmil-log.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(aes(date, deceassed_per_100000,group=province, color=province), size= 1 ) +
-  geom_point(aes(date, deceassed_per_100000, color=province), size= 1.5 ) +
+  geom_line(aes(date, deceassed_per_100000,group=province, color=ccaa), size= 1 ) +
+  geom_point(aes(date, deceassed_per_100000, color=ccaa), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & deceassed_per_100000), 
-                  aes(date, deceassed_per_100000, color=province, 
+                  aes(date, deceassed_per_100000, color=ccaa, 
                       label=paste(format(deceassed_per_100000, nsmall=1, big.mark="."),province)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
@@ -446,7 +446,7 @@ data_cases_sp_provinces %>%
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = "none"
+    legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
        subtitle = paste0("Por provincia [sin Cataluña y Canarias] (escala logarítmica). ",period),
