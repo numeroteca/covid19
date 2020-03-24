@@ -316,7 +316,7 @@ test %>%
   geom_line(aes(days_since, deceassed, group= region, color= country), size= 1 ) +
   geom_point(aes(days_since, deceassed, color= country), size= 1.5 ) +
   # Spain
-  geom_text_repel(data=filter( test, date==max(as.Date("2020-03-23")) & country == "Spain" | 
+  geom_text_repel(data=filter( test, date==max(as.Date("2020-03-24")) & country == "Spain" | 
                                     date==as.Date("2020-03-23") & country == "Italia" ),
                   aes(days_since, deceassed, label=paste(format(deceassed, nsmall=1, big.mark="."), region)),
                   color= "#000000",
