@@ -8,9 +8,9 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # COVID-19 in France-----------
 # data_f_cases_original <- read.delim("data/original/france/covid19.csv",sep = ",")  
 # original source
-# data_f_cases_original <- read.delim("https://www.data.gouv.fr/fr/datasets/r/fa9b8fc8-35d5-4e24-90eb-9abe586b0fa5",sep = ",")
+data_f_cases_original <- read.delim("https://www.data.gouv.fr/fr/datasets/r/fa9b8fc8-35d5-4e24-90eb-9abe586b0fa5",sep = ",")
 # new source
-data_f_cases_original <- read.delim("https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.csv",sep = ",") %>% filter( granularite == "region")
+# data_f_cases_original <- read.delim("https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.csv",sep = ",") %>% filter( granularite == "region")
 table(data_f_cases_original$source_nom)
 
 # Population
@@ -35,11 +35,12 @@ data_f_cases[!is.na(data_f_cases$population),]$cases_per_100000 <- round( data_f
 
 write.csv(data_f_cases, file = "data/output/france/covid19-cases-registered-region-france-by-day-accumulated.csv", row.names = FALSE)
 
+data_f_cases_dc <- read.delim("data/output/france/covid19-deceassed-region-france-by-day-accumulated.csv",sep = ",")
 
 # Settings -------  
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_i <- "Gráfico: montera34.com. Datos: data.gouv.fr"
-periodo_i <- "2020.03.04 - 03.22"
+periodo_i <- "2020.03.04 - 03.24"
 # 1. Cases ------------
 
 # create temp dataframes to be able to plot all the values in small multiples
@@ -56,7 +57,7 @@ data_f_cases %>%
   geom_line(aes(date,cases_registered,group=region) ) +
   geom_point(aes(date,cases_registered,group=region), size = 0.5 ) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "2 day", 
                date_labels = "%d"
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -85,7 +86,7 @@ data_f_cases %>%
   geom_point(aes(date,cases_registered,group=region), size = 0.5 ) +
   scale_y_log10( minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "2 day", 
                date_labels = "%d"
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -111,7 +112,7 @@ data_f_cases %>%
   geom_line(aes(date,cases_per_100000,group=region) ) +
   geom_point(aes(date,cases_per_100000,group=region), size = 0.5 ) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d"
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -138,7 +139,7 @@ data_f_cases %>%
   geom_point(aes(date,cases_per_100000,group=region), size = 0.5 ) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 3000, 100) )) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d"
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -172,7 +173,7 @@ data_f_cases %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
                limits=c( min(data_f_cases$date), max(data_f_cases$date + 2.5)) 
   ) + 
@@ -210,7 +211,7 @@ data_f_cases %>%
                  # limits = c(0.95,12000),
                  breaks = c(1,10,100,1000,12000),
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
                limits=c( min(data_f_cases$date), max(data_f_cases$date + 3.5)) 
   ) + 
@@ -244,7 +245,7 @@ data_f_cases %>%
                   segment.size = 0.1,
                   segment.color="#333333"
   ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits=c( min(data_f_cases$date), max(data_f_cases$date + 3.5))
   ) +
@@ -283,7 +284,7 @@ data_f_cases %>%
   # scale_color_brewer(palette = "Dark2", type = "discrete") +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits=c( min(data_f_cases$date), max(data_f_cases$date + 3.5))
   ) +
