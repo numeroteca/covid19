@@ -57,7 +57,7 @@ dev.off()
 
 # Deceassed ------------------------
 
-umbral_d <- 40
+umbral_d <- 5
 
 # Select the date when a region had for the first time had n (umbral = n) or more deceasses
 data_s_offset_10deceassed <- data_all_export %>% filter( deceassed >= umbral_d) %>% group_by(region) %>% filter( row_number()==1 ) %>%
@@ -93,7 +93,7 @@ test2 %>%
   geom_line(aes(days_since, deceassed, group= region, color= region), size= 1 ) +
   geom_point(aes(days_since, deceassed, color= region), size= 1.5 ) +
   geom_line(data = crec_test2, aes(x = days_since, y = ynn), linetype = 2, size = 1, color ="#444444") +
-  geom_text(data = crec_test2[1,],aes(8,200,label="un 35% más de fallecimientos cada día"), 
+  geom_text(data = crec_test2[1,],aes(13,350,label="un 35% más de fallecimientos cada día"), 
             size = 5, base_family = "Roboto Condensed") +
   geom_text_repel(data=filter( test2, date==max(test2$date),  region != "Total"), 
                   aes(days_since, deceassed, color= region, label=paste(format(deceassed, nsmall=1, big.mark="."), region)),
@@ -114,15 +114,15 @@ test2 %>%
     #  date_labels = "%d",
     limits=c(0,max(test2$days_since)+10)
   ) + 
-  theme_minimal(base_family = "Roboto Condensed", base_size = 16) +
+  theme_minimal(base_family = "Roboto Condensed", base_size = 18) +
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = paste0("Número de fallecimientos de COVID-19 registrados en España. Día 0: desde ", umbral_d ," o más fallecimientos acumulados"),
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+  labs(title = paste0("Número de fallecimientos acumulados de COVID-19 registrados en España"),
+       subtitle = paste0("Por comunidad autónoma. Día 0: desde ", umbral_d ," o más fallecimientos acumulados. (escala logarítmica). ",period),
        y = "casos registrados",
        x = paste0("días desde que hubo ", umbral_d, " o más fallecimientos"),
        caption = caption)
