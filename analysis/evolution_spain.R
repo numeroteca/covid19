@@ -8,10 +8,10 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
-caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
+caption <- "Gráfico: @numeroteca (Montera34) lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
-caption_provincia <- "Gráfico: montera34.com | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 03.23"
+caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: Varias fuentes. Ver lab.montera34.com"
+period <- "2020.02.27 - 03.24"
 
 # Load Data ---------
 # / Population -------------
@@ -31,7 +31,7 @@ data_altas_original <- read.delim("https://github.com/datadista/datasets/raw/mas
 # Change to long format
 # Casos registrados
 data_cases <- melt(data_cases_original, id.vars = c("CCAA", "cod_ine")) 
-data_cases$date <- as.Date(substr(data_cases$variable,2,12),"%d.%m.%Y")
+data_cases$date <- as.Date(substr(data_cases$variable,2,12),"%Y.%m.%d")
 data_cases <- select(data_cases,-variable)
 
 # add population data
@@ -43,7 +43,7 @@ write.csv(data_cases, file = "data/output/covid19-casos-registrados-por-ccaa-esp
 
 # Personas UCI registradas
 data_uci <- melt(data_uci_original, id.vars = c("CCAA","cod_ine"))
-data_uci$date <- as.Date(substr(data_uci$variable,2,12),"%d.%m.%Y")
+data_uci$date <- as.Date(substr(data_uci$variable,2,12),"%Y.%m.%d")
 data_uci <- select(data_uci,-variable)
 
 # add population data
@@ -55,7 +55,7 @@ write.csv(data_uci, file = "data/output/covid19-ingresos-uci-por-ccaa-espana-por
 
 # Fallecimientos registrados
 data_death <- melt(data_death_original, id.vars = c("CCAA","cod_ine"))
-data_death$date <- as.Date(substr(data_death$variable,2,12),"%d.%m.%Y")
+data_death$date <- as.Date(substr(data_death$variable,2,12),"%Y.%m.%d")
 data_death <- select(data_death,-variable)
 
 # add population data
@@ -67,7 +67,7 @@ write.csv(data_death, file = "data/output/covid19-fallecimientos-por-ccaa-espana
 
 # altas
 data_altas <- melt(data_altas_original, id.vars = c("CCAA","cod_ine"))
-data_altas$date <- as.Date(substr(data_altas$variable,2,12),"%d.%m.%Y")
+data_altas$date <- as.Date(substr(data_altas$variable,2,12),"%Y.%m.%d")
 data_altas <- select(data_altas,-variable)
 
 # add population data
@@ -1076,7 +1076,7 @@ png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-com
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(data = crec2, aes(x = date, y = y_percent2), linetype = 2, size = 2, color ="#444444") +
-  geom_text(data = crec2[1,],aes(as.Date("2020-03-16"),740,label="curva: un 27% más de casos cada día"), 
+  geom_text(data = crec2[1,],aes(as.Date("2020-03-15"),740,label="curva: un 27% más de fallecimientos cada día"), 
             size = 8, base_family = "Roboto Condensed") +
   geom_line(aes(date,death,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,death, color=CCAA), size= 1.5 ) +
