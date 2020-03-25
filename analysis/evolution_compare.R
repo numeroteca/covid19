@@ -383,8 +383,8 @@ test2 %>% filter( country != "France") %>%
   geom_line(aes(days_since, deceassed_per_100000*10, group= region, color= country), size= 1 ) +
   geom_point(aes(days_since, deceassed_per_100000*10, color= country), size= 1.5 ) +
   # Spain
-  geom_text_repel(data=filter( test2,   date==max(as.Date("2020-03-23")) & country == "Spain"  |
-                                       date==max(as.Date("2020-03-23")) & country == "Italia"  ),
+  geom_text_repel(data=filter( test2,   date==max(as.Date("2020-03-25")) & country == "Spain"  |
+                                       date==max(as.Date("2020-03-25")) & country == "Italia"  ),
                   aes(days_since, deceassed_per_100000*10, label=paste(format(deceassed_per_100000*10, nsmall=1, big.mark="."), region)),
                   color= "#000000",
                   # nudge_x = 3, # adjust the starting y position of the text label
@@ -412,14 +412,14 @@ test2 %>% filter( country != "France") %>%
     legend.position = c(0.9,0.3)
   ) +
   labs(title = paste0("Número de fallecimientos de COVID-19 registrados por 1.000.000 habitantes por región en España e Italia"),
-       subtitle = paste0("Muertes acumuladas desde ", umbral , " o más fallecimientos por millón de habitantes (23.03.2020). Escala logarítmica"),
+       subtitle = paste0("Muertes acumuladas desde ", umbral , " o más fallecimientos por millón de habitantes (25.03.2020). Escala logarítmica"),
        y = "fallecimientos registrados por 1.000.000 habitantes (escala log)",
        x = paste0("días desde ", umbral , " o más fallecimientos por 1.000.000 habitantes"),
        caption ="Por: @numeroteca (Montera34). lab.montera34.com/covid19 | Data: various official sources. Check website.")
 dev.off()
 
 
-  # 2. interactive -----------------------
+# 2. interactive -----------------------
 # Cases compare ----------------- 
 p <- compare_countries %>%
 # compare_countries %>% # filter(region =="Lazio")  %>% #  filter(country !="Italy") %>%
