@@ -311,15 +311,15 @@ test <- merge(compare_countries, select(compare_countries_offset_ncases,region,o
 test$days_since <- as.numeric(test$date - min(compare_countries_offset_ncases$date) ) - as.numeric(test$offset)
 
 # png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased_en.png"),width = 1000,height = 700)
-png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased.png"),width = 1000,height = 700)
-# png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased-facet.png"),width = 1400,height = 700)
+# png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased.png"),width = 1000,height = 700)
+png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased-facet.png"),width = 1400,height = 700)
 test %>% filter( country != "France") %>%
   ggplot() +
   geom_line(aes(days_since, deceassed, group= region, color= country), size= 1 ) +
   geom_point(aes(days_since, deceassed, color= country), size= 1.5 ) +
   # Spain
-  geom_text_repel(data=filter( test, date==max(as.Date("2020-03-24")) & country == "Spain" | 
-                                    date==as.Date("2020-03-23") & country == "Italia" ),
+  geom_text_repel(data=filter( test, date==max(as.Date("2020-03-25")) & country == "Spain" | 
+                                    date==as.Date("2020-03-25") & country == "Italia" ),
                   aes(days_since, deceassed, label=paste(format(deceassed, nsmall=1, big.mark="."), region)),
                   color= "#000000",
                   # nudge_x = 3, # adjust the starting y position of the text label
@@ -330,7 +330,7 @@ test %>% filter( country != "France") %>%
                   segment.size = 0.1,
                   segment.color="#333333"
   ) +
-  # facet_grid(~country) +
+  facet_grid(~country) +
   scale_y_log10(
     breaks = c(10,100,1000,2000,3000,4000),
     limits = c( umbral,max(test$deceassed)),
@@ -361,7 +361,7 @@ test %>% filter( country != "France") %>%
   #      caption ="By: @numeroteca (Montera34). https://lab.montera34.com/covid19 | Data: various official sources. Check website.")
 dev.off()
 
-# Per 100.000 inhabitants
+  # Per 100.000 inhabitants
 
 # compare_countries with "umbral" or more deceassed accumulated
 umbral2 <- 0.5 # 0.5 deceassed per 100.00 inhab is 5 deceassed per million
