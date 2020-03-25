@@ -107,6 +107,7 @@ When no data is available `NA` is indicated. Intensive care patients data have n
 #### Provincias
 
 IMPORTANTE: los datos de Cataluña no están desagregados por provincias. Los datos de Canarias están desagregados por sus islas.
+[Actualización: Desde el 24/03 los datos tampoco incluyen Aragón ni Castilla-La Mancha]
 
 Llamamiento para colaborar en conseguir los datos de [@numeroteca](https://twitter.com/numeroteca/status/1239853592569425920) [@ProsumidorSoc](https://twitter.com/ProsumidorSoc/status/1240569799056461826) y 
 Working spreadsheet: https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/edit#gid=0
@@ -115,6 +116,8 @@ Ayúdanos a completarla. Pide acceso. Si detectas errores háznoslo saber.
 ¿Cómo citar cuando lo utilices? [Pon link a este repositorio](https://code.montera34.com:4443/numeroteca/covid19). Varias personas han colaborado en esta iniciativa ciudadana. Gracias a todas por colaborar.
 
 Lo más importante: quédate en casa para parar.
+
+[Dashboard interactivo en Tableau con los datos provinciales (en Tableau Public)](https://public.tableau.com/profile/javier.cant.n#!/vizhome/COVIDprov/Historia1?publish=yes)
 
 Fuentes: se han usado varias fuentes que se indican en cada una de los datos por día y provincia.
 
