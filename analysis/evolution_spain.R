@@ -8,10 +8,10 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
-caption <- "Gráfico: @numeroteca (Montera34) lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
+caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 03.24"
+period <- "2020.02.27 - 03.25"
 
 # Load Data ---------
 # / Population -------------

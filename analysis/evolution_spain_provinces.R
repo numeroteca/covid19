@@ -53,6 +53,7 @@ data_cases_sp_provinces %>%
   geom_line(aes(date,cases_accumulated,group=province) ) +
   geom_point(aes(date,cases_accumulated,group=province), size = 0.5 ) +
   facet_wrap( ~province) +
+  scale_y_continuous(
     limits = c(0,max(data_cases_sp_provinces$cases_accumulated) ),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "2 day", 
@@ -324,7 +325,7 @@ data_cases_sp_provinces %>%
   facet_wrap(~province) +
   scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 6)) 
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -352,7 +353,7 @@ data_cases_sp_provinces %>%
   scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
   scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 6)) 
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -380,7 +381,7 @@ data_cases_sp_provinces %>%
   scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
   scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 6)) 
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -407,7 +408,7 @@ data_cases_sp_provinces %>%
   facet_wrap(~province) +
   scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 5)) 
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -437,7 +438,7 @@ data_cases_sp_provinces %>%
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_death$date), max(data_death$date + 5)) 
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date) ) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -466,7 +467,7 @@ data_cases_sp_provinces %>%
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_death$date), max(data_death$date + 5)) 
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date) ) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -608,7 +609,7 @@ data_cases_sp_provinces %>%
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_death$date), max(data_death$date + 5)) 
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 5)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
