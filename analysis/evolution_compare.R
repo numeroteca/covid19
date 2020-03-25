@@ -19,6 +19,8 @@ data_f_cases_to_bind$region <- data_f_cases$region
 data_f_cases_to_bind$country <- "France"
 data_f_cases_to_bind$cases_registered <- data_f_cases$cases_registered
 data_f_cases_to_bind$cases_per_100000 <- data_f_cases$cases_per_100000
+data_f_cases_to_bind <- data_f_cases %>% filter ( !is.na(date))
+data_f_cases <- data_f_cases %>% filter ( !is.na(date))
 
 # Add France
 compare_countries <- rbind(compare_countries, data_f_cases_to_bind)
@@ -39,7 +41,7 @@ data_cases %>%
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  value > 100), 
                   aes(date,value, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
                   color="orange",
-                  nudge_x = 5, # adjust the starting y position of the text label
+                  nudge_x = 6, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -65,7 +67,7 @@ data_cases %>%
   # France
   geom_line( data = data_f_cases, aes(date,cases_registered, group=region), size= 0.7, color= "darkgreen", alpha = 0.8  ) +
   # geom_point(data = data_f_cases, aes(date,cases), size = 0.5, color= "darkgreen", alpha = 0.8 ) +
-  geom_text_repel(data=filter( data_f_cases, date==max(data_f_cases$date), cases_registered > 100), 
+  geom_text_repel(data=filter( data_f_cases, date==max(data_f_cases$date) & cases_registered > 100 & !is.na(cases_registered) ), 
                   aes(date,cases_registered, label=paste(format(cases_registered, nsmall=1, big.mark="."),region)),
                   color= "darkgreen",
                   nudge_x = 11.5, # adjust the starting y position of the text label
@@ -81,7 +83,7 @@ data_cases %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 14))
+               limits=c( min(data_cases$date), max(data_cases$date + 17))
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -270,8 +272,8 @@ data_death %>%
 # ) +
 # Scales
 scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
-               minor_breaks = c(  seq(0.1 , 1, 0.1),seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) )
-               # limits = c(min(data_i_cases$deceassed_per_100000),max(data_i_cases$deceassed_per_100000))
+               minor_breaks = c(  seq(0.1 , 1, 0.1),seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ),
+               limits = c(0.1,max(data_i_cases$deceassed_per_100000))
 ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
@@ -311,7 +313,7 @@ test$days_since <- as.numeric(test$date - min(compare_countries_offset_ncases$da
 # png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased_en.png"),width = 1000,height = 700)
 png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased.png"),width = 1000,height = 700)
 # png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased-facet.png"),width = 1400,height = 700)
-test %>%
+test %>% filter( country != "France") %>%
   ggplot() +
   geom_line(aes(days_since, deceassed, group= region, color= country), size= 1 ) +
   geom_point(aes(days_since, deceassed, color= country), size= 1.5 ) +
@@ -376,7 +378,7 @@ test2$days_since <- as.numeric(test2$date - min(compare_countries_offset_ncases_
 
 
 png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-per-cienmil-log_since-", umbral ,"deceased.png"),width = 1000,height = 700)
-test2 %>%
+test2 %>% filter( country != "France") %>%
   ggplot() +
   geom_line(aes(days_since, deceassed_per_100000*10, group= region, color= country), size= 1 ) +
   geom_point(aes(days_since, deceassed_per_100000*10, color= country), size= 1.5 ) +
@@ -446,7 +448,7 @@ p <- compare_countries %>%
 
 fig <- ggplotly(p)
 
-# save to interactive/spain-italy-france_cases_regions-evolution.jtml
+# save to interactive/spain-italy-france_cases_regions-evolution.html
 fig %>% 
   layout(annotations = 
            list(x = 1, y = -0.1, text = "lab.montera34.com/covid19 | Data: various official sources. Check website.", 
