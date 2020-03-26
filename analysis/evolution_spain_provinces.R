@@ -5,6 +5,13 @@ library(tidyverse)
 library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 
+# Settings -------
+# Cambia el pie del gráfico pero conserva la fuente de los datos
+caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
+caption_en <- "By: lab.montera34.com/covid19 | Data: ProvidencialData19. Check code.montera34.com/covid19"
+caption_provincia <- "Gráfico: montera34.com | Datos: Varias fuentes. Ver lab.montera34.com"
+period <- "2020.02.27 - 03.25"
+
 # Load Data ---------
 # / Population -------------
 ccaa_poblacion <-  read.delim("data/original/spain/ccaa-poblacion.csv",sep = ";")
@@ -27,13 +34,6 @@ data_cases_sp_provinces <- filter(data_cases_sp_provinces, !is.na(date))
 data_cases_sp_provinces$cases_per_cienmil <- round( data_cases_sp_provinces$cases_accumulated / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 data_cases_sp_provinces$intensive_care_per_1000000 <- round( data_cases_sp_provinces$intensive_care / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 data_cases_sp_provinces$deceassed_per_100000 <- round( data_cases_sp_provinces$deceased / data_cases_sp_provinces$poblacion * 100000, digits = 2)
-
-# Settings -------
-# Cambia el pie del gráfico pero conserva la fuente de los datos
-caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
-caption_en <- "By: lab.montera34.com/covid19 | Data: various official sources. Check website."
-caption_provincia <- "Gráfico: montera34.com | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 03.24"
 
 # Plots --------------------
 # / 1. Cases ------------
