@@ -364,14 +364,16 @@ png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-o
 # png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased.png"),width = 1000,height = 700)
 # png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased-facet.png"),width = 1400,height = 700)
 # png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased-facet_en.png"),width = 1400,height = 700)
-test %>% filter( country != "France") %>%
+ptotal <- test %>% filter( country != "France") %>%
 ggplot() +
   geom_line(data =growth_2x, aes(days_since, value), size= 0.5, color = "#555555", linetype = 2 ) +
   geom_line(data =growth_2x, aes(days_since, value3), size= 0.5, color = "#555555", linetype = 2 ) +
   geom_line(data =growth_2x, aes(days_since, value4), size= 0.5, color = "#555555", linetype = 2 ) +
   geom_line(data =growth_2x, aes(days_since, value5), size= 0.5, color = "#555555", linetype = 2 ) +
-  geom_line(aes(days_since, deceassed, group= region, color= country), size= 1 ) +
-  geom_point(aes(days_since, deceassed, color= country), size= 1.5 ) +
+  geom_line(aes(days_since, deceassed, group= region, color= country), size= 0.8, alpha = 0.8 ) +
+  geom_point( aes(days_since, deceassed, color= country, 
+                  text = paste0("<b>", region, " (", country, ")</b><br>", format(deceassed, nsmall=1, big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")), 
+              size= 1.3, alpha = 0.8  ) +
   # ES
   # geom_text(data = growth_2x[1,], aes(20,7000, label=paste0("pendiente: muertes doblan cada 2 días")),
   #           size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") +
@@ -439,7 +441,23 @@ ggplot() +
        caption ="By: @numeroteca (Montera34). https://lab.montera34.com/covid19 | Data: various official sources. Check website.")
 dev.off()
 
-# Per 100.000 inhabitants
+fig <- ggplotly(ptotal, tooltip = "text") %>% layout(title = list(text = paste0('Coronavirus (COVID-19) deaths in regions of Spain and Italy',
+                                                                            '<br>',
+                                                                            '<sup>',
+                                                                            'Cumulative number of deaths, by number of days since ',umbral ,'th death. Updated: 2020.03.26',
+                                                                            '</sup>')))
+
+# save to interactive/spain-italy-france_cases_regions-evolution.html
+fig %>% 
+  layout(annotations = 
+           list(x = 1, y = -0.1, text = "lab.montera34.com/covid19 | Data: various official sources. Check website.", 
+                showarrow = F, xref='paper', yref='paper', 
+                xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                font=list(size=15, color="grey"))
+  )
+
+
+# Per 100.000 inhabitants -----------------
 
 # compare_countries with "umbral" or more deceassed accumulated
 umbral2 <- 0.5 # 0.5 deceassed per 100.00 inhab is 5 deceassed per million
