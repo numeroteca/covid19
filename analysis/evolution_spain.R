@@ -933,6 +933,9 @@ data_death %>% filter( CCAA != "Total") %>%
   geom_line(aes(date,death,group=CCAA) ) +
   geom_point(aes(date,death), size=0.5 ) +
   facet_wrap( ~CCAA) +
+  scale_y_continuous( 
+    labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
   scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                expand = c(0,0)
@@ -971,13 +974,14 @@ data_death %>% filter( CCAA != "Total") %>%
                   segment.color="#777777"
   ) +
   scale_y_log10( 
-    function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
-    minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )) +
+    labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+    ) +
   facet_wrap( ~CCAA) +
   scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                # limits=c( min(data_death$date), max(data_death$date + 1.5)),
-               expand = c(0,0)
+               expand = c(0,1)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1139,7 +1143,11 @@ data_death %>% filter( CCAA != "Total") %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
-  scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
+  scale_y_log10(
+    breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
+    labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
                limits=c( min(data_death$date), max(data_death$date + 1.5))

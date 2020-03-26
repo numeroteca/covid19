@@ -373,26 +373,26 @@ ggplot() +
   geom_line(aes(days_since, deceassed, group= region, color= country), size= 1 ) +
   geom_point(aes(days_since, deceassed, color= country), size= 1.5 ) +
   # ES
-  # geom_text(data = growth_2x[1,], aes(20,6000, label=paste0("pendiente: muertes doblan cada 2 días")),
+  # geom_text(data = growth_2x[1,], aes(20,7000, label=paste0("pendiente: muertes doblan cada 2 días")),
   #           size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") +
-  # geom_text(data = growth_2x[1,], aes(30,6000, label=paste0("... doblan cada 3 días")),
+  # geom_text(data = growth_2x[1,], aes(30,7000, label=paste0("... doblan cada 3 días")),
   #           size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") +
   # geom_text(data = growth_2x[1,], aes(25.5,400, label=paste0("... doblan cada 4 días")),
   #           size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555") +
-  # geom_text(data = growth_2x[1,], aes(27.5,210, label=paste0("...doblan cada 5 días")), 
+  # geom_text(data = growth_2x[1,], aes(27.5,210, label=paste0("...doblan cada 5 días")),
   #           size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555") +
   # EN
-  geom_text(data = growth_2x[1,], aes(20,6200, label=paste0("slope: deaths double every 2 days")),
+  geom_text(data = growth_2x[1,], aes(20,7000, label=paste0("slope: deaths double every 2 days")),
             size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") +
-  geom_text(data = growth_2x[1,], aes(30,6200, label=paste0("... every 3 days")),
+  geom_text(data = growth_2x[1,], aes(30,7000, label=paste0("... every 3 days")),
             size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") +
   geom_text(data = growth_2x[1,], aes(25.5,400, label=paste0("... every 4 days")),
             size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555") +
   geom_text(data = growth_2x[1,], aes(27.5,210, label=paste0("... every 5 days")),
             size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555") +
   # labels
-  geom_text_repel(data=filter( test, date==max(as.Date("2020-03-25")) & country == "Spain" |
-                                 date==as.Date("2020-03-25") & country == "Italia" ),
+  geom_text_repel(data=filter( test, date==max(as.Date("2020-03-26")) & country == "Spain" |
+                                 date==as.Date("2020-03-26") & country == "Italia" ),
                   aes(days_since, deceassed, label=paste(format(deceassed, nsmall=1, big.mark="."), region)),
                   color= "#000000",
                   nudge_x = 1, # adjust the starting y position of the text label
@@ -428,12 +428,12 @@ ggplot() +
     legend.position = c(0.9,0.3)
   ) +
   # labs(title = paste0("Número de fallecimientos de COVID-19 registrados. Días desde ",umbral ," o más fallecimientos"),
-  #      subtitle = paste0("Por región en España e Italia (25.03.2020) (escala logarítmica). "),
+  #      subtitle = paste0("Por región en España e Italia (26.03.2020) (escala logarítmica). "),
   #      y = "fallecimientos registrados (escala log.)",
   #      x = paste0("días desde ", umbral , " o más fallecimientos"),
   #      caption ="Por: @numeroteca (Montera34). lab.montera34.com/covid19 | Data: various official sources. Check website.")
   labs(title = paste0("Coronavirus (COVID-19) deaths in regions of Spain and Italy"),
-       subtitle = paste0("Cumulative number of deaths, by number of days since ",umbral ,"th death. Updated: 2020.03.25"),
+       subtitle = paste0("Cumulative number of deaths, by number of days since ",umbral ,"th death. Updated: 2020.03.26"),
        y = "Number of deaths (log. scale)",
        x = paste0("Days since ", umbral , "th or more cumulative deaths"),
        caption ="By: @numeroteca (Montera34). https://lab.montera34.com/covid19 | Data: various official sources. Check website.")
@@ -490,7 +490,7 @@ test2 %>% filter( country != "France") %>%
     legend.position = c(0.9,0.3)
   ) +
   labs(title = paste0("Número de fallecimientos de COVID-19 registrados por 1.000.000 habitantes por región en España e Italia"),
-       subtitle = paste0("Muertes acumuladas desde ", umbral , " o más fallecimientos por millón de habitantes (25.03.2020). Escala logarítmica"),
+       subtitle = paste0("Muertes acumuladas desde ", umbral , " o más fallecimientos por millón de habitantes (26.03.2020). Escala logarítmica"),
        y = "fallecimientos registrados por 1.000.000 habitantes (escala log)",
        x = paste0("días desde ", umbral , " o más fallecimientos por 1.000.000 habitantes"),
        caption ="Por: @numeroteca (Montera34). lab.montera34.com/covid19 | Data: various official sources. Check website.")

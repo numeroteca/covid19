@@ -5,6 +5,11 @@ library(tidyverse)
 library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 
+# Settings -------
+# Cambia el pie del gráfico pero conserva la fuente de los datos
+caption_i <- "Gráfico: @numeroteca (montera34.com). Datos: Protezione Civile (Italia)"
+periodo_i <- "2020.02.24 - 03.26"
+
 # COVID-19 in Italy -----------
 # Load data
 data_i_cases_original <- read.delim("https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-regioni/dpc-covid19-ita-regioni.csv",sep = ",")  
@@ -46,10 +51,7 @@ data_i_cases$recovered_per_100000 <- round( data_i_cases$recovered / data_i_case
 
 
 
-# Settings -------
-# Cambia el pie del gráfico pero conserva la fuente de los datos
-caption_i <- "Gráfico: @numeroteca (montera34.com). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 03.25"
+
 # 1. Cases ------------
 
 # create temp dataframes to be able to plot all the   values in small multiples
@@ -405,7 +407,7 @@ data_i_cases %>%
   scale_y_log10( 
     limits = c(1,max(data_i_cases$deceassed)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
-    minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
+    minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
                limits=c( min(data_i_cases$date), max(data_i_cases$date)) 
@@ -510,6 +512,7 @@ data_i_cases %>%
   ) +
   scale_y_log10( 
     limits = c(1,max(data_i_cases$deceassed)),
+    breaks = c(0,1,5,10,20,50,100,200,500,1000,2000,5000 ),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
   scale_x_date(date_breaks = "2 day", 
@@ -549,6 +552,7 @@ data_i_cases %>%
   scale_y_log10( 
     limits = c(0.1,max(data_i_cases$deceassed_per_100000)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    breaks = c(0,1,5,10,20,50 ),
     minor_breaks = c(seq(0.1 , 1, 0.1),seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
