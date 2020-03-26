@@ -143,11 +143,57 @@ Italian data: https://github.com/pcm-dpc/COVID-19
 
 Working on it. Meanwhile: data/original/france/covid19-france.csv
 
-Sources:
+Official data from national government: https://www.data.gouv.fr/fr/datasets/cas-confirmes-dinfection-au-covid-19-par-region/
 
-* https://www.data.gouv.fr/fr/datasets/cas-confirmes-dinfection-au-covid-19-par-region/
+The main source for french data is this repo: https://github.com/opencovid19-fr/data
 
-## Authrship
+The repo gathers data from national and regional administrations and unifies it. All the structured data is disponible in two formats:
+
+ * CSV. Direct link to CSV file: https://github.com/opencovid19-fr/data/blob/master/dist/chiffres-cles.csv
+ * JSON. Direct link to JSON file: https://github.com/opencovid19-fr/data/blob/master/dist/chiffres-cles.json
+
+This is the structure:
+
+| Columns       | Description                                                |
+|---------------|------------------------------------------------------------|
+| date          | date                                                       |
+| granularite   | disaggregation level                                       |
+| maille_code   | code of the state, region or country (just FRA for France) |
+| maille_nom    | name of the state, region or country (just France)         |
+| cas_confirmes | registered cases                                           |
+| deces         | deceassed                                                  |
+| reanimation   | intensive care hospitalizations                            |
+| hospitalises  | hospitalizations                                           |
+| gueris        | recovered                                                  |
+| depistes      | number of discovered cases\*                               |
+| source_nom    | name of the source                                         |
+| source_url    | URL of the source                                          |
+| source_type   | type of source                                             |
+\* don't know the different with registered cases. this column is empty except for Polynésie et Nouvelle Calédonie 
+
+#### Regiones (Régions)
+
+Regional data is in the main exit file linked above.
+
+#### Provincias (Départements)
+
+The data for départements is also in the main file. There is also (https://github.com/opencovid19-fr/data/tree/master/data-sources/sante-publique-france)[this dataset] to gather the data before to push it in the exit file.
+
+This is the structure:
+
+| Input | Output       | Description                        |                                                    |
+|-------|--------------|------------------------------------|----------------------------------------------------|
+| dep   | code & nom   | Code et nom du département (code and name of the state)                                 |
+| sexe  | --           | Non repris en sortie (this data is not used in exit file)                               |
+| jour  | date         | Date de la donnée (date)                                                                |
+| hosp  | hospitalises | Nombre de personnes hospitalisées  (number of people hospitalized)                      |
+| rea   | reanimation  | Nombre de personnes en réanimation (number of people hospitalized with intensive care)  |
+| rad   | gueris       | Nombre de personnes guéries (number of recovered people)                                |
+| dc    | deces        | Nombre de personnes décédées (number of deceassed people)                               |
+
+Direct link to this dataset: https://github.com/opencovid19-fr/data/blob/master/data-sources/sante-publique-france/covid_hospit.csv
+
+## Authorship
 
 Pablo Rey Mazón ([@numeroteca](https://twitter.com/numeroteca)) y Alfonso Sánchez Uzábal ([@skotperez](https://twitter.com/skotperez))desde [montera34.com](https://montera34.com).
 
