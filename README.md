@@ -112,13 +112,13 @@ Llamamiento para colaborar en conseguir los datos de [@numeroteca](https://twitt
 Working spreadsheet: https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/edit#gid=0
 Ayúdanos a completarla. Pide acceso. Si detectas errores háznoslo saber.
 
-¿Cómo citar cuando lo utilices? [Pon link a este repositorio](https://code.montera34.com:4443/numeroteca/covid19). Varias personas han colaborado en esta iniciativa ciudadana. Gracias a todas por colaborar.
-
-Lo más importante: quédate en casa para parar.
+¿Cómo citar cuando lo utilices? [Pon link a este repositorio](https://code.montera34.com:4443/numeroteca/covid19), lo hemos llamado provisionalmente ProvidencialData19. Hay muchas personas que nos habéis ayudado y aportado pistas. Gracias a todas por colaborar. Ahora mismo, estamos manteniendo los datos: [@arivero](https://twitter.com/arivero), [@ManoloYuri](https://twitter.com/ManoloYuri), [@ManoloYuri](https://twitter.com/ManoloYuri), [@congosto](https://twitter.com/congosto) y [@ProsumidorSoc](https://twitter.com/ProsumidorSoc). Si se nos olvida alguien ¡avísanos!
+ 
+Lo más importante: quédate en casa para parar la propagación del virus.
 
 Fuentes: se han usado varias fuentes que se indican en cada una de los datos por día y provincia.
 
-Data are published in this file: [/data/original/spain/covid19_spain_provincias.csv](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/original/spain/covid19_spain_provincias.csv)
+Data are published in this CSV file: [/data/original/spain/covid19_spain_provincias.csv](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/original/spain/covid19_spain_provincias.csv)
 
 Format:
 
