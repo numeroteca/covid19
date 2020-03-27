@@ -11,7 +11,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 03.26"
+period <- "2020.02.27 - 03.27"
 
 # Load Data ---------
 # / Population -------------
@@ -913,7 +913,7 @@ y_percent2 <- vector(length=length(xx))
 y_percent2[[1]] <- 213 # sets starting value
 # create data series with certain % of growth
 for (i in 2:length(xx)) {
-  y_percent2[[i]] <- y_percent2[[i-1]] + y_percent2[[i-1]]*0.27 # grows n %
+  y_percent2[[i]] <- y_percent2[[i-1]] + y_percent2[[i-1]]*0.24 # grows n %
 }
 # creates the data fame
 data_unique2 <- arrange(data_death2, date) %>% select(date) %>% unique()
@@ -1091,11 +1091,11 @@ data_death %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-lineal-with-curve-27.png", sep = ""),width = 1200,height = 700)
+png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-lineal-with-curve-24.png", sep = ""),width = 1200,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(data = crec2, aes(x = date, y = y_percent2), linetype = 2, size = 2, color ="#444444") +
-  geom_text(data = crec2[1,],aes(as.Date("2020-03-15"),740,label="curva: un 27% más de fallecimientos cada día"), 
+  geom_text(data = crec2[1,],aes(as.Date("2020-03-15"),740,label="curva: un 24% más de fallecimientos cada día"), 
             size = 8, base_family = "Roboto Condensed") +
   geom_line(aes(date,death,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,death, color=CCAA), size= 1.5 ) +
@@ -1167,11 +1167,11 @@ data_death %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-log-with-curve-27.png", sep = ""),width = 1200,height = 700)
+png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-log-with-curve-24.png", sep = ""),width = 1200,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(data = crec2, aes(x = date, y = y_percent2), linetype = 2, size = 2, color ="#444444") +
-  geom_text(data = crec2[1,],aes(as.Date("2020-03-14"),750,label="línea: un 27% más de fallecimientos cada día"), 
+  geom_text(data = crec2[1,],aes(as.Date("2020-03-14"),750,label="línea: un 24% más de fallecimientos cada día"), 
             size = 8, base_family = "Roboto Condensed") +
   geom_line(aes(date,death,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,death, color=CCAA), size= 1.5 ) +
