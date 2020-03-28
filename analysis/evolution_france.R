@@ -5,28 +5,39 @@ library(tidyverse)
 library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 
+
+# Settings -------  
+# Cambia el pie del gráfico pero conserva la fuente de los datos
+caption_f <- "Gráfico: montera34.com. Datos: data.gouv.fr"
+periodo_f <- "2020.03.04 - 03.28"
+
 # COVID-19 in France-----------
+
+# Load data ----
 # data_f_cases_original <- read.delim("data/original/france/covid19.csv",sep = ",")  
 # original source
 data_f_cases_original <- read.delim("https://www.data.gouv.fr/fr/datasets/r/fa9b8fc8-35d5-4e24-90eb-9abe586b0fa5",sep = ",")
 # new source
 # data_f_cases_original <- read.delim("https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.csv",sep = ",") %>% filter( granularite == "region")
-table(data_f_cases_original$source_nom)
-
+# data_f_cases_original2 <- read.delim("data/original/france/covid_hospit.csv",sep = ";")
+data_f2_cases_original <- read.delim("https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.csv",sep = ",")
+# table(data_f_cases_original$source_nom)
+# names(data_f_cases_original)
 # Population
-population_f_region <- read.delim("data/original/france/ccaa-poblacion.csv",sep = ",")  
+population_f_region <- read.delim("data/original/france/ccaa-poblacion.csv",sep = ",")
 
 # Process data -------
 data_f_cases<- melt(data_f_cases_original, id.vars = "Date") 
 names(data_f_cases) <- c("date","region","cases_registered")
 data_f_cases$date <-  as.Date(data_f_cases$date)
 data_f_cases$cases_registered <- as.numeric(data_f_cases$cases_registered)
+# levels(data_f_cases$region)
+# population_f_region$Regio
 
-levels(data_f_cases$region)
-population_f_region$Region
 
-# add population data
+# add population data ----
 data_f_cases <- merge( data_f_cases, select(population_f_region,Region,X1er.janvier.2020..p.), by.x = "region", by.y = "Region", all.x = TRUE)
+# rename variables
 names(data_f_cases) <- c("region","date","cases_registered","population")
 
 # calculate values per 100.000
@@ -35,12 +46,37 @@ data_f_cases[!is.na(data_f_cases$population),]$cases_per_100000 <- round( data_f
 
 write.csv(data_f_cases, file = "data/output/france/covid19-cases-registered-region-france-by-day-accumulated.csv", row.names = FALSE)
 
-data_f_cases_dc <- read.delim("data/output/france/covid19-deceassed-region-france-by-day-accumulated.csv",sep = ",")
+# Process new data-------
+# Convert facator to number id
+# data_f_cases_original2$id <- as.numeric( data_f_cases_original2$dep )
+# add population data
+# TODO # data_f_cases_original2 <- merge( data_f_cases_original2, select(population_f_region,id,Region,X1er.janvier.2020..p.), by.x = "id", by.y = "id", all.x = TRUE)
+# rename variables
+names(data_f_cases_original2) <- c("region","sexe","date","hosp","rea","rad","deceassed") #"region","population"
+data_f_cases_original2$date <-  as.Date(as.character(data_f_cases_original2$date))
+# calculate values per 100.000
+# data_f_cases_original2$cases_per_100000 <- NA
+# data_f_cases_original2$deceassed_per_100000 <- round( data_f_cases_original2$deceassed / data_f_cases_original2$population * 100000, digits = 2)
 
-# Settings -------  
-# Cambia el pie del gráfico pero conserva la fuente de los datos
-caption_i <- "Gráfico: montera34.com. Datos: data.gouv.fr"
-periodo_i <- "2020.03.04 - 03.24"
+# create temp dataframes to be able to plot all the   values in small multiples
+data_f_cases_original2_sm <-data_f_cases_original2
+data_f_cases_original2_sm$region_cp <- data_f_cases_original2$region
+
+
+# data_f_cases_dc <- read.delim("data/output/france/covid19-deceassed-region-france-by-day-accumulated.csv",sep = ",")
+#  new new france data
+data_f2_cases <- data_f2_cases_original %>% filter(granularite == "region"& source_nom != "Santé publique France")
+data_f2_cases$date <- as.Date(data_f2_cases$date)
+
+# data_f2_cases <- filter(data_f2_cases, source_nom == "OpenCOVID19-fr" & date > "2020-03-26" | source_nom != "OpenCOVID19-fr" & date < "2020-03-27" )
+
+
+# create temp dataframes to be able to plot all the   values in small multiples
+data_f2_cases_sm <-data_f2_cases
+data_f2_cases_sm$maille_nom_cp <- data_f2_cases$maille_nom
+
+
+
 # 1. Cases ------------
 
 # create temp dataframes to be able to plot all the values in small multiples
@@ -70,10 +106,10 @@ data_f_cases %>%
     # legend.position = "bottom"
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en Francia",
-       subtitle = paste0("Por región (escala lineal). ",periodo_i),
+       subtitle = paste0("Por región (escala lineal). ",periodo_f),
        y = "casos registrados",
        x = "fecha",
-       caption = caption_i)
+       caption = caption_f)
 dev.off()
 
 # Escala logarítmica
@@ -98,10 +134,10 @@ data_f_cases %>%
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en Francia",
-       subtitle = paste0("Por región (escala logarítmica). ",periodo_i),
+       subtitle = paste0("Por región (escala logarítmica). ",periodo_f),
        y = "casos registrados",
        x = "fecha",
-       caption = caption_i)
+       caption = caption_f)
 dev.off()
 
 png(filename=paste("img/france/covid19_casos-registrados-por-region-per-cienmil-lineal.png", sep = ""),width = 1200,height = 700)
@@ -124,10 +160,10 @@ data_f_cases %>%
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en Francia",
-       subtitle = paste0("Por región (escala lineal). ",periodo_i),
+       subtitle = paste0("Por región (escala lineal). ",periodo_f),
        y = "casos registrados por 100.000 habitantes",
        x = "fecha",
-       caption = caption_i)
+       caption = caption_f)
 dev.off()
 
 png(filename=paste("img/france/covid19_casos-registrados-por-region-per-cienmil-log.png", sep = ""),width = 1200,height = 700)
@@ -151,10 +187,10 @@ data_f_cases %>%
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en Francia",
-       subtitle = paste0("Por región (escala logarítmica). ",periodo_i),
+       subtitle = paste0("Por región (escala logarítmica). ",periodo_f),
        y = "casos registrados por 100.000 habitantes",
        x = "fecha",
-       caption = caption_i)
+       caption = caption_f)
 dev.off()
 
 # ---------- Superpuesto ---------------
@@ -186,10 +222,10 @@ data_f_cases %>%
     legend.position = "none"
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en Francia",
-       subtitle = paste0("Por región (escala lineal). ",periodo_i),
+       subtitle = paste0("Por región (escala lineal). ",periodo_f),
        y = "casos registrados",
        x = "fecha",
-       caption = caption_i)
+       caption = caption_f)
 dev.off()
 
 png(filename=paste("img/france/covid19_casos-registrados-por-region-superpuesto-log.png", sep = ""),width = 1200,height = 700)
@@ -224,10 +260,10 @@ data_f_cases %>%
     legend.position = "none"
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en Francia",
-       subtitle = paste0("Por región (escala logarítmica). ",periodo_i),
+       subtitle = paste0("Por región (escala logarítmica). ",periodo_f),
        y = "casos registrados",
        x = "fecha",
-       caption = caption_i)
+       caption = caption_f)
 dev.off()
 
 png(filename=paste("img/france/covid19_casos-registrados-por-region-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1200,height = 700)
@@ -258,10 +294,10 @@ data_f_cases %>%
     legend.position = "none"
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en Francia",
-       subtitle = paste0("Por región (escala lineal). ",periodo_i),
+       subtitle = paste0("Por región (escala lineal). ",periodo_f),
        y = "casos registrados por 100.000 habitantes",
        x = "fecha",
-       caption = caption_i)
+       caption = caption_f)
 dev.off()
 
 
@@ -297,8 +333,220 @@ data_f_cases %>%
     legend.position = "none"
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en Francia",
-       subtitle = paste0("Por región (escala logarítmica). ",periodo_i),
+       subtitle = paste0("Por región (escala logarítmica). ",periodo_f),
        y = "casos registrados por 100.000 habitantes",
        x = "fecha",
-       caption = caption_i)
+       caption = caption_f)
 dev.off()
+
+# 3. Deceassed -------------------
+
+data_f_cases_original2 %>%
+  ggplot() +
+  geom_line(aes(date, deceassed, group=region) )
+
+data_f_cases_original2 %>% filter(region == "68")
+
+# / small multiple ----------
+png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-lineal.png", sep = ""),width = 1000,height = 700)
+data_f2_cases %>% 
+  ggplot() +
+  geom_line(data = select(data_f2_cases_sm,date,deces,maille_nom_cp,-maille_nom),
+            aes(date,deces,group=maille_nom_cp), color="#CACACA" ) +
+  geom_line(aes(date, deces, group=maille_nom) ) +
+  geom_point(aes(date,deces), size= 0.5 ) +
+  facet_wrap( ~maille_nom) +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  scale_x_date(date_breaks = "3 day", 
+               date_labels = "%d",
+               limits=c( min(data_f2_cases[!is.na(data_f2_cases$deces) > 0,]$date), max(data_f_cases_original2$date))
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en France",
+       subtitle = paste0("Por región (escala lineal). ",periodo_f),
+       y = "fallecidos",
+       x = "fecha",
+       caption = caption_f)
+dev.off()
+
+png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-log.png", sep = ""),width = 1000,height = 700)
+data_f2_cases %>% 
+  ggplot() +
+  geom_line(data = select(data_f2_cases_sm,date,deces,maille_nom_cp,-maille_nom),
+            aes(date,deces,group=maille_nom_cp), color="#CACACA" ) +
+  geom_line(aes(date, deces, group=maille_nom) ) +
+  geom_point(aes(date,deces), size= 0.5 ) +
+  facet_wrap( ~maille_nom) +
+  scale_y_log10( 
+    limits = c(1,max(data_f_cases_original2$deceassed)),
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
+  scale_x_date(date_breaks = "3 day", 
+               date_labels = "%d",
+               limits=c( min(data_f2_cases[!is.na(data_f2_cases$deces) > 0,]$date), max(data_f_cases_original2$date))
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en France",
+       subtitle = paste0("Por región (escala logarítmica). ",periodo_f),
+       y = "fallecidos",
+       x = "fecha",
+       caption = caption_f)
+dev.off()
+
+# png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
+# data_f_cases_original2 %>% 
+#   ggplot() +
+#   geom_line(data = select(data_f_cases_original2_sm,date,deceassed_per_100000,region_cp,-region),
+#             aes(date,deceassed_per_100000,group=region_cp), color="#CACACA" ) +
+#   geom_line(aes(date, deceassed_per_100000, group=region) ) +
+#   geom_point(aes(date,deceassed_per_100000), size= 0.5 ) +
+#   facet_wrap( ~region) +
+#   # coord_cartesian( ylim = c( 0 , max(data_f_cases_original2$deceassed_per_100000))  )+
+#   scale_y_log10( 
+#     # limits = c( 0 , max(data_i_cases$deceassed_per_100000) ),
+#     labels= function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+#     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
+#   scale_x_date(date_breaks = "2 day", 
+#                date_labels = "%d",
+#                limits=c( min(data_i_cases$date), max(data_i_cases$date)) 
+#   ) + 
+#   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+#   theme(
+#     panel.grid.minor.x = element_blank(),
+#     panel.grid.major.x = element_blank(),
+#     # panel.grid.minor.y = element_blank(),
+#     axis.ticks.x = element_line(color = "#000000"),
+#     legend.position = "none"
+#   ) +
+#   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados  por 100.000 habitantes en France",
+#        subtitle = paste0("Por región (escala logarítmica). ",periodo_f),
+#        y = "fallecidos por 100.000 habitantes ",
+#        x = "fecha",
+#        caption = caption_f)
+# dev.off()
+
+# / Fallecimientos superpuestos ----------
+png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-superpuesto-lineal.png", sep = ""),width = 1000,height = 700)
+data_f2_cases %>% 
+  ggplot() +
+  geom_line(aes(date, deces, group=maille_nom, color=maille_nom), size= 1 ) +
+  geom_point(aes(date,deces, color=maille_nom), size= 1.5 ) +
+  geom_text_repel(data=filter( data_f2_cases, date==max(data_f2_cases$date)), 
+                  aes(date, deces, color=maille_nom, label=paste(format( deces, nsmall=1, big.mark="."),maille_nom)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  scale_x_date(date_breaks = "2 day", 
+               date_labels = "%d",
+               limits=c( min(data_f2_cases$date) + 40, max(data_f2_cases$date + 3)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en France",
+       subtitle = paste0("Por región (escala lineal). ",periodo_f),
+       y = "fallecidos",
+       x = "fecha",
+       caption = caption_f)
+dev.off()
+
+png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-superpuesto-log.png", sep = ""),width = 1000,height = 700)
+data_f2_cases %>% 
+  ggplot() +
+  geom_line(aes(date, deces, group=maille_nom, color=maille_nom), size= 1 ) +
+  geom_point(aes(date,deces, color=maille_nom), size= 1.5 ) +
+  geom_text_repel(data=filter( data_f2_cases, date==max(data_f2_cases$date)), 
+                  aes(date, deces, color=maille_nom, label=paste(format( deces, nsmall=1, big.mark="."),maille_nom)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_y_log10( 
+    limits = c(1,max(data_f2_cases$deces)),
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
+  scale_x_date(date_breaks = "2 day", 
+               date_labels = "%d",
+               limits=c( min(data_f2_cases$date) + 40, max(data_f2_cases$date + 3)) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en France",
+       subtitle = paste0("Por región (escala logarítmica). ",periodo_f),
+       y = "fallecidos",
+       x = "fecha",
+       caption = caption_f)
+dev.off()
+
+# png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-superpuesto-per-cienmil-log.png", sep = ""),width = 1000,height = 700)
+# data_i_cases %>% 
+#   ggplot() +
+#   geom_line(aes(date,deceassed_per_100000,group=region, color=region), size= 1 ) +
+#   geom_point(aes(date,deceassed_per_100000, color=region), size= 1.5 ) +
+#   geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date),  region != "Total"), 
+#                   aes(date,deceassed_per_100000, color=region, label=paste(format(deceassed_per_100000, nsmall=1, big.mark="."),region)),
+#                   nudge_x = 3, # adjust the starting y position of the text label
+#                   size=5,
+#                   hjust=0,
+#                   family = "Roboto Condensed",
+#                   direction="y",
+#                   segment.size = 0.1,
+#                   segment.color="#777777"
+#   ) +
+#   scale_y_log10( 
+#     limits = c(0.1,max(data_i_cases$deceassed_per_100000)),
+#     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+#     minor_breaks = c(seq(0.1 , 1, 0.1),seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
+#   scale_x_date(date_breaks = "2 day", 
+#                date_labels = "%d",
+#                limits=c( min(data_i_cases$date), max(data_i_cases$date +3.5)) 
+#   ) + 
+#   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+#   theme(
+#     panel.grid.minor.x = element_blank(),
+#     panel.grid.major.x = element_blank(),
+#     # panel.grid.minor.y = element_blank(),
+#     axis.ticks.x = element_line(color = "#000000"),
+#     legend.position = "none"
+#   ) +
+#   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en France",
+#        subtitle = paste0("Por región (escala logarítmica). ",periodo_f),
+#        y = "fallecidospor 100.000 habitantes",
+#        x = "fecha",
+#        caption = caption_f)
+# dev.off()
