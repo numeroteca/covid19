@@ -9,7 +9,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: ProvidencialData19. Check code.montera34.com/covid19"
-caption_provincia <- "Gráfico: montera34.com | Datos: Varias fuentes. Ver lab.montera34.com"
+caption_provincia <- "Gráfico: montera34.com | Datos: Varias fuentes (recopilado por Providencialdata19). Ver lab.montera34.com/covid19"
 period <- "2020.02.27 - 03.28"
 
 # Load Data ---------
@@ -46,7 +46,7 @@ data_cases_sp_provinces_sm$province_cp <- data_cases_sp_provinces$province
 # /// Provincias small multiple --------------
 # Escala lineal
 png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-lineal.png", sep = ""),width = 1400,height = 1000)
-data_cases_sp_provinces %>% 
+data_cases_sp_provinces %>%
   ggplot() +
   geom_line(data = select(data_cases_sp_provinces_sm,date,cases_accumulated,province_cp,-province),
             aes(date,cases_accumulated,group=province_cp), color="#CACACA" ) +
@@ -69,7 +69,7 @@ data_cases_sp_provinces %>%
     # legend.position = "bottom"
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña sin desagregar, Canarias por islas] (escala lineal). ",period),
+       subtitle = paste0("Por provincia [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala lineal). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -100,7 +100,7 @@ data_cases_sp_provinces %>%
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña sin desagregar, Canarias por islas] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala logarítmica). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -131,7 +131,7 @@ data_cases_sp_provinces %>%
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por comunidad autónoma y provincias [Cataluña sin desagregar, Canarias por islas] (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma y provincias [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala logarítmica). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -146,9 +146,6 @@ data_cases_sp_provinces %>%
   geom_point(aes(date,cases_accumulated,group=province, color=ccaa), size = 1.5 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, 
                                date==max(data_cases_sp_provinces$date) & cases_accumulated > 100
-                                 # ( province == "Castellón/Castelló" & date==max(data_cases_sp_provinces$date -2) ) |
-                                 # ( province == "Alicante/Alacant" & date==max(data_cases_sp_provinces$date -2) ) |
-                                 # ( province == "Valencia/València" & date==max(data_cases_sp_provinces$date -2) )  
   ), 
         aes(date, cases_accumulated, color=ccaa, label=paste(format(cases_accumulated, nsmall=1, big.mark="."),province)),
               nudge_x = 3, # adjust the starting y position of the text label
@@ -175,7 +172,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña sin desagregar, Canarias por islas] (escala lineal). ",period),
+       subtitle = paste0("Por provincia [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala lineal). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -187,7 +184,7 @@ data_cases_sp_provinces %>%
   geom_line(aes(date,cases_accumulated,group=province, color=ccaa ), size = 1 ) +
   geom_point(aes(date,cases_accumulated,group=province, color=ccaa), size = 1.5 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, 
-                               date==max(data_cases_sp_provinces$date) & cases_accumulated > 10
+                               date==max(data_cases_sp_provinces$date) & cases_accumulated > 20
                                  # ( province == "Castellón/Castelló" & date==max(data_cases_sp_provinces$date -2) ) |
                                  # ( province == "Alicante/Alacant" & date==max(data_cases_sp_provinces$date -2) ) |
                                  # ( province == "Valencia/València" & date==max(data_cases_sp_provinces$date -2) )  
@@ -203,7 +200,8 @@ data_cases_sp_provinces %>%
   ) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
                  limits = c(1,max(data_cases_sp_provinces$cases_accumulated)),
-                 minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
+                 # breaks = c(1,10,100,1000),
+                 minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 7))
@@ -217,10 +215,10 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por comunidad autónoma [Cataluña sin desagregar, Canarias por islas] (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala logarítmica). ",period),
        y = "casos registrados",
        x = "fecha",
-       caption = caption)
+       caption = caption_provincia)
 dev.off()
 
 png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1200,height = 700)
@@ -255,7 +253,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia [sin Cataluña y Canarias] (escala lineal). ",period),
+       subtitle = paste0("Por provincia [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala lineal). ",period),
        y = "casos registrados por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
@@ -298,7 +296,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia [sin Cataluña y Canarias] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala logarítmica). ",period),
        y = "casos registrados por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
@@ -336,10 +334,10 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña sin desagregar, Canarias por islas] (escala lineal). ",period),
+       subtitle = paste0("Por provincia [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala lineal). ",period),
        y = "fallecidos",
        x = "fecha",
-       caption = caption)
+       caption = caption_provincia)
 dev.off()
 
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-log.png", sep = ""),width = 1200,height = 800)
@@ -364,10 +362,10 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña sin desagregar, Canarias por islas] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala logarítmica). ",period),
        y = "fallecidos",
        x = "fecha",
-       caption = caption)
+       caption = caption_provincia)
 dev.off()
 
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-log_ccaa.png", sep = ""),width = 1000,height = 600)
@@ -392,10 +390,10 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña sin desagregar, Canarias por islas] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala logarítmica). ",period),
        y = "fallecidos",
        x = "fecha",
-       caption = caption)
+       caption = caption_provincia)
 dev.off()
 
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-per-cienmil-lineal.png", sep = ""),width = 1200,height = 800)
@@ -419,10 +417,10 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia  [sin Cataluña y Canarias] (escala lineal). ",period),
+       subtitle = paste0("Por provincia  [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala lineal). ",period),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
-       caption = caption)
+       caption = caption_provincia)
 dev.off()
 
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-per-cienmil-log.png", sep = ""),width = 1200,height = 800)
@@ -448,10 +446,10 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia [sin Cataluña y Canarias] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala logarítmica). ",period),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
-       caption = caption)
+       caption = caption_provincia)
 dev.off()
 
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-per-cienmil-log-ccaa.png", sep = ""),width = 1000,height = 600)
@@ -477,10 +475,10 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia [sin Cataluña y Canarias] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala logarítmica). ",period),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
-       caption = caption)
+       caption = caption_provincia)
 dev.off()
 
 # // 3.2 Superpuesto----------------------
@@ -512,10 +510,10 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña sin desagregar, Canarias por islas] (escala lineal). ",period),
+       subtitle = paste0("Por provincia [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala lineal). ",period),
        y = "fallecidos",
        x = "fecha",
-       caption = caption)
+       caption = caption_provincia)
 dev.off()
 
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-log.png", sep = ""),width = 1200,height = 700)
@@ -547,10 +545,10 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña sin desagregar, Canarias por islas] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala logarítmica). ",period),
        y = "fallecidos",
        x = "fecha",
-       caption = caption)
+       caption = caption_provincia)
 dev.off()
 
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1200,height = 700)
@@ -582,10 +580,10 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia  [sin Cataluña y Canarias] (escala lineal). ",period),
+       subtitle = paste0("Por provincia  [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala lineal). ",period),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
-       caption = caption)
+       caption = caption_provincia)
 dev.off()
 
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-per-cienmil-log.png", sep = ""),width = 1200,height = 700)
@@ -619,9 +617,9 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia [sin Cataluña y Canarias] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: sólo Lleida, Canarias por islas, País Vasco sin actualizar 28.03] (escala logarítmica). ",period),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
-       caption = caption)
+       caption = caption_provincia)
 dev.off()
-
+  
