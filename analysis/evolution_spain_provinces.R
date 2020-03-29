@@ -10,7 +10,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: ProvidencialData19. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: montera34.com | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 03.25"
+period <- "2020.02.27 - 03.28"
 
 # Load Data ---------
 # / Population -------------
