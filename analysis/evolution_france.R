@@ -69,6 +69,7 @@ data_f2_cases <- data_f2_cases_original %>% filter(granularite == "region"& sour
 data_f2_cases$date <- as.Date(data_f2_cases$date)
 
 # data_f2_cases <- filter(data_f2_cases, source_nom == "OpenCOVID19-fr" & date > "2020-03-26" | source_nom != "OpenCOVID19-fr" & date < "2020-03-27" )
+data_f2_cases <- data_f2_cases %>% group_by(maille_nom,date) %>% mutate( deceassed = max(deces) )
 
 
 # create temp dataframes to be able to plot all the   values in small multiples
@@ -341,25 +342,21 @@ dev.off()
 
 # 3. Deceassed -------------------
 
-data_f_cases_original2 %>%
-  ggplot() +
-  geom_line(aes(date, deceassed, group=region) )
-
-data_f_cases_original2 %>% filter(region == "68")
+sm_fr <-as.data.frame( select(data_f2_cases_sm,date,deceassed,maille_nom_cp,-maille_nom, -maille_code) )
+sm_fr <- sm_fr[,2:4]
 
 # / small multiple ----------
 png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-lineal.png", sep = ""),width = 1000,height = 700)
-data_f2_cases %>% 
-  ggplot() +
-  geom_line(data = select(data_f2_cases_sm,date,deces,maille_nom_cp,-maille_nom),
-            aes(date,deces,group=maille_nom_cp), color="#CACACA" ) +
-  geom_line(aes(date, deces, group=maille_nom) ) +
-  geom_point(aes(date,deces), size= 0.5 ) +
-  facet_wrap( ~maille_nom) +
+  data_f2_cases %>%
+    ggplot() +
+    geom_line(data = sm_fr, aes(date,deceassed,group=maille_nom_cp), color="#CACACA" ) +
+    geom_line(aes(date, deceassed, group=maille_nom) ) +
+    geom_point(aes(date,deceassed), size= 0.5 ) +
+    facet_wrap( ~maille_nom) +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  scale_x_date(date_breaks = "3 day", 
+  scale_x_date(date_breaks = "4 day", 
                date_labels = "%d",
-               limits=c( min(data_f2_cases[!is.na(data_f2_cases$deces) > 0,]$date), max(data_f_cases_original2$date))
+               limits=c( min(data_f2_cases[!is.na(data_f2_cases$deces) > 0,]$date)+25, max(data_f_cases_original2$date))
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -379,18 +376,18 @@ dev.off()
 png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-log.png", sep = ""),width = 1000,height = 700)
 data_f2_cases %>% 
   ggplot() +
-  geom_line(data = select(data_f2_cases_sm,date,deces,maille_nom_cp,-maille_nom),
-            aes(date,deces,group=maille_nom_cp), color="#CACACA" ) +
-  geom_line(aes(date, deces, group=maille_nom) ) +
-  geom_point(aes(date,deces), size= 0.5 ) +
+  geom_line(data = sm_fr, aes(date,deceassed,group=maille_nom_cp), color="#CACACA" ) +
+  geom_line(aes(date, deceassed, group=maille_nom) ) +
+  geom_point(aes(date,deceassed), size= 0.5 ) +
   facet_wrap( ~maille_nom) +
+  coord_cartesian( ylim = c(1, max(data_f2_cases[!is.na(data_f2_cases$deceassed),]$deceassed) * 1.05) ) +
   scale_y_log10( 
-    limits = c(1,max(data_f_cases_original2$deceassed)),
+    # limits = c(1,max(data_f_cases_original2$deceassed)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
   scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_f2_cases[!is.na(data_f2_cases$deces) > 0,]$date), max(data_f_cases_original2$date))
+               limits=c( min(data_f2_cases[!is.na(data_f2_cases$deces) > 0,]$date)+25, max(data_f2_cases$date))
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -443,13 +440,13 @@ dev.off()
 png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-superpuesto-lineal.png", sep = ""),width = 1000,height = 700)
 data_f2_cases %>% 
   ggplot() +
-  geom_line(aes(date, deces, group=maille_nom, color=maille_nom), size= 1 ) +
-  geom_point(aes(date,deces, color=maille_nom), size= 1.5 ) +
+  geom_line(aes(date, deceassed, group=maille_nom, color=maille_nom), size= 1 ) +
+  geom_point(aes(date,deceassed, color=maille_nom), size= 1.5 ) +
   geom_text_repel(data=filter( data_f2_cases, date==max(data_f2_cases$date)), 
-                  aes(date, deces, color=maille_nom, label=paste(format( deces, nsmall=1, big.mark="."),maille_nom)),
-                  nudge_x = 3, # adjust the starting y position of the text label
+                  aes(date, deceassed, color=maille_nom, label=paste(format( deces, nsmall=1, big.mark="."),maille_nom)),
+                  nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
-                  # hjust=0,
+                  hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
@@ -458,7 +455,7 @@ data_f2_cases %>%
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_f2_cases$date) + 40, max(data_f2_cases$date + 3)) 
+               limits=c( min(data_f2_cases$date) + 40, max(data_f2_cases$date + 7)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -476,15 +473,15 @@ data_f2_cases %>%
 dev.off()
 
 png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-superpuesto-log.png", sep = ""),width = 1000,height = 700)
-data_f2_cases %>% 
+data_f2_cases %>% # filter( source_type != "opencovid19-fr" | (source_type == "opencovid19-fr" & date > as.Date("2020-03-26")) ) %>%
   ggplot() +
-  geom_line(aes(date, deces, group=maille_nom, color=maille_nom), size= 1 ) +
-  geom_point(aes(date,deces, color=maille_nom), size= 1.5 ) +
+  geom_line(aes(date, deceassed, group=maille_nom, color=maille_nom), size= 1 ) +
+  geom_point(aes(date,deceassed, color=maille_nom), size= 1.5 ) +
   geom_text_repel(data=filter( data_f2_cases, date==max(data_f2_cases$date)), 
-                  aes(date, deces, color=maille_nom, label=paste(format( deces, nsmall=1, big.mark="."),maille_nom)),
-                  nudge_x = 3, # adjust the starting y position of the text label
+                  aes(date, deceassed, color=maille_nom, label=paste(format( deces, nsmall=1, big.mark="."),maille_nom)),
+                  nudge_x = 1, # adjust the starting y position of the text label
                   size=5,
-                  # hjust=0,
+                  hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
@@ -496,7 +493,7 @@ data_f2_cases %>%
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_f2_cases$date) + 40, max(data_f2_cases$date + 3)) 
+               limits=c( min(data_f2_cases$date) + 40, max(data_f2_cases$date + 6)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
