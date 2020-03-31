@@ -296,8 +296,13 @@ dev.off()
 
 # setting 0 day -------------
 
+# Bind Spanish and Italian data
+compare_countries <- rbind(data_all_export, data_i_cases)
+
+# adds FRance
 data_f2_cases$country <- "France"
-ddd <- data_f2_cases %>% filter( (maille_nom == "Corse" & date < as.Date("2020-03-17") ) )
+
+# ddd <- data_f2_cases %>% filter( (maille_nom == "Corse" & date < as.Date("2020-03-17") ) )
 compare_countries_deceassed <-rbind( compare_countries %>% select(date,region, country,deceassed), 
                                      as.data.frame(data_f2_cases %>% select(date,maille_nom, country,deceassed) %>% rename(region = maille_nom ) )
 )
@@ -373,9 +378,9 @@ for (i in 1:4) {
     png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased_en.png"), width = 1100,height = 800)
   } else if (i == 2 ) {
     png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased-facet_en.png"), width = 800,height = 1500)
-  } else if (i == 3 ) { 
+  } else if (i == 4 ) { 
     png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased.png"), width = 1100,height = 800)
-  }  else if (i == 4 ) { 
+  }  else if (i == 3 ) { 
     png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased-facet.png"),width = 800,height = 1500)
   }   
   # png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased-facet_es.png"),width = 700,height = 1500)
@@ -389,7 +394,7 @@ ggplot() +
   geom_line(data =growth_2x, aes(days_since, value5), size= 0.5, color = "#555555", linetype = 2 ) +
   geom_line(aes(days_since, deceassed, group= region, color= country), size= 0.8, alpha = 0.8 ) +
   geom_point( aes(days_since, deceassed, color= country, 
-                  text = paste0("<b>", region, " (", country, ")</b><br>", format(deceassed, nsmall=1, big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")), 
+                  text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")), 
               size= 1.3, alpha = 0.8  ) +
   # ES
   # geom_text(data = growth_2x[1,], aes(20,7000, label=paste0("pendiente: muertes doblan cada 2 días")),
@@ -410,10 +415,10 @@ ggplot() +
   # geom_text(data = growth_2x[1,], aes(32.5,350, label=paste0("... every 5 days")),
   #           size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555") +
   # labels
-  geom_text_repel(data=filter( test, date==max(as.Date("2020-03-30")) & country == "Spain" |
-                                 date==as.Date("2020-03-30") & country == "Italia" | 
+  geom_text_repel(data=filter( test, date== as.Date("2020-03-31") & country == "Spain" |
+                                 date==as.Date("2020-03-31") & country == "Italia" | 
                                  date==as.Date("2020-03-29") & country == "France" ),
-                  aes(days_since, deceassed, label=paste(format(deceassed, nsmall=1, big.mark="."), region)),
+                  aes(days_since, deceassed, label=paste(format( round(deceassed, digits = 0), big.mark="."), region)),
                   color= "#000000",
                   nudge_x = 1, # adjust the starting y position of the text label
                   size=4,
@@ -426,7 +431,7 @@ ggplot() +
   ) +
   coord_cartesian( 
     ylim=c(umbral-1, max(test[!is.na(test$deceassed),]$deceassed)*1.15 ),
-    xlim=c(0, 34 )
+    xlim=c(0,  36 ) #max(test[!is.na(test$deceassed),]$days_since) + 3
     ) +
   scale_y_log10(
     breaks = c(5,10,20,50,100,200,500,1000,2000,5000),
@@ -458,13 +463,13 @@ ggplot() +
   #      caption ="Por: @numeroteca (Montera34). lab.montera34.com/covid19 | Data: various official sources. Check website.")
 
 
-if ( (i == 2) | (i == 4)  ) {
+if ( (i == 2) | (i == 3)  ) {
   ptotal <- ptotal + facet_wrap(~country, ncol = 1) 
 }
 
 if ( (i == 1) | (i == 2)  ) { # EN
-  ptotal <- ptotal + labs(title = paste0("Coronavirus (COVID-19) deaths in regions of Spain and Italy"),
-     subtitle = paste0("Cumulative number of deaths, by number of days since ",umbral ,"th death. Updated: 2020.03.30"),
+  ptotal <- ptotal + labs(title = paste0("Coronavirus (COVID-19) deaths in regions of Spain, Italy and France"),
+     subtitle = paste0("Cumulative number of deaths, by number of days since ",umbral ,"th death. Updated: 2020.03.31 (France 29.03)"),
      y = "Number of deaths (log. scale)",
      x = paste0("Days since ", umbral , "th or more cumulative deaths"),
      caption ="By: @numeroteca (Montera34). https://lab.montera34.com/covid19 | Data: various official sources. Check website.") +
@@ -479,7 +484,7 @@ if ( (i == 1) | (i == 2)  ) { # EN
               size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555")
 } else { # ES
   ptotal <- ptotal + labs(title = paste0("Número de fallecimientos de COVID-19 registrados. Días desde ",umbral ," o más fallecimientos"),
-       subtitle = paste0("Por región en España e Italia (30.03.2020) (escala logarítmica). "),
+       subtitle = paste0("Por región en España, Italia (31.03.2020) y Francia (29.03.2020) (escala logarítmica). "),
        y = "fallecimientos registrados (escala log.)",
        x = paste0("días desde ", umbral , " o más fallecimientos"),
        caption ="Por: @numeroteca (Montera34). lab.montera34.com/covid19 | Data: various official sources. Check website.") +
@@ -498,7 +503,7 @@ print(paste("plot",i))
 dev.off()
 }
 
-fig <- ggplotly(ptotal, tooltip = "text") %>% layout(title = list(text = paste0('Coronavirus (COVID-19) deaths in regions of Spain and Italy',
+fig <- ggplotly(ptotal, tooltip = "text") %>% layout(title = list(text = paste0('Coronavirus (COVID-19) deaths in regions of Spain, France and Italy',
                                                                             '<br>',
                                                                             '<sup>',
                                                                             'Cumulative number of deaths, by number of days since ',umbral ,'th death. Updated: 2020.03.26',
