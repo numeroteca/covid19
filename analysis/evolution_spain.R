@@ -11,7 +11,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 03.30"
+period <- "2020.02.27 - 03.31"
 
 # Load Data ---------
 # / Population -------------
@@ -1096,7 +1096,7 @@ png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-com
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(data = crec2, aes(x = date, y = y_percent2), linetype = 2, size = 2, color ="#444444") +
-  geom_text(data = crec2[1,],aes(as.Date("2020-03-24"),740,label="curva: un 18% más de fallecimientos cada día"), 
+  geom_text(data = crec2[1,],aes(as.Date("2020-03-24"),1200,label="curva: un 18% más de fallecimientos cada día"), 
             size = 8, base_family = "Roboto Condensed") +
   geom_line(aes(date,death,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,death, color=CCAA), size= 1.5 ) +
@@ -1168,11 +1168,11 @@ data_death %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
-png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-log-with-curve-24.png", sep = ""),width = 1200,height = 700)
+png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-log-with-curve.png", sep = ""),width = 1200,height = 700)
 data_death %>% filter( CCAA != "Total") %>%
   ggplot() +
   geom_line(data = crec2, aes(x = date, y = y_percent2), linetype = 2, size = 2, color ="#444444") +
-  geom_text(data = crec2[1,],aes(as.Date("2020-03-14"),750,label="línea: un 24% más de fallecimientos cada día"), 
+  geom_text(data = crec2[1,],aes(as.Date("2020-03-14"),750,label="línea: un 18% más de fallecimientos cada día"), 
             size = 8, base_family = "Roboto Condensed") +
   geom_line(aes(date,death,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,death, color=CCAA), size= 1.5 ) +
