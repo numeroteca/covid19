@@ -9,7 +9,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------  
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_f <- "Gráfico: montera34.com. Datos: data.gouv.fr"
-periodo_f <- "2020.03.04 - 03.28"
+periodo_f <- "2020.03.04 - 03.30"
 
 # COVID-19 in France-----------
 
@@ -347,6 +347,7 @@ sm_fr <- sm_fr[,2:4]
 
 # / small multiple ----------
 png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-lineal.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("xxxxxxxxxx.png", sep = ""),width = 1000,height = 700)
   data_f2_cases %>%
     ggplot() +
     geom_line(data = sm_fr, aes(date,deceassed,group=maille_nom_cp), color="#CACACA" ) +
@@ -356,7 +357,7 @@ png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-lin
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "4 day", 
                date_labels = "%d",
-               limits=c( min(data_f2_cases[!is.na(data_f2_cases$deces) > 0,]$date)+25, max(data_f_cases_original2$date))
+               limits=c( min(data_f2_cases[!is.na(data_f2_cases$deces) > 0,]$date)+25, max(data_f2_cases$date))
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -373,7 +374,7 @@ png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-lin
        caption = caption_f)
 dev.off()
 
-png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-log.png", sep = ""),width = 1000,height = 700)
+  png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-log.png", sep = ""),width = 1000,height = 700)
 data_f2_cases %>% 
   ggplot() +
   geom_line(data = sm_fr, aes(date,deceassed,group=maille_nom_cp), color="#CACACA" ) +
