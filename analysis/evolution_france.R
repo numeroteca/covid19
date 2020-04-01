@@ -9,7 +9,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------  
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_f <- "Gráfico: montera34.com. Datos: data.gouv.fr"
-periodo_f <- "2020.03.04 - 03.30"
+periodo_f <- "2020.03.04 - 03.31"
 
 # COVID-19 in France-----------
 
@@ -347,7 +347,7 @@ sm_fr <- sm_fr[,2:4]
 
 # / small multiple ----------
 png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-lineal.png", sep = ""),width = 1000,height = 700)
-png(filename=paste("xxxxxxxxxx.png", sep = ""),width = 1000,height = 700)
+# png(filename=paste("xxxxxxxxxx.png", sep = ""),width = 1000,height = 700)
   data_f2_cases %>%
     ggplot() +
     geom_line(data = sm_fr, aes(date,deceassed,group=maille_nom_cp), color="#CACACA" ) +
@@ -374,7 +374,7 @@ png(filename=paste("xxxxxxxxxx.png", sep = ""),width = 1000,height = 700)
        caption = caption_f)
 dev.off()
 
-  png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-log.png", sep = ""),width = 1000,height = 700)
+png(filename=paste("img/france/covid19_fallecimientos-registrados-por-region-log.png", sep = ""),width = 1000,height = 700)
 data_f2_cases %>% 
   ggplot() +
   geom_line(data = sm_fr, aes(date,deceassed,group=maille_nom_cp), color="#CACACA" ) +
