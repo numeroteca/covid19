@@ -35,6 +35,9 @@ data_cases_sp_provinces$cases_per_cienmil <- round( data_cases_sp_provinces$case
 data_cases_sp_provinces$intensive_care_per_1000000 <- round( data_cases_sp_provinces$intensive_care / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 data_cases_sp_provinces$deceassed_per_100000 <- round( data_cases_sp_provinces$deceased / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != as.Date("2020-04-01"))
+
+
 write.csv(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
 
 
@@ -635,12 +638,12 @@ data_cases_sp_provinces %>%
   ggplot() +
   geom_line(aes(date, deceassed_per_100000,group=province, color=ccaa), size= 1 ) +
   geom_point(aes(date, deceassed_per_100000, color=ccaa), size= 1.5 ) +
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & deceassed_per_100000 > 5), 
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & deceassed_per_100000 > 7), 
                   aes(date, deceassed_per_100000, color=ccaa, 
                       label=paste(format(deceassed_per_100000, nsmall=1, big.mark="."),province)),
-                  nudge_x = 4, # adjust the starting y position of the text label
+                  nudge_x = 5, # adjust the starting y position of the text label
                   size=5,
-                  # hjust=0,
+                  hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
