@@ -63,7 +63,8 @@ data_death <- merge( data_death, data_cases %>% filter (date == as.Date("2020-02
 # calculate values per 
 data_death$per_cienmil <- round( data_death$value / data_death$poblacion * 100000, digits = 2)
 
-data_death <- data_death %>% group_by(CCAA) %>% arrange(date) %>% mutate( daily_deaths = value - lag(value)  )
+data_death <- data_death %>% group_by(CCAA) %>% arrange(date) %>% mutate( daily_deaths = value - lag(value), 
+                                                                          daily_deaths_inc = round((value - lag(value)) /lag(value) * 100, digits = 1)   )
 
 write.csv(data_death, file = "data/output/covid19-fallecimientos-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
 
@@ -365,7 +366,7 @@ data_cases %>%
                   segment.color="#777777"
   ) +
   coord_cartesian( 
-    ylim=c(1, max(data_cases$value)*1.05 ),
+    ylim=c(1, max(data_cases$value)*1.05 )
   ) +
   scale_y_continuous( 
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
@@ -1164,7 +1165,7 @@ data_death %>% filter( CCAA != "Total") %>%
   geom_line(aes(date,death,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,death, color=CCAA), size= 1.5 ) +
   geom_text_repel(data=filter( data_death, date==max(data_death$date),  CCAA != "Total"),
-                  aes(date,death, color=CCAA, label=paste0(format(death, nsmall=1, big.mark="."), " ",CCAA, " (+", daily_deaths,")")),
+                  aes(date,death, color=CCAA, label=paste0(format(death, nsmall=1, big.mark="."), " ",CCAA, " (+", daily_deaths,", +", daily_deaths_inc ,"%)")),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -1181,7 +1182,7 @@ data_death %>% filter( CCAA != "Total") %>%
   ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits=c( min(data_death$date), max(data_death$date + 5))
+               limits=c( min(data_death$date), max(data_death$date + 6))
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
