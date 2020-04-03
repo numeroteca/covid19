@@ -28,8 +28,9 @@ Cada cual se encarga de una comunidad autńoma o provincia. [Ver sección "Organ
 
 Mándanos tu análisis o visualización si usas estos datos (covid19@montera34.com):
 
-* [Gráficos y códido de R disponibles](https://lab.montera34.com/covid19/#casos-provincia) (mantenido por [@montera34](https://twitter.com/montera34))
-* [Dashboard interactivo en Tableau con los datos provinciales (en Tableau Public)](https://public.tableau.com/profile/javier.cant.n#!/vizhome/COVIDprov/Historia1?publish=yes) mantenido por [@ProsumidorSoc](https://twitter.com/ProsumidorSoc)
+* [Gráficos y códido de R disponibles](https://lab.montera34.com/covid19/#casos-provincia) mantenido por [@montera34](https://twitter.com/montera34)).
+* [Dashboard interactivo en Tableau con los datos provinciales (en Tableau Public)](https://public.tableau.com/profile/javier.cant.n#!/vizhome/COVIDprov/Historia1?publish=yes) mantenido por [@ProsumidorSoc](https://twitter.com/ProsumidorSoc).
+* [Mapas de afectados por coronavirus en España](https://mapa-de-afectados-por-coronavirus-plataformacovid.hub.arcgis.com/) iniciativa mantenida por voluntarios e impulsada por Esri España.
 
 ## Fuentes
 
