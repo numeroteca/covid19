@@ -11,7 +11,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 04.02"
+period <- "2020.02.27 - 04.03"
 
 # Load Data ---------
 # / Population -------------
@@ -1321,6 +1321,47 @@ data_death %>% filter( CCAA != "Total") %>%
        caption = caption)
 dev.off()
 
+# Daily deaths log average --------
+png(filename=paste("img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-media-superpuesto-log.png", sep = ""),width = 1200,height = 700)
+data_death %>% filter( CCAA != "Total") %>%
+  ggplot() +
+  geom_smooth(aes(date,daily_deaths_avg6,group=CCAA, color=CCAA), size= 1, se = FALSE ) +
+  geom_point(aes(date,daily_deaths, color=CCAA), size= 1.5 ) +
+  geom_text_repel(data=filter( data_death, date==max(data_death$date),  CCAA != "Total"),
+                  aes(date,daily_deaths_avg6, color=CCAA, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),CCAA)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_color_manual(values = colors ) +
+  scale_y_log10(
+    breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
+    labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  ) +
+  scale_x_date(date_breaks = "1 day",
+               date_labels = "%d",
+               limits=c( min(data_death$date), max(data_death$date + 4)),
+               expand = c(0,0)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Media de muertes por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       y = "fallecidos por día (media 6 días) (escala logarítmica)",
+       x = "fecha",
+       caption = caption)
+dev.off()
 
 # deaths per 100.000
 png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1200,height = 700)
