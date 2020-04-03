@@ -1058,7 +1058,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-31,Huelva,Andalucía,,,96,7,4,177,2,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
 2020-03-31,Jaén,Andalucía,,,358,13,26,661,17,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
 2020-03-31,El Hierro,Canarias,,3,,,0,,,,"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
-2020-03-31,León,Castilla y León,46,,464,55,176,964,100,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-03-31,León,Castilla y León,46,,464,55,100,964,100,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-31,Lleida,Cataluña,,,,,55,825,108,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-31,Lugo,Galicia,,371,,,7,402,,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado.",
 2020-03-31,Madrid,"Madrid, Comunidad de",,14576,,,3603,27509,9330,falta fuente,
@@ -1112,11 +1112,11 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-01,Toledo,Castilla - La Mancha,,1298,,,205,1593,,https://public.flourish.studio/visualisation/1451263/,"¹La Junta no especifica el lugar de las altas, por lo que el total de casos activos es aproximado."
 2020-04-01,Ávila,Castilla y León,45,321,164,17,59,512,132,https://analisis.datosabiertos.jcyl.es/pages/coronavirus,
 2020-04-01,Burgos,Castilla y León,58,521,247,55,77,848,250,https://analisis.datosabiertos.jcyl.es/pages/coronavirus,
-2020-04-01,León,Castilla y León,43,683,474,55,,1007,216,https://analisis.datosabiertos.jcyl.es/pages/coronavirus,
+2020-04-01,León,Castilla y León,43,683,474,55,108,1007,216,https://analisis.datosabiertos.jcyl.es/pages/coronavirus,
 2020-04-01,Palencia,Castilla y León,34,284,120,20,23,359,52,https://analisis.datosabiertos.jcyl.es/pages/coronavirus,
 2020-04-01,Salamanca,Castilla y León,131,946,351,54,135,1316,235,https://analisis.datosabiertos.jcyl.es/pages/coronavirus,
 2020-04-01,Segovia,Castilla y León,91,520,308,23,81,811,210,https://analisis.datosabiertos.jcyl.es/pages/coronavirus,
-2020-04-01,Soria,Castilla y León,104,525,148,20,,659,90,https://analisis.datosabiertos.jcyl.es/pages/coronavirus,
+2020-04-01,Soria,Castilla y León,104,525,148,20,44,659,90,https://analisis.datosabiertos.jcyl.es/pages/coronavirus,
 2020-04-01,Valladolid,Castilla y León,121,758,447,95,89,1109,262,https://analisis.datosabiertos.jcyl.es/pages/coronavirus,
 2020-04-01,Zamora,Castilla y León,9,150,97,14,25,226,51,https://analisis.datosabiertos.jcyl.es/pages/coronavirus,
 2020-04-01,Girona,Cataluña,192,,,,119,1180,,https://www.diaridegirona.cat/comarques/2020/04/01/girona-arriba-al-pic-mes/1037492.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
@@ -1168,6 +1168,6 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-02,Cuenca,Castilla - La Mancha,,207,181,,73,,,https://public.flourish.studio/visualisation/1451263/,Actualizado a las 23:00. Los hospitalizados están extraidos de notas de prensa en https://www.castillalamancha.es/actualidad/notasdeprensa
 2020-04-02,Guadalajara,Castilla - La Mancha,,644,295,,105,,,https://public.flourish.studio/visualisation/1451263/,Actualizado a las 23:00. Los hospitalizados están extraidos de notas de prensa en https://www.castillalamancha.es/actualidad/notasdeprensa
 2020-04-02,Toledo,Castilla - La Mancha,,1339,731,,234,,,https://public.flourish.studio/visualisation/1451263/,Actualizado a las 23:00. Los hospitalizados están extraidos de notas de prensa en https://www.castillalamancha.es/actualidad/notasdeprensa
-2020-04-02,Zaragoza,Aragón,,,,,,2068,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258306,
-2020-04-02,Huesca,Aragón,,,,,,349,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258306,
-2020-04-02,Teruel,Aragón,,,,,,283,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258306,
+2020-04-02,Zaragoza,Aragón,,1654,1008,137,155,2068,259,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258306,
+2020-04-02,Huesca,Aragón,,296,146,20,18,349,35,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258306,
+2020-04-02,Teruel,Aragón,,232,166,21,25,283,26,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258306,

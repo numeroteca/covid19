@@ -104,7 +104,7 @@ getPalette <- colorRampPalette(brewer.pal(9, "Set1"))
 
 # create temp dataframes to be able to plot all the values in small multiples
 data_cases_sp_provinces_sm <- data_cases_sp_provinces %>% filter( date != as.Date("2020-04-02"))
-data_cases_sp_provinces_sm$province_cp <- data_cases_sp_provinces[data_cases_sp_provinces$date != as.Date("2020-04-02"),]$province
+data_cases_sp_provinces_sm$province_cp <- data_cases_sp_provinces[data_cases_sp_provinces$date != as.Date("2020-04-02"),]$province 
 
 # Remove last day
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != as.Date("2020-04-02"))
@@ -115,9 +115,9 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != as.Date("
 png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-lineal.png", sep = ""),width = 1400,height = 1000)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(data = select(data_cases_sp_provinces_sm,date,cases_accumulated,province_cp,-province),
+  geom_line(data = data_cases_sp_provinces_sm %>% ungroup() %>% select(date,cases_accumulated,province_cp,-province) ,
             aes(date,cases_accumulated,group=province_cp), color="#CACACA" ) +
-  geom_line(aes(date,cases_accumulated,group=province) ) +
+  geom_line(aes(date,cases_accumulated,group=province), size = 1 ) +
   geom_point(aes(date,cases_accumulated,group=province), size = 0.5 ) +
   facet_wrap( ~province) +
   scale_y_continuous(
@@ -137,7 +137,7 @@ data_cases_sp_provinces %>%
     # legend.position = "bottom"
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -147,7 +147,7 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-log.png", sep = ""),width = 1400,height = 1000)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(data = select(data_cases_sp_provinces_sm,date,cases_accumulated,province_cp,-province),
+  geom_line(data = data_cases_sp_provinces_sm %>% ungroup() %>% select(date,cases_accumulated,province_cp,-province) ,
             aes(date,cases_accumulated,group=province_cp), color="#CACACA" ) +
   geom_line(aes(date,cases_accumulated,group=province), size = 1 ) +
   geom_point(aes(date,cases_accumulated,group=province), size = 0.5 ) +
@@ -169,7 +169,7 @@ data_cases_sp_provinces %>%
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -201,7 +201,7 @@ data_cases_sp_provinces %>%
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por comunidad autónoma y provincias [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma y provincias [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -244,7 +244,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -286,7 +286,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por comunidad autónoma [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -326,7 +326,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
        y = "casos registrados por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
@@ -368,7 +368,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
        y = "casos registrados por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
@@ -382,7 +382,7 @@ dev.off()
 
 # create temp dataframes to be able to plot all the values in small multiples
 data_cases_sp_provinces_sm <- data_cases_sp_provinces
-data_cases_sp_provinces_sm$province_cp <- data_cases_sp_provinces$province %>% ungroup()
+data_cases_sp_provinces_sm$province_cp <- data_cases_sp_provinces$province  
 
 # // 3.1 Fallecimientos Small multiple ----------
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-lineal.png", sep = ""),width = 1200,height = 800)
@@ -416,7 +416,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
        y = "fallecidos",
        x = "fecha",
        caption = caption_provincia)
@@ -453,7 +453,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
        y = "fallecidos",
        x = "fecha",
        caption = caption_provincia)
@@ -482,7 +482,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
        y = "fallecidos",
        x = "fecha",
        caption = caption_provincia)
@@ -510,7 +510,7 @@ data_cases_sp_provinces %>% filter(ccaa != "Canarias") %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia  [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       subtitle = paste0("Por provincia  [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
@@ -540,7 +540,7 @@ data_cases_sp_provinces %>% filter(ccaa != "Canarias") %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
@@ -569,7 +569,7 @@ data_cases_sp_provinces %>% filter(ccaa != "Canarias") %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
@@ -582,8 +582,7 @@ data_cases_sp_provinces %>%
   geom_line(aes(date, deceased,group=province, color=ccaa), size= 1 ) +
   geom_point(aes(date, deceased, color=ccaa), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, 
-                               ( date==max(data_cases_sp_provinces$date) & deceased > 50 ) |
-                                ( date==max(data_cases_sp_provinces$date)-1 & (data_cases_sp_provinces$province == "Soria") )
+                               date==max(data_cases_sp_provinces$date) & deceased > 50 
                                ), 
                   aes(date, deceased, color=ccaa, label=paste(format(deceased, nsmall=1, big.mark="."),province)),
                   nudge_x = 3, # adjust the starting y position of the text label
@@ -609,7 +608,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
        y = "fallecidos",
        x = "fecha",
        caption = caption_provincia)
@@ -648,7 +647,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
        y = "fallecidos",
        x = "fecha",
        caption = caption_provincia)
@@ -656,7 +655,7 @@ dev.off()
 
 
 # Daily deaths --------------
-png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media6-superpuesto-log.png", sep = ""),width = 1200,height = 800)
+png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-log.png", sep = ""),width = 1200,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
   geom_line(aes(date, daily_deaths_avg6,group=province, color=ccaa), size= 1 ) +
@@ -689,7 +688,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
-       subtitle = paste0("Por provincia [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona]. Escala logarítmica  ",period),
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona]. Escala logarítmica  ",period),
        y = "fallecidos por día (media 6 días)",
        x = "fecha",
        caption = caption_provincia)
@@ -727,7 +726,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia  [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       subtitle = paste0("Por provincia  [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
@@ -771,7 +770,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia [CLM: Soria y León falta último día. Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
