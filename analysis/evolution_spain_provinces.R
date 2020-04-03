@@ -19,7 +19,8 @@ provincias_poblacion <-  read.delim("data/original/spain/provincias-poblacion.cs
 
 # / COVID-19 in Spain -----------
 # / By province -----------
-data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")  
+data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")
+# data_cases_canarias <- read.delim("data/original/spain/covid19_canarias.csv",sep = ",")
 
 # Process data ------
 # Create date variable
@@ -37,10 +38,10 @@ tenerife <- canarias %>% filter(province == "La Gomera" | province =="La Palma" 
   hospitalized = sum(hospitalized),
   intensive_care = sum(intensive_care),
   deceased = sum(deceased),
-  cases_accumulated = sum(cases_accumulated),
-  recovered = sum(recovered),
-  source = paste(source, collapse = ";"),
-  comments = paste(comments, collapse = ";")
+  cases_accumulated = sum(cases_accumulated)
+  recovered = sum(recovered)
+  # source = paste(source, collapse = ";"),
+  # comments = paste(comments, collapse = ";")
 )
 palmas <- canarias %>% filter(province == "Fuerteventura" | province =="Lanzarote" | province == "Gran Canaria") %>% group_by(date) %>% summarise(
   province = "Palmas, Las",
@@ -658,8 +659,9 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-log.png", sep = ""),width = 1200,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(aes(date, daily_deaths_avg6,group=province, color=ccaa), size= 1 ) +
-  geom_point(aes(date, daily_deaths_avg6, color=ccaa), size= 1.5 ) +
+  geom_smooth(aes(date, daily_deaths_avg6,group=province, color=ccaa), size= 1, se = FALSE, span = 0.6 ) +
+  geom_point(aes(date, daily_deaths, color=ccaa), size= 1.5 ) +
+  # geom_point(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), aes(date, daily_deaths_avg6, color=province), size= 1.5, alpha = 0.3 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths > 0), 
                   aes(date, daily_deaths_avg6, color=ccaa, label=paste(format(daily_deaths, nsmall=1, big.mark=".", decimal.mark = ","),province)),
                   nudge_x = 2, # adjust the starting y position of the text label
@@ -670,7 +672,32 @@ data_cases_sp_provinces %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
+  # marca un día
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)-12,  province == "Madrid" ),
+                  aes(date,daily_deaths, label=paste("muertes en un día en una provincia")),
+                  nudge_y = 5, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="x",
+                  segment.size = 0.5,
+                  segment.color="#777777"
+  ) +
+  # marca la línea
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)-3,  province == "Madrid" ),
+                  aes(date+0.5,daily_deaths, label=paste("media de 6 días")),
+                  nudge_y = 2, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="x",
+                  segment.size = 0.5,
+                  segment.color="#777777"
+  ) +
   scale_color_manual(values = getPalette(colourCount )) +
+  coord_cartesian(
+    ylim = c(1,500)
+  ) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
                  minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
                  expand = c(0,0.2) ) +
