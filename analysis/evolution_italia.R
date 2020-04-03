@@ -8,7 +8,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_i <- "Gráfico: @numeroteca (montera34.com). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 04.02"
+periodo_i <- "2020.02.24 - 04.03"
 
 # COVID-19 in Italy -----------
 # Load data
@@ -64,7 +64,7 @@ data_i_cases_sm$region_cp <- data_i_cases$region
 png(filename=paste("img/italia/covid19_casos-registrados-por-region-lineal.png", sep = ""),width = 1100,height = 800)
 data_i_cases %>%
   ggplot() +
-  geom_line(data = select(data_i_cases_sm,date,cases_registered,region_cp,-region),
+  geom_line(data = data_i_cases_sm %>% ungroup() %>% select(date,cases_registered,region_cp,-region),
             aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
   geom_line(aes(date,cases_registered,group=region) ) +
   geom_point(aes(date,cases_registered,group=region), size = 0.5 ) +
@@ -93,7 +93,7 @@ dev.off()
 png(filename=paste("img/italia/covid19_casos-registrados-por-region-log.png", sep = ""),width = 1100,height = 800)
 data_i_cases %>%
   ggplot() +
-  geom_line(data = select(data_i_cases_sm,date,cases_registered,region_cp,-region),
+  geom_line(data = data_i_cases_sm %>% ungroup() %>% select(date,cases_registered,region_cp,-region),
             aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
   geom_line(aes(date,cases_registered,group=region) ) +
   geom_point(aes(date,cases_registered,group=region), size = 0.5 )  +
@@ -122,7 +122,7 @@ dev.off()
 png(filename=paste("img/italia/covid19_casos-registrados-por-region-per-cienmil-lineal.png", sep = ""),width = 1100,height = 800)
 data_i_cases %>%
   ggplot() +
-  geom_line(data = select(data_i_cases_sm,date,cases_per_100000,region_cp,-region),
+  geom_line(data = data_i_cases_sm %>% ungroup() %>% select(date,cases_per_100000,region_cp,-region),
             aes(date,cases_per_100000,group=region_cp), color="#CACACA" ) +
   geom_line(aes(date,cases_per_100000,group=region) ) +
   geom_point(aes(date,cases_per_100000,group=region), size = 0.5 ) +
@@ -148,7 +148,7 @@ dev.off()
 png(filename=paste("img/italia/covid19_casos-registrados-por-region-per-cienmil-log.png", sep = ""),width = 1100,height = 800)
 data_i_cases %>%
   ggplot() +
-  geom_line(data = select(data_i_cases_sm,date,cases_per_100000,region_cp,-region),
+  geom_line(data = data_i_cases_sm %>% ungroup() %>% select(date,cases_per_100000,region_cp,-region),
             aes(date,cases_per_100000,group=region_cp), color="#CACACA" ) +
   geom_line(aes(date,cases_per_100000,group=region) ) +
   geom_point(aes(date,cases_per_100000,group=region), size = 0.5 ) +
@@ -372,7 +372,7 @@ dev.off()
 png(filename=paste("img/italia/covid19_fallecimientos-registrados-por-region-lineal.png", sep = ""),width = 1100,height = 800)
 data_i_cases %>% 
   ggplot() +
-  geom_line(data = select(data_i_cases_sm,date,deceassed,region_cp,-region),
+  geom_line(data = data_i_cases_sm %>% ungroup() %>% select(date,deceassed,region_cp,-region),
             aes(date,deceassed,group=region_cp), color="#CACACA" ) +
   geom_line(aes(date, deceassed, group=region) ) +
   geom_point(aes(date,deceassed), size= 0.5 ) +
@@ -400,7 +400,7 @@ dev.off()
 png(filename=paste("img/italia/covid19_fallecimientos-registrados-por-region-log.png", sep = ""),width = 1100,height = 800)
 data_i_cases %>% 
   ggplot() +
-  geom_line(data = select(data_i_cases_sm,date,deceassed,region_cp,-region),
+  geom_line(data = data_i_cases_sm %>% ungroup() %>% select(date,deceassed,region_cp,-region),
             aes(date,deceassed,group=region_cp), color="#CACACA" ) +
   geom_line(aes(date, deceassed, group=region) ) +
   geom_point(aes(date,deceassed), size= 0.5 ) +
@@ -431,7 +431,7 @@ dev.off()
 png(filename=paste("img/italia/covid19_fallecimientos-registrados-por-region-per-cienmil-log.png", sep = ""),width = 1100,height = 800)
 data_i_cases %>% 
   ggplot() +
-  geom_line(data = select(data_i_cases_sm,date,deceassed_per_100000,region_cp,-region),
+  geom_line(data = data_i_cases_sm %>% ungroup() %>% select(date,deceassed_per_100000,region_cp,-region),
             aes(date,deceassed_per_100000,group=region_cp), color="#CACACA" ) +
   geom_line(aes(date, deceassed_per_100000, group=region) ) +
   geom_point(aes(date,deceassed_per_100000), size= 0.5 ) +
