@@ -10,7 +10,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: ProvidencialData19. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: montera34.com | Datos: recopilado por Providencialdata19 (lab.montera34.com/covid19, bit.ly/amadrinaunaccaa)"
-period <- "2020.02.27 - 04.01"
+period <- "2020.02.27 - 04.02"
 
 # Load Data ---------
 # / Population -------------
@@ -84,7 +84,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
           )
 
 # Remove last -usually incomplete- day
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != as.Date("2020-04-02")) %>% arrange(date)
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != as.Date("2020-04-03")) %>% arrange(date)
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_code,everything()) %>%
                                                   select(-source,-comments,source,comments)
@@ -103,11 +103,11 @@ getPalette <- colorRampPalette(brewer.pal(9, "Set1"))
 # / 1. Cases ------------
 
 # create temp dataframes to be able to plot all the values in small multiples
-data_cases_sp_provinces_sm <- data_cases_sp_provinces %>% filter( date != as.Date("2020-04-02"))
-data_cases_sp_provinces_sm$province_cp <- data_cases_sp_provinces[data_cases_sp_provinces$date != as.Date("2020-04-02"),]$province 
+data_cases_sp_provinces_sm <- data_cases_sp_provinces %>% filter( date != as.Date("2020-04-03"))
+data_cases_sp_provinces_sm$province_cp <- data_cases_sp_provinces[data_cases_sp_provinces$date != as.Date("2020-04-03"),]$province 
 
 # Remove last day
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != as.Date("2020-04-02"))
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != as.Date("2020-04-03"))
 
 # // 1.1 Small multiple ------------
 # /// Provincias small multiple --------------
@@ -338,12 +338,12 @@ data_cases_sp_provinces %>%
   geom_line(aes(date, cases_per_cienmil,group= province, color= ccaa), size= 1 ) +
   geom_point(aes(date,cases_per_cienmil, color=ccaa), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, 
-                               date==max(data_cases_sp_provinces$date) & cases_per_cienmil > 50
+                               date==max(data_cases_sp_provinces$date) & cases_per_cienmil > 100
                       ), 
                       aes(date,cases_per_cienmil, color=ccaa, label=paste(format(cases_per_cienmil, nsmall=1, big.mark=".", digits = 1), province)),
-                              nudge_x = 3, # adjust the starting y position of the text label
+                              nudge_x = 5, # adjust the starting y position of the text label
                               size=5,
-                              # hjust=0,
+                              hjust=0,
                               family = "Roboto Condensed",
                               direction="y",
                               segment.size = 0.1,
