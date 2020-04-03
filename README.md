@@ -63,6 +63,13 @@ When you go to any of the scripts you can run it and it will produce all the vis
 
 ### España (Spain)
 
+#### Provincias
+
+Más información sobre la recogidade datos por provincias (proyecto Providencialdata19) en   [README_providencialdata19.md](https://code.montera34.com:4443/numeroteca/covid19/-/tree/master/README_providencialdata19.md).
+
+Read more information at [README_providencialdata19.md](https://code.montera34.com:4443/numeroteca/covid19/-/tree/master/README_providencialdata19.md).
+                                          
+
 #### Comunidades autónomas
 
 Data are extracted from official PDF sources by Datadista [in this repository](https://github.com/datadista/datasets/tree/master/COVID%2019).
@@ -104,49 +111,9 @@ Example of observations:
 
 When no data is available `NA` is indicated. Intensive care patients data have not been published since March 13th.
 
-#### Provincias
-
-IMPORTANTE: los datos de Cataluña s'olo est'an para Girona y LLeida. Los datos de Canarias están desagregados por sus islas, aunque en los 'ultimos días no se han pubicado. Los datos de Girona para casos acumulados experimentan un descenso debido al cambio de criterio en la contabilidad.
-
-Llamamiento para colaborar en conseguir los datos de [@numeroteca](https://twitter.com/numeroteca/status/1239853592569425920) [@ProsumidorSoc](https://twitter.com/ProsumidorSoc/status/1240569799056461826) y 
-Working spreadsheet: https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/edit#gid=0
-Ayúdanos a completarla. Pide acceso. Si detectas errores háznoslo saber.
-
-¿Cómo citar cuando lo utilices? [Pon link a este repositorio](https://code.montera34.com:4443/numeroteca/covid19), lo hemos llamado provisionalmente ProvidencialData19. Hay muchas personas que nos habéis ayudado y aportado pistas. Gracias a todas por colaborar. Ahora mismo, estamos manteniendo los datos: [@arivero](https://twitter.com/arivero), [@ManoloYuri](https://twitter.com/ManoloYuri), [@ManoloYuri](https://twitter.com/ManoloYuri), [@congosto](https://twitter.com/congosto) y [@ProsumidorSoc](https://twitter.com/ProsumidorSoc). Si se nos olvida alguien ¡avísanos!
-TO DO: por actualizar. [Ver sección "Organización" de la hoja de cálculo](https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/edit#gid=179891808).
- 
-Lo más importante: quédate en casa para parar la propagación del virus.
-
-
-##### Visualizaciones 
-
-* [Gráficos y códido de R disponibles](https://lab.montera34.com/covid19/#casos-provincia) (mantenido por [@montera34](https://twitter.com/montera34))
-* [Dashboard interactivo en Tableau con los datos provinciales (en Tableau Public)](https://public.tableau.com/profile/javier.cant.n#!/vizhome/COVIDprov/Historia1?publish=yes) mantenido por [@ProsumidorSoc](https://twitter.com/ProsumidorSoc)
-
-##### Fuentes
-
-Se han usado varias fuentes que se indican en cada una de los datos por día y provincia en la columna "source".
-
-
-##### Los datos / The data
-
-Data are published in this CSV file: [/data/output/spain/covid19-provincias-spain_consolidated.csv](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/covid19-provincias-spain_consolidated.csv)
-
-It includes now INE code for provinces and data per 100.000 inhabitants. TODO> update this data structure.
-
-Format:
-
-|            |                      |                    |            |              |                    |                  |                              |             |
-|------------|------------------|-----------|----------------|----------|-------------------|-----------|---------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------| 
-| date       | province         | new_cases | intensive_care | deceased | cases_accumulated | recovered | source                                                                                            | comments                                                                                            | 
-| 2020-03-14 | Alicante/Alacant | 18        |                |          | 57                |           | http://www.san.gva.es/documents/151311/8476524/200314+NOTA+DE+PRENSA+CORONAVIRUS.pdf              |                                                                             | 
-| 2020-03-15 | Alicante/Alacant | 94        |                |          | 151               |           | http://www.san.gva.es/documents/151311/8477533/20200315+NOTA+CORONAVIRUS                          |                                         | 
-| 2020-03-13 | Almería          | 0         | 0              | 0        | 9                 | 0         | https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html |                                                                                                     | 
-#### Población por comunidades autónomas y provincias (2019)
+#### Población por comunidades autónomas (2019)
 
 Población por comunidades autónomas del INE: https://www.ine.es/jaxiT3/Datos.htm?t=2853#!tabs-tabla
-
-Población por provincias del INE:  https://www.ine.es/jaxiT3/Datos.htm?t=2852#!tabs-tabla
 
 
 ### Italia

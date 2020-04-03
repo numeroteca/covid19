@@ -63,8 +63,12 @@ data_death <- merge( data_death, data_cases %>% filter (date == as.Date("2020-02
 # calculate values per 
 data_death$per_cienmil <- round( data_death$value / data_death$poblacion * 100000, digits = 2)
 
-data_death <- data_death %>% group_by(CCAA) %>% arrange(date) %>% mutate( daily_deaths = value - lag(value), 
-                                                                          daily_deaths_inc = round((value - lag(value)) /lag(value) * 100, digits = 1)   )
+# Calculates daily deaths
+data_death <- data_death %>% group_by(CCAA) %>% 
+  arrange(date) %>% mutate( daily_deaths = value - lag(value),
+                            daily_deaths_inc = round((value - lag(value)) /lag(value) * 100, digits = 1),
+                            daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5) ) / 6, digits = 1 ) # average of dayly deaths of 6 last days
+  )
 
 write.csv(data_death, file = "data/output/covid19-fallecimientos-por-ccaa-espana-por-dia-acumulado.csv", row.names = FALSE)
 
