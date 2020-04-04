@@ -11,7 +11,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 04.03"
+period <- "2020.02.27 - 04.04"
 
 # Load Data ---------
 # / Population -------------
@@ -105,6 +105,7 @@ colnames(data_altas)[3] <- "altas"
 
 data_all <- merge( data_all, select(data_altas,unique,altas,altas_per_cienmil ), by = "unique", all = TRUE  )
 
+# TODO: fix variables
 data_all_export <- select(data_all,  cod_ine , CCAA, cases, date ,poblacion, 
                           cases_per_cienmil, uci,uci_per_cienmil, death, death_per_cienmil, altas,altas_per_cienmil )
 
@@ -280,7 +281,7 @@ dev.off()
 # create shorted dataframe
 data_cases2 <- data_cases %>% filter(date >= "2020-03-23") # sets starting day
 
-slope <- 18
+slope <- 7
 
 x <- seq_along(unique(data_cases2$date))
 # creates empty vectors
@@ -1355,7 +1356,7 @@ data_death %>% filter( CCAA != "Total") %>%
   ) +
   # marca la línea
   geom_text_repel(data=filter( data_death, date==max(data_death$date)-4,  CCAA == "Madrid" ),
-                  aes(date+0.5,daily_deaths, color=CCAA, label=paste("media de 6 días")),
+                  aes(date+0.5,300, color=CCAA, label=paste("media de 6 días")),
                   nudge_y = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -1365,6 +1366,9 @@ data_death %>% filter( CCAA != "Total") %>%
                   segment.color="#777777"
   ) +
   scale_color_manual(values = colors ) +
+  coord_cartesian(
+    ylim = c(1,max(data_death[!is.na(data_death$daily_deaths_avg6),]$daily_deaths_avg6))
+  ) +
   scale_y_log10(
     breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
