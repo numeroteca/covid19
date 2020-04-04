@@ -1337,7 +1337,7 @@ data_death %>% filter( CCAA != "Total") %>%
                   aes(date,daily_deaths_avg6, color=CCAA, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  # hjust=0,
+                  hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.2,
@@ -1355,7 +1355,7 @@ data_death %>% filter( CCAA != "Total") %>%
                   segment.color="#777777"
   ) +
   # marca la línea
-  geom_text_repel(data=filter( data_death, date==max(data_death$date)-4,  CCAA == "Madrid" ),
+  geom_text_repel(data=filter( data_death, date==max(data_death$date )-4,  CCAA == "Madrid" ),
                   aes(date+0.5,300, color=CCAA, label=paste("media de 6 días")),
                   nudge_y = 2, # adjust the starting y position of the text label
                   size=5,
@@ -1367,7 +1367,7 @@ data_death %>% filter( CCAA != "Total") %>%
   ) +
   scale_color_manual(values = colors ) +
   coord_cartesian(
-    ylim = c(1,max(data_death[!is.na(data_death$daily_deaths_avg6),]$daily_deaths_avg6))
+    ylim = c(1,max(data_death[!is.na(data_death$daily_deaths_avg6) & ( data_death$CCAA != "Total"),]$daily_deaths_avg6))
   ) +
   scale_y_log10(
     breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
@@ -1376,7 +1376,75 @@ data_death %>% filter( CCAA != "Total") %>%
   ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits=c( min(data_death$date), max(data_death$date + 4)),
+               limits=c( min(data_death$date), max(data_death$date + 5)),
+               expand = c(0,0)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Media de muertes por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       y = "fallecidos por día (media 6 días) (escala logarítmica)",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+# Daily deaths log average --------
+png(filename=paste("img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-superpuesto-lineal_media.png", sep = ""),width = 1200,height = 700)
+data_death %>% filter( CCAA != "Total") %>%
+  ggplot() +
+  geom_smooth(aes(date,daily_deaths_avg6,group=CCAA, color=CCAA), size= 1, se = FALSE, span = 0.35 ) +
+  geom_point(aes(date,daily_deaths, color=CCAA), size= 1.5 ) +
+  geom_point(data=filter( data_death, date==max(data_death$date) & CCAA != "Total"), aes(date, daily_deaths_avg6, color=CCAA), size= 1.5, alpha = 0.3 ) +
+  geom_text_repel(data=filter( data_death, date==max(data_death$date),  CCAA != "Total"),
+                  aes(date,daily_deaths_avg6, color=CCAA, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),CCAA)),
+                  nudge_x = 3, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.2,
+                  segment.color="#777777"
+  ) +
+  # marca un día
+  geom_text_repel(data=filter( data_death, date==max(data_death$date)-12,  CCAA == "Madrid" ),
+                  aes(date,daily_deaths, color=CCAA, label=paste("muertes en un día en una provincia")),
+                  nudge_y = 5, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="x",
+                  segment.size = 0.5,
+                  segment.color="#777777"
+  ) +
+  # marca la línea
+  geom_text_repel(data=filter( data_death, date==max(data_death$date )-4,  CCAA == "Madrid" ),
+                  aes(date+0.5,300, color=CCAA, label=paste("media de 6 días")),
+                  nudge_y = 2, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="x",
+                  segment.size = 0.5,
+                  segment.color="#777777"
+  ) +
+  scale_color_manual(values = colors ) +
+  coord_cartesian(
+    ylim = c(1,max(data_death[!is.na(data_death$daily_deaths_avg6) & ( data_death$CCAA != "Total"),]$daily_deaths_avg6))
+  ) +
+  # scale_y_log10(
+  #   breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
+  #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  # ) +
+  scale_x_date(date_breaks = "1 day",
+               date_labels = "%d",
+               limits=c( min(data_death$date), max(data_death$date + 5)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
