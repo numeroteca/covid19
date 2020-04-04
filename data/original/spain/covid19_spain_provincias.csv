@@ -260,13 +260,6 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-12,Bizkaia,País Vasco,14,,,,,75,,https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,
 2020-03-12,Gipuzkoa,País Vasco,10,,,,,24,,https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,
 2020-03-13,Almería,Andalucía,0,,,0,0,9,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
-2020-03-13,Cádiz,Andalucía,1,,,1,0,19,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
-2020-03-13,Córdoba,Andalucía,3,,,0,0,9,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
-2020-03-13,Granada,Andalucía,3,,,0,0,14,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
-2020-03-13,Huelva,Andalucía,0,,,0,0,2,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
-2020-03-13,Jaén,Andalucía,9,,,1,0,30,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
-2020-03-13,Málaga,Andalucía,39,,,9,0,111,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
-2020-03-13,Sevilla,Andalucía,3,,,1,0,25,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
 2020-03-13,Asturias,"Asturias, Principado de",,,,2,1,67,,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
 2020-03-13,"Balears, Illes","Balears, Illes",,,,2,1,30,,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
 2020-03-13,Cantabria,Cantabria,,,,0,0,29,,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
@@ -307,14 +300,14 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-13,La Palma,Canarias,1,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-82-casos-activos-de-coronavirus-covid-19/,
 2020-03-13,Lanzarote,Canarias,1,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-82-casos-activos-de-coronavirus-covid-19/,
 2020-03-13,Tenerife,Canarias,13,,,,0,63,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-82-casos-activos-de-coronavirus-covid-19/,
+2020-03-13,Cádiz,Andalucía,1,,,1,0,19,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
+2020-03-13,Córdoba,Andalucía,3,,,0,0,9,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
+2020-03-13,Granada,Andalucía,3,,,0,0,14,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
+2020-03-13,Huelva,Andalucía,0,,,0,0,2,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
+2020-03-13,Jaén,Andalucía,9,,,1,0,30,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
+2020-03-13,Málaga,Andalucía,39,,,9,0,111,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
+2020-03-13,Sevilla,Andalucía,3,,,1,0,25,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
 2020-03-14,Almería,Andalucía,0,,,0,0,14,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
-2020-03-14,Cádiz,Andalucía,7,,,1,0,29,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
-2020-03-14,Córdoba,Andalucía,4,,,1,0,35,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
-2020-03-14,Granada,Andalucía,11,,,5,0,43,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
-2020-03-14,Huelva,Andalucía,0,,,1,0,6,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
-2020-03-14,Jaén,Andalucía,5,,,0,1,38,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
-2020-03-14,Málaga,Andalucía,53,,,12,4,159,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
-2020-03-14,Sevilla,Andalucía,13,,,1,0,52,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
 2020-03-14,Asturias,"Asturias, Principado de",,,,,1,92,,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
 2020-03-14,"Balears, Illes","Balears, Illes",,,,,1,28,,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
 2020-03-14,Cantabria,Cantabria,,,,,0,31,,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
@@ -355,14 +348,14 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-14,La Palma,Canarias,2,,,,0,5,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-101-casos-activos-de-coronavirus-y-7-curaciones/,
 2020-03-14,Lanzarote,Canarias,0,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-101-casos-activos-de-coronavirus-y-7-curaciones/,
 2020-03-14,Tenerife,Canarias,12,,,,0,75,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-101-casos-activos-de-coronavirus-y-7-curaciones/,
+2020-03-14,Cádiz,Andalucía,7,,,1,0,29,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
+2020-03-14,Córdoba,Andalucía,4,,,1,0,35,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
+2020-03-14,Granada,Andalucía,11,,,5,0,43,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
+2020-03-14,Huelva,Andalucía,0,,,1,0,6,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
+2020-03-14,Jaén,Andalucía,5,,,0,1,38,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
+2020-03-14,Málaga,Andalucía,53,,,12,4,159,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
+2020-03-14,Sevilla,Andalucía,13,,,1,0,52,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
 2020-03-15,Almería,Andalucía,1,,,0,0,14,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
-2020-03-15,Cádiz,Andalucía,8,,,1,0,34,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
-2020-03-15,Córdoba,Andalucía,6,,,2,0,37,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
-2020-03-15,Granada,Andalucía,20,,,3,0,57,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
-2020-03-15,Huelva,Andalucía,0,,,0,0,6,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
-2020-03-15,Jaén,Andalucía,3,,,1,2,47,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
-2020-03-15,Málaga,Andalucía,81,,,12,4,180,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
-2020-03-15,Sevilla,Andalucía,15,,,4,0,62,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
 2020-03-15,Asturias,"Asturias, Principado de",,,,,1,137,,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
 2020-03-15,"Balears, Illes","Balears, Illes",,,,,1,28,,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
 2020-03-15,Cantabria,Cantabria,,,,,0,51,,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
@@ -403,14 +396,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-15,La Palma,Canarias,0,,,,0,5,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-111-casos-activos-de-coronavirus-covid-19-y-7-altas/,
 2020-03-15,Lanzarote,Canarias,1,,,,0,4,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-111-casos-activos-de-coronavirus-covid-19-y-7-altas/,
 2020-03-15,Tenerife,Canarias,10,,,,0,85,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-111-casos-activos-de-coronavirus-covid-19-y-7-altas/,
+2020-03-15,Cádiz,Andalucía,8,,,1,0,34,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
+2020-03-15,Córdoba,Andalucía,6,,,2,0,37,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
+2020-03-15,Granada,Andalucía,20,,,3,0,57,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
+2020-03-15,Huelva,Andalucía,0,,,0,0,6,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
+2020-03-15,Jaén,Andalucía,3,,,1,2,47,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
+2020-03-15,Málaga,Andalucía,81,,,12,4,180,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
+2020-03-15,Sevilla,Andalucía,15,,,4,0,62,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
 2020-03-16,Almería,Andalucía,3,,,1,0,26,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
 2020-03-16,Cádiz,Andalucía,3,,,1,0,56,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
-2020-03-16,Córdoba,Andalucía,18,,,5,0,68,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
-2020-03-16,Granada,Andalucía,36,,,4,2,95,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
-2020-03-16,Huelva,Andalucía,1,,,1,0,8,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
-2020-03-16,Jaén,Andalucía,8,,,0,2,52,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
-2020-03-16,Málaga,Andalucía,97,,,13,6,278,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
-2020-03-16,Sevilla,Andalucía,34,,,9,1,100,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
 2020-03-16,Asturias,"Asturias, Principado de",,,,3,1,177,3,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
 2020-03-16,"Balears, Illes","Balears, Illes",,,,4,1,73,1,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
 2020-03-16,Cantabria,Cantabria,,,,2,0,58,,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
@@ -454,14 +448,14 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-16,Huesca,Aragón,,,,,,14,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257548,
 2020-03-16,Teruel,Aragón,,,,,,15,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257549,
 2020-03-16,Zaragoza,Aragón,,,,,,145,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257547,
+2020-03-16,Córdoba,Andalucía,18,,,5,0,68,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
+2020-03-16,Granada,Andalucía,36,,,4,2,95,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
+2020-03-16,Huelva,Andalucía,1,,,1,0,8,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
+2020-03-16,Jaén,Andalucía,8,,,0,2,52,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
+2020-03-16,Málaga,Andalucía,97,,,13,6,278,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
+2020-03-16,Sevilla,Andalucía,34,,,9,1,100,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
 2020-03-17,Almería,Andalucía,3,,,,0,26,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
 2020-03-17,Cádiz,Andalucía,3,,,,0,56,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
-2020-03-17,Córdoba,Andalucía,18,,,,0,68,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
-2020-03-17,Granada,Andalucía,36,,,,2,95,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
-2020-03-17,Huelva,Andalucía,1,,,,0,8,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
-2020-03-17,Jaén,Andalucía,8,,,,2,52,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
-2020-03-17,Málaga,Andalucía,97,,,,6,278,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
-2020-03-17,Sevilla,Andalucía,34,,,,1,100,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
 2020-03-17,Asturias,"Asturias, Principado de",,,,5,1,193,3,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
 2020-03-17,"Balears, Illes","Balears, Illes",,,,4,1,92,1,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
 2020-03-17,Cantabria,Cantabria,,,,2,0,58,,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
@@ -505,14 +499,14 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-17,Zaragoza,Aragón,,,,,,163,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257601,
 2020-03-17,Huesca,Aragón,,,,,,17,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257601,
 2020-03-17,Teruel,Aragón,,,,,,24,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257601,
+2020-03-17,Córdoba,Andalucía,18,,,,0,68,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
+2020-03-17,Granada,Andalucía,36,,,,2,95,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
+2020-03-17,Huelva,Andalucía,1,,,,0,8,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
+2020-03-17,Jaén,Andalucía,8,,,,2,52,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
+2020-03-17,Málaga,Andalucía,97,,,,6,278,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
+2020-03-17,Sevilla,Andalucía,34,,,,1,100,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
 2020-03-18,Almería,Andalucía,3,,,,0,30,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
 2020-03-18,Cádiz,Andalucía,3,,,,0,74,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
-2020-03-18,Córdoba,Andalucía,19,,,,0,78,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
-2020-03-18,Granada,Andalucía,29,,,,6,130,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
-2020-03-18,Huelva,Andalucía,4,,,,0,14,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
-2020-03-18,Jaén,Andalucía,10,,,,2,77,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
-2020-03-18,Málaga,Andalucía,113,,,,10,333,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
-2020-03-18,Sevilla,Andalucía,42,,,,1,123,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
 2020-03-18,Asturias,"Asturias, Principado de",,,,5,1,242,4,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
 2020-03-18,"Balears, Illes","Balears, Illes",,,,4,1,112,4,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
 2020-03-18,Cantabria,Cantabria,,,,3,1,68,,https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
@@ -549,14 +543,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-18,Zaragoza,Aragón,,,,,,180,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257646,
 2020-03-18,Huesca,Aragón,,,,,,19,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257646,
 2020-03-18,Teruel,Aragón,,,,,,24,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257646,
+2020-03-18,Córdoba,Andalucía,19,,,,0,78,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
+2020-03-18,Granada,Andalucía,29,,,,6,130,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
+2020-03-18,Huelva,Andalucía,4,,,,0,14,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
+2020-03-18,Jaén,Andalucía,10,,,,2,77,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
+2020-03-18,Málaga,Andalucía,113,,,,10,333,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
+2020-03-18,Sevilla,Andalucía,42,,,,1,123,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
 2020-03-19,Almería,Andalucía,7,,,,0,37,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-19,Cádiz,Andalucía,15,,,,0,84,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-19,Córdoba,Andalucía,26,,,,0,101,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
-2020-03-19,Granada,Andalucía,66,,,,7,176,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
-2020-03-19,Huelva,Andalucía,15,,,,0,23,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
-2020-03-19,Jaén,Andalucía,32,,,,2,88,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
-2020-03-19,Málaga,Andalucía,93,,,,13,361,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
-2020-03-19,Sevilla,Andalucía,53,,,,1,138,1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-19,Asturias,"Asturias, Principado de",,285,,5,3,292,4,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 y https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
 2020-03-19,"Balears, Illes","Balears, Illes",,160,,7,3,169,6,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-19,Cantabria,Cantabria,,72,,4,1,83,10,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 y https://github.com/datadista/datasets/tree/master/COVID%2019 de Ministerio de Sanidad,
@@ -604,14 +599,14 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-19,Huesca,Aragón,,24,,,,24,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 6 casos más en la comunidad que no son residentes en Aragón.
 2020-03-19,Teruel,Aragón,,26,,,1,27,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 6 casos más en la comunidad que no son residentes en Aragón.
 2020-03-19,Zaragoza,Aragón,,210,,,14,224,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 6 casos más en la comunidad que no son residentes en Aragón.
+2020-03-19,Granada,Andalucía,66,,,,7,176,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-19,Huelva,Andalucía,15,,,,0,23,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-19,Jaén,Andalucía,32,,,,2,88,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-19,Málaga,Andalucía,93,,,,13,361,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
+2020-03-19,Sevilla,Andalucía,53,,,,1,138,1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-20,Almería,Andalucía,,49,,,0,49,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-20,Cádiz,Andalucía,,102,,,1,103,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-20,Córdoba,Andalucía,,123,,,2,125,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-20,Granada,Andalucía,,234,,,10,244,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-20,Huelva,Andalucía,,36,,,0,36,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-20,Jaén,Andalucía,,117,,,2,119,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-20,Málaga,Andalucía,,406,,,18,424,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-20,Sevilla,Andalucía,,188,,,1,190,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-20,Asturias,"Asturias, Principado de",,328,,,4,344,12,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-20,"Balears, Illes","Balears, Illes",,189,,,4,203,10,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-20,Cantabria,Cantabria,,132,,,2,144,10,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
@@ -659,17 +654,17 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-20,Huesca,Aragón,,34,,,0,34,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 8 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
 2020-03-20,Teruel,Aragón,,38,,,2,40,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 8 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
 2020-03-20,Zaragoza,Aragón,,264,,,14,278,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 8 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
-2020-03-21,Huesca,Aragón,,37,,,0,37,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
-2020-03-21,Teruel,Aragón,,45,,,2,47,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
-2020-03-21,Zaragoza,Aragón,,315,,,14,329,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
+2020-03-20,Granada,Andalucía,,234,,,10,244,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-20,Huelva,Andalucía,,36,,,0,36,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-20,Jaén,Andalucía,,117,,,2,119,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-20,Málaga,Andalucía,,406,,,18,424,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-20,Sevilla,Andalucía,,188,,,1,190,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-21,Almería,Andalucía,,53,,,0,53,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-21,Cádiz,Andalucía,,126,,,0,126,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-21,Córdoba,Andalucía,,140,,,3,143,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-21,Granada,Andalucía,,276,,,13,289,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-21,Huelva,Andalucía,,37,,,0,37,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-21,Jaén,Andalucía,,136,,,2,138,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-21,Málaga,Andalucía,,464,,,20,484,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-21,Sevilla,Andalucía,,243,,,2,245,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-21,Huesca,Aragón,,37,,,0,37,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
+2020-03-21,Teruel,Aragón,,45,,,2,47,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
+2020-03-21,Zaragoza,Aragón,,315,,,14,329,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
 2020-03-21,Asturias,"Asturias, Principado de",,467,,,7,486,12,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-21,"Balears, Illes","Balears, Illes",,246,,,4,246,10,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹El Govern balear no especifica el lugar de los recuperados ni de las muertes.
 2020-03-21,Cantabria,Cantabria,,200,,,4,215,11,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
@@ -714,17 +709,17 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-21,La Palma,Canarias,3,,,,0,14,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-414-casos-de-coronavirus-covid-19-acumulados/,
 2020-03-21,Lanzarote,Canarias,5,,,,0,9,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-414-casos-de-coronavirus-covid-19-acumulados/,
 2020-03-21,Tenerife,Canarias,43,,,,6,262,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-414-casos-de-coronavirus-covid-19-acumulados/,
-2020-03-22,Huesca,Aragón,,37,,,0,37,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
-2020-03-22,Teruel,Aragón,,45,,,2,47,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
-2020-03-22,Zaragoza,Aragón,,315,,,14,329,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
+2020-03-21,Granada,Andalucía,,276,,,13,289,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-21,Huelva,Andalucía,,37,,,0,37,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-21,Jaén,Andalucía,,136,,,2,138,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-21,Málaga,Andalucía,,464,,,20,484,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-21,Sevilla,Andalucía,,243,,,2,245,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-22,Almería,Andalucía,,53,,,1,58,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-22,Cádiz,Andalucía,,126,,,2,134,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-22,Córdoba,Andalucía,,140,,,3,180,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-22,Granada,Andalucía,,276,,,13,335,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-22,Huelva,Andalucía,,37,,,0,47,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-22,Jaén,Andalucía,,136,,,3,171,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-22,Málaga,Andalucía,,464,,,21,505,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-22,Sevilla,Andalucía,,243,,,4,295,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-22,Huesca,Aragón,,37,,,0,37,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
+2020-03-22,Teruel,Aragón,,45,,,2,47,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
+2020-03-22,Zaragoza,Aragón,,315,,,14,329,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
 2020-03-22,Asturias,"Asturias, Principado de",,467,,,10,545,12,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,
 2020-03-22,"Balears, Illes","Balears, Illes",,,,,8,246,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹El Govern balear no especifica el lugar de los recuperados ni de las muertes.
 2020-03-22,Cantabria,Cantabria,,200,,,5,282,11,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,
@@ -769,17 +764,18 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-22,La Palma,Canarias,7,,,,,21,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-481-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-22,Lanzarote,Canarias,0,,,,,9,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-481-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-22,Tenerife,Canarias,31,,,,,293,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-481-casos-acumulados-de-coronavirus-covid-19/,
-2020-03-23,Huesca,Aragón,,37,,,0,37,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
-2020-03-23,Teruel,Aragón,,45,,,2,47,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
-2020-03-23,Zaragoza,Aragón,,315,,,14,329,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
+2020-03-22,Granada,Andalucía,,276,,,13,335,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-22,Huelva,Andalucía,,37,,,0,47,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-22,Jaén,Andalucía,,136,,,3,171,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-22,Málaga,Andalucía,,464,,,21,505,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-22,Sevilla,Andalucía,,243,,,4,295,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-23,Almería,Andalucía,,72,,,2,74,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-23,Cádiz,Andalucía,,175,,,3,178,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-23,Córdoba,Andalucía,,187,,,4,191,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-23,Huesca,Aragón,,37,,,0,37,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
+2020-03-23,Teruel,Aragón,,45,,,2,47,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
+2020-03-23,Zaragoza,Aragón,,315,,,14,329,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,Hay 11 casos más en la comunidad que no son residentes en Aragón y el Gobierno autonómico no ha informado del lugar de uno de los fallecimientos.
 2020-03-23,Granada,Andalucía,,357,,,17,374,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-23,Huelva,Andalucía,,57,,,1,58,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-23,Jaén,Andalucía,,210,,,5,215,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-23,Málaga,Andalucía,,499,,,21,520,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-23,Sevilla,Andalucía,,345,,,5,351,1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-23,Asturias,"Asturias, Principado de",,610,,,22,662,30,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,
 2020-03-23,"Balears, Illes","Balears, Illes",,197,,,9,246,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹El Govern balear no facilita el lugar de las altas.
 2020-03-23,Cantabria,Cantabria,,330,,,6,347,11,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,
@@ -824,14 +820,14 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-23,La Palma,Canarias,3,,,,,24,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-557-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-23,Lanzarote,Canarias,4,,,,,13,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-557-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-23,Tenerife,Canarias,45,,,,,338,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-557-casos-acumulados-de-coronavirus-covid-19/,
+2020-03-23,Huelva,Andalucía,,57,,,1,58,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-23,Jaén,Andalucía,,210,,,5,215,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-23,Málaga,Andalucía,,499,,,21,520,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-23,Sevilla,Andalucía,,345,,,5,351,1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-24,Almería,Andalucía,,86,,,5,91,,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-24,Cádiz,Andalucía,,242,,,3,245,,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-24,Córdoba,Andalucía,,228,,,6,234,,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-24,Granada,Andalucía,,459,,,21,480,,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-24,Huelva,Andalucía,,69,,,1,70,,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-24,Jaén,Andalucía,,247,,,12,259,,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-24,Málaga,Andalucía,,639,,,26,665,,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
-2020-03-24,Sevilla,Andalucía,,413,,,13,427,,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-24,Asturias,"Asturias, Principado de",,719,,,25,779,35,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,
 2020-03-24,"Balears, Illes","Balears, Illes",,443,,,16,478,19,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,
 2020-03-24,Cantabria,Cantabria,,404,,,9,425,12,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,
@@ -876,17 +872,17 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-24,La Palma,Canarias,9,,,,,33,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-657-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-24,Lanzarote,Canarias,4,,,,,17,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-657-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-24,Tenerife,Canarias,71,,,,,409,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-657-casos-acumulados-de-coronavirus-covid-19/,
-2020-03-25,Huesca,Aragón,,89,56,5,4,95,2,Aragon Hoy de Gobierno de Aragon http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1379/id.257948,
-2020-03-25,Teruel,Aragón,,83,45,8,5,90,2,Aragon Hoy de Gobierno de Aragon http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1379/id.257949,
-2020-03-25,Zaragoza,Aragón,,666,358,62,31,722,25,Aragon Hoy de Gobierno de Aragon http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1379/id.257947,
+2020-03-24,Huelva,Andalucía,,69,,,1,70,,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-24,Jaén,Andalucía,,247,,,12,259,,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-24,Málaga,Andalucía,,639,,,26,665,,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
+2020-03-24,Sevilla,Andalucía,,413,,,13,427,,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-25,Almería,Andalucía,,105,,,5,115,5,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
 2020-03-25,Cádiz,Andalucía,,270,,,4,278,4,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
 2020-03-25,Córdoba,Andalucía,,285,,,6,291,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
 2020-03-25,Granada,Andalucía,,553,,,25,579,1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
-2020-03-25,Huelva,Andalucía,,74,,,1,77,2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
-2020-03-25,Jaén,Andalucía,,297,,,14,316,5,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
-2020-03-25,Málaga,Andalucía,,731,,,40,819,48,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
-2020-03-25,Sevilla,Andalucía,,511,,,18,535,6,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
+2020-03-25,Huesca,Aragón,,89,56,5,4,95,2,Aragon Hoy de Gobierno de Aragon http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1379/id.257948,
+2020-03-25,Teruel,Aragón,,83,45,8,5,90,2,Aragon Hoy de Gobierno de Aragon http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1379/id.257949,
+2020-03-25,Zaragoza,Aragón,,666,358,62,31,722,25,Aragon Hoy de Gobierno de Aragon http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1379/id.257947,
 2020-03-25,Asturias,"Asturias, Principado de",,719,,,25,779,35,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
 2020-03-25,"Balears, Illes","Balears, Illes",,443,,,19,478,19,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
 2020-03-25,Cantabria,Cantabria,,484,,,14,510,12,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
@@ -924,17 +920,18 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-25,Bizkaia,País Vasco,349,1447,849,,65,1850,,https://twitter.com/osakidetzaEJGV/status/1243148965337587717/photo/1; Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
 2020-03-25,Gipuzkoa,País Vasco,98,543,201,,21,661,,https://twitter.com/osakidetzaEJGV/status/1243148965337587717/photo/1; Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
 2020-03-25,"Rioja, La","Rioja, La",,848,,,37,928,43,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
-2020-03-26,Huesca,Aragón,,109,55,8,4,119,6,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1379/id.258001,
-2020-03-26,Teruel,Aragón,,104,65,9,5,115,6,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1379/id.258002,
-2020-03-26,Zaragoza,Aragón,,801,442,76,39,882,42,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1379/id.258000,
+2020-03-25,Huelva,Andalucía,,74,,,1,77,2,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
+2020-03-25,Jaén,Andalucía,,297,,,14,316,5,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
+2020-03-25,Málaga,Andalucía,,731,,,40,819,48,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
+2020-03-25,Sevilla,Andalucía,,511,,,18,535,6,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
 2020-03-26,Almería,Andalucía,,122,,,7,134,5,,
 2020-03-26,Cádiz,Andalucía,,290,,,5,299,4,,
 2020-03-26,Córdoba,Andalucía,,342,,,7,349,0,,
 2020-03-26,Granada,Andalucía,,615,,,32,648,1,,
+2020-03-26,Huesca,Aragón,,109,55,8,4,119,6,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1379/id.258001,
+2020-03-26,Teruel,Aragón,,104,65,9,5,115,6,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1379/id.258002,
+2020-03-26,Zaragoza,Aragón,,801,442,76,39,882,42,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1379/id.258000,
 2020-03-26,Huelva,Andalucía,,91,,,2,95,2,,
-2020-03-26,Jaén,Andalucía,,329,,,15,349,5,,
-2020-03-26,Málaga,Andalucía,,811,,,42,905,52,,
-2020-03-26,Sevilla,Andalucía,,595,,,24,627,8,,
 2020-03-26,Asturias,"Asturias, Principado de",,819,,,29,900,52,,
 2020-03-26,"Balears, Illes","Balears, Illes",,599,,,22,660,39,,
 2020-03-26,Cantabria,Cantabria,,640,,,17,671,14,,
@@ -979,17 +976,17 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-26,La Palma,Canarias,,,,,,39,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-878-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-26,Lanzarote,Canarias,,,,,,23,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-878-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-26,Tenerife,Canarias,,,,,,586,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-878-casos-acumulados-de-coronavirus-covid-19/,
-2020-03-27,Huesca,Aragón,,136,71,11,4,150,10,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258060,
-2020-03-27,Teruel,Aragón,,129,79,13,5,143,9,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258061,
-2020-03-27,Zaragoza,Aragón,,928,543,90,49,1045,68,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258059,
+2020-03-26,Jaén,Andalucía,,329,,,15,349,5,,
+2020-03-26,Málaga,Andalucía,,811,,,42,905,52,,
+2020-03-26,Sevilla,Andalucía,,595,,,24,627,8,,
 2020-03-27,Almería,Andalucía,,128,,,8,142,6,,
 2020-03-27,Cádiz,Andalucía,,336,,,6,348,6,,
 2020-03-27,Córdoba,Andalucía,,350,,,8,359,1,,
 2020-03-27,Granada,Andalucía,,676,,,34,711,1,,
 2020-03-27,Huelva,Andalucía,,101,,,2,105,2,,
-2020-03-27,Jaén,Andalucía,,392,,,15,414,7,,
-2020-03-27,Málaga,Andalucía,,899,,,46,1006,61,,
-2020-03-27,Sevilla,Andalucía,,675,,,25,708,8,,
+2020-03-27,Huesca,Aragón,,136,71,11,4,150,10,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258060,
+2020-03-27,Teruel,Aragón,,129,79,13,5,143,9,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258061,
+2020-03-27,Zaragoza,Aragón,,928,543,90,49,1045,68,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258059,
 2020-03-27,Asturias,"Asturias, Principado de",,906,,,33,1004,65,,
 2020-03-27,"Balears, Illes","Balears, Illes",,662,,,26,755,67,,
 2020-03-27,Cantabria,Cantabria,,770,,,21,810,19,,
@@ -1034,17 +1031,17 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-27,La Palma,Canarias,4,,,,1,43,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1025-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-27,Lanzarote,Canarias,1,,,,3,24,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1025-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-27,Tenerife,Canarias,85,,,,23,671,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1025-casos-acumulados-de-coronavirus-covid-19/,
-2020-03-28,Huesca,Aragón,,124,92,11,9,147,14,,
-2020-03-28,Teruel,Aragón,,159,101,15,10,179,10,,
-2020-03-28,Zaragoza,Aragón,,1071,642,98,72,1239,96,http://aragonhoy.aragon.es/index.php/mod.noticias/mem.detalle/area.1050/id.258115,es una correccion importante que ademas afecta a datos anteriores en la mortalidad
+2020-03-27,Jaén,Andalucía,,392,,,15,414,7,,
+2020-03-27,Málaga,Andalucía,,899,,,46,1006,61,,
+2020-03-27,Sevilla,Andalucía,,675,,,25,708,8,,
 2020-03-28,Almería,Andalucía,,173,72,,10,173,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233791.html,"47,63"
 2020-03-28,Cádiz,Andalucía,,406,156,,7,406,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233791.html,"47,63"
 2020-03-28,Córdoba,Andalucía,,424,200,,9,424,411,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233791.html,"47,63"
 2020-03-28,Granada,Andalucía,,806,396,,49,806,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233791.html,"47,63"
 2020-03-28,Huelva,Andalucía,,120,66,,2,120,,https://public.flourish.studio/visualisation/1451263/,"47,63"
-2020-03-28,Jaén,Andalucía,,465,258,,16,465,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233791.html,"47,63"
-2020-03-28,Málaga,Andalucía,,1053,575,,56,1053,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233791.html,"47,63"
-2020-03-28,Sevilla,Andalucía,,830,383,,26,830,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233791.html,"47,63"
+2020-03-28,Huesca,Aragón,,124,92,11,9,147,14,,
+2020-03-28,Teruel,Aragón,,159,101,15,10,179,10,,
+2020-03-28,Zaragoza,Aragón,,1071,642,98,72,1239,96,http://aragonhoy.aragon.es/index.php/mod.noticias/mem.detalle/area.1050/id.258115,es una correccion importante que ademas afecta a datos anteriores en la mortalidad
 2020-03-28,Asturias,"Asturias, Principado de",,1088,,,41,1088,971,https://public.flourish.studio/visualisation/1451263/,"89,17"
 2020-03-28,"Balears, Illes","Balears, Illes",,862,,,31,862,751,https://public.flourish.studio/visualisation/1451263/,"72,56"
 2020-03-28,Cantabria,Cantabria,,937,,,21,937,894,https://public.flourish.studio/visualisation/1451263/,"155,92"
@@ -1089,17 +1086,17 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-28,La Palma,Canarias,6,,,,2,49,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1125-casos-de-coronavirus-covid-19-acumulados/,
 2020-03-28,Lanzarote,Canarias,11,,,,3,35,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1125-casos-de-coronavirus-covid-19-acumulados/,
 2020-03-28,Tenerife,Canarias,41,,,,23,712,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1125-casos-de-coronavirus-covid-19-acumulados/,
-2020-03-29,Huesca,Aragón,,176,103,13,11,201,14,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.258137,
-2020-03-29,Teruel,Aragón,,186,112,19,12,208,10,,
-2020-03-29,Zaragoza,Aragón,,1269,720,121,79,1449,101,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.258137,
+2020-03-28,Jaén,Andalucía,,465,258,,16,465,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233791.html,"47,63"
+2020-03-28,Málaga,Andalucía,,1053,575,,56,1053,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233791.html,"47,63"
+2020-03-28,Sevilla,Andalucía,,830,383,,26,830,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233791.html,"47,63"
 2020-03-29,Almería,Andalucía,,102,86,,12,200,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
 2020-03-29,Cádiz,Andalucía,,268,170,,9,447,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
 2020-03-29,Córdoba,Andalucía,,241,221,,11,473,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
 2020-03-29,Granada,Andalucía,,376,427,,57,860,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
 2020-03-29,Huelva,Andalucía,,55,72,,4,131,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
-2020-03-29,Jaén,Andalucía,,202,279,,20,501,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
-2020-03-29,Málaga,Andalucía,,452,642,,64,1158,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
-2020-03-29,Sevilla,Andalucía,,485,397,,30,912,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
+2020-03-29,Huesca,Aragón,,176,103,13,11,201,14,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.258137,
+2020-03-29,Teruel,Aragón,,186,112,19,12,208,10,,
+2020-03-29,Zaragoza,Aragón,,1269,720,121,79,1449,101,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.258137,
 2020-03-29,Asturias,"Asturias, Principado de",,,,57,41,1088,76,debe indicar fuente,
 2020-03-29,"Balears, Illes","Balears, Illes",,,,71,29,958,82,debe indicar fuente,
 2020-03-29,Cantabria,Cantabria,,,,40,26,1023,25,debe indicar fuente,
@@ -1144,14 +1141,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-29,La Palma,Canarias,3,,,,2,52,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1204-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-29,Lanzarote,Canarias,13,,,,3,48,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1204-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-29,Tenerife,Canarias,9,,,,24,721,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1204-casos-acumulados-de-coronavirus-covid-19/,
+2020-03-29,Jaén,Andalucía,,202,279,,20,501,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
+2020-03-29,Málaga,Andalucía,,452,642,,64,1158,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
+2020-03-29,Sevilla,Andalucía,,485,397,,30,912,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
 2020-03-30,Almería,Andalucía,,113,96,,14,223,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233830.html,
 2020-03-30,Cádiz,Andalucía,,287,207,,13,507,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233830.html,
 2020-03-30,Córdoba,Andalucía,,290,269,,13,572,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233830.html,
 2020-03-30,Granada,Andalucía,,404,493,,66,963,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233830.html,
 2020-03-30,Huelva,Andalucía,,72,92,,4,168,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233830.html,
 2020-03-30,Jaén,Andalucía,,257,319,,23,599,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233830.html,
-2020-03-30,Málaga,Andalucía,,527,725,,69,1321,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233830.html,
-2020-03-30,Sevilla,Andalucía,,548,470,,34,1052,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233830.html,
 2020-03-30,Asturias,"Asturias, Principado de",,1091,,,55,1236,90,https://public.flourish.studio/visualisation/1451263/ 2020.03.31 02.07h,
 2020-03-30,"Balears, Illes","Balears, Illes",,856,,,37,1000,107,https://public.flourish.studio/visualisation/1451263/ 2020.03.31 02.07h,
 2020-03-30,Cantabria,Cantabria,,1049,,,27,1100,24,https://public.flourish.studio/visualisation/1451263/ 2020.03.31 02.07h,
@@ -1199,14 +1197,14 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-30,La Palma,Canarias,10,,,,2,62,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1262-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-30,El Hierro,Canarias,0,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1262-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-30,La Gomera,Canarias,0,,,,0,8,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1262-casos-acumulados-de-coronavirus-covid-19/,
+2020-03-30,Málaga,Andalucía,,527,725,,69,1321,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233830.html,
+2020-03-30,Sevilla,Andalucía,,548,470,,34,1052,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233830.html,
 2020-03-31,Almería,Andalucía,,,108,15,16,251,6,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
 2020-03-31,Cádiz,Andalucía,,,216,19,14,539,16,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
 2020-03-31,Córdoba,Andalucía,,,288,17,15,661,4,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
 2020-03-31,Granada,Andalucía,,,556,50,67,1061,15,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
 2020-03-31,Huelva,Andalucía,,,96,7,4,177,2,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
 2020-03-31,Jaén,Andalucía,,,358,13,26,661,17,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
-2020-03-31,Málaga,Andalucía,,,745,61,70,1349,83,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
-2020-03-31,Sevilla,Andalucía,,,500,53,36,1119,17,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
 2020-03-31,Asturias,"Asturias, Principado de",,1091,,,55,1236,90,falta fuente,
 2020-03-31,"Balears, Illes","Balears, Illes",,915,,,43,1069,111,falta fuente,
 2020-03-31,Cantabria,Cantabria,,1099,,,37,1171,35,falta fuente,
@@ -1254,14 +1252,14 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-31,La Palma,Canarias,6,,,,2,68,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1380-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-31,El Hierro,Canarias,0,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1380-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-31,La Gomera,Canarias,0,,,,0,8,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1380-casos-acumulados-de-coronavirus-covid-19/,
+2020-03-31,Málaga,Andalucía,,,745,61,70,1349,83,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
+2020-03-31,Sevilla,Andalucía,,,500,53,36,1119,17,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
 2020-04-01,Almería,Andalucía,,231,124,18,17,262,14,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234014.html,
 2020-04-01,Cádiz,Andalucía,,611,266,22,17,645,17,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234014.html,
 2020-04-01,Córdoba,Andalucía,,662,302,19,21,687,4,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234014.html,
 2020-04-01,Granada,Andalucía,,1087,603,56,80,1182,15,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234014.html,
 2020-04-01,Huelva,Andalucía,,189,106,7,4,195,2,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234014.html,
 2020-04-01,Jaén,Andalucía,,688,395,16,37,742,17,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234014.html,
-2020-04-01,Málaga,Andalucía,,1294,815,65,77,1464,93,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234014.html,
-2020-04-01,Sevilla,Andalucía,,1140,536,57,55,1215,20,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234014.html,
 2020-04-01,Asturias,"Asturias, Principado de",,1180,,,,1384,135,https://public.flourish.studio/visualisation/1451263/,
 2020-04-01,"Balears, Illes","Balears, Illes",,910,,,51,1131,170,https://public.flourish.studio/visualisation/1451263/,
 2020-04-01,Cantabria,Cantabria,,1116,,,54,1213,43,https://public.flourish.studio/visualisation/1451263/,
@@ -1309,6 +1307,8 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-01,La Palma,Canarias,1,,,,2,69,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1444-casos-acumulados-de-coronavirus-covid-19/,
 2020-04-01,El Hierro,Canarias,0,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1444-casos-acumulados-de-coronavirus-covid-19/,
 2020-04-01,La Gomera,Canarias,0,,,,0,8,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1444-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-01,Málaga,Andalucía,,1294,815,65,77,1464,93,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234014.html,
+2020-04-01,Sevilla,Andalucía,,1140,536,57,55,1215,20,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234014.html,
 2020-04-02,Almería,Andalucía,,258,129,19,18,290,22,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234073.html,
 2020-04-02,Cádiz,Andalucía,,661,295,23,19,697,22,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234073.html,
 2020-04-02,Córdoba,Andalucía,,753,321,20,25,728,7,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234073.html,
@@ -1316,7 +1316,6 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-02,Huelva,Andalucía,,216,115,10,6,224,2,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234073.html,
 2020-04-02,Jaén,Andalucía,,732,420,16,39,788,21,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234073.html,
 2020-04-02,Málaga,Andalucía,,1458,917,74,93,1644,101,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234073.html,
-2020-04-02,Sevilla,Andalucía,,1294,611,60,57,1371,30,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234073.html,
 2020-04-02,Asturias,"Asturias, Principado de",,1209,,,70,1433,154,https://app.flourish.studio/visualisation/1451263/ (22:55),
 2020-04-02,Cantabria,Cantabria,,1148,,,60,1268,60,https://app.flourish.studio/visualisation/1451263/ (22:55),"¹El Gobierno de Aragón ha informado del fallecimiento de otras dos personas cuyo origen es desconocido, por lo que el total en la comunidad asciende a 200."
 2020-04-02,Albacete,Castilla - La Mancha,,1806,,,170,2098,,https://app.flourish.studio/visualisation/1451263/ (22:55),"¹El Gobierno de Aragón ha informado del fallecimiento de otras dos personas cuyo origen es desconocido, por lo que el total en la comunidad asciende a 200."
@@ -1364,14 +1363,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-02,La Palma,Canarias,0,,,,3,69,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1490-casos-acumulados-de-coronavirus-covid-19/,
 2020-04-02,El Hierro,Canarias,0,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1490-casos-acumulados-de-coronavirus-covid-19/,
 2020-04-02,La Gomera,Canarias,0,,,,0,8,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1490-casos-acumulados-de-coronavirus-covid-19/,
-2020-04-03,Almería,Andalucía,,,145,25,20,301,8,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html,
-2020-04-03,Cádiz,Andalucía,,,319,42,22,754,28,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html,
-2020-04-03,Córdoba,Andalucía,,,338,32,25,782,10,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html,
-2020-04-03,Granada,Andalucía,,,681,68,93,1292,25,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html,
-2020-04-03,Huelva,Andalucía,,,123,10,10,237,4,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html,
-2020-04-03,Jaén,Andalucía,,,440,21,43,821,23,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html,
-2020-04-03,Málaga,Andalucía,,,968,77,98,1725,110,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html,
-2020-04-03,Sevilla,Andalucía,,,659,63,65,1462,33,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html,
+2020-04-02,Sevilla,Andalucía,,1294,611,60,57,1371,30,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234073.html,
+2020-04-03,Almería,Andalucía,,284,145,25,20,301,8,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html;https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Cádiz,Andalucía,,756,319,42,22,754,28,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html;https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Córdoba,Andalucía,,842,338,32,25,782,10,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-03,Granada,Andalucía,,1222,681,68,93,1292,25,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html;https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Huelva,Andalucía,,252,123,10,10,237,4,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html;https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Jaén,Andalucía,,801,440,21,43,821,23,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html;https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Málaga,Andalucía,,1697,968,77,98,1725,110,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html;https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Lleida,Cataluña,,,,,75,991,176,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-04-03,Girona,Cataluña,150,,,,144,1450,,https://www.diaridegirona.cat/comarques/2020/04/03/coronavirus-deixa-setze-noves-victimes/1037819.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-04-03,Albacete,Castilla - La Mancha,,2386,799,,183,,,notas de prensa https://www.castillalamancha.es/actualidad/notasdeprensa,Hoy no se utilizó la habitual funte de rtve porque hcia referencia a un unico dato regional de datos activos. El de defunciones coincide siempre con el de las notas de prensa.
 2020-04-03,Ciudad Real,Castilla - La Mancha,,3098,1182,,291,,,notas de prensa https://www.castillalamancha.es/actualidad/notasdeprensa,Hoy no se utilizó la habitual funte de rtve porque hcia referencia a un unico dato regional de datos activos. El de defunciones coincide siempre con el de las notas de prensa.
@@ -1393,25 +1393,77 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-03,Zaragoza,Aragón,,1742,1089,138,173,2212,297,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1036/id.258374,
 2020-04-03,Huesca,Aragón,,301,175,21,24,368,43,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1036/id.258374,
 2020-04-03,Teruel,Aragón,,256,167,21,25,319,38,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1036/id.258374,
-2020-04-03,Almería,Andalucía,,284,,,20,329,25,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Cádiz,Andalucía,,756,,,22,806,28,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Córdoba,Andalucía,,842,,,25,877,10,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Granada,Andalucía,,1222,,,93,1340,25,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Huelva,Andalucía,,252,,,10,266,4,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Jaén,Andalucía,,801,,,43,867,23,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Málaga,Andalucía,,1697,,,98,1905,110,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Sevilla,Andalucía,,1520,,,65,1618,33,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Asturias,"Asturias, Principado de",,1292,,,76,1522,154,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Baleares,Illes Balears,,813,,,69,1257,375,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Cantabria,Cantabria,,1183,,,64,1321,74,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Ceuta,Ceuta,,59,,,1,62,2,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Badajoz,Extremadura,,511,,,27,645,107,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Cáceres,Extremadura,,1018,,,173,1248,57,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Madrid,"Madrid, Comunidad de",,15855,,,4483,34188,13850,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Melilla,Melilla,,68,,,2,79,9,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Murcia,"Murcia, Región de",,1024,,,51,1188,113,https://app.flourish.studio/visualisation/1451263/ (22:55),
-2020-04-03,Navarra,"Navarra, Comunidad Foral de",,2391,,,151,2836,294,https://app.flourish.studio/visualisation/1451263/ (22:55),
+2020-04-03,Asturias,"Asturias, Principado de",,1292,702,86,70,1522,154,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019;https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,"Balears, Illes","Balears, Illes",,813,587,112,69,1257,375,https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Cantabria,Cantabria,,1183,592,59,64,1321,74,https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Ceuta,Ceuta,,59,8,3,1,62,2,https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Badajoz,Extremadura,,511,,,27,645,107,https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Cáceres,Extremadura,,1018,,,173,1248,57,https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Madrid,"Madrid, Comunidad de",,15855,15050,1506,4483,34188,13850,https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Melilla,Melilla,,68,34,3,2,79,4,https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Murcia,"Murcia, Región de",,1024,405,72,46,1188,90,https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Navarra,"Navarra, Comunidad Foral de",,2391,1284,119,151,2836,294,https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
 2020-04-03,Araba/Álava,País Vasco,,92,319,,184,2539,,https://twitter.com/osakidetzaEJGV/status/1246389273953095681;https://app.flourish.studio/visualisation/1451263/ (22:55);https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
 2020-04-03,Bizkaia,País Vasco,,200,1177,,224,4224,,https://twitter.com/osakidetzaEJGV/status/1246389273953095681;https://app.flourish.studio/visualisation/1451263/ (22:55);https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
 2020-04-03,Gipuzkoa,País Vasco,,68,362,,69,1424,,https://twitter.com/osakidetzaEJGV/status/1246389273953095681;https://app.flourish.studio/visualisation/1451263/ (22:55);https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
-2020-04-03,La Rioja,"Rioja, La",,1370,,,109,2224,745,https://app.flourish.studio/visualisation/1451263/ (22:55),
+2020-04-03,"Rioja, La","Rioja, La",,1370,738,64,109,2224,745,https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Tenerife,Canarias,53,,,,51,946,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1564-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-03,Gran Canaria,Canarias,19,,,,21,435,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1564-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-03,Fuerteventura,Canarias,1,,,,0,35,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1564-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-03,Lanzarote,Canarias,1,,,,3,68,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1564-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-03,La Palma,Canarias,0,,,,3,69,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1564-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-03,El Hierro,Canarias,0,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1564-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-03,La Gomera,Canarias,0,,,,0,8,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1564-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-03,Sevilla,Andalucía,,1520,659,63,65,1462,33,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html;https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-04,Almería,Andalucía,,270,,,22,329,37,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Cádiz,Andalucía,,717,,,27,806,62,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Córdoba,Andalucía,,792,,,30,877,55,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Granada,Andalucía,,1188,,,105,1340,47,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Huelva,Andalucía,,247,,,11,266,8,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Jaén,Andalucía,,782,,,46,867,39,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Málaga,Andalucía,,1633,,,110,1905,162,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Lleida,Cataluña,,,,,79,1037,213,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
+2020-04-04,Albacete,Castilla - La Mancha,,2548,809,,194,,,notas de prensa https://www.castillalamancha.es/actualidad/notasdeprensa,Actualizado a las 22:30. Hoy el flourish de rtve no incluia informaciòn provincial (solo fallecimientos).
+2020-04-04,Ciudad Real,Castilla - La Mancha,,3496,1.169,,312,,,notas de prensa https://www.castillalamancha.es/actualidad/notasdeprensa,Actualizado a las 22:30. Hoy el flourish de rtve no incluia informaciòn provincial (solo fallecimientos).
+2020-04-04,Cuenca,Castilla - La Mancha,,449,158,,89,,,notas de prensa https://www.castillalamancha.es/actualidad/notasdeprensa,Actualizado a las 22:30. Hoy el flourish de rtve no incluia informaciòn provincial (solo fallecimientos).
+2020-04-04,Guadalajara,Castilla - La Mancha,,837,279,,118,,,notas de prensa https://www.castillalamancha.es/actualidad/notasdeprensa,Actualizado a las 22:30. Hoy el flourish de rtve no incluia informaciòn provincial (solo fallecimientos).
+2020-04-04,Toledo,Castilla - La Mancha,,1994,718,,276,,,notas de prensa https://www.castillalamancha.es/actualidad/notasdeprensa,Actualizado a las 22:30. Hoy el flourish de rtve no incluia informaciòn provincial (solo fallecimientos).
+2020-04-04,Ávila,Castilla y León,48,,178,15,69,638,205,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-04,Burgos,Castilla y León,24,,231,55,96,964,323,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-04,León,Castilla y León,79,,383,50,159,1204,398,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-04,Palencia,Castilla y León,25,,109,19,31,452,104,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-04,Salamanca,Castilla y León,90,,372,55,178,1579,332,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-04,Segovia,Castilla y León,85,,263,23,102,1051,311,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-04,Soria,Castilla y León,17,,137,19,52,769,136,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-04,Valladolid,Castilla y León,62,,438,103,125,1352,439,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-04,Zamora,Castilla y León,27,,112,12,35,323,83,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-04,Alicante/Alacant,Comunitat Valenciana,114,,684,143,245,2559,214,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8513691/200404+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
+2020-04-04,Castellón/Castelló,Comunitat Valenciana,47,,242,43,56,787,56,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8513691/200404+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
+2020-04-04,Valencia/València,Comunitat Valenciana,116,,1051,200,270,3555,425,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8513691/200404+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
+2020-04-04,Sevilla,Andalucía,,1490,,,75,1618,53,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Huesca,Aragón,,319,,,30,393,44,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹El Gobierno de Aragón ha informado del fallecimiento de otras dos personas cuyo origen es desconocido, por lo que el total en la comunidad asciende a 224."
+2020-04-04,Teruel,Aragón,,251,,,27,343,65,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹El Gobierno de Aragón ha informado del fallecimiento de otras dos personas cuyo origen es desconocido, por lo que el total en la comunidad asciende a 224."
+2020-04-04,Zaragoza,Aragón,,1819,,,192,2342,331,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹El Gobierno de Aragón ha informado del fallecimiento de otras dos personas cuyo origen es desconocido, por lo que el total en la comunidad asciende a 224."
+2020-04-04,Asturias,"Asturias, Principado de",,1309,,,80,1605,216,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Baleares,Illes Balears,,778,,,71,1257,422,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,El Hierro,Canarias,,,,,0,3,,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
+2020-04-04,Fuerteventura,Canarias,,,,,0,35,,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
+2020-04-04,Gran Canaria,Canarias,,,,,21,435,,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
+2020-04-04,La Gomera,Canarias,,,,,0,8,,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
+2020-04-04,La Palma,Canarias,,,,,3,68,,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
+2020-04-04,Lanzarote,Canarias,,,,,3,69,,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
+2020-04-04,Tenerife,Canarias,,,,,51,946,,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
+2020-04-04,Cantabria,Cantabria,,1217,,,68,1384,99,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Cataluña,Cataluña,,13867,,,2637,26032,9528,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Ceuta,Ceuta,,70,,,1,73,2,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Badajoz,Extremadura,,513,,,29,662,120,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Cáceres,Extremadura,,1053,,,179,1317,85,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Galicia,Galicia,,4926,,,168,5625,531,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Madrid,"Madrid, Comunidad de",,16164,,,4723,36249,15362,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Melilla,Melilla,,70,,,2,83,11,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Murcia,Murcia,,1046,,,51,1235,130,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Navarra,"Navarra, Comunidad Foral de",,2507,,,171,2972,294,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
+2020-04-04,Araba/Álava,País Vasco,,,,,176,2539,,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
+2020-04-04,Bizkaia,País Vasco,,,,,205,4224,,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
+2020-04-04,Gipuzkoa,País Vasco,,,,,63,1424,,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
+2020-04-04,La Rioja,"Rioja, La",,1434,,,128,2405,843,https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),
