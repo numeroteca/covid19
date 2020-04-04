@@ -38,10 +38,10 @@ tenerife <- canarias %>% filter(province == "La Gomera" | province =="La Palma" 
   hospitalized = sum(hospitalized),
   intensive_care = sum(intensive_care),
   deceased = sum(deceased),
-  cases_accumulated = sum(cases_accumulated)
-  recovered = sum(recovered)
-  # source = paste(source, collapse = ";"),
-  # comments = paste(comments, collapse = ";")
+  cases_accumulated = sum(cases_accumulated),
+  recovered = sum(recovered),
+  source = paste(source, collapse = ";"),
+  comments = paste(comments, collapse = ";")
 )
 palmas <- canarias %>% filter(province == "Fuerteventura" | province =="Lanzarote" | province == "Gran Canaria") %>% group_by(date) %>% summarise(
   province = "Palmas, Las",
@@ -490,7 +490,7 @@ data_cases_sp_provinces %>%
 dev.off()
 
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-per-cienmil-lineal.png", sep = ""),width = 1200,height = 800)
-data_cases_sp_provinces %>% filter(ccaa != "Canarias") %>%
+data_cases_sp_provinces %>%
   ggplot() +
   geom_line(data = data_cases_sp_provinces_sm %>% ungroup() %>% select(date,deceassed_per_100000,province_cp,-province),
             aes(date,deceassed_per_100000,group=province_cp), color="#CACACA" ) +
@@ -518,7 +518,7 @@ data_cases_sp_provinces %>% filter(ccaa != "Canarias") %>%
 dev.off()
 
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-per-cienmil-log.png", sep = ""),width = 1200,height = 800)
-data_cases_sp_provinces %>% filter(ccaa != "Canarias") %>%
+data_cases_sp_provinces %>% 
   ggplot() +
   geom_line(data = data_cases_sp_provinces_sm %>% ungroup() %>% select(date,deceassed_per_100000,province_cp,-province),
             aes(date,deceassed_per_100000,group=province_cp), color="#CACACA" ) +
@@ -548,7 +548,7 @@ data_cases_sp_provinces %>% filter(ccaa != "Canarias") %>%
 dev.off()
 
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-per-cienmil-log-ccaa.png", sep = ""),width = 1000,height = 600)
-data_cases_sp_provinces %>% filter(ccaa != "Canarias") %>%
+data_cases_sp_provinces %>% 
   ggplot() +
   geom_line(data = select(data_cases_sp_provinces_sm,date,deceassed_per_100000,province_cp,-province),
             aes(date,deceassed_per_100000,group=province_cp), color="#CACACA" ) +
@@ -657,13 +657,13 @@ dev.off()
 
 # Daily deaths --------------
 png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-log.png", sep = ""),width = 1200,height = 800)
-data_cases_sp_provinces %>%
+data_cases_sp_provinces %>% 
   ggplot() +
   geom_smooth(aes(date, daily_deaths_avg6,group=province, color=ccaa), size= 1, se = FALSE, span = 0.6 ) +
   geom_point(aes(date, daily_deaths, color=ccaa), size= 1.5 ) +
   # geom_point(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), aes(date, daily_deaths_avg6, color=province), size= 1.5, alpha = 0.3 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths > 0), 
-                  aes(date, daily_deaths_avg6, color=ccaa, label=paste(format(daily_deaths, nsmall=1, big.mark=".", decimal.mark = ","),province)),
+                  aes(date, daily_deaths_avg6, color=ccaa, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),province)),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -703,7 +703,7 @@ data_cases_sp_provinces %>%
                  expand = c(0,0.2) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date + 6)),
+               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +9)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
