@@ -91,12 +91,14 @@ Data structure:
 * `population` population of the region
 * `cases_registered` Number of registered cases
 * `cases_per_100000` Number of registered cases per 100.000 people
-* `intensive_care` Number of intensive care patients (UCI in Spanish)
+* `intensive_care` Number of intensive care patients (UCI in Spanish). [Read Datadista README for exceptions](https://github.com/datadista/datasets/blob/master/COVID%2019/readme.md)
 * `intensive_care_per_1000000` Number of intensive care patients per 100.000 people (UCI in Spanish)
 * `deceassed` Number of deceassed
 * `deceassed_per_100000` Number of deceassed per 100.000 people
 * `recovered` Number of recovered
 * `recovered_per_100000` Number of recovered per 100.000 people
+* `hospitalized` Number of hospitalized
+* `hospitalized_per_100000` Number of hospitalized per 100.000 people
 
 Example of observations:
 
