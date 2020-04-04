@@ -22,10 +22,10 @@ ccaa_poblacion <-  read.delim("data/original/spain/ccaa-poblacion.csv",sep = ";"
 # extracted by Datadista and published in this repository https://github.com/datadista/datasets/tree/master/COVID%2019
 # Spanish data https://github.com/datadista/datasets/tree/master/COVID%2019
 data_cases_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_casos.csv",sep = ",")  
-# data_cases_original <- read.delim("../coronavirus-datadista/COVID 19/12-03-2020/casos_cccaa_12032020_covid19.csv",sep = ",") #loads local data 
 data_uci_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_uci.csv",sep = ",")
 data_death_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_fallecidos.csv",sep = ",")
 data_altas_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_altas.csv",sep = ",")
+data_hosp_original <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_hospitalizados.csv",sep = ",")
 
 # Process data ------
 # Change to long format
@@ -82,6 +82,18 @@ data_altas <- merge( data_altas, data_cases %>% filter (date == as.Date("2020-02
 # calculate values per 
 data_altas$altas_per_cienmil <- round( data_altas$value / data_altas$poblacion * 1000000, digits = 2)
 
+#  hospitalizados
+data_hosp <- melt(data_hosp_original, id.vars = c("CCAA","cod_ine"))
+data_hosp$date <- as.Date(substr(data_hosp$variable,2,12),"%Y.%m.%d")
+data_hosp <- select(data_hosp,-variable)
+
+# add population data
+data_hosp <- merge( data_hosp, data_cases %>% filter (date == as.Date("2020-02-27") ) %>% select(CCAA,poblacion), by.x = "CCAA", by.y = "CCAA" , all.x = TRUE  )
+# calculate values per 
+data_hosp$hosp_per_cienmil <- round( data_hosp$value / data_hosp$poblacion * 1000000, digits = 2)
+
+
+
 # / join data sets and export --------------
 data_all <- data_cases
 data_all$unique <- paste0(data_all$CCAA,data_all$date)
@@ -98,29 +110,43 @@ data_death$unique <- paste0(data_death$CCAA,data_death$date)
 colnames(data_death)[3] <- "death"
 colnames(data_death)[6] <- "death_per_cienmil"
 
-data_all <- merge( data_all, select(data_death,unique,death,death_per_cienmil ), by = "unique", all = TRUE  )
+data_all <- merge( data_all, data_death %>% ungroup() %>% select(unique,death,death_per_cienmil ), by = "unique", all = TRUE  )
 
 data_altas$unique <- paste0(data_altas$CCAA,data_altas$date)
 colnames(data_altas)[3] <- "altas"
 
 data_all <- merge( data_all, select(data_altas,unique,altas,altas_per_cienmil ), by = "unique", all = TRUE  )
 
+data_hosp$unique <- paste0(data_hosp$CCAA,data_hosp$date)
+colnames(data_hosp)[3] <- "hospitalizados"
+
+data_all <- merge( data_all, select(data_hosp,unique,hospitalizados,hosp_per_cienmil ), by = "unique", all = TRUE  )
+
 # TODO: fix variables
 data_all_export <- select(data_all,  cod_ine , CCAA, cases, date ,poblacion, 
-                          cases_per_cienmil, uci,uci_per_cienmil, death, death_per_cienmil, altas,altas_per_cienmil )
+                          cases_per_cienmil, uci,uci_per_cienmil, death, death_per_cienmil, 
+                          altas,altas_per_cienmil, hospitalizados, hosp_per_cienmil )
 
 names(data_all_export) <- c("region_code" , "region",  "cases_registered" , "date"  ,"population"  , "cases_per_100000", "intensive_care",
-                            "intensive_care_per_1000000", "deceassed", "deceassed_per_100000","recovered","recovered_per_100000")
+                            "intensive_care_per_1000000", "deceassed", "deceassed_per_100000","recovered","recovered_per_100000",
+                            "hospitalized","hospitalized_per_100000")
 
 data_all_export$country <- "Spain"
 
 data_all_export <- data_all_export %>% select(date, region_code, region, country, population, cases_registered, cases_per_100000,
                                               intensive_care, intensive_care_per_1000000, deceassed, deceassed_per_100000,
-                                              recovered, recovered_per_100000)
+                                              recovered, recovered_per_100000,hospitalized, hospitalized_per_100000)
 
 data_all_export <- data_all_export %>% filter(!is.na(region))
 
 write.csv(data_all_export, file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv", row.names = FALSE)
+
+export_uniprovinciales <- data_all_export %>% select(date,region,hospitalized,intensive_care,deceassed,recovered) %>% 
+  filter( region == "Melilla" | region == "Asturias" | region == "Baleares" | region == "Cantabria" | 
+            region == "Ceuta" |region == "Madride" | region == "Murcia" | region == "Navarra" | region == "Madrid" |
+            region == "La Rioja" )
+
+write.csv(export_uniprovinciales, file = "data/output/covid19-data-uniprovinciales.csv", row.names = FALSE)
 
 
 # colors ---------
@@ -130,7 +156,7 @@ library(RColorBrewer)
 colourCount <- length(unique(data_cases$CCAA))
 getPalette <- colorRampPalette(brewer.pal(9, "Set1"))
 colors <- getPalette(colourCount )
-
+# Change yellow to blue
 colors[12] <- "#84d3e7"
 
 # Create extra data ------
