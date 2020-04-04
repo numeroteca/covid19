@@ -460,19 +460,36 @@ data_cases_sp_provinces %>%
        caption = caption_provincia)
 dev.off()
 
-png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-log_ccaa.png", sep = ""),width = 1000,height = 600)
+# Agrupado por CCAA
+png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-log_ccaa.png", sep = ""),width = 1200,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
   geom_line(data = select(data_cases_sp_provinces_sm,date,deceased,province_cp,-province),
             aes(date,deceased,group=province_cp), color="#CACACA" ) +
-  geom_line(aes(date, deceased,group=province) ) +
+  geom_line(aes(date, deceased,group=province), size= 0.7 ) +
   geom_point(aes(date, deceased), size= 0.5 ) +
+  geom_text_repel(data=filter( data_cases_sp_provinces, 
+                               date==max(data_cases_sp_provinces$date) & deceased > 0
+                                ), 
+                                aes(date+1, deceased, label=paste(format(deceased, nsmall=1, big.mark="."), substr(province,1,2) ) ),
+                                # nudge_x = 3, # adjust the starting y position of the text label
+                                size=3,
+                                hjust=0,
+                                family = "Roboto Condensed",
+                                direction="y",
+                                segment.size = 0.1,
+                                segment.color="#777777"
+                                ) +
   facet_wrap(~ccaa) +
-  scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
+  coord_cartesian(
+    xlim = c( min(data_cases_sp_provinces$date + 10), max(data_cases_sp_provinces$date +4)),
+  ) +
+  scale_y_log10( 
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
   scale_x_date(date_breaks = "4 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date)),
-               expand = c(0,0) 
+               expand = c(0,1) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
