@@ -1,0 +1,343 @@
+"date","region","hospitalized","intensive_care","deceassed","recovered"
+2020-02-27,"Asturias",NA,NA,NA,NA
+2020-02-28,"Asturias",NA,NA,NA,NA
+2020-02-29,"Asturias",NA,NA,NA,NA
+2020-03-01,"Asturias",NA,NA,NA,NA
+2020-03-02,"Asturias",NA,NA,NA,NA
+2020-03-03,"Asturias",NA,NA,0,NA
+2020-03-04,"Asturias",NA,1,0,NA
+2020-03-05,"Asturias",NA,2,0,NA
+2020-03-06,"Asturias",NA,2,0,NA
+2020-03-07,"Asturias",NA,NA,0,NA
+2020-03-08,"Asturias",NA,NA,0,NA
+2020-03-09,"Asturias",NA,2,0,NA
+2020-03-10,"Asturias",NA,2,0,NA
+2020-03-11,"Asturias",NA,2,0,NA
+2020-03-12,"Asturias",NA,2,1,NA
+2020-03-13,"Asturias",NA,2,1,NA
+2020-03-14,"Asturias",NA,NA,1,NA
+2020-03-15,"Asturias",NA,NA,1,NA
+2020-03-16,"Asturias",NA,3,1,3
+2020-03-17,"Asturias",NA,5,1,3
+2020-03-18,"Asturias",NA,5,1,4
+2020-03-19,"Asturias",NA,6,1,4
+2020-03-20,"Asturias",NA,7,2,12
+2020-03-21,"Asturias",133,12,5,16
+2020-03-22,"Asturias",171,15,8,20
+2020-03-23,"Asturias",194,22,12,21
+2020-03-24,"Asturias",224,23,22,30
+2020-03-25,"Asturias",263,29,25,35
+2020-03-26,"Asturias",300,34,27,40
+2020-03-27,"Asturias",339,47,29,52
+2020-03-28,"Asturias",408,50,33,65
+2020-03-29,"Asturias",466,57,41,76
+2020-03-30,"Asturias",479,60,49,78
+2020-03-31,"Asturias",529,65,55,90
+2020-04-01,"Asturias",590,76,63,109
+2020-04-02,"Asturias",640,79,69,135
+2020-04-03,"Asturias",702,86,70,154
+2020-04-04,"Asturias",766,87,76,190
+2020-02-27,"Baleares",NA,NA,NA,NA
+2020-02-28,"Baleares",NA,NA,NA,NA
+2020-02-29,"Baleares",NA,NA,NA,NA
+2020-03-01,"Baleares",NA,NA,NA,NA
+2020-03-02,"Baleares",NA,NA,NA,NA
+2020-03-03,"Baleares",NA,NA,0,NA
+2020-03-04,"Baleares",NA,0,0,NA
+2020-03-05,"Baleares",NA,0,0,NA
+2020-03-06,"Baleares",NA,0,0,NA
+2020-03-07,"Baleares",NA,NA,0,NA
+2020-03-08,"Baleares",NA,NA,0,NA
+2020-03-09,"Baleares",NA,0,0,NA
+2020-03-10,"Baleares",NA,1,0,NA
+2020-03-11,"Baleares",NA,1,0,NA
+2020-03-12,"Baleares",NA,2,1,NA
+2020-03-13,"Baleares",NA,2,1,NA
+2020-03-14,"Baleares",NA,NA,1,NA
+2020-03-15,"Baleares",NA,NA,1,NA
+2020-03-16,"Baleares",NA,4,1,1
+2020-03-17,"Baleares",NA,4,1,1
+2020-03-18,"Baleares",NA,4,1,4
+2020-03-19,"Baleares",NA,7,2,6
+2020-03-20,"Baleares",NA,10,2,10
+2020-03-21,"Baleares",60,14,4,11
+2020-03-22,"Baleares",79,14,4,17
+2020-03-23,"Baleares",87,27,10,18
+2020-03-24,"Baleares",127,35,10,19
+2020-03-25,"Baleares",164,40,13,28
+2020-03-26,"Baleares",205,43,17,39
+2020-03-27,"Baleares",237,46,22,67
+2020-03-28,"Baleares",283,59,26,80
+2020-03-29,"Baleares",345,71,29,82
+2020-03-30,"Baleares",353,80,37,100
+2020-03-31,"Baleares",399,85,42,111
+2020-04-01,"Baleares",468,95,46,170
+2020-04-02,"Baleares",517,105,58,239
+2020-04-03,"Baleares",587,112,69,375
+2020-04-04,"Baleares",634,114,71,422
+2020-02-27,"Cantabria",NA,NA,NA,NA
+2020-02-28,"Cantabria",NA,NA,NA,NA
+2020-02-29,"Cantabria",NA,NA,NA,NA
+2020-03-01,"Cantabria",NA,NA,NA,NA
+2020-03-02,"Cantabria",NA,NA,NA,NA
+2020-03-03,"Cantabria",NA,NA,0,NA
+2020-03-04,"Cantabria",NA,0,0,NA
+2020-03-05,"Cantabria",NA,0,0,NA
+2020-03-06,"Cantabria",NA,0,0,NA
+2020-03-07,"Cantabria",NA,NA,0,NA
+2020-03-08,"Cantabria",NA,NA,0,NA
+2020-03-09,"Cantabria",NA,0,0,NA
+2020-03-10,"Cantabria",NA,0,0,NA
+2020-03-11,"Cantabria",NA,0,0,NA
+2020-03-12,"Cantabria",NA,0,0,NA
+2020-03-13,"Cantabria",NA,0,0,NA
+2020-03-14,"Cantabria",NA,NA,0,NA
+2020-03-15,"Cantabria",NA,NA,0,NA
+2020-03-16,"Cantabria",NA,2,0,10
+2020-03-17,"Cantabria",NA,2,0,10
+2020-03-18,"Cantabria",NA,3,1,10
+2020-03-19,"Cantabria",NA,4,1,10
+2020-03-20,"Cantabria",NA,7,1,10
+2020-03-21,"Cantabria",92,9,2,11
+2020-03-22,"Cantabria",116,9,5,11
+2020-03-23,"Cantabria",157,14,6,11
+2020-03-24,"Cantabria",200,16,9,12
+2020-03-25,"Cantabria",241,18,14,12
+2020-03-26,"Cantabria",300,26,17,14
+2020-03-27,"Cantabria",355,29,21,19
+2020-03-28,"Cantabria",406,37,22,21
+2020-03-29,"Cantabria",449,40,26,25
+2020-03-30,"Cantabria",481,46,27,24
+2020-03-31,"Cantabria",522,50,37,35
+2020-04-01,"Cantabria",543,54,54,43
+2020-04-02,"Cantabria",567,57,60,60
+2020-04-03,"Cantabria",592,59,64,74
+2020-04-04,"Cantabria",619,60,68,99
+2020-02-27,"Ceuta",NA,NA,NA,NA
+2020-02-28,"Ceuta",NA,NA,NA,NA
+2020-02-29,"Ceuta",NA,NA,NA,NA
+2020-03-01,"Ceuta",NA,NA,NA,NA
+2020-03-02,"Ceuta",NA,NA,NA,NA
+2020-03-03,"Ceuta",NA,NA,0,NA
+2020-03-04,"Ceuta",NA,0,0,NA
+2020-03-05,"Ceuta",NA,0,0,NA
+2020-03-06,"Ceuta",NA,0,0,NA
+2020-03-07,"Ceuta",NA,NA,0,NA
+2020-03-08,"Ceuta",NA,NA,0,NA
+2020-03-09,"Ceuta",NA,0,0,NA
+2020-03-10,"Ceuta",NA,0,0,NA
+2020-03-11,"Ceuta",NA,0,0,NA
+2020-03-12,"Ceuta",NA,0,0,NA
+2020-03-13,"Ceuta",NA,0,0,NA
+2020-03-14,"Ceuta",NA,NA,0,NA
+2020-03-15,"Ceuta",NA,NA,0,NA
+2020-03-16,"Ceuta",NA,0,0,0
+2020-03-17,"Ceuta",NA,0,0,0
+2020-03-18,"Ceuta",NA,0,0,0
+2020-03-19,"Ceuta",NA,0,0,0
+2020-03-20,"Ceuta",NA,0,0,0
+2020-03-21,"Ceuta",0,0,0,0
+2020-03-22,"Ceuta",0,0,0,0
+2020-03-23,"Ceuta",0,0,0,0
+2020-03-24,"Ceuta",0,0,0,0
+2020-03-25,"Ceuta",2,1,0,0
+2020-03-26,"Ceuta",2,2,0,0
+2020-03-27,"Ceuta",2,2,0,0
+2020-03-28,"Ceuta",2,2,1,0
+2020-03-29,"Ceuta",2,2,1,0
+2020-03-30,"Ceuta",2,2,1,0
+2020-03-31,"Ceuta",3,3,1,0
+2020-04-01,"Ceuta",6,3,1,0
+2020-04-02,"Ceuta",7,3,1,0
+2020-04-03,"Ceuta",8,3,1,2
+2020-04-04,"Ceuta",8,4,1,2
+2020-02-27,"La Rioja",NA,NA,NA,NA
+2020-02-28,"La Rioja",NA,NA,NA,NA
+2020-02-29,"La Rioja",NA,NA,NA,NA
+2020-03-01,"La Rioja",NA,NA,NA,NA
+2020-03-02,"La Rioja",NA,NA,NA,NA
+2020-03-03,"La Rioja",NA,NA,0,NA
+2020-03-04,"La Rioja",NA,0,0,NA
+2020-03-05,"La Rioja",NA,0,0,NA
+2020-03-06,"La Rioja",NA,0,0,NA
+2020-03-07,"La Rioja",NA,NA,0,NA
+2020-03-08,"La Rioja",NA,NA,0,NA
+2020-03-09,"La Rioja",NA,1,0,NA
+2020-03-10,"La Rioja",NA,1,1,NA
+2020-03-11,"La Rioja",NA,1,2,NA
+2020-03-12,"La Rioja",NA,1,2,NA
+2020-03-13,"La Rioja",NA,2,2,NA
+2020-03-14,"La Rioja",NA,NA,3,NA
+2020-03-15,"La Rioja",NA,NA,3,NA
+2020-03-16,"La Rioja",NA,13,4,2
+2020-03-17,"La Rioja",NA,13,5,2
+2020-03-18,"La Rioja",NA,13,5,2
+2020-03-19,"La Rioja",NA,15,5,2
+2020-03-20,"La Rioja",NA,15,7,13
+2020-03-21,"La Rioja",128,17,15,18
+2020-03-22,"La Rioja",134,17,18,18
+2020-03-23,"La Rioja",166,22,22,18
+2020-03-24,"La Rioja",206,24,30,24
+2020-03-25,"La Rioja",254,33,37,43
+2020-03-26,"La Rioja",316,36,43,48
+2020-03-27,"La Rioja",388,43,55,62
+2020-03-28,"La Rioja",458,43,65,364
+2020-03-29,"La Rioja",497,43,68,397
+2020-03-30,"La Rioja",517,43,71,431
+2020-03-31,"La Rioja",575,51,85,496
+2020-04-01,"La Rioja",619,54,90,569
+2020-04-02,"La Rioja",660,57,101,641
+2020-04-03,"La Rioja",738,64,109,745
+2020-04-04,"La Rioja",805,64,128,843
+2020-02-27,"Madrid",NA,NA,NA,NA
+2020-02-28,"Madrid",NA,NA,NA,NA
+2020-02-29,"Madrid",NA,NA,NA,NA
+2020-03-01,"Madrid",NA,NA,NA,NA
+2020-03-02,"Madrid",NA,NA,NA,NA
+2020-03-03,"Madrid",NA,NA,0,NA
+2020-03-04,"Madrid",NA,2,0,NA
+2020-03-05,"Madrid",NA,2,1,NA
+2020-03-06,"Madrid",NA,2,2,NA
+2020-03-07,"Madrid",NA,NA,4,NA
+2020-03-08,"Madrid",NA,NA,8,NA
+2020-03-09,"Madrid",NA,53,8,NA
+2020-03-10,"Madrid",NA,77,21,NA
+2020-03-11,"Madrid",NA,102,31,NA
+2020-03-12,"Madrid",NA,135,56,NA
+2020-03-13,"Madrid",NA,180,81,NA
+2020-03-14,"Madrid",NA,NA,86,NA
+2020-03-15,"Madrid",NA,NA,213,NA
+2020-03-16,"Madrid",NA,253,213,474
+2020-03-17,"Madrid",NA,340,355,951
+2020-03-18,"Madrid",NA,491,390,951
+2020-03-19,"Madrid",NA,590,498,941
+2020-03-20,"Madrid",NA,678,628,1186
+2020-03-21,"Madrid",7388,767,804,1542
+2020-03-22,"Madrid",8441,834,1021,1899
+2020-03-23,"Madrid",9561,942,1263,2063
+2020-03-24,"Madrid",10443,1050,1535,2291
+2020-03-25,"Madrid",11153,1150,1825,3031
+2020-03-26,"Madrid",12440,1221,2090,3882
+2020-03-27,"Madrid",13580,1312,2412,5044
+2020-03-28,"Madrid",14211,1404,2757,6326
+2020-03-29,"Madrid",14454,1429,3082,7491
+2020-03-30,"Madrid",14917,1460,3392,8301
+2020-03-31,"Madrid",15140,1514,3603,9330
+2020-04-01,"Madrid",15227,1514,3865,10827
+2020-04-02,"Madrid",15227,1528,4175,12400
+2020-04-03,"Madrid",15050,1506,4483,13850
+2020-04-04,"Madrid",14741,1498,4723,15362
+2020-02-27,"Melilla",NA,NA,NA,NA
+2020-02-28,"Melilla",NA,NA,NA,NA
+2020-02-29,"Melilla",NA,NA,NA,NA
+2020-03-01,"Melilla",NA,NA,NA,NA
+2020-03-02,"Melilla",NA,NA,NA,NA
+2020-03-03,"Melilla",NA,NA,0,NA
+2020-03-04,"Melilla",NA,0,0,NA
+2020-03-05,"Melilla",NA,0,0,NA
+2020-03-06,"Melilla",NA,0,0,NA
+2020-03-07,"Melilla",NA,NA,0,NA
+2020-03-08,"Melilla",NA,NA,0,NA
+2020-03-09,"Melilla",NA,0,0,NA
+2020-03-10,"Melilla",NA,0,0,NA
+2020-03-11,"Melilla",NA,0,0,NA
+2020-03-12,"Melilla",NA,0,0,NA
+2020-03-13,"Melilla",NA,0,0,NA
+2020-03-14,"Melilla",NA,NA,0,NA
+2020-03-15,"Melilla",NA,NA,0,NA
+2020-03-16,"Melilla",NA,0,0,0
+2020-03-17,"Melilla",NA,0,0,0
+2020-03-18,"Melilla",NA,0,0,0
+2020-03-19,"Melilla",NA,0,0,0
+2020-03-20,"Melilla",NA,1,0,0
+2020-03-21,"Melilla",8,1,0,0
+2020-03-22,"Melilla",12,1,0,0
+2020-03-23,"Melilla",12,1,0,0
+2020-03-24,"Melilla",12,1,0,0
+2020-03-25,"Melilla",14,2,0,0
+2020-03-26,"Melilla",16,2,1,0
+2020-03-27,"Melilla",18,2,1,0
+2020-03-28,"Melilla",22,2,1,0
+2020-03-29,"Melilla",24,2,1,0
+2020-03-30,"Melilla",27,3,1,0
+2020-03-31,"Melilla",27,3,1,0
+2020-04-01,"Melilla",32,3,1,0
+2020-04-02,"Melilla",32,3,1,0
+2020-04-03,"Melilla",34,3,2,4
+2020-04-04,"Melilla",37,3,2,9
+2020-02-27,"Murcia",NA,NA,NA,NA
+2020-02-28,"Murcia",NA,NA,NA,NA
+2020-02-29,"Murcia",NA,NA,NA,NA
+2020-03-01,"Murcia",NA,NA,NA,NA
+2020-03-02,"Murcia",NA,NA,NA,NA
+2020-03-03,"Murcia",NA,NA,0,NA
+2020-03-04,"Murcia",NA,0,0,NA
+2020-03-05,"Murcia",NA,0,0,NA
+2020-03-06,"Murcia",NA,0,0,NA
+2020-03-07,"Murcia",NA,NA,0,NA
+2020-03-08,"Murcia",NA,NA,0,NA
+2020-03-09,"Murcia",NA,0,0,NA
+2020-03-10,"Murcia",NA,0,0,NA
+2020-03-11,"Murcia",NA,0,0,NA
+2020-03-12,"Murcia",NA,1,0,NA
+2020-03-13,"Murcia",NA,1,0,NA
+2020-03-14,"Murcia",NA,NA,0,NA
+2020-03-15,"Murcia",NA,NA,0,NA
+2020-03-16,"Murcia",NA,2,0,1
+2020-03-17,"Murcia",NA,3,0,1
+2020-03-18,"Murcia",NA,4,0,1
+2020-03-19,"Murcia",NA,6,0,1
+2020-03-20,"Murcia",NA,11,0,1
+2020-03-21,"Murcia",61,14,1,1
+2020-03-22,"Murcia",78,16,1,1
+2020-03-23,"Murcia",80,23,2,1
+2020-03-24,"Murcia",99,26,3,1
+2020-03-25,"Murcia",127,33,5,4
+2020-03-26,"Murcia",172,36,8,9
+2020-03-27,"Murcia",209,53,15,12
+2020-03-28,"Murcia",231,58,17,12
+2020-03-29,"Murcia",260,58,20,16
+2020-03-30,"Murcia",265,58,25,17
+2020-03-31,"Murcia",283,59,34,20
+2020-04-01,"Murcia",304,59,37,43
+2020-04-02,"Murcia",389,68,42,45
+2020-04-03,"Murcia",405,72,46,90
+2020-04-04,"Murcia",434,79,51,113
+2020-02-27,"Navarra",NA,NA,NA,NA
+2020-02-28,"Navarra",NA,NA,NA,NA
+2020-02-29,"Navarra",NA,NA,NA,NA
+2020-03-01,"Navarra",NA,NA,NA,NA
+2020-03-02,"Navarra",NA,NA,NA,NA
+2020-03-03,"Navarra",NA,NA,0,NA
+2020-03-04,"Navarra",NA,1,0,NA
+2020-03-05,"Navarra",NA,1,0,NA
+2020-03-06,"Navarra",NA,1,0,NA
+2020-03-07,"Navarra",NA,NA,0,NA
+2020-03-08,"Navarra",NA,NA,0,NA
+2020-03-09,"Navarra",NA,1,0,NA
+2020-03-10,"Navarra",NA,2,0,NA
+2020-03-11,"Navarra",NA,3,0,NA
+2020-03-12,"Navarra",NA,3,0,NA
+2020-03-13,"Navarra",NA,4,0,NA
+2020-03-14,"Navarra",NA,NA,0,NA
+2020-03-15,"Navarra",NA,NA,0,NA
+2020-03-16,"Navarra",NA,5,1,0
+2020-03-17,"Navarra",NA,10,2,0
+2020-03-18,"Navarra",NA,10,3,0
+2020-03-19,"Navarra",NA,11,4,0
+2020-03-20,"Navarra",NA,19,5,1
+2020-03-21,"Navarra",222,25,9,1
+2020-03-22,"Navarra",288,30,14,4
+2020-03-23,"Navarra",339,40,24,7
+2020-03-24,"Navarra",405,45,31,11
+2020-03-25,"Navarra",506,51,33,23
+2020-03-26,"Navarra",649,54,49,35
+2020-03-27,"Navarra",732,75,58,70
+2020-03-28,"Navarra",827,84,70,98
+2020-03-29,"Navarra",896,90,84,125
+2020-03-30,"Navarra",955,96,102,161
+2020-03-31,"Navarra",1035,99,113,192
+2020-04-01,"Navarra",1120,104,130,236
+2020-04-02,"Navarra",1181,108,141,278
+2020-04-03,"Navarra",1284,119,151,294
+2020-04-04,"Navarra",1341,120,171,311
