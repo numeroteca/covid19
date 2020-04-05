@@ -8,7 +8,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_i <- "Gráfico: @numeroteca (montera34.com). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 04.03"
+periodo_i <- "2020.02.24 - 04.05"
 
 # COVID-19 in Italy -----------
 # Load data
@@ -49,9 +49,10 @@ data_i_cases$intensive_care_per_1000000 <- round( data_i_cases$intensive_care / 
 data_i_cases$deceassed_per_100000 <- round( data_i_cases$deceassed / data_i_cases$population * 100000, digits = 2)
 data_i_cases$recovered_per_100000 <- round( data_i_cases$recovered / data_i_cases$population * 100000, digits = 2)
 
-
-data_i_cases <- data_i_cases %>% group_by(region) %>% arrange(date) %>% mutate( daily_deaths = deceassed - lag(deceassed)  )
-
+data_i_cases <- data_i_cases %>% group_by(region) %>% arrange(date) %>% mutate(
+  daily_deaths = deceassed - lag(deceassed),
+  daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) ) / 6, digits = 1 ) # average of dayly deaths of 6 last days
+)
 
 # 1. Cases ------------
 
@@ -539,7 +540,7 @@ data_i_cases %>%
        caption = caption_i)
 dev.off()
 
-
+# Daily deaths --------
 png(filename=paste("img/italia/covid19_muertes-por-dia-region-superpuesto-log.png", sep = ""),width = 1100,height = 800)
 data_i_cases %>% 
   ggplot() +
@@ -553,6 +554,74 @@ data_i_cases %>%
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  coord_cartesian(
+    ylim=c(1, max(data_i_cases[!is.na(data_i_cases$daily_deaths),]$daily_deaths)*1.05 )
+  ) +
+  scale_y_log10( 
+    breaks = c(0,1,5,10,20,50,100,200,500,1000,2000,5000 ),
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+    expand = c(0,0.1)
+  ) +
+  scale_x_date(date_breaks = "2 day", 
+               date_labels = "%d",
+               limits=c( min(data_i_cases$date), max(data_i_cases$date +9)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Número de muertes por COVID-19 registradas por día en Italia",
+       subtitle = paste0("Por región (escala logarítmica). ",periodo_i),
+       y = "fallecidos.",
+       x = "fecha",
+       caption = caption_i)
+dev.off()
+
+
+png(filename=paste("img/italia/covid19_muertes-por-dia-region-superpuesto-log_media.png", sep = ""),width = 1100,height = 800)
+data_i_cases %>%
+  ggplot() +
+  geom_smooth(aes(date, daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE  ) +
+  geom_point(aes(date, daily_deaths, color=region), size= 1.5 ) +
+  # geom_point(aes(date, daily_deaths_avg6, color=region), size= 1.5, alpha = 0.5 ) +
+  geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date)), 
+                  aes(date, daily_deaths_avg6, color=region, label=paste(format( daily_deaths_avg6, nsmall=1, big.mark="."),region)),
+                  nudge_x = 1, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  # marca un día
+  geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date)-12, region == "Lombardia" ),
+                  aes(date,daily_deaths, label=paste("muertes en un día en una región")),
+                  nudge_y = 5, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="x",
+                  segment.size = 0.5,
+                  segment.color="#777777"
+  ) +
+  # marca la línea
+  geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date)-2, region == "Lombardia" ),
+                  aes(date+0.5,390, label=paste("media de 6 días")),
+                  nudge_y = 5, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="x",
+                  segment.size = 0.5,
                   segment.color="#777777"
   ) +
   coord_cartesian(
