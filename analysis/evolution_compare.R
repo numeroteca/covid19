@@ -1,3 +1,4 @@
+
 # Compare countries
 
 # You need to run the other country scripts at /analysis/ to be able to load the data first.
@@ -8,8 +9,15 @@ library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 library(plotly)
 
+period_comp <- "Updated: 2020-04-04"
+
 # Bind Spanish and Italian data
-compare_countries <- rbind(data_all_export, data_i_cases)
+names(data_all_export)
+names(data_i_cases)
+compare_countries <- rbind(
+  data_all_export %>% select( -hospitalized, -hospitalized_per_100000), 
+  data_i_cases %>% select(-daily_deaths)
+)
 
 # Create France dataframe
 data_f_cases_to_bind <- data_all_export[-c(1:(nrow(data_all_export)-nrow(data_f_cases))),]
@@ -297,14 +305,18 @@ dev.off()
 # setting 0 day -------------
 
 # Bind Spanish and Italian data
-compare_countries <- rbind(data_all_export, data_i_cases)
+compare_countries <- rbind(
+  as.data.frame( data_all_export %>% select( -hospitalized, -hospitalized_per_100000) ), 
+  as.data.frame( data_i_cases %>% select(-daily_deaths) )
+)
 
 # adds FRance
 data_f2_cases$country <- "France"
 
 # ddd <- data_f2_cases %>% filter( (maille_nom == "Corse" & date < as.Date("2020-03-17") ) )
-compare_countries_deceassed <-rbind( compare_countries %>% select(date,region, country,deceassed), 
-                                     as.data.frame(data_f2_cases %>% select(date,maille_nom, country,deceassed) %>% rename(region = maille_nom ) )
+compare_countries_deceassed <-rbind(
+  as.data.frame(compare_countries %>% select(date,region, country,deceassed) ), 
+  as.data.frame(data_f2_cases %>% select(date,region, country,deceassed) )
 )
 
 
@@ -415,9 +427,9 @@ ggplot() +
   # geom_text(data = growth_2x[1,], aes(32.5,350, label=paste0("... every 5 days")),
   #           size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555") +
   # labels
-  geom_text_repel(data=filter( test, date== as.Date("2020-04-01") & country == "Spain" |
-                                 date==as.Date("2020-04-01") & country == "Italia" | 
-                                 date==as.Date("2020-03-29") & country == "France" ),
+  geom_text_repel(data=filter( test, date== as.Date("2020-04-04") & country == "Spain" |
+                                 date==as.Date("2020-04-04") & country == "Italia" | 
+                                 date==as.Date("2020-04-04") & country == "France" ),
                   aes(days_since, deceassed, label=paste(format( round(deceassed, digits = 0), big.mark="."), region)),
                   color= "#000000",
                   nudge_x = 1, # adjust the starting y position of the text label
@@ -431,7 +443,7 @@ ggplot() +
   ) +
   coord_cartesian( 
     ylim=c(umbral-1, max(test[!is.na(test$deceassed),]$deceassed)*1.15 ),
-    xlim=c(0,  36 ) #max(test[!is.na(test$deceassed),]$days_since) + 3
+    xlim=c(0,  40 ) #max(test[!is.na(test$deceassed),]$days_since) + 3
     ) +
   scale_y_log10(
     breaks = c(5,10,20,50,100,200,500,1000,2000,5000),
@@ -439,7 +451,7 @@ ggplot() +
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(  seq(1 , 10, 2), seq(10 , 100, 20), seq(100 , 1000, 200), seq(1000, 10000, 2000) ) ) +
   scale_x_continuous(
-    breaks = c(0,5,10,15,20,25,30)
+    breaks = c(0,5,10,15,20,25,30,35,40)
     # limits=c( 0, max(test$days_since + 5))
   ) +
   theme_minimal(base_family = "Roboto Condensed", base_size = 20) +
@@ -469,7 +481,7 @@ if ( (i == 2) | (i == 3)  ) {
 
 if ( (i == 1) | (i == 2)  ) { # EN
   ptotal <- ptotal + labs(title = paste0("Coronavirus (COVID-19) deaths in regions of Spain, Italy and France"),
-     subtitle = paste0("Cumulative number of deaths, by number of days since ",umbral ,"th death. Updated: 2020.04.01 (France 29.03)"),
+     subtitle = paste0("Cumulative number of deaths, by number of days since ",umbral ,"th death. Updated: 2020.04.04"),
      y = "Number of deaths (log. scale)",
      x = paste0("Days since ", umbral , "th or more cumulative deaths"),
      caption ="By: @numeroteca (Montera34). https://lab.montera34.com/covid19 | Data: various official sources. Check website.") +
@@ -478,13 +490,13 @@ if ( (i == 1) | (i == 2)  ) { # EN
               size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") +
     geom_text(data = growth_2x[1,], aes(30,7000, label=paste0("... every 3 days")),
               size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") +
-    geom_text(data = growth_2x[1,], aes(30,850, label=paste0("... every 4 days")),
+    geom_text(data = growth_2x[1,], aes(33,4000, label=paste0("... every 4 days")),
               size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555") +
-    geom_text(data = growth_2x[1,], aes(32.5,350, label=paste0("... every 5 days")),
+    geom_text(data = growth_2x[1,], aes(37,700, label=paste0("... every 5 days")),
               size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555")
 } else { # ES
   ptotal <- ptotal + labs(title = paste0("Número de fallecimientos de COVID-19 registrados. Días desde ",umbral ," o más fallecimientos"),
-       subtitle = paste0("Por región en España, Italia (01.04.2020) y Francia (29.03.2020) (escala logarítmica). "),
+       subtitle = paste0("Por región en España, Italia (04.04.2020) (escala logarítmica). "),
        y = "fallecimientos registrados (escala log.)",
        x = paste0("días desde ", umbral , " o más fallecimientos"),
        caption ="Por: @numeroteca (Montera34). lab.montera34.com/covid19 | Data: various official sources. Check website.") +
@@ -492,9 +504,9 @@ if ( (i == 1) | (i == 2)  ) { # EN
               size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") +
     geom_text(data = growth_2x[1,], aes(30,7000, label=paste0("... doblan cada 3 días")),
               size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") +
-    geom_text(data = growth_2x[1,], aes(30,850, label=paste0("... doblan cada 4 días")),
+    geom_text(data = growth_2x[1,], aes(33,4000, label=paste0("... doblan cada 4 días")),
               size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555") +
-    geom_text(data = growth_2x[1,], aes(32.5,350, label=paste0("...doblan cada 5 días")),
+    geom_text(data = growth_2x[1,], aes(37,700, label=paste0("...doblan cada 5 días")),
               size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555")
 }
 
