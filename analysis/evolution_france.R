@@ -77,12 +77,15 @@ names(data_f2_cases)
 names(data_f2_cases)  <- c("date","granularite","region_code","region","cases_registered","deces","deces_ehpad","reanimation","hospitalises",
                            "gueris","depistes","source_nom","source_url","source_archive","source_type","deceassed", "cases"  )
 
+# write.csv(data_f2_cases, file = "data/output/france/covid19-cases-registered-region-france-by-day-accumulated.csv", row.names = FALSE)
+
+
 # Calculate daily deaths
-data_f2_cases <- data_f2_cases %>% group_by(region) %>% arrange(date) %>% 
-  mutate( daily_deaths = deceassed - lag(deceassed),
-          daily_deaths_inc = round((deceassed - lag(deceassed)) /lag(deceassed) * 100, digits = 1),
-          daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5) ) / 6, digits = 1 ) # average of dayly deaths of 6 last days
-          )
+# data_f2_cases <- data_f2_cases %>% group_by(region) %>% arrange(date) %>% 
+#   mutate( daily_deaths = deceassed - lag(deceassed),
+#           daily_deaths_inc = round((deceassed - lag(deceassed)) /lag(deceassed) * 100, digits = 1),
+#           daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5) ) / 6, digits = 1 ) # average of dayly deaths of 6 last days
+#           )
 data_f2_cases_death <- data_f2_cases %>% group_by(date,region) %>% arrange(date) %>% 
   summarise( 
     # date = date,

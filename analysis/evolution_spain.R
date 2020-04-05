@@ -146,7 +146,7 @@ export_uniprovinciales <- data_all_export %>% select(date,region,hospitalized,in
             region == "Ceuta" |region == "Madride" | region == "Murcia" | region == "Navarra" | region == "Madrid" |
             region == "La Rioja" )
 
-write.csv(export_uniprovinciales, file = "data/output/covid19-data-uniprovinciales.csv", row.names = FALSE)
+write.csv(export_uniprovinciales, file = "data/output/spain/covid19-data-uniprovinciales.csv", row.names = FALSE)
 
 
 # colors ---------
