@@ -9,7 +9,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------  
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_f <- "Gráfico: montera34.com. Datos: OpenCOVID19-fr"
-periodo_f <- "2020.03.04 - 04.04"
+periodo_f <- "2020.03.04 - 04.05"
 
 # COVID-19 in France-----------
 
@@ -81,11 +81,11 @@ names(data_f2_cases)  <- c("date","granularite","region_code","region","cases_re
 
 
 # Calculate daily deaths
-# data_f2_cases <- data_f2_cases %>% group_by(region) %>% arrange(date) %>% 
-#   mutate( daily_deaths = deceassed - lag(deceassed),
-#           daily_deaths_inc = round((deceassed - lag(deceassed)) /lag(deceassed) * 100, digits = 1),
-#           daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5) ) / 6, digits = 1 ) # average of dayly deaths of 6 last days
-#           )
+data_f2_cases <- data_f2_cases %>% group_by(region) %>% arrange(date) %>%
+  mutate( daily_deaths = deceassed - lag(deceassed),
+          daily_deaths_inc = round((deceassed - lag(deceassed)) /lag(deceassed) * 100, digits = 1),
+          daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5) ) / 6, digits = 1 ) # average of dayly deaths of 6 last days
+          )
 data_f2_cases_death <- data_f2_cases %>% group_by(date,region) %>% arrange(date) %>% 
   summarise( 
     # date = date,
