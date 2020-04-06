@@ -1546,7 +1546,7 @@ data_all_export %>%
   geom_point(data=filter( data_all_export, date==max(data_all_export$date)), aes(date, daily_deaths_avg6, color=region), size= 1.5, alpha = 0.3 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
                   aes(date,daily_deaths_avg6, color=region, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),region)),
-                  nudge_x = 3, # adjust the starting y position of the text label
+                  nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -1557,18 +1557,18 @@ data_all_export %>%
   # marca un día
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)-12,  region == "Madrid" ),
                   aes(date,daily_deaths, label=paste("muertes en un día en una provincia")),
-                  nudge_y = 6, # adjust the starting y position of the text label
+                  nudge_x = -1, # adjust the starting y position of the text label
                   size=5,
-                  hjust=0,
+                  hjust=1,
                   family = "Roboto Condensed",
                   # direction="x",
                   segment.size = 0.5,
                   segment.color="#777777"
   ) +
   # marca la línea
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date )-4,  region == "Madrid" ),
-                  aes(date+0.5,300, label=paste("media de 6 días")),
-                  nudge_y = 2, # adjust the starting y position of the text label
+  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date )-3,  region == "Madrid" ),
+                  aes(date+1,275, label=paste("media de 6 días")),
+                  nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -1587,7 +1587,7 @@ data_all_export %>%
   # ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits=c( min(data_all_export$date + 11), max(data_all_export$date + 5)),
+               limits=c( min(data_all_export$date + 11), max(data_all_export$date + 7)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -2073,8 +2073,8 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Número de altas acumuladas por COVID-19 en España ",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). Entre paréntesis muertos del último día y % respecto día anterior. ",period),
-       y = "fallecidos (escala logarítmica)",
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       y = "altas (escala logarítmica)",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -2364,7 +2364,7 @@ data_all_export %>%
   ) +
   labs(title = "Número de altas acumuladas por COVID-19 por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
-       y = "fallecidos por 100.000 habitantes",
+       y = "altas por 100.000 habitantes",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -2405,7 +2405,7 @@ data_all_export %>% filter( region != "Total") %>%
   ) +
   labs(title = "Número de altas acumuladas por COVID-19 por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "fallecidos por 100.000 habitantes",
+       y = "altas por 100.000 habitantes",
        x = "fecha",
        caption = caption)
 dev.off()
