@@ -8,7 +8,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_i <- "Gráfico: @numeroteca (montera34.com). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 04.05"
+periodo_i <- "2020.02.24 - 04.06"
 
 # COVID-19 in Italy -----------
 # Load data
@@ -603,7 +603,7 @@ data_i_cases %>%
                   segment.color="#777777"
   ) +
   # marca un día
-  geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date)-12, region == "Lombardia" ),
+  geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date)-25, region == "Lombardia" ),
                   aes(date,daily_deaths, label=paste("muertes en un día en una región")),
                   nudge_y = 5, # adjust the starting y position of the text label
                   size=5,
@@ -615,7 +615,7 @@ data_i_cases %>%
   ) +
   # marca la línea
   geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date)-2, region == "Lombardia" ),
-                  aes(date+0.5,390, label=paste("media de 6 días")),
+                  aes(date+0.5,370, label=paste("media de 6 días")),
                   nudge_y = 5, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
