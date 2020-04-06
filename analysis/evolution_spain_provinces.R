@@ -10,8 +10,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: ProvidencialData19. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: montera34.com | Datos: recopilado por Providencialdata19 (lab.montera34.com/covid19, bit.ly/amadrinaunaccaa)"
-period <- "2020.02.27 - 04.04"
-filter_date <- as.Date("2020-04-05")
+period <- "2020.02.27 - 04.05"
+filter_date <- as.Date("2020-04-06")
 
 # Load Data ---------
 # / Population -------------
@@ -82,7 +82,10 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
   mutate( daily_deaths = deceased - lag(deceased),
           daily_deaths_inc = round((deceased - lag(deceased)) /lag(deceased) * 100, digits = 1),
           daily_deaths_avg3 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2) ) / 3, digits = 1 ), # average of daily deaths of 3 last days
-          daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5) ) / 6, digits = 1 ) # average of dayly deaths of 6 last days
+          daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+
+                                          lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5) ) / 6, digits = 1 )  # average of dayly deaths of 6 last days
+          # daily_deaths_avg6b =  round( mean( daily_deaths, lag(daily_deaths,1),lag(daily_deaths,2),lag(daily_deaths,3),
+          #                                lag(daily_deaths,4),lag(daily_deaths,5), na.rm = TRUE ), digits = 1 ) # average of dayly deaths of 6 last days
           )
 
 # Remove last -usually incomplete- day
@@ -386,8 +389,10 @@ dev.off()
 # / 3. Deceassed (Fallecimientos) ------------
 
 # create temp dataframes to be able to plot all the values in small multiples
-data_cases_sp_provinces_sm <- data_cases_sp_provinces
+data_cases_sp_provinces_sm <- data_cases_sp_provinces 
 data_cases_sp_provinces_sm$province_cp <- data_cases_sp_provinces$province  
+
+ccaa_missing <- data_all_export %>% filter(region == "Cataluña" | region == "Galicia") %>% filter( date < filter_date) %>% mutate (province = region, ccaa = region)
 
 # // 3.1 Fallecimientos Small multiple ----------
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-lineal.png", sep = ""),width = 1200,height = 800)
@@ -464,20 +469,35 @@ data_cases_sp_provinces %>%
        caption = caption_provincia)
 dev.off()
 
-# Agrupado por CCAA
+# SM Agrupado por CCAA -----
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-log_ccaa.png", sep = ""),width = 1200,height = 800)
+# prov_sm <- data_cases_sp_provinces %>%
 data_cases_sp_provinces %>%
   ggplot() +
   geom_line(data = select(data_cases_sp_provinces_sm,date,deceased,province_cp,-province),
             aes(date,deceased,group=province_cp), color="#CACACA" ) +
+  # add missing ccaa
+  geom_line(data = ccaa_missing, aes(date, deceassed,group=province), size= 0.7, linetype = 2 ) +
+  geom_text_repel(data=filter( ccaa_missing, 
+                               date==max(data_cases_sp_provinces$date)), 
+                                      aes(date+1, deceassed, label=paste0("(",format(deceassed, nsmall=1, big.mark="."), " ", substr(province,1,3), ")") ),
+                                      # nudge_x = 3, # adjust the starting y position of the text label
+                                      size=4,
+                                      hjust=0,
+                                      family = "Roboto Condensed",
+                                      direction="y",
+                                      segment.size = 0.1,
+                                      segment.color="#777777"
+  ) +
+  # all the provinces 
   geom_line(aes(date, deceased,group=province), size= 0.7 ) +
   geom_point(aes(date, deceased), size= 0.5 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, 
                                date==max(data_cases_sp_provinces$date) & deceased > 0
                                 ), 
                                 aes(date+1, deceased, label=paste(format(deceased, nsmall=1, big.mark="."), substr(province,1,2) ) ),
-                                # nudge_x = 3, # adjust the starting y position of the text label
-                                size=3,
+                                nudge_x = 2, # adjust the starting x position of the text label
+                                size=4,
                                 hjust=0,
                                 family = "Roboto Condensed",
                                 direction="y",
@@ -486,7 +506,7 @@ data_cases_sp_provinces %>%
                                 ) +
   facet_wrap(~ccaa) +
   coord_cartesian(
-    xlim = c( min(data_cases_sp_provinces$date + 9), max(data_cases_sp_provinces$date +4)),
+    xlim = c( min(data_cases_sp_provinces$date + 9), max(data_cases_sp_provinces$date +10)),
     ylim = c(1, max( data_cases_sp_provinces[!is.na(data_cases_sp_provinces$deceased),]$deceased))
   ) +
   scale_y_log10( 
@@ -598,77 +618,7 @@ data_cases_sp_provinces %>%
        caption = caption_provincia)
 dev.off()
 
-# Daily deaths 
-png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-lineal.png", sep = ""),width = 1200,height = 800)
-data_cases_sp_provinces %>%
-  ggplot() +
-  geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(date,daily_deaths_avg6,province_cp,-province),
-            aes(date,daily_deaths_avg6,group=province_cp), color="#CACACA" ) +
-  geom_line(aes(date, daily_deaths_avg6,group=province) ) +
-  geom_point(aes(date, daily_deaths_avg6), size= 0.5 ) +
-  geom_text(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
-            aes(date,max(data_cases_sp_provinces[!is.na(data_cases_sp_provinces$daily_deaths_avg6),]$daily_deaths_avg6)/4, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark="."))),
-            size=3,
-            hjust=1,
-            family = "Roboto Condensed"
-  ) +
-  facet_wrap(~province) +
-  scale_x_date(date_breaks = "4 day", 
-               date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date)),
-               expand = c(0,0) 
-  ) + 
-  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
-  theme(
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000"),
-    legend.position = c(0.1,0.6)
-  ) +
-  labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
-       y = "fallecidos por día",
-       x = "fecha",
-       caption = caption_provincia)
-dev.off()
 
-png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-log.png", sep = ""),width = 1200,height = 800)
-data_cases_sp_provinces %>%
-  ggplot() +
-  geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(date,daily_deaths_avg6,province_cp,-province),
-            aes(date,daily_deaths_avg6,group=province_cp), color="#CACACA" ) +
-  geom_line(aes(date, daily_deaths_avg6,group=province) ) +
-  geom_point(aes(date, daily_deaths_avg6), size= 0.5 ) +
-  geom_text(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
-            aes(date,max(data_cases_sp_provinces[!is.na(data_cases_sp_provinces$daily_deaths_avg6),]$daily_deaths_avg6)/4, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark="."))),
-            size=3,
-            hjust=1,
-            family = "Roboto Condensed"
-  ) +
-  facet_wrap(~province) +
-  scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
-                 labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
-  ) +
-  scale_x_date(date_breaks = "4 day", 
-               date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date)),
-               expand = c(0,0) 
-  ) + 
-  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
-  theme(
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000"),
-    legend.position = c(0.1,0.6)
-  ) +
-  labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
-       y = "fallecidos por día",
-       x = "fecha",
-       caption = caption_provincia)
-dev.off()
 
 # // 3.2 Superpuesto----------------------
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-lineal.png", sep = ""),width = 1200,height = 800)
@@ -749,71 +699,7 @@ data_cases_sp_provinces %>%
 dev.off()
 
 
-# Daily deaths --------------
-png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-log.png", sep = ""),width = 1200,height = 800)
-data_cases_sp_provinces %>% 
-  ggplot() +
-  geom_smooth(aes(date, daily_deaths_avg6,group=province, color=ccaa), size= 1, se = FALSE, span = 0.6 ) +
-  geom_point(aes(date, daily_deaths, color=ccaa), size= 1.5 ) +
-  # geom_point(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), aes(date, daily_deaths_avg6, color=province), size= 1.5, alpha = 0.3 ) +
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths > 0), 
-                  aes(date, daily_deaths_avg6, color=ccaa, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),province)),
-                  nudge_x = 2, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  direction="y",
-                  segment.size = 0.1,
-                  segment.color="#777777"
-  ) +
-  # marca un día
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)-12,  province == "Madrid" ),
-                  aes(date,daily_deaths, label=paste("muertes en un día en una provincia")),
-                  nudge_y = 5, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  # direction="x",
-                  segment.size = 0.5,
-                  segment.color="#777777"
-  ) +
-  # marca la línea
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)-3,  province == "Madrid" ),
-                  aes(date+0.5,310, label=paste("media de 6 días")),
-                  nudge_y = 2, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  # direction="x",
-                  segment.size = 0.5,
-                  segment.color="#777777"
-  ) +
-  scale_color_manual(values = colors) +
-  coord_cartesian(
-    ylim = c(1,500)
-  ) +
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
-                 minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
-                 expand = c(0,0.2) ) +
-  scale_x_date(date_breaks = "1 day", 
-               date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +9)),
-               expand = c(0,0) 
-  ) + 
-  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
-  theme(
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000"),
-    legend.position = c(0.1,0.6)
-  ) +
-  labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona]. Escala logarítmica  ",period),
-       y = "fallecidos por día (media 6 días)",
-       x = "fecha",
-       caption = caption_provincia)
-dev.off()
+
 
 # Per 100.000 ---------
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1200,height = 800)
@@ -897,3 +783,301 @@ data_cases_sp_provinces %>%
        caption = caption_provincia)
 dev.off()
   
+
+# 4. Daily deaths --------------
+# SM Lineal
+png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-lineal.png", sep = ""),width = 1200,height = 800)
+data_cases_sp_provinces %>%
+  ggplot() +
+  geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(date,daily_deaths_avg6,province_cp,-province),
+            aes(date,daily_deaths_avg6,group=province_cp), color="#CACACA" ) +
+  # geom_line(aes(date, daily_deaths_avg6,group=province) ) +
+  geom_smooth(aes(date, daily_deaths_avg6,group=province), size= 0.7, se = FALSE, span = 0.6 ) +
+  # geom_point(aes(date, daily_deaths_avg6), size= 0.5 ) +
+  geom_text(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
+            aes(date,max(data_cases_sp_provinces[!is.na(data_cases_sp_provinces$daily_deaths_avg6),]$daily_deaths_avg6)/4, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark="."))),
+            size=3,
+            hjust=1,
+            family = "Roboto Condensed"
+  ) +
+  facet_wrap(~province) +
+  scale_x_date(date_breaks = "3 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases_sp_provinces$date)+15, max(data_cases_sp_provinces$date)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = c(0.1,0.6)
+  ) +
+  labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       y = "fallecidos por día",
+       x = "fecha",
+       caption = caption_provincia)
+dev.off()
+
+# SM Log
+png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-log.png", sep = ""),width = 1200,height = 800)
+data_cases_sp_provinces %>%
+  ggplot() +
+  geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(date,daily_deaths_avg6,province_cp,-province),
+            aes(date,daily_deaths_avg6,group=province_cp), color="#CACACA" ) +
+  geom_line(aes(date, daily_deaths_avg6,group=province) ) +
+  geom_point(aes(date, daily_deaths_avg6), size= 0.5 ) +
+  geom_text(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
+            aes(date,max(data_cases_sp_provinces[!is.na(data_cases_sp_provinces$daily_deaths_avg6),]$daily_deaths_avg6)/4, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark="."))),
+            size=3,
+            hjust=1,
+            family = "Roboto Condensed"
+  ) +
+  facet_wrap(~province) +
+  scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+                 labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(date_breaks = "4 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = c(0.1,0.6)
+  ) +
+  labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       y = "fallecidos por día",
+       x = "fecha",
+       caption = caption_provincia)
+dev.off()
+
+# Superpuesto Lineal
+png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-lineal.png", sep = ""),width = 1200,height = 800)
+data_cases_sp_provinces %>% 
+  ggplot() +
+  geom_line(aes(date, daily_deaths,group=province, color=ccaa), size= 1 ) +
+  geom_point(aes(date, daily_deaths, color=ccaa), size= 1.5 ) +
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths > 5), 
+                  aes(date, daily_deaths, color=ccaa, label=paste(format(daily_deaths, nsmall=1, big.mark=".", decimal.mark = ","),province)),
+                  nudge_x = 2, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_color_manual(values = colors) +
+  # coord_cartesian(
+  #   ylim = c(1,500)
+  # ) +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
+  # scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #                minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+  #                expand = c(0,0.2) ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +9)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = c(0.1,0.6)
+  ) +
+  labs(title = "Muertes por día por COVID-19 en España",
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona]",period),
+       y = "fallecidos por día",
+       x = "fecha",
+       caption = caption_provincia)
+dev.off()
+
+png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-log.png", sep = ""),width = 1200,height = 800)
+data_cases_sp_provinces %>% 
+  ggplot() +
+  geom_line(aes(date, daily_deaths,group=province, color=ccaa), size= 1 ) +
+  geom_point(aes(date, daily_deaths, color=ccaa), size= 1.5 ) +
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths > 5), 
+                  aes(date, daily_deaths, color=ccaa, label=paste(format(daily_deaths, nsmall=1, big.mark=".", decimal.mark = ","),province)),
+                  nudge_x = 2, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_color_manual(values = colors) +
+  coord_cartesian(
+    ylim = c(1,500)
+  ) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+                 minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+                 expand = c(0,0.2) ) +
+  # scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #                minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+  #                expand = c(0,0.2) ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +9)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = c(0.1,0.6)
+  ) +
+  labs(title = "Muertes por día por COVID-19 en España",
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona]",period),
+       y = "fallecidos por día",
+       x = "fecha",
+       caption = caption_provincia)
+dev.off()
+
+png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-lineal_media.png", sep = ""),width = 1200,height = 800)
+data_cases_sp_provinces %>% 
+  ggplot() +
+  geom_smooth(aes(date, daily_deaths_avg6,group=province, color=ccaa), size= 1, se = FALSE, span = 0.6 ) +
+  geom_point(aes(date, daily_deaths, color=ccaa), size= 1.5 ) +
+  # geom_point(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), aes(date, daily_deaths_avg6, color=province), size= 1.5, alpha = 0.3 ) +
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths > 5), 
+                  aes(date, daily_deaths_avg6, color=ccaa, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),province)),
+                  nudge_x = 2, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  # marca un día
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)-12,  province == "Madrid" ),
+                  aes(date,daily_deaths, label=paste("muertes en un día en una provincia")),
+                  nudge_x = -1, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=1,
+                  family = "Roboto Condensed",
+                  # direction="x",
+                  segment.size = 0.5,
+                  segment.color="#777777"
+  ) +
+  # marca la línea
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)-3,  province == "Madrid" ),
+                  aes(date+0.5,292, label=paste("media de 6 días")),
+                  nudge_x = 2, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="x",
+                  segment.size = 0.5,
+                  segment.color="#777777"
+  ) +
+  scale_color_manual(values = colors) +
+  # coord_cartesian(
+  #   ylim = c(1,500)
+  # ) +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+                 ) +
+  # scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #                minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+  #                expand = c(0,0.2) ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +9)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = c(0.1,0.6)
+  ) +
+  labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona]. Escala logarítmica  ",period),
+       y = "fallecidos por día (media 6 días)",
+       x = "fecha",
+       caption = caption_provincia)
+dev.off()
+
+# Superpuesto Log
+png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-log_media.png", sep = ""),width = 1200,height = 800)
+data_cases_sp_provinces %>% 
+  ggplot() +
+  geom_smooth(aes(date, daily_deaths_avg6,group=province, color=ccaa), size= 1, se = FALSE, span = 0.6 ) +
+  geom_point(aes(date, daily_deaths, color=ccaa), size= 1.5 ) +
+  # geom_point(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), aes(date, daily_deaths_avg6, color=province), size= 1.5, alpha = 0.3 ) +
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths > 0), 
+                  aes(date, daily_deaths_avg6, color=ccaa, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),province)),
+                  nudge_x = 2, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  # marca un día
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)-12,  province == "Madrid" ),
+                  aes(date,daily_deaths, label=paste("muertes en un día en una provincia")),
+                  nudge_y = 5, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="x",
+                  segment.size = 0.5,
+                  segment.color="#777777"
+  ) +
+  # marca la línea
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)-3,  province == "Madrid" ),
+                  aes(date+0.5,310, label=paste("media de 6 días")),
+                  nudge_y = 2, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="x",
+                  segment.size = 0.5,
+                  segment.color="#777777"
+  ) +
+  scale_color_manual(values = colors) +
+  coord_cartesian(
+    ylim = c(1,500)
+  ) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+                 minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+                 expand = c(0,0.2) ) +
+  scale_x_date(date_breaks = "1 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +9)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = c(0.1,0.6)
+  ) +
+  labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
+       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona]. Escala logarítmica  ",period),
+       y = "fallecidos por día (media 6 días)",
+       x = "fecha",
+       caption = caption_provincia)
+dev.off()
