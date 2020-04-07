@@ -10,8 +10,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: ProvidencialData19. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: montera34.com | Datos: recopilado por Providencialdata19 (lab.montera34.com/covid19, bit.ly/amadrinaunaccaa)"
-period <- "2020.02.27 - 04.05"
-filter_date <- as.Date("2020-04-06")
+period <- "2020.02.27 - 04.06"
+filter_date <- as.Date("2020-04-07")
 
 # Load Data ---------
 # / Population -------------
@@ -392,7 +392,8 @@ dev.off()
 data_cases_sp_provinces_sm <- data_cases_sp_provinces 
 data_cases_sp_provinces_sm$province_cp <- data_cases_sp_provinces$province  
 
-ccaa_missing <- data_all_export %>% filter(region == "Cataluña" | region == "Galicia") %>% filter( date < filter_date) %>% mutate (province = region, ccaa = region)
+ccaa_missing <- data_all_export %>% filter(region == "Cataluña" | region == "Galicia") %>% filter( date < filter_date) %>% 
+  mutate (province = region, ccaa = region)
 
 # // 3.1 Fallecimientos Small multiple ----------
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-lineal.png", sep = ""),width = 1200,height = 800)

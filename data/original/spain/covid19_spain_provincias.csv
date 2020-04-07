@@ -942,7 +942,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-26,Huesca,Aragón,,109,55,8,4,119,6,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1379/id.258001,
 2020-03-26,Teruel,Aragón,,104,65,9,5,115,6,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1379/id.258002,
 2020-03-26,Huelva,Andalucía,,91,,,2,95,2,,
-2020-03-26,Asturias,"Asturias, Principado de",,819,,,29,900,52,,
+2020-03-26,Asturias,"Asturias, Principado de",,819,,,29,900,52,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019;,
 2020-03-26,"Balears, Illes","Balears, Illes",,599,,,22,660,39,,
 2020-03-26,Cantabria,Cantabria,,640,,,17,671,14,,
 2020-03-26,Albacete,Castilla - La Mancha,,666,,,66,666,,https://public.flourish.studio/visualisation/1451263,
@@ -997,7 +997,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-27,Huelva,Andalucía,,101,,,2,105,2,,
 2020-03-27,Huesca,Aragón,,136,71,11,4,150,10,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258060,
 2020-03-27,Teruel,Aragón,,129,79,13,5,143,9,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258061,
-2020-03-27,Asturias,"Asturias, Principado de",,906,,,33,1004,65,,
+2020-03-27,Asturias,"Asturias, Principado de",,906,,,33,1004,65,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019;,
 2020-03-27,"Balears, Illes","Balears, Illes",,662,,,26,755,67,,
 2020-03-27,Cantabria,Cantabria,,770,,,21,810,19,,
 2020-03-27,Albacete,Castilla - La Mancha,,667,,,83,780,,https://public.flourish.studio/visualisation/1451263,
@@ -1052,7 +1052,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-28,Huelva,Andalucía,,120,66,,2,120,,https://public.flourish.studio/visualisation/1451263/,"47,63"
 2020-03-28,Huesca,Aragón,,124,92,11,9,147,14,,
 2020-03-28,Teruel,Aragón,,159,101,15,10,179,10,,
-2020-03-28,Asturias,"Asturias, Principado de",,1088,,,41,1088,971,https://public.flourish.studio/visualisation/1451263/,"89,17"
+2020-03-28,Asturias,"Asturias, Principado de",,1088,,,41,1088,971,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019;https://public.flourish.studio/visualisation/1451263/,"89,17"
 2020-03-28,"Balears, Illes","Balears, Illes",,862,,,31,862,751,https://public.flourish.studio/visualisation/1451263/,"72,56"
 2020-03-28,Cantabria,Cantabria,,937,,,21,937,894,https://public.flourish.studio/visualisation/1451263/,"155,92"
 2020-03-28,Albacete,Castilla - La Mancha,,968,,,101,1114,,https://public.flourish.studio/visualisation/1451263,
@@ -1107,7 +1107,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-29,Huelva,Andalucía,,55,72,,4,131,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
 2020-03-29,Huesca,Aragón,,176,103,13,11,201,14,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.258137,
 2020-03-29,Teruel,Aragón,,186,112,19,12,208,10,,
-2020-03-29,Asturias,"Asturias, Principado de",,,,57,41,1088,76,debe indicar fuente,
+2020-03-29,Asturias,"Asturias, Principado de",,,,57,49,1088,76,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019;,
 2020-03-29,"Balears, Illes","Balears, Illes",,,,71,29,958,82,debe indicar fuente,
 2020-03-29,Cantabria,Cantabria,,,,40,26,1023,25,debe indicar fuente,
 2020-03-29,Albacete,Castilla - La Mancha,,1204,741,,122,1386,,https://public.flourish.studio/visualisation/1451263,"Actualizado a las 14:30h. La Junta no especifica el lugar de las altas, por lo que el total de casos activos es aproximado. Los hospitalizados está extraidos de nota de prensa en la fuente habitual."
@@ -1161,7 +1161,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-30,Granada,Andalucía,,404,493,,66,963,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233830.html,
 2020-03-30,Huelva,Andalucía,,72,92,,4,168,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233830.html,
 2020-03-30,Jaén,Andalucía,,257,319,,23,599,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233830.html,
-2020-03-30,Asturias,"Asturias, Principado de",,1091,,,55,1236,90,https://public.flourish.studio/visualisation/1451263/ 2020.03.31 02.07h,
+2020-03-30,Asturias,"Asturias, Principado de",,1091,,,55,1236,90,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019;https://public.flourish.studio/visualisation/1451263/ 2020.03.31 02.07h,
 2020-03-30,"Balears, Illes","Balears, Illes",,856,,,37,1000,107,https://public.flourish.studio/visualisation/1451263/ 2020.03.31 02.07h,
 2020-03-30,Cantabria,Cantabria,,1049,,,27,1100,24,https://public.flourish.studio/visualisation/1451263/ 2020.03.31 02.07h,
 2020-03-30,Albacete,Castilla - La Mancha,,1339,799,82,133,1537,,https://public.flourish.studio/visualisation/1451266,"Actualizado a las 23:15h. La Junta no especifica el lugar de las altas, por lo que el total de casos activos es aproximado. Los hospitalizados y datos UCI (pacientes con respirador) están extraidos de nota de prensa en la fuente habitual."
@@ -1216,7 +1216,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-31,Granada,Andalucía,,,556,50,67,1061,15,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
 2020-03-31,Huelva,Andalucía,,,96,7,4,177,2,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
 2020-03-31,Jaén,Andalucía,,,358,13,26,661,17,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
-2020-03-31,Asturias,"Asturias, Principado de",,1091,,,55,1236,90,falta fuente,
+2020-03-31,Asturias,"Asturias, Principado de",,1091,,,63,1236,90,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
 2020-03-31,"Balears, Illes","Balears, Illes",,915,,,43,1069,111,falta fuente,
 2020-03-31,Cantabria,Cantabria,,1099,,,37,1171,35,falta fuente,
 2020-03-31,Albacete,Castilla - La Mancha,,1494,,,148,1707,,https://public.flourish.studio/visualisation/1451263/,Actualizado a las 21:50. Los hospitalizados y datos UCI (pacientes con respirador) están extraidos de notas de prensa en https://www.castillalamancha.es/actualidad/notasdeprensa
@@ -1271,7 +1271,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-01,Granada,Andalucía,,1087,603,56,80,1182,15,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234014.html,
 2020-04-01,Huelva,Andalucía,,189,106,7,4,195,2,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234014.html,
 2020-04-01,Jaén,Andalucía,,688,395,16,37,742,17,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234014.html,
-2020-04-01,Asturias,"Asturias, Principado de",,1180,,,,1384,135,https://public.flourish.studio/visualisation/1451263/,
+2020-04-01,Asturias,"Asturias, Principado de",,1180,,,69,1384,135,https://public.flourish.studio/visualisation/1451263/,
 2020-04-01,"Balears, Illes","Balears, Illes",,910,,,51,1131,170,https://public.flourish.studio/visualisation/1451263/,
 2020-04-01,Cantabria,Cantabria,,1116,,,54,1213,43,https://public.flourish.studio/visualisation/1451263/,
 2020-04-01,Albacete,Castilla - La Mancha,,1678,,,156,1933,,https://public.flourish.studio/visualisation/1451263/,"¹La Junta no especifica el lugar de las altas, por lo que el total de casos activos es aproximado."
@@ -1403,7 +1403,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-03,Valencia/València,Comunitat Valenciana,148,,1105,199,242,3439,348,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8512276/200403+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-04-03,Zaragoza,Aragón,,1742,1089,138,173,2212,297,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1036/id.258374,
 2020-04-03,Huesca,Aragón,,301,175,21,24,368,43,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1036/id.258374,
-2020-04-03,Asturias,"Asturias, Principado de",,1292,702,86,70,1522,154,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019;https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
+2020-04-03,Asturias,"Asturias, Principado de",,1292,702,86,76,1522,154,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019;https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
 2020-04-03,"Balears, Illes","Balears, Illes",,813,587,112,69,1257,375,https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
 2020-04-03,Cantabria,Cantabria,,1183,592,59,64,1321,74,https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
 2020-04-03,Ceuta,Ceuta,,59,8,3,1,62,2,https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
@@ -1536,15 +1536,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-06,Jaén,Andalucía,,,490,46,52,934,61,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234228.html,
 2020-04-06,Málaga,Andalucía,,,1087,96,121,1916,258,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234228.html,
 2020-04-06,Sevilla,Andalucía,,,778,101,97,1663,95,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234228.html,
-2020-04-06,Barcelona,Cataluña,43,18,,,,4909,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp,
-2020-04-06,Tarragona,Cataluña,,2696,,,,10431,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp,
-2020-04-06,Girona,Cataluña,21,11,,,,7897,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp,
-2020-04-06,Lleida,Cataluña,,,,,,8884,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp,
-2020-04-06,Albacete,Castilla - La Mancha,,2751,776,,241,,,notas de prensa (22:40 horas) https://www.castillalamancha.es/actualidad/notasdeprensa,El flourish de rtve de hoy solo aporta defunciones de de una manera desagrada por provincia. No existe otra fuente. 
-2020-04-06,Ciudad Real,Castilla - La Mancha,,4125,1018,,364,,,notas de prensa (22:40 horas) https://www.castillalamancha.es/actualidad/notasdeprensa,El flourish de rtve de hoy solo aporta defunciones de de una manera desagrada por provincia. No existe otra fuente. 
-2020-04-06,Cuenca,Castilla - La Mancha,,570,156,,124,,,notas de prensa (22:40 horas) https://www.castillalamancha.es/actualidad/notasdeprensa,El flourish de rtve de hoy solo aporta defunciones de de una manera desagrada por provincia. No existe otra fuente. 
-2020-04-06,Guadalajara,Castilla - La Mancha,,873,253,,96,,,notas de prensa (22:40 horas) https://www.castillalamancha.es/actualidad/notasdeprensa,El flourish de rtve de hoy solo aporta defunciones de de una manera desagrada por provincia. No existe otra fuente. 
-2020-04-06,Toledo,Castilla - La Mancha,,2283,698,,307,,,notas de prensa (22:40 horas) https://www.castillalamancha.es/actualidad/notasdeprensa,El flourish de rtve de hoy solo aporta defunciones de de una manera desagrada por provincia. No existe otra fuente. 
+2020-04-06,Barcelona,Cataluña,43,18,,,,,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp,
+2020-04-06,Tarragona,Cataluña,,2696,,,,,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp,
+2020-04-06,Girona,Cataluña,40,11,,,181,1771,,https://www.diaridegirona.cat/comarques/2020/04/06/sestabilitza-nombre-morts-coronavirus-baixen/1038208.html;https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp,
+2020-04-06,Lleida,Cataluña,,,,,82,1098,224,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html;,
+2020-04-06,Albacete,Castilla - La Mancha,,2751,776,,241,,,https://www.castillalamancha.es/actualidad/notasdeprensa/el-n%C3%BAmero-de-altas-epidemiol%C3%B3gicas-en-castilla-la-mancha-asciende-1259-personas;notas de prensa (22:40 horas) https://www.castillalamancha.es/actualidad/notasdeprensa,El flourish de rtve de hoy solo aporta defunciones de de una manera desagrada por provincia. No existe otra fuente. 
+2020-04-06,Ciudad Real,Castilla - La Mancha,,4125,1018,,364,,,https://www.castillalamancha.es/actualidad/notasdeprensa/el-n%C3%BAmero-de-altas-epidemiol%C3%B3gicas-en-castilla-la-mancha-asciende-1259-personas;notas de prensa (22:40 horas) https://www.castillalamancha.es/actualidad/notasdeprensa,El flourish de rtve de hoy solo aporta defunciones de de una manera desagrada por provincia. No existe otra fuente. 
+2020-04-06,Cuenca,Castilla - La Mancha,,570,156,,96,,,https://www.castillalamancha.es/actualidad/notasdeprensa/el-n%C3%BAmero-de-altas-epidemiol%C3%B3gicas-en-castilla-la-mancha-asciende-1259-personas;notas de prensa (22:40 horas) https://www.castillalamancha.es/actualidad/notasdeprensa,El flourish de rtve de hoy solo aporta defunciones de de una manera desagrada por provincia. No existe otra fuente. 
+2020-04-06,Guadalajara,Castilla - La Mancha,,873,253,,124,,,https://www.castillalamancha.es/actualidad/notasdeprensa/el-n%C3%BAmero-de-altas-epidemiol%C3%B3gicas-en-castilla-la-mancha-asciende-1259-personas;notas de prensa (22:40 horas) https://www.castillalamancha.es/actualidad/notasdeprensa,El flourish de rtve de hoy solo aporta defunciones de de una manera desagrada por provincia. No existe otra fuente. 
+2020-04-06,Toledo,Castilla - La Mancha,,2283,698,,307,,,https://www.castillalamancha.es/actualidad/notasdeprensa/el-n%C3%BAmero-de-altas-epidemiol%C3%B3gicas-en-castilla-la-mancha-asciende-1259-personas;notas de prensa (22:40 horas) https://www.castillalamancha.es/actualidad/notasdeprensa,El flourish de rtve de hoy solo aporta defunciones de de una manera desagrada por provincia. No existe otra fuente. 
 2020-04-06,Ávila,Castilla y León,53,,197,13,79,732,225,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/#situacin-actual,
 2020-04-06,Burgos,Castilla y León,18,,221,53,113,1003,360,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/#situacin-actual,
 2020-04-06,León,Castilla y León,54,,323,50,186,1315,498,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/#situacin-actual,
@@ -1563,11 +1563,8 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-06,Asturias,"Asturias, Principado de",,1339,,,96,1679,244,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),
 2020-04-06,"Balears, Illes","Balears, Illes",,708,,,81,1320,531,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),
 2020-04-06,El Hierro,Canarias,,,,,0,1,,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
-2020-04-06,Fuerteventura,Canarias,,,,,0,23,,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
-2020-04-06,Gran Canaria,Canarias,,,,,24,411,,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
 2020-04-06,La Gomera,Canarias,,,,,0,7,,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
 2020-04-06,La Palma,Canarias,,,,,2,58,,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
-2020-04-06,Lanzarote,Canarias,,,,,3,66,,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
 2020-04-06,Tenerife,Canarias,,,,,56,1080,,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
 2020-04-06,Cantabria,Cantabria,,1288,,,77,1483,118,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),
 2020-04-06,Ceuta,Ceuta,,68,,,4,83,11,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),
@@ -1577,7 +1574,19 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-06,Melilla,Melilla,,79,,,2,92,11,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),
 2020-04-06,Murcia,"Murcia, Región de",,1012,,,78,1283,193,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),
 2020-04-06,Navarra,"Navarra, Comunidad Foral de",,2664,,,187,3231,380,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),
-2020-04-06,Araba/Álava,País Vasco,,,,,201,2675,,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
-2020-04-06,Bizkaia,País Vasco,,,,,266,4603,,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
-2020-04-06,Gipuzkoa,País Vasco,,,,,81,1532,,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
+2020-04-06,Araba/Álava,País Vasco,69,,271,,212,2744,,https://twitter.com/osakidetzaEJGV/status/1247477653780692998;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/6_abril_Boletin.pdf,"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
+2020-04-06,Bizkaia,País Vasco,114,,1105,,292,4717,,https://twitter.com/osakidetzaEJGV/status/1247477653780692998;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/6_abril_Boletin.pdf,"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
+2020-04-06,Gipuzkoa,País Vasco,28,,349,,82,1560,,https://twitter.com/osakidetzaEJGV/status/1247477653780692998;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/6_abril_Boletin.pdf,"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
 2020-04-06,"Rioja, La","Rioja, La",,1614,,,141,2719,964,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),
+2020-04-06,Tenerife,Canarias,,,,,59,1122,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1725-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-06,Gran Canaria,Canarias,,,,,25,444,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1725-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-06,Fuerteventura,Canarias,,,,,0,23,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1725-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-06,Lanzarote,Canarias,,,,,2,61,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1725-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-06,La Palma,Canarias,,,,,3,67,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1725-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-06,El Hierro,Canarias,,,,,0,1,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1725-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-06,La Gomera,Canarias,,,,,0,7,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1725-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-07,Albacete,Castilla - La Mancha,,2832,756,,241,,,https://www.castillalamancha.es/actualidad/notasdeprensa/el-n%C3%BAmero-de-altas-epidemiol%C3%B3gicas-dobla-al-n%C3%BAmero-de-fallecimientos-en-las-%C3%BAltimas-24-horas;notas de prensa (22:40 horas) https://www.castillalamancha.es/actualidad/notasdeprensa,El flourish de rtve de hoy solo aporta defunciones de de una manera desagrada por provincia. No existe otra fuente.
+2020-04-07,Ciudad Real,Castilla - La Mancha,,4298,1017,,364,,,https://www.castillalamancha.es/actualidad/notasdeprensa/el-n%C3%BAmero-de-altas-epidemiol%C3%B3gicas-dobla-al-n%C3%BAmero-de-fallecimientos-en-las-%C3%BAltimas-24-horas;notas de prensa (22:40 horas) https://www.castillalamancha.es/actualidad/notasdeprensa,El flourish de rtve de hoy solo aporta defunciones de de una manera desagrada por provincia. No existe otra fuente.
+2020-04-07,Cuenca,Castilla - La Mancha,,616,153,,96,,,https://www.castillalamancha.es/actualidad/notasdeprensa/el-n%C3%BAmero-de-altas-epidemiol%C3%B3gicas-dobla-al-n%C3%BAmero-de-fallecimientos-en-las-%C3%BAltimas-24-horas;notas de prensa (22:40 horas) https://www.castillalamancha.es/actualidad/notasdeprensa,El flourish de rtve de hoy solo aporta defunciones de de una manera desagrada por provincia. No existe otra fuente.
+2020-04-07,Guadalajara,Castilla - La Mancha,,897,270,,128,,,https://www.castillalamancha.es/actualidad/notasdeprensa/el-n%C3%BAmero-de-altas-epidemiol%C3%B3gicas-dobla-al-n%C3%BAmero-de-fallecimientos-en-las-%C3%BAltimas-24-horas;notas de prensa (22:40 horas) https://www.castillalamancha.es/actualidad/notasdeprensa,El flourish de rtve de hoy solo aporta defunciones de de una manera desagrada por provincia. No existe otra fuente.
+2020-04-07,Toledo,Castilla - La Mancha,,2434,712,,307,,,https://www.castillalamancha.es/actualidad/notasdeprensa/el-n%C3%BAmero-de-altas-epidemiol%C3%B3gicas-dobla-al-n%C3%BAmero-de-fallecimientos-en-las-%C3%BAltimas-24-horas;notas de prensa (22:40 horas) https://www.castillalamancha.es/actualidad/notasdeprensa,El flourish de rtve de hoy solo aporta defunciones de de una manera desagrada por provincia. No existe otra fuente.
