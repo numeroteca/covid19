@@ -8,7 +8,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_i <- "Gráfico: @numeroteca (montera34.com). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 04.07"
+periodo_i <- "2020.02.24 - 04.08"
 
 # COVID-19 in Italy -----------
 # Load data
@@ -51,7 +51,11 @@ data_i_cases$recovered_per_100000 <- round( data_i_cases$recovered / data_i_case
 
 data_i_cases <- data_i_cases %>% group_by(region) %>% arrange(date) %>% mutate(
   daily_deaths = deceassed - lag(deceassed),
-  daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) ) / 6, digits = 1 ) # average of dayly deaths of 6 last days
+  daily_deaths_inc = round((deceassed - lag(deceassed)) /lag(deceassed) * 100, digits = 1),
+  daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) ) / 6, digits = 1 ), # average of dayly deaths of 6 last days
+  daily_deaths_avg2 =  round( ( daily_deaths + lag(daily_deaths,1) ) / 2, digits = 1 ),
+  daily_deaths_avg3 =  round( ( daily_deaths + lag(daily_deaths,1)+ lag(daily_deaths,2) ) / 3, digits = 1 ),
+  daily_deaths_avg4 =  round( ( daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) ) / 4, digits = 1 )
 )
 
 # 1. Cases ------------
@@ -228,8 +232,8 @@ data_i_cases %>%
   ) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
                  limits = c(0.95,max(data_i_cases$cases_registered)),
-                 breaks = c(1,10,100,1000,12000),
-                 minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
+                 # breaks = c(1,10,100,1000,12000),
+                 minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_i_cases$date), max(data_i_cases$date +4)) 
@@ -389,6 +393,7 @@ data_i_cases %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9),
     legend.position = "none"
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en Italia",
@@ -420,6 +425,7 @@ data_i_cases %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9),
     legend.position = "none"
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en Italia",
@@ -504,7 +510,8 @@ data_i_cases %>%
   geom_line(aes(date,deceassed,group=region, color=region), size= 1 ) +
   geom_point(aes(date,deceassed, color=region), size= 1.5 ) +
   geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date),  region != "Total"), 
-                  aes(date,deceassed, color=region, label=paste(format(deceassed, nsmall=1, big.mark="."),region, " (+", daily_deaths,")")),
+                  aes(date,deceassed, color=region, 
+                  label=paste0(format(deceassed, nsmall=1, big.mark="."),region, " (+", daily_deaths,", +", daily_deaths_inc ,"%)")),
                   nudge_x = 1, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -522,7 +529,7 @@ data_i_cases %>%
     ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date +9)),
+               limits=c( min(data_i_cases$date), max(data_i_cases$date +13)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -540,7 +547,7 @@ data_i_cases %>%
        caption = caption_i)
 dev.off()
 
-# Daily deaths --------
+# 4. Daily deaths --------
 png(filename=paste("img/italia/covid19_muertes-por-dia-region-superpuesto-log.png", sep = ""),width = 1100,height = 800)
 data_i_cases %>% 
   ggplot() +
@@ -590,6 +597,9 @@ png(filename=paste("img/italia/covid19_muertes-por-dia-region-superpuesto-log_me
 data_i_cases %>%
   ggplot() +
   geom_smooth(aes(date, daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE  ) +
+  # geom_smooth(aes(date, daily_deaths_avg2,group=region, color=region), size= 1, se = FALSE  ) +
+  # geom_smooth(aes(date, daily_deaths_avg3,group=region, color=region), size= 1, se = FALSE  ) +
+  # geom_smooth(aes(date, daily_deaths_avg4,group=region, color=region), size= 1, se = FALSE  ) +
   geom_point(aes(date, daily_deaths, color=region), size= 1.5 ) +
   # geom_point(aes(date, daily_deaths_avg6, color=region), size= 1.5, alpha = 0.5 ) +
   geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date)), 
@@ -603,7 +613,7 @@ data_i_cases %>%
                   segment.color="#777777"
   ) +
   # marca un día
-  geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date)-25, region == "Lombardia" ),
+  geom_text_repel(data=filter( data_i_cases, date==as.Date("2020-03-15"), region == "Lombardia" ),
                   aes(date,daily_deaths, label=paste("muertes en un día en una región")),
                   nudge_y = 5, # adjust the starting y position of the text label
                   size=5,
@@ -614,8 +624,8 @@ data_i_cases %>%
                   segment.color="#777777"
   ) +
   # marca la línea
-  geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date)-2, region == "Lombardia" ),
-                  aes(date+0.5,370, label=paste("media de 6 días")),
+  geom_text_repel(data=filter( data_i_cases, date==as.Date("2020-04-06"), region == "Lombardia" ),
+                  aes(date+0.5,330, label=paste("media de 6 días")),
                   nudge_y = 5, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -646,7 +656,7 @@ data_i_cases %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de muertes por COVID-19 registradas por día en Italia",
+  labs(title = "Media de Número de muertes por COVID-19 registradas por día en Italia",
        subtitle = paste0("Por región (escala logarítmica). ",periodo_i),
        y = "fallecidos.",
        x = "fecha",
