@@ -1,8 +1,9 @@
 # Providencialdta19: Capturando datos por provincias en España
 
 **IMPORTANTE** 
-los datos de Cataluña sólo están para Girona y LLeida. 
+Faltan datos de fallecimientos en Cataluña.
 Los datos de Girona para casos acumulados experimentan un descenso debido al cambio de criterio en la contabilidad (día 28.03.2020).
+Más información sobre cada una de las fuentes: https://docs.google.com/document/d/12wkE0w1kdBHdwkj6AhPc0VnSQHgP_zz5rcVTyqng5y8/edit#
 
 ## ¿Puedes utilizar los datos? 
 
@@ -18,7 +19,7 @@ Contacto: covid19@montera34.com
 ### ¿Quíen está detrás de esto?
 
 Hay muchas personas que nos habéis ayudado y aportado pistas. Gracias a todas por colaborar. 
-Ahora mismo, estamos manteniendo los datos y amadrinando provincias y comunidades autónomas: [@ProsumidorSoc](https://twitter.com/ProsumidorSoc),[@arivero](https://twitter.com/arivero), [@ManoloYuri](https://twitter.com/ManoloYuri), [@ManoloYuri](https://twitter.com/ManoloYuri), [@congosto](https://twitter.com/congosto), [@skotperez](https://twitter.com/skotperez), [@leu2001](https://twitter.com/leu2001),[@allisdata](https://twitter.com/@allisdata), [@arivero](https://twitter.com/arivero), [@acorsin](https://twitter.com/acorsin), [@hhkaos](https://twitter.com/hhkaos), [@aitorcalero](https://twitter.com/aitorcalero), [@belengarcia_8](https://twitter.com/belengarcia_8).
+Ahora mismo, estamos manteniendo los datos y amadrinando provincias y comunidades autónomas: [@ProsumidorSoc](https://twitter.com/ProsumidorSoc),[@arivero](https://twitter.com/arivero) [@ManoloYuri](https://twitter.com/ManoloYuri), [@ManoloYuri](https://twitter.com/ManoloYuri) [@congosto](https://twitter.com/congosto) [@skotperez](https://twitter.com/skotperez), [@leu2001](https://twitter.com/leu2001) [@allisdata](https://twitter.com/@allisdata) [@arivero](https://twitter.com/arivero), [@acorsin](https://twitter.com/acorsin) [@hhkaos](https://twitter.com/hhkaos) [@aitorcalero](https://twitter.com/aitorcalero), [@belengarcia_8](https://twitter.com/belengarcia_8) [@Tejerauskas](https://twitter.com/Tejerauskas).
 
 Si se nos olvida alguien ¡avísanos!
 
@@ -37,6 +38,8 @@ Mándanos tu análisis o visualización si usas estos datos (covid19@montera34.c
 Se han usado varias fuentes, la mayoría oficiales, algunas periodísicas, que se indican en cada una de los datos por día y provincia en la columna "source".
 
 ## Los datos / The data
+
+Los datos se publican en este CSV: [/data/output/spain/covid19-provincias-spain_consolidated.csv](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/covid19-provincias-spain_consolidated.csv)
 
 Data are published in this CSV file: [/data/output/spain/covid19-provincias-spain_consolidated.csv](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/covid19-provincias-spain_consolidated.csv)
 
