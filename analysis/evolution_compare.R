@@ -328,8 +328,8 @@ dev.off()
 
 # Bind Spanish and Italian data
 compare_countries <- rbind(
-  as.data.frame( data_all_export %>% select( date, region, country, deceassed, daily_deaths, daily_deaths_inc, daily_deaths_avg6 ) ), 
-  as.data.frame( data_i_cases %>% select( date, region, country, deceassed, daily_deaths, daily_deaths_inc, daily_deaths_avg6 ) )
+  as.data.frame( data_all_export %>% select( date, region, country, deceassed, deceassed_per_100000, daily_deaths, daily_deaths_inc, daily_deaths_avg6 ) ), 
+  as.data.frame( data_i_cases %>% select( date, region, country, deceassed, deceassed_per_100000, daily_deaths, daily_deaths_inc, daily_deaths_avg6 ) )
 )
 
 # adds FRance
@@ -338,7 +338,7 @@ data_f2_cases$country <- "France"
 # ddd <- data_f2_cases %>% filter( (maille_nom == "Corse" & date < as.Date("2020-03-17") ) )
 compare_countries_deceassed <-rbind(
   compare_countries, 
-  as.data.frame( data_f2_cases %>% select( date, region, country, deceassed, daily_deaths, daily_deaths_inc, daily_deaths_avg6 ) ) 
+  as.data.frame( data_f2_cases %>% select( date, region, country, deceassed, deceassed_per_100000, daily_deaths, daily_deaths_inc, daily_deaths_avg6 ) ) 
 )
 
 
@@ -573,13 +573,13 @@ png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-o
 test2 %>% filter( country != "France") %>%
   ggplot() +
   geom_line(aes(days_since, deceassed_per_100000*10, group= region, color= country), size= 1 ) +
-  geom_point(aes(days_since, deceassed_per_100000*10, color= country), size= 1.5 ) +
+  geom_point(data = test2 %>% filter(date == max(test2$date) ), aes(days_since, deceassed_per_100000*10, color= country), size= 1.5 ) +
   # Spain
-  geom_text_repel(data=filter( test2,   date==max(as.Date("2020-03-27")) & country == "Spain"  |
-                                       date==max(as.Date("2020-03-27")) & country == "Italia"  ),
+  geom_text_repel(data=filter( test2,   date==max(as.Date("2020-04-08")) & country == "Spain"  |
+                                       date==max(as.Date("2020-04-08")) & country == "Italia"  ),
                   aes(days_since, deceassed_per_100000*10, label=paste(format(deceassed_per_100000*10, nsmall=1, big.mark="."), region)),
                   color= "#000000",
-                  # nudge_x = 3, # adjust the starting y position of the text label
+                  nudge_x = 3, # adjust the starting y position of the text label
                   size=4,
                   hjust=1,
                   family = "Roboto Condensed",
@@ -624,11 +624,11 @@ for (i in 1:4) {
     png(filename=paste0("img/compare/covid19_muertes-dia-por-region-superpuesto-offset-log_since-", umbral ,"deceased-facet.png"),width = 800,height = 1500)
   }   
   # png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-", umbral ,"deceased-facet_es.png"),width = 700,height = 1500)
-  test %>%
-  # daily_plot <- test %>%
+  # test %>%
+  daily_plot <- test %>%
     # ptotal <- test %>% filter( country != "France") %>%
     ggplot() +
-    geom_line(aes(days_since, daily_deaths_avg6, group= region, color= country), size= 0.7, alpha = 0.6, se = FALSE ) +
+    geom_line(aes(days_since, daily_deaths_avg6, group= region, color= country), size= 0.9, alpha = 0.6, se = FALSE ) +
     geom_point(data = filter(test, date == max(test$date) ),  aes(days_since, daily_deaths_avg6, color= country, 
                                                                   text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")), 
                size= 1, alpha = 0.6  ) +
