@@ -18,7 +18,7 @@ Contacto: covid19@montera34.com
 ### ¿Quíen está detrás de esto?
 
 Hay muchas personas que nos habéis ayudado y aportado pistas. Gracias a todas por colaborar. 
-Ahora mismo, estamos manteniendo los datos y amadrinando provincias y comunidades autónomas: [@ProsumidorSoc](https://twitter.com/ProsumidorSoc) [@numeroteca](https://twitter.com/numeroteca) [@arivero](https://twitter.com/arivero) [@ManoloYuri](https://twitter.com/ManoloYuri), [@ManoloYuri](https://twitter.com/ManoloYuri) [@congosto](https://twitter.com/congosto) [@skotperez](https://twitter.com/skotperez), [@leu2001](https://twitter.com/leu2001) [@allisdata](https://twitter.com/@allisdata) [@arivero](https://twitter.com/arivero), [@acorsin](https://twitter.com/acorsin) [@hhkaos](https://twitter.com/hhkaos) [@aitorcalero](https://twitter.com/aitorcalero), [@belengarcia_8](https://twitter.com/belengarcia_8) [@Tejerauskas](https://twitter.com/Tejerauskas).
+Ahora mismo, estamos manteniendo los datos y amadrinando provincias y comunidades autónomas: [@ProsumidorSoc](https://twitter.com/ProsumidorSoc) [@numeroteca](https://twitter.com/numeroteca) [@arivero](https://twitter.com/arivero) [@ManoloYuri](https://twitter.com/ManoloYuri) [@congosto](https://twitter.com/congosto) [@skotperez](https://twitter.com/skotperez), [@leu2001](https://twitter.com/leu2001) [@allisdata](https://twitter.com/@allisdata) [@arivero](https://twitter.com/arivero), [@acorsin](https://twitter.com/acorsin) [@hhkaos](https://twitter.com/hhkaos) [@aitorcalero](https://twitter.com/aitorcalero), [@belengarcia_8](https://twitter.com/belengarcia_8) [@Tejerauskas](https://twitter.com/Tejerauskas).
 
 Si se nos olvida alguien ¡avísanos!
 
@@ -28,7 +28,7 @@ Cada cual se encarga de una comunidad autńoma o provincia. [Ver sección "Organ
 
 Mándanos tu análisis o visualización si usas estos datos (covid19@montera34.com):
 
-* [Gráficos y códido de R disponibles](https://lab.montera34.com/covid19/#casos-provincia) mantenido por [@montera34](https://twitter.com/montera34)).
+* [Gráficos y códido de R disponibles](https://lab.montera34.com/covid19/#fallecimientosDiaProvincias) mantenido por [@montera34](https://twitter.com/montera34)).
 * [Dashboard interactivo en Tableau con los datos provinciales (en Tableau Public)](https://public.tableau.com/profile/javier.cant.n#!/vizhome/COVIDprov/Historia1?publish=yes) mantenido por [@ProsumidorSoc](https://twitter.com/ProsumidorSoc).
 * [Mapas de afectados por coronavirus en España](https://mapa-de-afectados-por-coronavirus-plataformacovid.hub.arcgis.com/) iniciativa mantenida por voluntarios e impulsada por Esri España.
 * [Un dashboard de análisis](https://cultureofinsight.shinyapps.io/covid-19/) mantenido por [@harlesden88](https://twitter.com/harlesden88)
