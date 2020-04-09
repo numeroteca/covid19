@@ -152,7 +152,7 @@ data_all_export <- data_all_export %>% group_by(region) %>%
 data_all_export_sm <- data_all_export
 data_all_export_sm$region_cp <-data_all_export_sm$region
 
-export_uniprovinciales <- data_all_export %>% select(date,region,hospitalized,intensive_care,deceassed,recovered) %>% 
+export_uniprovinciales <- data_all_export %>% select(date,region,hospitalized,intensive_care,deceassed,cases_registered, recovered) %>% 
   filter( region == "Melilla" | region == "Asturias" | region == "Baleares" | region == "Cantabria" | 
             region == "Ceuta" |region == "Madride" | region == "Murcia" | region == "Navarra" | region == "Madrid" |
             region == "La Rioja" )
