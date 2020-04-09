@@ -10,8 +10,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: ProvidencialData19. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: montera34.com | Datos: recopilado por Providencialdata19 (lab.montera34.com/covid19, bit.ly/amadrinaunaccaa)"
-period <- "2020.02.27 - 04.06"
-filter_date <- as.Date("2020-04-07")
+period <- "2020.02.27 - 04.07"
+filter_date <- as.Date("2020-04-08")
 
 # Load Data ---------
 # / Population -------------
@@ -110,6 +110,8 @@ colors[12] <- "#84d3e7"
 # Plots --------------------
 # / 1. Cases ------------
 
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter(date > as.Date("2020-02-25"))
+
 # create temp dataframes to be able to plot all the values in small multiples
 data_cases_sp_provinces_sm <- data_cases_sp_provinces %>% filter( date != filter_date)
 data_cases_sp_provinces_sm$province_cp <- data_cases_sp_provinces[data_cases_sp_provinces$date != filter_date,]$province 
@@ -145,7 +147,7 @@ data_cases_sp_provinces %>%
     # legend.position = "bottom"
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       subtitle = paste0("Por provincia (escala lineal). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -177,7 +179,7 @@ data_cases_sp_provinces %>%
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia (escala logarítmica). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -190,6 +192,7 @@ data_cases_sp_provinces %>%
   geom_line(data = select(data_cases_sp_provinces_sm,date,cases_accumulated,province_cp,-province),
             aes(date,cases_accumulated,group=province_cp), color="#CACACA" ) +
   geom_line(aes(date,cases_accumulated,group=province), size = 0.7 ) +
+  # geom_line(cattotal,aes(date,cases_accumulated,group=province), size = 1, color="red" ) +
   geom_point(aes(date,cases_accumulated,group=province), size = 0.5 ) +
   scale_y_log10(
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
@@ -209,7 +212,7 @@ data_cases_sp_provinces %>%
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por comunidad autónoma y provincias [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma y provincias (escala logarítmica). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -252,7 +255,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       subtitle = paste0("Por provincia (escala lineal). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -294,7 +297,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por comunidad autónoma [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia (escala logarítmica). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -334,7 +337,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       subtitle = paste0("Por provincia (escala lineal). ",period),
        y = "casos registrados por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
@@ -376,7 +379,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia (escala logarítmica). ",period),
        y = "casos registrados por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
@@ -427,7 +430,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       subtitle = paste0("Por provincia [Cataluña: falta Barcelona] (escala lineal). ",period),
        y = "fallecidos",
        x = "fecha",
        caption = caption_provincia)
@@ -464,7 +467,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: falta Barcelona] (escala logarítmica). ",period),
        y = "fallecidos",
        x = "fecha",
        caption = caption_provincia)
@@ -526,7 +529,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: falta Barcelona] (escala logarítmica). ",period),
        y = "fallecidos",
        x = "fecha",
        caption = caption_provincia)
@@ -554,7 +557,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia  [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       subtitle = paste0("Por provincia  [Cataluña: falta Barcelona] (escala lineal). ",period),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
@@ -584,7 +587,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: falta Barcelona] (escala logarítmica). ",period),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
@@ -613,7 +616,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: falta Barcelona] (escala logarítmica). ",period),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
@@ -654,7 +657,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       subtitle = paste0("Por provincia [Cataluña: falta Barcelona] (escala lineal). ",period),
        y = "fallecidos",
        x = "fecha",
        caption = caption_provincia)
@@ -693,7 +696,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: falta Barcelona] (escala logarítmica). ",period),
        y = "fallecidos",
        x = "fecha",
        caption = caption_provincia)
@@ -734,7 +737,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia  [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       subtitle = paste0("Por provincia  [Cataluña: falta Barcelona] (escala lineal). ",period),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
@@ -778,7 +781,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: falta Barcelona] (escala logarítmica). ",period),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
        caption = caption_provincia)
@@ -815,7 +818,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala lineal). ",period),
+       subtitle = paste0("Por provincia [Cataluña: falta Barcelona] (escala lineal). ",period),
        y = "fallecidos por día",
        x = "fecha",
        caption = caption_provincia)
@@ -853,7 +856,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: falta Barcelona] (escala logarítmica). ",period),
        y = "fallecidos por día",
        x = "fecha",
        caption = caption_provincia)
@@ -900,7 +903,7 @@ data_cases_sp_provinces %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
-       subtitle = paste0("Por provincia [Cataluña: faltan Barcelona y Tarragona] (escala logarítmica). ",period),
+       subtitle = paste0("Por provincia [Cataluña: falta Barcelona] (escala logarítmica). ",period),
        y = "fallecidos por día",
        x = "fecha",
        caption = caption_provincia)
