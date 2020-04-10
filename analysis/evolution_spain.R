@@ -11,7 +11,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 04.08"
+period <- "2020.02.27 - 04.10"
 
 # Load Data ---------
 # / Population -------------
@@ -359,7 +359,7 @@ data_cases %>%
   geom_point(aes(date,value, color=CCAA), size= 2 ) +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
                   aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
-                  nudge_x = 3, # adjust the starting y position of the text label
+                  nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -371,7 +371,7 @@ data_cases %>%
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 3.5)) 
+               limits=c( min(data_cases$date), max(data_cases$date + 5.5)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -399,7 +399,7 @@ data_cases %>%
   scale_color_manual(values = colors ) +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
                   aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
-                  nudge_x = 3, # adjust the starting y position of the text label
+                  nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -414,7 +414,7 @@ data_cases %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 3.5)) 
+               limits=c( min(data_cases$date), max(data_cases$date + 6)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -478,7 +478,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   geom_point(aes(date,value,color=CCAA), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
                   aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
-                  nudge_x = 3, # adjust the starting y position of the text label
+                  nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -491,7 +491,7 @@ data_cases %>% filter( CCAA != "Total") %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 3.5)) 
+               limits=c( min(data_cases$date), max(data_cases$date + 7)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -516,7 +516,7 @@ data_cases %>%
   geom_point(aes(date,value,color=CCAA), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
                   aes(date,value, color=CCAA, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
-                  nudge_x = 3, # adjust the starting y position of the text label
+                  nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -529,7 +529,7 @@ data_cases %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 3.5)) 
+               limits=c( min(data_cases$date), max(data_cases$date + 7)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -606,7 +606,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   scale_color_manual(values = colors ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 3.5)) 
+               limits=c( min(data_cases$date), max(data_cases$date + 7)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -645,7 +645,7 @@ data_cases %>% filter( CCAA != "Total") %>%
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 3.5)) 
+               limits=c( min(data_cases$date), max(data_cases$date + 7)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -685,7 +685,7 @@ data_cases %>% filter( CCAA != "Total") %>%
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 3.5)) 
+               limits=c( min(data_cases$date), max(data_cases$date + 7)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -971,7 +971,7 @@ dev.off()
 # Contribution by @lorezmt
 
 # create shorted dataframe
-data_death2 <- data_death%>% filter(date >= "2020-03-24") # sets starting day
+data_death2 <- data_death %>% filter(date >= "2020-03-24") # sets starting day
 
 xx <- seq_along(unique(data_death2$date))
 # creates empty vectors
@@ -980,12 +980,14 @@ y_percent2 <- vector(length=length(xx))
 y_percent2[[1]] <- 1535 # sets starting value
 # create data series with certain % of growth
 for (i in 2:length(xx)) {
-  y_percent2[[i]] <- y_percent2[[i-1]] + y_percent2[[i-1]]*0.184 # grows n %
+  y_percent2[[i]] <- y_percent2[[i-1]] + y_percent2[[i-1]]*0.04 # grows n 
+  print(paste(i," valor i.") )
+  print(y_percent2[[i]])
 }
 # creates the data fame
-data_unique2 <- arrange(data_death2, date) %>% select(date) %>% unique()
-crec2 <- data.frame(x = data_unique2, y_percent2 = y_percent2)
-# plot(crec2$x.date)
+data_unique2 <- arrange(data_death2, date) %>% select(date) %>% unique() %>% filter( CCAA == "Andalucía" )
+crec2 <- data_unique2
+crec2$y_percent2 <- y_percent2
 
 # create temp dataframes to be able to plot all the values in small multiples -----
 data_death_sm <-data_death
@@ -1137,7 +1139,7 @@ data_all_export %>%
   geom_point(aes(date,deceassed, color=region), size= 1.5 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
                   aes(date,deceassed, color=region, label=paste(format(deceassed, nsmall=1, big.mark="."),region)),
-                  nudge_x = 3, # adjust the starting y position of the text label
+                  nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -1151,7 +1153,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits=c( min(data_all_export$date) + 6, max(data_all_export$date + 5)),
+               limits=c( min(data_all_export$date) + 6, max(data_all_export$date + 8)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -1172,15 +1174,15 @@ dev.off()
 png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-lineal-with-curve.png", sep = ""),width = 1200,height = 700)
 data_all_export %>%
   ggplot() +
-  geom_line(data = crec2, aes(x = date, y = y_percent2), linetype = 2, size = 2, color ="#444444") +
-  geom_text(data = crec2[1,],aes(as.Date("2020-03-24"),1200,label="curva: un 18% más de fallecimientos cada día"), 
+  geom_line(data = filter(crec2, CCAA == "Andalucía" ), aes(x = date, y = y_percent2), linetype = 2, size = 2, color ="#444444") +
+  geom_text(data = crec2[1,],aes(as.Date("2020-03-24"),1200,label="curva: un 4% más de fallecimientos cada día"), 
             size = 8, base_family = "Roboto Condensed") +
   geom_line(aes(date,deceassed,group=region, color=region), size= 1 ) +
   geom_point(aes(date,deceassed, color=region), size= 1.5 ) +
   scale_color_manual(values = colors ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
                   aes(date,deceassed, color=region, label=paste(format(deceassed, nsmall=1, big.mark="."),region)),
-                  nudge_x = 3, # adjust the starting y position of the text label
+                  nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   # hjust=0,
                   family = "Roboto Condensed",
@@ -1230,7 +1232,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits=c( min(data_all_export$date) + 6, max(data_all_export$date + 8))
+               limits=c( min(data_all_export$date) + 6, max(data_all_export$date + 9))
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1251,12 +1253,12 @@ png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-com
 data_all_export %>%
   ggplot() +
   geom_line(data = crec2, aes(x = date, y = y_percent2), linetype = 2, size = 2, color ="#444444") +
-  geom_text(data = crec2[1,],aes(as.Date("2020-03-14"),750,label="línea: un 18% más de fallecimientos cada día"), 
+  geom_text(data = crec2[1,],aes(as.Date("2020-03-14"),750,label="línea: un 4% más de fallecimientos cada día"), 
             size = 8, base_family = "Roboto Condensed") +
-  geom_line(aes(date,death,group=region, color=region), size= 1 ) +
-  geom_point(aes(date,death, color=region), size= 1.5 ) +
+  geom_line(aes(date,deceassed,group=region, color=region), size= 1 ) +
+  geom_point(aes(date,deceassed, color=region), size= 1.5 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
-                  aes(date,death, color=region, label=paste(format(death, nsmall=1, big.mark="."),region)),
+                  aes(date,deceassed, color=region, label=paste(format(deceassed, nsmall=1, big.mark="."),region)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
                   # hjust=0,
@@ -1266,7 +1268,7 @@ data_all_export %>%
                   segment.color="#777777"
   ) +
   scale_color_manual(values = colors ) +
-  scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
+  scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
                limits=c( min(data_all_export$date), max(data_all_export$date + 1.5))
@@ -1566,9 +1568,9 @@ data_all_export %>%
                   segment.color="#777777"
   ) +
   # marca un día
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)-12,  region == "Madrid" ),
+  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-03-23") &  region == "Madrid" ),
                   aes(date,daily_deaths, label=paste("muertes en un día en una provincia")),
-                  nudge_y = 6, # adjust the starting y position of the text label
+                  nudge_y = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -1577,8 +1579,8 @@ data_all_export %>%
                   segment.color="#777777"
   ) +
   # marca la línea
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date )-3,  region == "Madrid" ),
-                  aes(date+0.5,280, label=paste("media de 6 días")),
+  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-04") &  region == "Madrid" ),
+                  aes(date+0.5,270, label=paste("media de 6 días")),
                   nudge_y = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -1634,7 +1636,7 @@ data_all_export %>%
                   segment.color="#777777"
   ) +
   # marca un día
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)-12,  region == "Madrid" ),
+  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-03-28") &  region == "Madrid" ),
                   aes(date,daily_deaths, label=paste("muertes en un día en una provincia")),
                   nudge_x = -1, # adjust the starting y position of the text label
                   size=5,
@@ -1645,8 +1647,8 @@ data_all_export %>%
                   segment.color="#777777"
   ) +
   # marca la línea
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date )-3,  region == "Madrid" ),
-                  aes(date+1,275, label=paste("media de 6 días")),
+  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-04") &  region == "Madrid" ),
+                  aes(date,275, label=paste("media de 6 días")),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -2060,7 +2062,7 @@ data_all_export %>%
   scale_y_log10(
     breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
-    minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+    minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000), seq(10000 , 100000, 10000) )
   ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
@@ -2378,7 +2380,7 @@ data_all_export %>% filter( region != "Total") %>%
   geom_point(aes(date,recovered_per_100000, color=region), size= 1.5 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date),  region != "Total"),
                   aes(date,recovered_per_100000, color=region, label=paste(format(recovered_per_100000, nsmall=1, big.mark=".", decimal.mark = ","),region)),
-                  nudge_x = 3, # adjust the starting y position of the text label
+                  nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
