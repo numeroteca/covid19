@@ -204,7 +204,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-08,Murcia,"Murcia, Región de",,,,,0,1,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-08,Navarra,"Navarra, Comunidad Foral de",,,,,0,3,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-08,"Rioja, La","Rioja, La",,,,,0,55,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-09,Teruel,Aragón,,,,,,0,,https://www.lacomarca.net/tres-casos-coronavirus-residencia-ancianos-provincia-teruel/,
+2020-03-09,Teruel,Aragón,,,,,0,0,,https://www.lacomarca.net/tres-casos-coronavirus-residencia-ancianos-provincia-teruel/,
 2020-03-09,Zaragoza,Aragón,9,28,14,,2,30,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/relmenu.9/id.257068,
 2020-03-09,El Hierro,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-20-casos-activos-de-coronavirus-covid-19-y-cinco-altas/,
 2020-03-09,Fuerteventura,Canarias,0,,,,0,1,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-20-casos-activos-de-coronavirus-covid-19-y-cinco-altas/,
@@ -254,7 +254,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-10,Murcia,"Murcia, Región de",,,,0,0,9,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-10,Navarra,"Navarra, Comunidad Foral de",,,,2,0,12,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-10,"Rioja, La","Rioja, La",,,,1,1,144,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-11,Huesca,Aragón,,,,,,0,,https://www.heraldo.es/noticias/aragon/huesca/2020/03/12/el-concejal-de-vox-en-huesca-primer-caso-de-coronavirus-conocido-en-la-provincia-1363617.html,
+2020-03-11,Huesca,Aragón,,,,,0,0,,https://www.heraldo.es/noticias/aragon/huesca/2020/03/12/el-concejal-de-vox-en-huesca-primer-caso-de-coronavirus-conocido-en-la-provincia-1363617.html,
 2020-03-11,Teruel,Aragón,0,3,3,,0,3,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/relmenu.9/id.257332,
 2020-03-11,Zaragoza,Aragón,10,40,18,,6,46,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/relmenu.9/id.257332,
 2020-03-11,El Hierro,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-46-casos-activos-de-coronavirus-covid-19-y-5-altas/,
@@ -282,9 +282,9 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-11,Murcia,"Murcia, Región de",,,,0,0,11,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-11,Navarra,"Navarra, Comunidad Foral de",,,,3,0,46,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-11,"Rioja, La","Rioja, La",,,,1,2,179,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-12,Huesca,Aragón,1,,,,,1,,https://www.heraldo.es/noticias/aragon/huesca/2020/03/12/el-concejal-de-vox-en-huesca-primer-caso-de-coronavirus-conocido-en-la-provincia-1363617.html,
-2020-03-12,Teruel,Aragón,,,,,,4,,https://www.diariodeteruel.es/noticia.asp?notid=1022484,
-2020-03-12,Zaragoza,Aragón,,,,,,60,,Mapa de RTVE,
+2020-03-12,Huesca,Aragón,1,,,,0,1,,https://www.heraldo.es/noticias/aragon/huesca/2020/03/12/el-concejal-de-vox-en-huesca-primer-caso-de-coronavirus-conocido-en-la-provincia-1363617.html,
+2020-03-12,Teruel,Aragón,,,,,0,4,,https://www.diariodeteruel.es/noticia.asp?notid=1022484,
+2020-03-12,Zaragoza,Aragón,,,,,6,60,,Mapa de RTVE,
 2020-03-12,El Hierro,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-63-casos-activos-de-coronavirus-covid-19-y-7-altas/,
 2020-03-12,Fuerteventura,Canarias,0,,,,0,1,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-63-casos-activos-de-coronavirus-covid-19-y-7-altas/,
 2020-03-12,Gran Canaria,Canarias,1,,,,0,13,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-63-casos-activos-de-coronavirus-covid-19-y-7-altas/,
@@ -318,9 +318,9 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-13,Jaén,Andalucía,9,,,1,0,30,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
 2020-03-13,Málaga,Andalucía,39,,,9,0,111,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
 2020-03-13,Sevilla,Andalucía,3,,,1,0,25,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
-2020-03-13,Huesca,Aragón,,,,,,1,,Mapa de RTVE,
-2020-03-13,Teruel,Aragón,,,,,,4,,Mapa de RTVE,
-2020-03-13,Zaragoza,Aragón,,,,,,75,,Mapa de RTVE,
+2020-03-13,Huesca,Aragón,,,,,0,1,,Mapa de RTVE,
+2020-03-13,Teruel,Aragón,,,,,0,4,,Mapa de RTVE,
+2020-03-13,Zaragoza,Aragón,,,,,7,75,,Mapa de RTVE,
 2020-03-13,El Hierro,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-82-casos-activos-de-coronavirus-covid-19/,
 2020-03-13,Fuerteventura,Canarias,0,,,,0,1,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-82-casos-activos-de-coronavirus-covid-19/,
 2020-03-13,Gran Canaria,Canarias,4,,,,1,17,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-82-casos-activos-de-coronavirus-covid-19/,
@@ -371,9 +371,9 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-14,Jaén,Andalucía,5,,,0,1,38,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
 2020-03-14,Málaga,Andalucía,53,,,12,4,159,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
 2020-03-14,Sevilla,Andalucía,13,,,1,0,52,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
-2020-03-14,Huesca,Aragón,,,,,,1,,Mapa de RTVE,
-2020-03-14,Teruel,Aragón,,,,,,4,,Mapa de RTVE,
-2020-03-14,Zaragoza,Aragón,,,,,,116,,Mapa de RTVE,
+2020-03-14,Huesca,Aragón,,,,,0,1,,Mapa de RTVE,
+2020-03-14,Teruel,Aragón,,,,,0,4,,Mapa de RTVE,
+2020-03-14,Zaragoza,Aragón,,,,,7,116,,Mapa de RTVE y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.257447,
 2020-03-14,El Hierro,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-101-casos-activos-de-coronavirus-y-7-curaciones/,
 2020-03-14,Fuerteventura,Canarias,2,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-101-casos-activos-de-coronavirus-y-7-curaciones/,
 2020-03-14,Gran Canaria,Canarias,3,,,,1,20,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-101-casos-activos-de-coronavirus-y-7-curaciones/,
@@ -424,9 +424,9 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-15,Jaén,Andalucía,3,,,1,2,47,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
 2020-03-15,Málaga,Andalucía,81,,,12,4,180,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
 2020-03-15,Sevilla,Andalucía,15,,,4,0,62,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
-2020-03-15,Huesca,Aragón,,,,,,3,,https://www.diariodelaltoaragon.es/NoticiasDetalle.aspx?Id=1199912,
-2020-03-15,Teruel,Aragón,,,,,,15,,Mapa de RTVE,
-2020-03-15,Zaragoza,Aragón,,,,,,130,,Mapa de RTVE,
+2020-03-15,Huesca,Aragón,,,,,0,3,,https://www.diariodelaltoaragon.es/NoticiasDetalle.aspx?Id=1199912,
+2020-03-15,Teruel,Aragón,,,,,0,15,,Mapa de RTVE,
+2020-03-15,Zaragoza,Aragón,,,,,7,130,,Mapa de RTVE y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.257489,
 2020-03-15,El Hierro,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-111-casos-activos-de-coronavirus-covid-19-y-7-altas/,
 2020-03-15,Fuerteventura,Canarias,3,,,,0,6,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-111-casos-activos-de-coronavirus-covid-19-y-7-altas/,
 2020-03-15,Gran Canaria,Canarias,13,,,,1,33,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-111-casos-activos-de-coronavirus-covid-19-y-7-altas/,
@@ -477,9 +477,9 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-16,Jaén,Andalucía,8,,,0,2,52,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
 2020-03-16,Málaga,Andalucía,97,,,13,6,278,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
 2020-03-16,Sevilla,Andalucía,34,,,9,1,100,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
-2020-03-16,Huesca,Aragón,,,,,,14,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257548,
+2020-03-16,Huesca,Aragón,,,,,0,14,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257548,
 2020-03-16,Teruel,Aragón,,,,,0,15,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257549,
-2020-03-16,Zaragoza,Aragón,,,,,,145,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257547,
+2020-03-16,Zaragoza,Aragón,,,,,11,145,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257547,
 2020-03-16,El Hierro,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/canarias-constata-148-casos-acumulados-de-coronavirus-covid-19-incluyendo-8-recuperados/,
 2020-03-16,Fuerteventura,Canarias,0,,,,0,6,,https://www3.gobiernodecanarias.org/noticias/canarias-constata-148-casos-acumulados-de-coronavirus-covid-19-incluyendo-8-recuperados/,
 2020-03-16,Gran Canaria,Canarias,3,,,,1,36,,https://www3.gobiernodecanarias.org/noticias/canarias-constata-148-casos-acumulados-de-coronavirus-covid-19-incluyendo-8-recuperados/,
@@ -530,9 +530,9 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-17,Jaén,Andalucía,8,,,,2,52,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
 2020-03-17,Málaga,Andalucía,97,,,,6,278,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
 2020-03-17,Sevilla,Andalucía,34,,,,1,100,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
-2020-03-17,Huesca,Aragón,,,,,,17,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257601,
+2020-03-17,Huesca,Aragón,,,,,0,17,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257601,
 2020-03-17,Teruel,Aragón,,,,,1,24,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257601 y https://www.diariodeteruel.es/noticia.asp?notid=1022624,
-2020-03-17,Zaragoza,Aragón,,,,,,163,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257601,
+2020-03-17,Zaragoza,Aragón,,,,,11,163,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257601,
 2020-03-17,El Hierro,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-confirma-un-total-acumulado-de-181-casos-de-coronavirus-covid-19-incluyendo-8-altas/,
 2020-03-17,Fuerteventura,Canarias,0,,,,0,6,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-confirma-un-total-acumulado-de-181-casos-de-coronavirus-covid-19-incluyendo-8-altas/,
 2020-03-17,Gran Canaria,Canarias,9,,,,1,45,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-confirma-un-total-acumulado-de-181-casos-de-coronavirus-covid-19-incluyendo-8-altas/,
@@ -583,9 +583,9 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-18,Jaén,Andalucía,10,,,,2,77,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
 2020-03-18,Málaga,Andalucía,113,,,,10,333,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
 2020-03-18,Sevilla,Andalucía,42,,,,1,123,1,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
-2020-03-18,Huesca,Aragón,,,,,,19,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257646,
-2020-03-18,Teruel,Aragón,,,,,,24,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257646,
-2020-03-18,Zaragoza,Aragón,,,,,,180,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257646,
+2020-03-18,Huesca,Aragón,,,,,0,19,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257646,
+2020-03-18,Teruel,Aragón,,,,,1,24,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257646,
+2020-03-18,Zaragoza,Aragón,,,,,12,180,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.257646,
 2020-03-18,El Hierro,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-220-casos-acumulados-de-coronavirus-covid-19-en-canarias-con-9-curados/,
 2020-03-18,Fuerteventura,Canarias,5,,,,0,11,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-220-casos-acumulados-de-coronavirus-covid-19-en-canarias-con-9-curados/,
 2020-03-18,Gran Canaria,Canarias,10,,,,1,55,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-220-casos-acumulados-de-coronavirus-covid-19-en-canarias-con-9-curados/,
@@ -631,7 +631,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-19,Jaén,Andalucía,32,,,,2,88,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-19,Málaga,Andalucía,93,,,,13,361,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-19,Sevilla,Andalucía,53,,,,1,138,1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
-2020-03-19,Huesca,Aragón,,24,,,,24,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 6 casos más en la comunidad que no son residentes en Aragón.
+2020-03-19,Huesca,Aragón,,24,,,0,24,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 6 casos más en la comunidad que no son residentes en Aragón.
 2020-03-19,Teruel,Aragón,,26,,,1,27,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 6 casos más en la comunidad que no son residentes en Aragón.
 2020-03-19,Zaragoza,Aragón,,210,,,14,224,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 6 casos más en la comunidad que no son residentes en Aragón.
 2020-03-19,El Hierro,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-del-gobierno-de-canarias-constata-287-casos-acumulados-de-coronavirus-covid-19/,
@@ -1134,8 +1134,8 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-28,Jaén,Andalucía,,465,258,,16,465,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233791.html,"47,63"
 2020-03-28,Málaga,Andalucía,,1053,575,,56,1053,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233791.html,"47,63"
 2020-03-28,Sevilla,Andalucía,,830,383,,26,830,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233791.html,"47,63"
-2020-03-28,Huesca,Aragón,,124,92,11,9,147,14,Falta fuente,
-2020-03-28,Teruel,Aragón,,159,101,15,10,179,10,Falta fuente,
+2020-03-28,Huesca,Aragón,,151,92,11,9,174,14,http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258115,
+2020-03-28,Teruel,Aragón,,159,101,15,10,179,10,http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258115,
 2020-03-28,Zaragoza,Aragón,,1071,642,98,72,1239,96,http://aragonhoy.aragon.es/index.php/mod.noticias/mem.detalle/area.1050/id.258115,es una correccion importante que ademas afecta a datos anteriores en la mortalidad
 2020-03-28,El Hierro,Canarias,0,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1125-casos-de-coronavirus-covid-19-acumulados/,
 2020-03-28,Fuerteventura,Canarias,5,,,,0,30,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1125-casos-de-coronavirus-covid-19-acumulados/,
@@ -1192,7 +1192,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-29,Málaga,Andalucía,,452,642,,64,1158,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
 2020-03-29,Sevilla,Andalucía,,485,397,,30,912,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
 2020-03-29,Huesca,Aragón,,176,103,13,11,201,14,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.258137,
-2020-03-29,Teruel,Aragón,,186,112,19,12,208,10,Falta fuente,
+2020-03-29,Teruel,Aragón,,186,112,19,12,208,10,http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258137,
 2020-03-29,Zaragoza,Aragón,,1269,720,121,79,1449,101,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/id.258137,
 2020-03-29,El Hierro,Canarias,0,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1204-casos-acumulados-de-coronavirus-covid-19/,
 2020-03-29,Fuerteventura,Canarias,1,,,,0,31,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1204-casos-acumulados-de-coronavirus-covid-19/,
@@ -1582,9 +1582,9 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-05,Jaén,Andalucía,,,475,46,49,914,60,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234183.html,
 2020-04-05,Málaga,Andalucía,,,1.057,94,118,1863,211,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234183.html,
 2020-04-05,Sevilla,Andalucía,,,747,100,93,1602,82,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234183.html,
-2020-04-05,Huesca,Aragón,,310,,,33,396,53,https://app.flourish.studio/visualisation/1451263/ (5-abr 22:00),"¹El Gobierno de Aragón ha informado del fallecimiento de otras dos personas cuyo origen es desconocido, por lo que el total en la comunidad asciende a 224."
-2020-04-05,Teruel,Aragón,,251,,,29,371,91,https://app.flourish.studio/visualisation/1451263/ (5-abr 22:00),"¹El Gobierno de Aragón ha informado del fallecimiento de otras dos personas cuyo origen es desconocido, por lo que el total en la comunidad asciende a 224."
-2020-04-05,Zaragoza,Aragón,,1816,,,206,2409,387,https://app.flourish.studio/visualisation/1451263/ (5-abr 22:00),"¹El Gobierno de Aragón ha informado del fallecimiento de otras dos personas cuyo origen es desconocido, por lo que el total en la comunidad asciende a 224."
+2020-04-05,Huesca,Aragón,,310,176,26,33,396,53,https://app.flourish.studio/visualisation/1451263/ (5-abr 22:00) y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258447,"¹El Gobierno de Aragón ha informado del fallecimiento de otras dos personas cuyo origen es desconocido, por lo que el total en la comunidad asciende a 224."
+2020-04-05,Teruel,Aragón,,251,180,27,29,371,91,https://app.flourish.studio/visualisation/1451263/ (5-abr 22:00) y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258447,"¹El Gobierno de Aragón ha informado del fallecimiento de otras dos personas cuyo origen es desconocido, por lo que el total en la comunidad asciende a 224."
+2020-04-05,Zaragoza,Aragón,,1816,1217,178,206,2409,387,https://app.flourish.studio/visualisation/1451263/ (5-abr 22:00) y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258447,"¹El Gobierno de Aragón ha informado del fallecimiento de otras dos personas cuyo origen es desconocido, por lo que el total en la comunidad asciende a 224."
 2020-04-05,El Hierro,Canarias,-2,,,,0,1,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1649-casos-acumulados-de-coronavirus-covid-19-2/,
 2020-04-05,Fuerteventura,Canarias,-12,,,,0,23,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1649-casos-acumulados-de-coronavirus-covid-19-2/,
 2020-04-05,Gran Canaria,Canarias,-56,,,,24,411,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1649-casos-acumulados-de-coronavirus-covid-19-2/,
@@ -1635,9 +1635,9 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-06,Jaén,Andalucía,,,490,46,52,934,61,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234228.html,
 2020-04-06,Málaga,Andalucía,,,1087,96,121,1916,258,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234228.html,
 2020-04-06,Sevilla,Andalucía,,,778,101,97,1663,95,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234228.html,
-2020-04-06,Huesca,Aragón,,323,,,37,417,57,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),"¹El Gobierno de Aragón ha informado de 30 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 284."
-2020-04-06,Teruel,Aragón,,258,,,29,380,93,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),"¹El Gobierno de Aragón ha informado de 30 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 284."
-2020-04-06,Zaragoza,Aragón,,1895,,,217,2520,408,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),"¹El Gobierno de Aragón ha informado de 30 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 284."
+2020-04-06,Huesca,Aragón,,323,184,26,37,417,57,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00) y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1020/id.258484,"¹El Gobierno de Aragón ha informado de 30 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 284."
+2020-04-06,Teruel,Aragón,,258,185,27,29,380,93,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00) y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1020/id.258484,"¹El Gobierno de Aragón ha informado de 30 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 284."
+2020-04-06,Zaragoza,Aragón,,1895,1258,183,217,2520,408,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00) y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1020/id.258484,"¹El Gobierno de Aragón ha informado de 30 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 284."
 2020-04-06,El Hierro,Canarias,,,,,0,1,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1725-casos-acumulados-de-coronavirus-covid-19/,
 2020-04-06,Fuerteventura,Canarias,,,,,0,23,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1725-casos-acumulados-de-coronavirus-covid-19/,
 2020-04-06,Gran Canaria,Canarias,,,,,25,444,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1725-casos-acumulados-de-coronavirus-covid-19/,
@@ -1721,12 +1721,9 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-07,Araba/Álava,País Vasco,62,,237,,229,2806,,https://twitter.com/osakidetzaEJGV/status/1247844743280766978;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/7_abril_Boletin.pdf,
 2020-04-07,Bizkaia,País Vasco,251,,1002,,317,4968,,https://twitter.com/osakidetzaEJGV/status/1247844743280766978;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/7_abril_Boletin.pdf,
 2020-04-07,Gipuzkoa,País Vasco,118,,320,,92,1678,,https://twitter.com/osakidetzaEJGV/status/1247844743280766978;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/7_abril_Boletin.pdf,
-2020-04-07,Huesca,Aragón,,315,,,42,419,62,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/,"¹El Gobierno de Aragón ha informado de 35 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 312."
-2020-04-07,Teruel,Aragón,,271,,,32,396,93,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/,"¹El Gobierno de Aragón ha informado de 35 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 312."
-2020-04-07,Zaragoza,Aragón,,1946,,,237,2599,416,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/,"¹El Gobierno de Aragón ha informado de 35 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 312."
-2020-04-08,Huesca,Aragón,,309,,,51,428,68,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/,"¹El Gobierno de Aragón ha informado de 36 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 349."
-2020-04-08,Teruel,Aragón,,273,,,34,406,99,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/,"¹El Gobierno de Aragón ha informado de 36 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 349."
-2020-04-08,Zaragoza,Aragón,,1932,,,263,2679,484,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/,"¹El Gobierno de Aragón ha informado de 36 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 349."
+2020-04-07,Huesca,Aragón,,315,185,27,42,419,62,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258516,"¹El Gobierno de Aragón ha informado de 35 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 312."
+2020-04-07,Teruel,Aragón,,271,187,27,32,396,93,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258516,"¹El Gobierno de Aragón ha informado de 35 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 312."
+2020-04-07,Zaragoza,Aragón,,1946,1280,192,237,2599,416,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258516,"¹El Gobierno de Aragón ha informado de 35 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 312."
 2020-04-07,Girona,Cataluña,,,,,199,1844,,https://www.diaridegirona.cat/comarques/2020/04/07/girona-ja-frega-200-morts/1038408.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-04-07,Asturias,"Asturias, Principado de",,,889,91,96,1679,244,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-07,"Balears, Illes","Balears, Illes",,,705,124,84,1369,537,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
@@ -1737,6 +1734,9 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-07,Murcia,"Murcia, Región de",,,500,84,78,1283,193,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-07,Navarra,"Navarra, Comunidad Foral de",,,1488,124,202,3355,421,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-07,"Rioja, La","Rioja, La",,,918,66,160,2846,994,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-04-08,Huesca,Aragón,,309,190,28,51,428,68,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258578,"¹El Gobierno de Aragón ha informado de 36 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 349."
+2020-04-08,Teruel,Aragón,,273,191,29,34,406,99,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258578,"¹El Gobierno de Aragón ha informado de 36 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 349."
+2020-04-08,Zaragoza,Aragón,,1932,1324,197,263,2679,484,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258578,"¹El Gobierno de Aragón ha informado de 36 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 349."
 2020-04-08,Badajoz,Extremadura,,502,,,43,731,186,,
 2020-04-08,Cáceres,Extremadura,,1083,,,228,1453,142,,
 2020-04-08,Lleida,Cataluña,,,,,88,1154,273,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
@@ -1786,3 +1786,55 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-08,La Palma,Canarias,,,,,4,70,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1834-casos-acumulados-de-coronavirus-covid-19/,
 2020-04-08,El Hierro,Canarias,,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1834-casos-acumulados-de-coronavirus-covid-19/,
 2020-04-08,La Gomera,Canarias,,,,,0,7,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1834-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-09,Lleida,Cataluña,,,,,90,1220,307,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
+2020-04-09,Araba/Álava,País Vasco,40,,214,,245,2908,,https://twitter.com/osakidetzaEJGV/status/1248566574996430849;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/9_abril_Boletin.pdf,
+2020-04-09,Bizkaia,País Vasco,210,,912,,377,5392,,https://twitter.com/osakidetzaEJGV/status/1248566574996430849;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/9_abril_Boletin.pdf,
+2020-04-09,Gipuzkoa,País Vasco,47,,290,,107,1803,,https://twitter.com/osakidetzaEJGV/status/1248566574996430849;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/9_abril_Boletin.pdf,
+2020-04-09,Girona,Cataluña,,,,,244,1986,,https://www.diaridegirona.cat/comarques/2020/04/09/dotze-persones-mes-moren-coronavirus/1038709.html,
+2020-04-09,Almería,Andalucía,,,168,32,27,395,63,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234409.html,
+2020-04-09,Cádiz,Andalucía,,,403,58,45,915,128,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234409.html,
+2020-04-09,Córdoba,Andalucía,,,424,52,45,1084,131,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234409.html,
+2020-04-09,Granada,Andalucía,,,865,95,142,1639,205,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234409.html,
+2020-04-09,Huelva,Andalucía,,,159,25,21,308,40,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234409.html,
+2020-04-09,Jaén,Andalucía,,,548,51,84,1021,80,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234409.html,
+2020-04-09,Málaga,Andalucía,,,1158,111,147,2074,355,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234409.html,
+2020-04-09,Sevilla,Andalucía,,,874,114,141,1825,191,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234409.html,
+2020-04-09,Tarragona,Cataluña,,,240,66,120,1307,,https://tarragonadigital.com/area-metropolitana/dades-coronavirus-tarragona-9-abril-2020,
+2020-04-09,Albacete,Castilla - La Mancha,,3.212,650,,280,,,Notas de prensa JCCM [23:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/contin%C3%BAa-descendiendo-el-n%C3%BAmero-de-hospitalizados-y-pacientes-cr%C3%ADticos-la-vez-que-aumentan-las-altas-1,
+2020-04-09,Ciudad Real,Castilla - La Mancha,,4720,907,,428,,,Notas de prensa JCCM [23:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/contin%C3%BAa-descendiendo-el-n%C3%BAmero-de-hospitalizados-y-pacientes-cr%C3%ADticos-la-vez-que-aumentan-las-altas-2,
+2020-04-09,Cuenca,Castilla - La Mancha,,800,136,,110,,,Notas de prensa JCCM [23:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/contin%C3%BAa-descendiendo-el-n%C3%BAmero-de-hospitalizados-y-pacientes-cr%C3%ADticos-la-vez-que-aumentan-las-altas-3,
+2020-04-09,Guadalajara,Castilla - La Mancha,,994,246,,134,,,Notas de prensa JCCM [23:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/contin%C3%BAa-descendiendo-el-n%C3%BAmero-de-hospitalizados-y-pacientes-cr%C3%ADticos-la-vez-que-aumentan-las-altas-4,
+2020-04-09,Toledo,Castilla - La Mancha,,2763,636,,370,,,Notas de prensa JCCM [23:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/contin%C3%BAa-descendiendo-el-n%C3%BAmero-de-hospitalizados-y-pacientes-cr%C3%ADticos-la-vez-que-aumentan-las-altas-5,
+2020-04-09,Ávila,Castilla y León,32,,156,13,90,825,297,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-09,Burgos,Castilla y León,27,,202,47,129,1080,441,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-09,León,Castilla y León,57,,280,53,218,1455,666,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-09,Palencia,Castilla y León,21,,105,19,42,545,153,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-09,Salamanca,Castilla y León,41,,341,47,231,1956,507,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-09,Segovia,Castilla y León,91,,160,21,125,1571,446,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-09,Soria,Castilla y León,23,,108,20,73,872,203,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-09,Valladolid,Castilla y León,160,,390,100,173,1846,664,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-09,Zamora,Castilla y León,8,,94,12,48,368,129,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-09,Alicante/Alacant,Comunitat Valenciana,47,,487,131,310,2850,632,http://coronavirus.san.gva.es/es/inicio (https://www.gva.es/va/inicio/area_de_prensa/not_detalle_area_prensa?id=853765),
+2020-04-09,Castellón/Castelló,Comunitat Valenciana,22,,219,41,96,921,194,http://coronavirus.san.gva.es/es/inicio (https://www.gva.es/va/inicio/area_de_prensa/not_detalle_area_prensa?id=853765),
+2020-04-09,Valencia/València,Comunitat Valenciana,238,,910,176,361,4188,946,http://coronavirus.san.gva.es/es/inicio (https://www.gva.es/va/inicio/area_de_prensa/not_detalle_area_prensa?id=853765),
+2020-04-09,Tenerife,Canarias,,,,,62,1210,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1858-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-09,Gran Canaria,Canarias,,,,,27,468,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1858-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-09,Fuerteventura,Canarias,,,,,0,37,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1858-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-09,Lanzarote,Canarias,,,,,2,64,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1858-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-09,La Palma,Canarias,,,,,3,70,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1858-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-09,El Hierro,Canarias,,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1858-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-09,La Gomera,Canarias,,,,,0,7,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1858-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-09,Asturias,"Asturias, Principado de",,,1018,94,110,1737,340,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
+2020-04-09,"Balears, Illes","Balears, Illes",,,751,132,89,1448,696,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
+2020-04-09,Cantabria,Cantabria,,,720,71,98,1619,214,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
+2020-04-09,Ceuta,Ceuta,,,9,4,4,84,7,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
+2020-04-09,"Rioja, La","Rioja, La",,,997,69,182,3026,1172,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
+2020-04-09,Madrid,"Madrid, Comunidad de",,,12853,1433,5800,43877,21121,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
+2020-04-09,Melilla,Melilla,,,40,3,2,93,16,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
+2020-04-09,Murcia,"Murcia, Región de",,,533,87,88,1356,219,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
+2020-04-09,Navarra,"Navarra, Comunidad Foral de",,,1526,124,214,3575,462,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
+2020-04-09,Huesca,Aragón,,312,,,58,444,74,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,"¹El Gobierno de Aragón ha informado de 37 en investigación, por lo que el total de casos asciende a 3.685. También hay 718 dadas de alta en toda la comunidad, nueve de ellas correspondientes a los casos en investigación. Además, los fallecidos en Aragón suman 385, uno de ellos en investigación."
+2020-04-09,Teruel,Aragón,,276,,,39,416,101,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,"¹El Gobierno de Aragón ha informado de 37 en investigación, por lo que el total de casos asciende a 3.685. También hay 718 dadas de alta en toda la comunidad, nueve de ellas correspondientes a los casos en investigación. Además, los fallecidos en Aragón suman 385, uno de ellos en investigación."
+2020-04-09,Zaragoza,Aragón,,1967,,,287,2788,534,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,"¹El Gobierno de Aragón ha informado de 37 en investigación, por lo que el total de casos asciende a 3.685. También hay 718 dadas de alta en toda la comunidad, nueve de ellas correspondientes a los casos en investigación. Además, los fallecidos en Aragón suman 385, uno de ellos en investigación."
+2020-04-09,Badajoz,Extremadura,,508,,,48,760,204,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,
+2020-04-09,Cáceres,Extremadura,,1101,,,235,1513,177,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,
