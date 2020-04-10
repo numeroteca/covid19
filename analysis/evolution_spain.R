@@ -63,7 +63,7 @@ data_death <- merge( data_death, data_cases %>% filter (date == as.Date("2020-02
 # calculate values per 
 data_death$per_cienmil <- round( data_death$value / data_death$poblacion * 100000, digits = 2)
 
-# Calculates Altas
+# Calculates muertes por día
 data_death <- data_death %>% group_by(CCAA) %>% 
   arrange(date) %>% mutate( daily_deaths = value - lag(value),
                             daily_deaths_inc = round((value - lag(value)) /lag(value) * 100, digits = 1),
@@ -76,6 +76,13 @@ write.csv(data_death, file = "data/output/covid19-fallecimientos-por-ccaa-espana
 data_altas <- melt(data_altas_original, id.vars = c("CCAA","cod_ine"))
 data_altas$date <- as.Date(substr(data_altas$variable,2,12),"%Y.%m.%d")
 data_altas <- select(data_altas,-variable)
+
+data_altas<- data_altas %>% group_by(CCAA) %>% 
+  arrange(date) %>% mutate( daily_altas = value - lag(value),
+                            daily_altas_inc = round((value - lag(value)) /lag(value) * 100, digits = 1),
+                            daily_altas_avg6 =  round( ( daily_altas + lag(daily_altas,1)+lag(daily_altas,2)+lag(daily_altas,3)+lag(daily_altas,4)+lag(daily_altas,5) ) / 6, digits = 1 ) # average of dayly altas of 6 last days
+  )
+
 
 # add population data
 data_altas <- merge( data_altas, data_cases %>% filter (date == as.Date("2020-02-27") ) %>% select(CCAA,poblacion), by.x = "CCAA", by.y = "CCAA" , all.x = TRUE  )
@@ -145,8 +152,14 @@ data_all_export <- data_all_export %>% group_by(region) %>%
     arrange(date) %>% mutate( daily_deaths = deceassed - lag(deceassed),
                             daily_deaths_inc = round((deceassed - lag(deceassed)) / lag(deceassed) * 100, digits = 1),
                             # lag2 = lag(deceassed,2),
-                            daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) ) / 6, digits = 1 ) # average of dayly deaths of 6 last days
-  )
+                            daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) ) / 6, digits = 1 ), # average of dayly deaths of 6 last days
+                            daily_recovered = recovered - lag(recovered),
+                            daily_recovered_inc = round((recovered - lag(recovered)) /lag(recovered) * 100, digits = 1),
+                            daily_recovered_avg6 =  round( ( daily_recovered + lag(daily_recovered,1)+lag(daily_recovered,2)+
+                                                               lag(daily_recovered,3)+lag(daily_recovered,4)+lag(daily_recovered,5) ) / 6, digits = 1 ) # average of dayly recovered of 6 last days
+                            
+                            
+                             )
 
 # For small multiples
 data_all_export_sm <- data_all_export
@@ -2410,6 +2423,241 @@ data_all_export %>% filter( region != "Total") %>%
   labs(title = "Número de altas acumuladas por COVID-19 por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
        y = "altas por 100.000 habitantes",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+# 6. Daily Altas ---------
+
+# 4.1 Small multiple ---------------
+# Daily recovered lineal average SM --------
+png(filename=paste("img/spain/regions/covid19_altas-por-dia-comunidad-autonoma-lineal_media.png", sep = ""),width = 1200,height = 700)
+data_all_export %>%
+  ggplot() +
+  geom_smooth(data = data_all_export_sm %>% ungroup() %>% select(date,daily_recovered_avg6,region_cp,-region),
+            aes(date,daily_recovered_avg6,group=region_cp), color="#CACACA", se = FALSE, span = 0.35, size= 0.5 ) +
+  geom_point(aes(date,daily_recovered, color=region), size= 1.5, alpha = 0.5) +
+  geom_smooth(aes(date,daily_recovered_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
+  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
+                  aes(date,daily_recovered_avg6, 
+                      label=paste(format(daily_recovered_avg6, nsmall=1, big.mark=".", decimal.mark = ","))),
+                  nudge_x = 2, # adjust the starting y position of the text label
+                  size=4,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.2,
+                  segment.color="#777777"
+  ) +
+  facet_wrap( ~region) +
+  scale_color_manual(values = colors ) +
+  coord_cartesian(
+    ylim = c(1,max(data_all_export[!is.na(data_all_export$daily_recovered_avg6) & ( data_all_export$region != "Total"),]$daily_recovered_avg6)+100)
+  ) +
+  # scale_y_log10(
+  #   breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
+  #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  # ) +
+  scale_x_date(date_breaks = "4 day",
+               date_labels = "%d",
+               limits=c( min(data_all_export$date + 20), max(data_all_export$date + 5)),
+               expand = c(0,0)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       y = "altas por día (media 6 días) (escala logarítmica)",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+# Daily recovered log average SM --------
+png(filename=paste("img/spain/regions/covid19_altas-por-dia-comunidad-autonoma-log_media.png", sep = ""),width = 1200,height = 700)
+data_all_export %>%
+  ggplot() +
+  geom_smooth(data = data_all_export_sm %>%  ungroup() %>% select(date,daily_recovered_avg6,region_cp,-region),
+            aes(date,daily_recovered_avg6,group=region_cp), color="#CACACA", se = FALSE, span = 0.35, size= 0.5) +
+  geom_point(aes(date,daily_recovered, color=region), size= 1.5, alpha = 0.5) +
+  geom_smooth(aes(date,daily_recovered_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
+  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
+                  aes(date,daily_recovered_avg6, 
+                      label=paste(format(daily_recovered_avg6, nsmall=1, big.mark=".", decimal.mark = ","))),
+                  nudge_x = 2, # adjust the starting y position of the text label
+                  size=4,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.2,
+                  segment.color="#777777"
+  ) +
+  facet_wrap( ~region) +
+  scale_color_manual(values = colors ) +
+  coord_cartesian(
+    ylim = c(1,max(data_all_export[!is.na(data_all_export$daily_recovered_avg6) & ( data_all_export$region != "Total"),]$daily_recovered_avg6))
+  ) +
+  scale_y_log10(
+    breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
+    labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  ) +
+  scale_x_date(date_breaks = "4 day",
+               date_labels = "%d",
+               limits=c( min(data_all_export$date + 20), max(data_all_export$date + 5)),
+               expand = c(0,0)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       y = "altas por día (media 6 días) (escala logarítmica)",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+# 6.2 superpuesto
+
+# average log --------
+png(filename=paste("img/spain/regions/covid19_altas-por-dia-comunidad-autonoma-superpuesto-log_media.png", sep = ""),width = 1200,height = 700)
+data_all_export %>%
+  ggplot() +
+  # geom_smooth( data=hubei, aes(date+40,daily_deaths_avg6,group=region, color=region), size= 3, color="#aaaaaa", se = FALSE, span = 0.35 ) +
+  geom_smooth(aes(date,daily_recovered_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
+  geom_point(aes(date,daily_recovered, color=region), size= 1.5 ) +
+  geom_point(data=filter( data_all_export, date==max(data_all_export$date)), aes(date, daily_recovered_avg6, color=region), size= 1, alpha = 0.3 ) +
+  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date) ),
+                  aes(date,daily_recovered_avg6, color=region, label=paste(format(daily_recovered_avg6, nsmall=1, big.mark=".", decimal.mark = ","),region)),
+                  nudge_x = 2, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.2,
+                  segment.color="#777777"
+  ) +
+  # marca un día
+  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-03-28") &  region == "Madrid" ),
+                  aes(date,daily_recovered, label=paste("altas en un día en una provincia")),
+                  nudge_y = 3, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="x",
+                  segment.size = 0.5,
+                  segment.color="#777777"
+  ) +
+  # marca la línea
+  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-04") &  region == "Madrid" ),
+                  aes(date+0.5,1360, label=paste("media de 6 días")),
+                  nudge_y = 2, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="x",
+                  segment.size = 0.5,
+                  segment.color="#777777"
+  ) +
+  scale_color_manual(values = colors ) +
+  coord_cartesian(
+    ylim = c(1,max(data_all_export[!is.na(data_all_export$daily_recovered_avg6) & ( data_all_export$region != "Total"),]$daily_recovered_avg6))
+  ) +
+  scale_y_log10(
+    breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
+    labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  ) +
+  scale_x_date(date_breaks = "1 day",
+               date_labels = "%d",
+               limits=c( min(data_all_export$date + 19), max(data_all_export$date + 8)),
+               expand = c(0,0)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       y = "altas por día (media 6 días) (escala logarítmica)",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+# lineal average --------
+png(filename=paste("img/spain/regions/covid19_altas-por-dia-comunidad-autonoma-superpuesto-lineal_media.png", sep = ""),width = 1200,height = 700)
+data_all_export %>%
+  ggplot() +
+  geom_smooth(aes(date,daily_recovered_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
+  geom_point(aes(date,daily_recovered, color=region), size= 1.5 ) +
+  geom_point(data=filter( data_all_export, date==max(data_all_export$date)), aes(date, daily_recovered_avg6, color=region), size= 1.5, alpha = 0.3 ) +
+  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
+                  aes(date,daily_recovered_avg6, color=region, label=paste(format(daily_recovered_avg6, nsmall=1, big.mark=".", decimal.mark = ","),region)),
+                  nudge_x = 2, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.2,
+                  segment.color="#777777"
+  ) +
+  # marca un día
+  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-03-28") &  region == "Madrid" ),
+                  aes(date,daily_recovered, label=paste("altas en un día en una provincia")),
+                  nudge_x = -1, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=1,
+                  family = "Roboto Condensed",
+                  # direction="x",
+                  segment.size = 0.5,
+                  segment.color="#777777"
+  ) +
+  # marca la línea
+  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-06") &  region == "Madrid" ),
+                  aes(date,1330, label=paste("media de 6 días")),
+                  nudge_x = 1, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="x",
+                  segment.size = 0.5,
+                  segment.color="#777777"
+  ) +
+  scale_color_manual(values = colors ) +
+  coord_cartesian(
+    ylim = c(1,max(data_all_export[!is.na(data_all_export$daily_recovered_avg6) & ( data_all_export$region != "Total"),]$daily_recovered_avg6)*1.1)
+  ) +
+  scale_x_date(date_breaks = "1 day",
+               date_labels = "%d",
+               limits=c( min(data_all_export$date + 19), max(data_all_export$date + 7)),
+               expand = c(0,0)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       y = "altas por día (media 6 días) (escala logarítmica)",
        x = "fecha",
        caption = caption)
 dev.off()
