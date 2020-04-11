@@ -1,4 +1,4 @@
-# Providencialdta19: Capturando datos por provincias en España
+# Providencialdata19: Capturando datos por provincias en España
 
 **IMPORTANTE** 
 Faltan datos de fallecimientos en Cataluña.

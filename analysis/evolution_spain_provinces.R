@@ -10,8 +10,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: ProvidencialData19. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: montera34.com | Datos: recopilado por Providencialdata19 (lab.montera34.com/covid19, bit.ly/amadrinaunaccaa)"
-period <- "2020.02.27 - 04.09"
-filter_date <- as.Date("2020-04-10")
+period <- "2020.02.27 - 04.10"
+filter_date <- as.Date("2020-04-11")
 
 # Load Data ---------
 # / Population -------------
@@ -293,8 +293,8 @@ data_cases_sp_provinces %>%
   segment.color="#777777"
   ) +
   geom_text_repel(data=filter( data_cases_sp_provinces,  
-                               (date==max(data_cases_sp_provinces$date-2) & province == "Barcelona") |
-                                 (date==max(data_cases_sp_provinces$date-7) & ccaa == "Galicia")
+                               (date==max(data_cases_sp_provinces$date-3) & province == "Barcelona") |
+                                 (date==max(data_cases_sp_provinces$date-8) & ccaa == "Galicia")
   ), 
   aes(date, cases_accumulated, color=ccaa, label=paste(format(cases_accumulated, nsmall=1, big.mark="."),province)),
   nudge_y = 1, # adjust the starting y position of the text label
