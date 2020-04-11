@@ -1173,8 +1173,11 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   unaprov <- unaprov[1]
   
   print(prov)
-  png(filename=paste0("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-log_media-", tolower( substr(prov,1,4) ),".png", sep = ""),width = 1200,height = 800)
-    
+  if (i == 8 ) {
+    png(filename=paste0("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-log_media-", tolower( substr(prov,1,4) ),"leon.png", sep = ""),width = 1200,height = 800)
+  } else {
+    png(filename=paste0("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-log_media-", tolower( substr(prov,1,4) ),".png", sep = ""),width = 1200,height = 800)
+  }
   the_province  <- data_cases_sp_provinces %>% filter (ccaa == prov ) %>%
   # data_cases_sp_provinces %>% filter (ccaa == prov ) %>%
   ggplot() +

@@ -1892,3 +1892,19 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-10,Huesca,Aragón,,331,,,64,478,83,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,"¹El Gobierno de Aragón ha informado de 41 en investigación, por lo que el total de casos asciende a 3.831. También hay 797 dadas de alta en toda la comunidad, diez de ellas correspondientes a los casos en investigación. Además, los fallecidos en Aragón suman 409, uno de ellos en investigación."
 2020-04-10,Teruel,Aragón,,275,,,41,423,107,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,"¹El Gobierno de Aragón ha informado de 41 en investigación, por lo que el total de casos asciende a 3.831. También hay 797 dadas de alta en toda la comunidad, diez de ellas correspondientes a los casos en investigación. Además, los fallecidos en Aragón suman 409, uno de ellos en investigación."
 2020-04-10,Zaragoza,Aragón,,1989,,,303,2889,597,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,"¹El Gobierno de Aragón ha informado de 41 en investigación, por lo que el total de casos asciende a 3.831. También hay 797 dadas de alta en toda la comunidad, diez de ellas correspondientes a los casos en investigación. Además, los fallecidos en Aragón suman 409, uno de ellos en investigación."
+2020-04-10,Tenerife,Canarias,,,,,62,1216,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1887-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-10,Gran Canaria,Canarias,,,,,26,485,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1887-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-10,Fuerteventura,Canarias,,,,,0,37,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1887-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-10,Lanzarote,Canarias,,,,,3,67,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1887-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-10,La Palma,Canarias,,,,,4,71,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1887-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-10,El Hierro,Canarias,,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1887-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-10,La Gomera,Canarias,,,,,0,7,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1887-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-11,Almería,Andalucía,,,171,33,32,403,83,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234431.html,
+2020-04-11,Cádiz,Andalucía,,,421,65,52,943,157,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234431.html,
+2020-04-11,Córdoba,Andalucía,,,449,55,49,1136,161,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234431.html,
+2020-04-11,Granada,Andalucía,,,915,102,157,1725,272,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234431.html,
+2020-04-11,Huelva,Andalucía,,,170,27,22,318,57,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234431.html,
+2020-04-11,Jaén,Andalucía,,,561,57,96,1097,156,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234431.html,
+2020-04-11,Málaga,Andalucía,,,1199,137,170,2143,523,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234431.html,
+2020-04-11,Sevilla,Andalucía,,,922,126,159,1947,221,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234431.html,
+2020-04-11,Tarragona,Cataluña,,,200,67,138,1420,,,
