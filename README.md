@@ -11,9 +11,9 @@ Este repositorio contiene dos proyectos diferentes:
   * Script de R para facilitar el análisis del COVID19 en España e Italia. Puedes ver los gráficos producidos en la web que hemos montado en montera34: https://lab.montera34.com/covid19
   * Los datos de COVID-19 por provincias. Una iniciativa ciudadana para recolectarlos de diferentes fuentes, en vista de que el gobierno no lo facilita. [Más información](#provincias).
 
-![Casos registrados por comunidad autónoma. España. COVIC-19](https://lab.montera34.com/covid19-r/img/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log.png)
+![Media de muertes por día en los 6 días anteriores por comunidad autónoma.. España. COVIC-19](https://lab.montera34.com/covid19-r/img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-superpuesto-log_media.png)
 
-![Casos registrados por comunidad autónoma. España. COVIC-19](https://lab.montera34.com/covid19-r/img/covid19_casos-registrados-por-comunidad-autonoma-log.png)
+![Fallecimientos acumulados por día desde el primer día que hubo 5 fallecimientos o más en regiones de España (CCAA), Italia y Francia. Escala logarítmica.. España. COVIC-19](https://lab.montera34.com/covid19-r/img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-5deceased.png)
 
 ## Licencia / License
 
