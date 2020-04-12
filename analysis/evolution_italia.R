@@ -8,7 +8,7 @@
   # Settings -------
   # Cambia el pie del gráfico pero conserva la fuente de los datos
   caption_i <- "Gráfico: @numeroteca (montera34.com). Datos: Protezione Civile (Italia)"
-  periodo_i <- "2020.02.24 - 04.10"
+  periodo_i <- "2020.02.24 - 04.12"
   
   # COVID-19 in Italy -----------
   # Load data
