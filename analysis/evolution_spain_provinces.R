@@ -10,8 +10,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: ProvidencialData19. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: montera34.com | Datos: recopilado por Providencialdata19 (lab.montera34.com/covid19, bit.ly/amadrinaunaccaa)"
-period <- "2020.02.27 - 04.10"
-filter_date <- as.Date("2020-04-11")
+period <- "2020.02.27 - 04.11"
+filter_date <- as.Date("2020-04-12")
 
 # Load Data ---------
 # / Population -------------
@@ -83,10 +83,10 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
           daily_deaths_inc = round((deceased - lag(deceased)) /lag(deceased) * 100, digits = 1),
           daily_deaths_avg3 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2) ) / 3, digits = 1 ), # average of daily deaths of 3 last days
           daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+
-                                          lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5) ) / 6, digits = 1 )  # average of dayly deaths of 6 last days
-          # daily_deaths_avg6b =  round( mean( daily_deaths, lag(daily_deaths,1),lag(daily_deaths,2),lag(daily_deaths,3),
-          #                                lag(daily_deaths,4),lag(daily_deaths,5), na.rm = TRUE ), digits = 1 ) # average of dayly deaths of 6 last days
-          )
+                                          lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5) ) / 6, digits = 1 ),  # average of dayly deaths of 6 last days
+          deaths_cum_last_week = ( deceased + lag(deceased,1) + lag(deceased,2) + lag(deceased,3) + lag(deceased,4) + lag(deceased,5) + lag(deceased,6) ) / 7,  
+          deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)  
+  )
 
 # Remove last -usually incomplete- day
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != filter_date) %>% arrange(date)
@@ -96,8 +96,13 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_
 
 write.csv(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
 
-prov_cat <- data_cases_sp_provinces %>% filter( ccaa != "Cataluña") %>% group_by(date) %>% summary( muertes_cat = sum(deceased) )
-
+prov_cat <- data_cases_sp_provinces %>% filter( ccaa == "Cataluña"  & date > as.Date("2020-03-02") ) %>% 
+  group_by(date ) %>% summarise( tot_menos_bc = sum(deceased, na.rm = TRUE) )
+catalunya_datadista <- data_all_export %>% filter( region == "Cataluña" & date > as.Date("2020-03-02") &  date < as.Date("2020-04-12") ) %>% select(date,deceassed)
+catalunya_datadista$tot_menos_bcn <- prov_cat$tot_menos_bc
+catalunya_datadista <- as.data.frame(catalunya_datadista)
+catalunya_datadista$deaths_bcn <- catalunya_datadista$deceassed - catalunya_datadista$tot_menos_bc
+catalunya_datadista$province <- "Barcelona"
 
 # colors ---------
 # extends color paletter
@@ -105,9 +110,9 @@ library(RColorBrewer)
 # creates extended color palette https://www.r-bloggers.com/how-to-expand-color-palette-with-ggplot-and-rcolorbrewer/
 colourCount <- length(unique(data_cases_sp_provinces$ccaa))
 getPalette <- colorRampPalette(brewer.pal(9, "Set1"))
-colors <- getPalette(colourCount )
+colors_prov <- getPalette(colourCount )
 # Change yellow to blue
-colors[12] <- "#84d3e7"
+colors_prov[12] <- "#84d3e7"
 
 # Plots --------------------
 # / 1. Cases ------------
@@ -251,7 +256,7 @@ data_cases_sp_provinces %>%
                       segment.size = 0.1,
                       segment.color="#777777"
   ) +
-  scale_color_manual(values = colors) +
+  scale_color_manual(values = colors_prov) +
   scale_y_continuous(
     limits = c(0,max(data_cases_sp_provinces$cases_accumulated)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
@@ -305,7 +310,7 @@ data_cases_sp_provinces %>%
   segment.size = 0.1,
   segment.color="#777777"
   ) +
-  scale_color_manual(values = colors) +
+  scale_color_manual(values = colors_prov) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
                  limits = c(1,max(data_cases_sp_provinces$cases_accumulated)),
                  # breaks = c(1,10,100,1000),
@@ -347,7 +352,7 @@ data_cases_sp_provinces %>%
           segment.size = 0.1,
           segment.color="#333333"
   ) +
-  scale_color_manual(values = colors) +
+  scale_color_manual(values = colors_prov) +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".",small.mark = ",", scientific = FALSE),
                  ) +
   scale_x_date(date_breaks = "1 day", 
@@ -388,13 +393,13 @@ data_cases_sp_provinces %>%
                               segment.color="#333333"
                               # xlim  = c(as.Date(max(dates.count.barrio.room$fechab)),as.Date("2020-01-4"))
                       ) +
-  scale_color_manual(values = colors) +
+  scale_color_manual(values = colors_prov) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
                  limits = c(1,max(data_cases_sp_provinces$cases_per_cienmil)),
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 10)),
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 13)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -669,7 +674,7 @@ data_cases_sp_provinces %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
-  scale_color_manual(values = colors) +
+  scale_color_manual(values = colors_prov) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date + 7)),
@@ -705,7 +710,7 @@ data_cases_sp_provinces %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
-  scale_color_manual(values = colors) +
+  scale_color_manual(values = colors_prov) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
                  minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
                  expand = c(0,0.1) ) +
@@ -749,7 +754,7 @@ data_cases_sp_provinces %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
-  scale_color_manual(values = colors) +
+  scale_color_manual(values = colors_prov) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +9)),
@@ -786,7 +791,7 @@ data_cases_sp_provinces %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
-  scale_color_manual(values = colors) +
+  scale_color_manual(values = colors_prov) +
   coord_cartesian( 
     ylim=c(0.05, max(data_cases_sp_provinces[!is.na(data_cases_sp_provinces$deceassed_per_100000),]$deceassed_per_100000)*1.05 )
   ) +
@@ -954,7 +959,7 @@ data_cases_sp_provinces %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
-  scale_color_manual(values = colors) +
+  scale_color_manual(values = colors_prov) +
   # coord_cartesian(
   #   ylim = c(1,500)
   # ) +
@@ -998,7 +1003,7 @@ data_cases_sp_provinces %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
-  scale_color_manual(values = colors) +
+  scale_color_manual(values = colors_prov) +
   coord_cartesian(
     ylim = c(1,500)
   ) +
@@ -1066,7 +1071,7 @@ data_cases_sp_provinces %>%
                   segment.size = 0.5,
                   segment.color="#777777"
   ) +
-  scale_color_manual(values = colors) +
+  scale_color_manual(values = colors_prov) +
   # coord_cartesian(
   #   ylim = c(1,500)
   # ) +
@@ -1134,7 +1139,7 @@ data_cases_sp_provinces %>%
                   segment.size = 0.5,
                   segment.color="#777777"
   ) +
-  scale_color_manual(values = colors) +
+  scale_color_manual(values = colors_prov) +
   coord_cartesian(
     ylim = c(1,500)
   ) +
@@ -1219,7 +1224,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   #                 segment.size = 0.5,
   #                 segment.color="#777777"
   # ) +
-  scale_color_manual(values = colors) +
+  scale_color_manual(values = colors_prov) +
   # coord_cartesian(
   #   ylim = c(1,500)
   # ) +
@@ -1250,3 +1255,49 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   dev.off()
 }
 
+
+# 7. Deaths vs weekly deaths ------
+# log --------
+png(filename=paste("img/spain/regions/covid19_trayectoria-provincia-superpuesto-log.png", sep = ""),width = 1500,height = 1000)
+data_cases_sp_provinces %>%
+  ggplot() +
+  geom_line(aes(deaths_cum_last_week,deaths_last_week,group=province), size= 0.4 ) +
+  geom_point(aes(deaths_cum_last_week,deaths_last_week ), size= 0.2 ) +
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
+                  aes(deaths_cum_last_week,deaths_last_week, color=ccaa, label= province ),
+                  nudge_x = 0.6, # adjust the starting y position of the text label
+                  size=4,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  facet_wrap( ~ccaa ) +
+  scale_color_manual(values = colors_prov ) +
+  scale_y_log10(
+    breaks = c(0,1,5,10,50,100,500,1000,5000 ),
+    labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  ) +
+  scale_x_log10(
+    breaks = c(0,1,5,10,50,100,500,1000,5000 ),
+    labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 19) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España",
+       subtitle = paste0("Por provincia. ", period),
+       y = "fallecidos última semana (log)",
+       x = "total de fallecidos (log)",
+       caption = paste0( caption_provincia , "| Ver web https://aatishb.com/covidtrends/" )
+  )
+       
+dev.off()
