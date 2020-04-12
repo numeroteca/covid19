@@ -104,6 +104,18 @@ catalunya_datadista <- as.data.frame(catalunya_datadista)
 catalunya_datadista$deaths_bcn <- catalunya_datadista$deceassed - catalunya_datadista$tot_menos_bc
 catalunya_datadista$province <- "Barcelona"
 
+
+catalunya_datadista$date
+data_cases_sp_provinces[  ( data_cases_sp_provinces$date > min(catalunya_datadista$date +2 ) ) & 
+                            ( data_cases_sp_provinces$date < max(catalunya_datadista$date +2 ) ) &
+                            data_cases_sp_provinces$province == "Barcelona", ]$date
+
+data_cases_sp_provinces[  ( data_cases_sp_provinces$date > min(catalunya_datadista$date +2 ) ) & 
+                          ( data_cases_sp_provinces$date < max(catalunya_datadista$date +2 ) ) &
+                           data_cases_sp_provinces$province == "Barcelona", ]$deceased <- catalunya_datadista[catalunya_datadista$date > as.Date("2020-03-05") & 
+                                                                                                                 catalunya_datadista$date < as.Date("2020-04-12") ,]$deaths_bcn
+
+
 # colors ---------
 # extends color paletter
 library(RColorBrewer)
