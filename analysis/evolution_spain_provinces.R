@@ -10,8 +10,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: ProvidencialData19. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: montera34.com | Datos: recopilado por Providencialdata19 (lab.montera34.com/covid19, bit.ly/amadrinaunaccaa)"
-period <- "2020.02.27 - 04.11"
-filter_date <- as.Date("2020-04-12")
+period <- "2020.02.27 - 04.12"
+filter_date <- as.Date("2020-04-13")
 
 # Load Data ---------
 # / Population -------------
@@ -96,25 +96,35 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_
 
 write.csv(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
 
-prov_cat <- data_cases_sp_provinces %>% filter( ccaa == "Cataluña"  & date > as.Date("2020-03-02") ) %>% 
-  group_by(date ) %>% summarise( tot_menos_bc = sum(deceased, na.rm = TRUE) )
-catalunya_datadista <- data_all_export %>% filter( region == "Cataluña" & date > as.Date("2020-03-02") &  date < as.Date("2020-04-12") ) %>% select(date,deceassed)
-catalunya_datadista$tot_menos_bcn <- prov_cat$tot_menos_bc
-catalunya_datadista <- as.data.frame(catalunya_datadista)
-catalunya_datadista$deaths_bcn <- catalunya_datadista$deceassed - catalunya_datadista$tot_menos_bc
-catalunya_datadista$province <- "Barcelona"
-
-
-catalunya_datadista$date
-data_cases_sp_provinces[  ( data_cases_sp_provinces$date > min(catalunya_datadista$date +2 ) ) & 
-                            ( data_cases_sp_provinces$date < max(catalunya_datadista$date +2 ) ) &
-                            data_cases_sp_provinces$province == "Barcelona", ]$date
-
-data_cases_sp_provinces[  ( data_cases_sp_provinces$date > min(catalunya_datadista$date +2 ) ) & 
-                          ( data_cases_sp_provinces$date < max(catalunya_datadista$date +2 ) ) &
-                           data_cases_sp_provinces$province == "Barcelona", ]$deceased <- catalunya_datadista[catalunya_datadista$date > as.Date("2020-03-05") & 
-                                                                                                                 catalunya_datadista$date < as.Date("2020-04-12") ,]$deaths_bcn
-
+# Add missin Barcelona data
+# prov_cat <- data_cases_sp_provinces %>% filter( ccaa == "Cataluña"  & date > as.Date("2020-03-02") ) %>% 
+#   group_by(date ) %>% summarise( tot_menos_bc = sum(deceased, na.rm = TRUE) )
+# catalunya_datadista <- data_all_export %>% filter( region == "Cataluña" & date > as.Date("2020-03-02") &  date < as.Date("2020-04-12") ) %>% select(date,deceassed)
+# catalunya_datadista$tot_menos_bcn <- prov_cat$tot_menos_bc
+# catalunya_datadista <- as.data.frame(catalunya_datadista)
+# catalunya_datadista$deaths_bcn <- catalunya_datadista$deceassed - catalunya_datadista$tot_menos_bc
+# catalunya_datadista$province <- "Barcelona"
+# 
+# 
+# catalunya_datadista$date
+# data_cases_sp_provinces[  ( data_cases_sp_provinces$date > min(catalunya_datadista$date +2 ) ) & 
+#                             ( data_cases_sp_provinces$date < max(catalunya_datadista$date +2 ) ) &
+#                             data_cases_sp_provinces$province == "Barcelona", ]$date
+# 
+# data_cases_sp_provinces[  ( data_cases_sp_provinces$date > min(catalunya_datadista$date +2 ) ) & 
+#                           ( data_cases_sp_provinces$date < max(catalunya_datadista$date +2 ) ) &
+#                            data_cases_sp_provinces$province == "Barcelona", ]$deceased <- catalunya_datadista[catalunya_datadista$date > as.Date("2020-03-05") & 
+#                                                                                                                  catalunya_datadista$date < as.Date("2020-04-12") ,]$deaths_bcn
+# data_cases_sp_provinces <- data_cases_sp_provinces %>% 
+#   group_by(province) %>% arrange(date) %>% 
+#   mutate( daily_deaths = deceased - lag(deceased),
+#           daily_deaths_inc = round((deceased - lag(deceased)) /lag(deceased) * 100, digits = 1),
+#           daily_deaths_avg3 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2) ) / 3, digits = 1 ), # average of daily deaths of 3 last days
+#           daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+
+#                                           lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5) ) / 6, digits = 1 ),  # average of dayly deaths of 6 last days
+#           deaths_cum_last_week = ( deceased + lag(deceased,1) + lag(deceased,2) + lag(deceased,3) + lag(deceased,4) + lag(deceased,5) + lag(deceased,6) ) / 7,  
+#           deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)  
+#   )
 
 # colors ---------
 # extends color paletter
@@ -675,7 +685,7 @@ data_cases_sp_provinces %>%
   geom_line(aes(date, deceased,group=province, color=ccaa), size= 1 ) +
   geom_point(aes(date, deceased, color=ccaa), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, 
-                               date==max(data_cases_sp_provinces$date) & deceased > 70 
+                               date==max(data_cases_sp_provinces$date) & deceased > 200 
                                ), 
                   aes(date, deceased, color=ccaa, label=paste(format(deceased, nsmall=1, big.mark="."),province)),
                   nudge_x = 2, # adjust the starting y position of the text label
@@ -1192,6 +1202,8 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   print(prov)
   if (i == 8 ) {
     png(filename=paste0("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-log_media-", tolower( substr(prov,1,4) ),"leon.png", sep = ""),width = 1200,height = 800)
+  } else if (i == 18 ) {
+    png(filename=paste0("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-log_media-pais.png", sep = ""),width = 1200,height = 800)
   } else {
     png(filename=paste0("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-log_media-", tolower( substr(prov,1,4) ),".png", sep = ""),width = 1200,height = 800)
   }
@@ -1270,14 +1282,17 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
 
 # 7. Deaths vs weekly deaths ------
 # log --------
-png(filename=paste("img/spain/regions/covid19_trayectoria-provincia-superpuesto-log.png", sep = ""),width = 1500,height = 1000)
+png(filename=paste("img/spain/provincias/covid19_trayectoria-provincia-facet-log.png", sep = ""),width = 1300,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
+  geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(deaths_cum_last_week,deaths_last_week,province_cp,-province),
+              aes(deaths_cum_last_week,deaths_last_week,group=province_cp), se = FALSE, span = 0.6, color="#CACACA", size=0.5 ) +
   geom_line(aes(deaths_cum_last_week,deaths_last_week,group=province), size= 0.4 ) +
-  geom_point(aes(deaths_cum_last_week,deaths_last_week ), size= 0.2 ) +
+  # geom_smooth(aes(deaths_cum_last_week,deaths_last_week,group=province), size= 0.5, se = FALSE, color = "black") +
+  # geom_point(aes(deaths_cum_last_week,deaths_last_week ), size= 0.2 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
                   aes(deaths_cum_last_week,deaths_last_week, color=ccaa, label= province ),
-                  nudge_x = 0.6, # adjust the starting y position of the text label
+                  nudge_x = 0.8, # adjust the starting y position of the text label
                   size=4,
                   # hjust=0,
                   family = "Roboto Condensed",
@@ -1303,13 +1318,61 @@ data_cases_sp_provinces %>%
     # panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
+    axis.text = element_text(size =9 ),
     legend.position = "none"
   ) +
   labs(title = "Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España",
        subtitle = paste0("Por provincia. ", period),
-       y = "fallecidos última semana (log)",
+       y = "fallecidos 7 días anteriores (log)",
        x = "total de fallecidos (log)",
-       caption = paste0( caption_provincia , "| Ver web https://aatishb.com/covidtrends/" )
+       caption = paste0( caption_provincia , " | Ver web https://aatishb.com/covidtrends/" )
   )
        
+dev.off()
+
+
+# log --------
+png(filename=paste("img/spain/provincias/covid19_trayectoria-provincia-superpuesto-log.png", sep = ""),width = 1300,height = 800)
+data_cases_sp_provinces %>%
+  ggplot() +
+  # geom_line(aes(deaths_cum_last_week,deaths_last_week,group=province,color=ccaa), size= 0.4 ) +
+  geom_smooth(aes(deaths_cum_last_week,deaths_last_week,group=province,color=ccaa), size= 0.5, se = FALSE ) +
+  # geom_point(aes(deaths_cum_last_week,deaths_last_week ), size= 0.2 ) +
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
+                  aes(deaths_cum_last_week,deaths_last_week, color=ccaa, label= province ),
+                  nudge_x = 0.8, # adjust the starting y position of the text label
+                  size=4,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_color_manual(values = colors_prov ) +
+  scale_y_log10(
+    breaks = c(0,1,5,10,50,100,500,1000,5000 ),
+    labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  ) +
+  scale_x_log10(
+    breaks = c(0,1,5,10,50,100,500,1000,5000 ),
+    labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 19) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text = element_text(size =9 ),
+    legend.position = "none"
+  ) +
+  labs(title = "Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España",
+       subtitle = paste0("Por provincia. ", period),
+       y = "fallecidos 7 días anteriores (log)",
+       x = "total de fallecidos (log)",
+       caption = paste0( caption_provincia , " | Ver web https://aatishb.com/covidtrends/" )
+  )
+
 dev.off()
