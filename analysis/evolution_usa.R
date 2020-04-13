@@ -50,7 +50,7 @@ data_us_cases$recovered_per_100000 <- ""
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_us <- "Gráfico: @numeroteca (montera34.com). Datos: covidtracking.com"
-periodo_us <- "2020.02.24 - 03.23"
+periodo_us <- "2020.02.24 - 04.01"
 # 1. Cases ------------
 
 # create temp dataframes to be able to plot all the   values in small multiples
