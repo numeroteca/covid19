@@ -27,7 +27,7 @@ data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provinc
 # Create date variable
 data_cases_sp_provinces$date  <- as.Date(data_cases_sp_provinces$date)
 
-# Agreggate Canary islands
+# Agreggate Canary islands -------
 canarias <- data_cases_sp_provinces %>% filter( ccaa == "Canarias")
 names(canarias)
 # Group by province
@@ -66,10 +66,42 @@ data_cases_sp_provinces <-  data_cases_sp_provinces %>% filter( ccaa != "Canaria
 # Add Canarias
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,canarias_bind)
 
-# add population data
-data_cases_sp_provinces <- merge( data_cases_sp_provinces, select(provincias_poblacion,provincia,poblacion,ine_code), by.x = "province", by.y = "provincia", all = TRUE   )
-
+# Remove last -usually incomplete- day
 data_cases_sp_provinces <- filter(data_cases_sp_provinces, !is.na(date))
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != filter_date) %>% arrange(date)
+
+# Add missin Barcelona data -------- 
+# # Do not use as data have been hasd coded in the original data
+# #  select all the cataluña provinces (Barcelona is not available) to calculate how many deaths
+# prov_cat <- data_cases_sp_provinces %>% filter( ccaa == "Cataluña" & province != "Barcelona"  & date > as.Date("2020-03-08") ) %>%
+#   group_by(date ) %>% summarise( tot_menos_bc = sum(deceased, na.rm = TRUE) )
+# prov_cat$date
+# # selects dates of DAtadista database for Cataluña region
+# catalunya_datadista <- data_all_export %>% filter( region == "Cataluña" & date > as.Date("2020-03-08") &  date < as.Date("2020-04-13") ) %>%
+#   select(date,deceassed)
+# catalunya_datadista$date
+# # insert Cataluña deaths bu Barcelona
+# catalunya_datadista$tot_menos_bcn <- prov_cat$tot_menos_bc
+# catalunya_datadista <- as.data.frame(catalunya_datadista)
+# # calculates Barcelona deaths
+# catalunya_datadista$deaths_bcn <- catalunya_datadista$deceassed - catalunya_datadista$tot_menos_bc
+# catalunya_datadista$province <- "Barcelona"
+# 
+# # compare dates to see they are the same
+# catalunya_datadista[catalunya_datadista$date > as.Date("2020-03-05") &
+#                       catalunya_datadista$date < as.Date("2020-04-13") ,]$date
+# data_cases_sp_provinces[  ( data_cases_sp_provinces$date > min(catalunya_datadista$date +2 ) ) &
+#                             ( data_cases_sp_provinces$date < as.Date("2020-04-13") ) &
+#                             data_cases_sp_provinces$province == "Barcelona", ]$date
+# 
+# # inserts Barcelona deaths
+# data_cases_sp_provinces[  ( data_cases_sp_provinces$date > min(catalunya_datadista$date +2 ) ) &
+#                             ( data_cases_sp_provinces$date < as.Date("2020-04-13") ) &
+#                             data_cases_sp_provinces$province == "Barcelona", ]$deceased <- catalunya_datadista[catalunya_datadista$date > as.Date("2020-03-05") &
+#                                                                                                                  catalunya_datadista$date < as.Date("2020-04-13") ,]$deaths_bcn
+
+# add population data -----
+data_cases_sp_provinces <- merge( data_cases_sp_provinces, select(provincias_poblacion,provincia,poblacion,ine_code), by.x = "province", by.y = "provincia", all = TRUE   )
 
 # calculate values per 
 data_cases_sp_provinces$cases_per_cienmil <- round( data_cases_sp_provinces$cases_accumulated / data_cases_sp_provinces$poblacion * 100000, digits = 2)
@@ -88,43 +120,11 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
           deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)  
   )
 
-# Remove last -usually incomplete- day
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != filter_date) %>% arrange(date)
-
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_code,everything()) %>%
                                                   select(-source,-comments,source,comments)
 
 write.csv(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
 
-# Add missin Barcelona data
-# prov_cat <- data_cases_sp_provinces %>% filter( ccaa == "Cataluña"  & date > as.Date("2020-03-02") ) %>% 
-#   group_by(date ) %>% summarise( tot_menos_bc = sum(deceased, na.rm = TRUE) )
-# catalunya_datadista <- data_all_export %>% filter( region == "Cataluña" & date > as.Date("2020-03-02") &  date < as.Date("2020-04-12") ) %>% select(date,deceassed)
-# catalunya_datadista$tot_menos_bcn <- prov_cat$tot_menos_bc
-# catalunya_datadista <- as.data.frame(catalunya_datadista)
-# catalunya_datadista$deaths_bcn <- catalunya_datadista$deceassed - catalunya_datadista$tot_menos_bc
-# catalunya_datadista$province <- "Barcelona"
-# 
-# 
-# catalunya_datadista$date
-# data_cases_sp_provinces[  ( data_cases_sp_provinces$date > min(catalunya_datadista$date +2 ) ) & 
-#                             ( data_cases_sp_provinces$date < max(catalunya_datadista$date +2 ) ) &
-#                             data_cases_sp_provinces$province == "Barcelona", ]$date
-# 
-# data_cases_sp_provinces[  ( data_cases_sp_provinces$date > min(catalunya_datadista$date +2 ) ) & 
-#                           ( data_cases_sp_provinces$date < max(catalunya_datadista$date +2 ) ) &
-#                            data_cases_sp_provinces$province == "Barcelona", ]$deceased <- catalunya_datadista[catalunya_datadista$date > as.Date("2020-03-05") & 
-#                                                                                                                  catalunya_datadista$date < as.Date("2020-04-12") ,]$deaths_bcn
-# data_cases_sp_provinces <- data_cases_sp_provinces %>% 
-#   group_by(province) %>% arrange(date) %>% 
-#   mutate( daily_deaths = deceased - lag(deceased),
-#           daily_deaths_inc = round((deceased - lag(deceased)) /lag(deceased) * 100, digits = 1),
-#           daily_deaths_avg3 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2) ) / 3, digits = 1 ), # average of daily deaths of 3 last days
-#           daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+
-#                                           lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5) ) / 6, digits = 1 ),  # average of dayly deaths of 6 last days
-#           deaths_cum_last_week = ( deceased + lag(deceased,1) + lag(deceased,2) + lag(deceased,3) + lag(deceased,4) + lag(deceased,5) + lag(deceased,6) ) / 7,  
-#           deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)  
-#   )
 
 # colors ---------
 # extends color paletter
@@ -421,7 +421,7 @@ data_cases_sp_provinces %>%
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 13)),
+               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 18)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -805,7 +805,7 @@ data_cases_sp_provinces %>%
   geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & deceassed_per_100000 > 7), 
                   aes(date, deceassed_per_100000, color=ccaa, 
                       label=paste(format(deceassed_per_100000, nsmall=1, big.mark="."),province)),
-                  nudge_x = 5, # adjust the starting y position of the text label
+                  nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",

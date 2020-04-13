@@ -17,7 +17,6 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-02-27,Madrid,"Madrid, Comunidad de",,,,,,4,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-02-27,Melilla,Melilla,,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-02-27,Murcia,"Murcia, Región de",,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-02-27,Navarra,"Navarra, Comunidad Foral de",,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-02-27,Araba/Álava,País Vasco,0,,,,,0,,https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,
 2020-02-27,Bizkaia,País Vasco,0,,,,,0,,https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,
 2020-02-27,Gipuzkoa,País Vasco,0,,,,,0,,https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,
@@ -29,7 +28,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-02-28,Madrid,"Madrid, Comunidad de",,,,,,5,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-02-28,Melilla,Melilla,,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-02-28,Murcia,"Murcia, Región de",,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-02-28,Navarra,"Navarra, Comunidad Foral de",,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-02-27,Navarra,"Navarra, Comunidad Foral de",,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-02-28,Araba/Álava,País Vasco,0,,,,,0,,https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,
 2020-02-28,Bizkaia,País Vasco,0,,,,,0,,https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,
 2020-02-28,Gipuzkoa,País Vasco,0,,,,,0,,https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,
@@ -46,7 +45,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-02-29,Madrid,"Madrid, Comunidad de",,,,,,8,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-02-29,Melilla,Melilla,,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-02-29,Murcia,"Murcia, Región de",,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-02-29,Navarra,"Navarra, Comunidad Foral de",,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-02-28,Navarra,"Navarra, Comunidad Foral de",,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-02-29,"Rioja, La","Rioja, La",,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-01,Barcelona,Cataluña,,,,,,4,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
 2020-03-01,Girona,Cataluña,,,,,,3,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
@@ -62,7 +61,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-01,Madrid,"Madrid, Comunidad de",,,,,,10,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-01,Melilla,Melilla,,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-01,Murcia,"Murcia, Región de",,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-01,Navarra,"Navarra, Comunidad Foral de",,,,,,1,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-02-29,Navarra,"Navarra, Comunidad Foral de",,,,,,1,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-01,"Rioja, La","Rioja, La",,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-02,Barcelona,Cataluña,,,,,,6,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
 2020-03-02,Girona,Cataluña,,,,,,4,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
@@ -78,7 +77,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-02,Madrid,"Madrid, Comunidad de",,,,,,29,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-02,Melilla,Melilla,,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-02,Murcia,"Murcia, Región de",,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-02,Navarra,"Navarra, Comunidad Foral de",,,,,,1,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-01,Navarra,"Navarra, Comunidad Foral de",,,,,,1,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-02,"Rioja, La","Rioja, La",,,,,,1,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-03,Zaragoza,Aragón,,,,0,0,0,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/relmenu.9/id.256887,
 2020-03-03,Barcelona,Cataluña,,,,,,7,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
@@ -94,7 +93,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-03,Madrid,"Madrid, Comunidad de",,,,,0,49,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-03,Melilla,Melilla,,,,,0,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-03,Murcia,"Murcia, Región de",,,,,0,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-03,Navarra,"Navarra, Comunidad Foral de",,,,,0,1,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-02,Navarra,"Navarra, Comunidad Foral de",,,,,0,1,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-03,"Rioja, La","Rioja, La",,,,,0,3,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-04,Zaragoza,Aragón,1,,,0,0,1,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/relmenu.9/id.256887,
 2020-03-04,Girona,Cataluña,,,,,,6,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
@@ -110,7 +109,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-04,Madrid,"Madrid, Comunidad de",,,,2,0,70,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-04,Melilla,Melilla,,,,0,0,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-04,Murcia,"Murcia, Región de",,,,0,0,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-04,Navarra,"Navarra, Comunidad Foral de",,,,1,0,3,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-03,Navarra,"Navarra, Comunidad Foral de",,,,1,0,3,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-04,"Rioja, La","Rioja, La",,,,0,0,7,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-05,Zaragoza,Aragón,,,,,0,6,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/relmenu.9/id.256994,
 2020-03-05,El Hierro,Canarias,,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-confirma-un-total-de-9-casos-activos-de-coronavirus-covid-19/,
@@ -120,6 +119,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-05,La Palma,Canarias,,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-confirma-un-total-de-9-casos-activos-de-coronavirus-covid-19/,
 2020-03-05,Lanzarote,Canarias,,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-confirma-un-total-de-9-casos-activos-de-coronavirus-covid-19/,
 2020-03-05,Tenerife,Canarias,,,,,0,7,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-confirma-un-total-de-9-casos-activos-de-coronavirus-covid-19/,
+2020-03-04,Barcelona,Cataluña,,,,,,,,https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
 2020-03-05,Barcelona,Cataluña,,,,,,10,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
 2020-03-05,Badajoz,Extremadura,0,,,0,0,4,0,http://www.juntaex.es/comunicacion/noticia?idPub=29866#.XnOUWnJ7mM8,
 2020-03-05,Cáceres,Extremadura,0,,,0,0,2,0,http://www.juntaex.es/comunicacion/noticia?idPub=29866#.XnOUWnJ7mM9,
@@ -133,7 +133,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-05,Madrid,"Madrid, Comunidad de",,,,2,1,90,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-05,Melilla,Melilla,,,,0,0,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-05,Murcia,"Murcia, Región de",,,,0,0,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-05,Navarra,"Navarra, Comunidad Foral de",,,,1,0,3,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-04,Navarra,"Navarra, Comunidad Foral de",,,,1,0,3,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-05,"Rioja, La","Rioja, La",,,,0,0,11,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-06,Zaragoza,Aragón,3,8,5,0,1,9,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/relmenu.9/id.256994,
 2020-03-06,El Hierro,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-15-casos-activos-de-coronavirus-covid-19-en-canarias-y-tres-altas/,
@@ -156,7 +156,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-06,Madrid,"Madrid, Comunidad de",,,,2,2,137,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-06,Melilla,Melilla,,,,0,0,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-06,Murcia,"Murcia, Región de",,,,0,0,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-06,Navarra,"Navarra, Comunidad Foral de",,,,1,0,3,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-05,Navarra,"Navarra, Comunidad Foral de",,,,1,0,3,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-06,"Rioja, La","Rioja, La",,,,0,0,29,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-07,Zaragoza,Aragón,2,10,8,0,1,11,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/relmenu.9/id.257000,
 2020-03-07,El Hierro,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-18-casos-positivos-en-coronavirus-covid-19-y-tres-altas/,
@@ -179,7 +179,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-07,Madrid,"Madrid, Comunidad de",,,,,4,174,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-07,Melilla,Melilla,,,,,0,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-07,Murcia,"Murcia, Región de",,,,,0,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-07,Navarra,"Navarra, Comunidad Foral de",,,,,0,3,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-06,Navarra,"Navarra, Comunidad Foral de",,,,,0,3,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-07,"Rioja, La","Rioja, La",,,,,0,39,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-08,Zaragoza,Aragón,10,19,13,3,2,21,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/relmenu.9/id.257023,
 2020-03-08,El Hierro,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/canarias-constata-17-casos-activos-de-coronavirus-covid-19-tras-el-alta-de-dos-pacientes-el-domingo/,
@@ -202,7 +202,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-08,Madrid,"Madrid, Comunidad de",,,,,8,202,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-08,Melilla,Melilla,,,,,0,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-08,Murcia,"Murcia, Región de",,,,,0,1,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-08,Navarra,"Navarra, Comunidad Foral de",,,,,0,3,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-07,Navarra,"Navarra, Comunidad Foral de",,,,,0,3,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-08,"Rioja, La","Rioja, La",,,,,0,55,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-09,Teruel,Aragón,,,,,0,0,,https://www.lacomarca.net/tres-casos-coronavirus-residencia-ancianos-provincia-teruel/,
 2020-03-09,Zaragoza,Aragón,9,28,14,,2,30,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/relmenu.9/id.257068,
@@ -213,7 +213,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-09,La Palma,Canarias,0,,,,0,2,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-20-casos-activos-de-coronavirus-covid-19-y-cinco-altas/,
 2020-03-09,Lanzarote,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-20-casos-activos-de-coronavirus-covid-19-y-cinco-altas/,
 2020-03-09,Tenerife,Canarias,1,,,,0,13,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-20-casos-activos-de-coronavirus-covid-19-y-cinco-altas/,
-2020-03-09,Barcelona,Cataluña,,,,,,50,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-09,Barcelona,Cataluña,,,,,1,50,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-09,Lleida,Cataluña,,,,,,1,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-09,Badajoz,Extremadura,0,,,0,0,4,0,,
 2020-03-09,Cáceres,Extremadura,1,,,0,0,3,1,https://www.hoy.es/prov-caceres/extremadura-registra-nuevo-20200309134239-nt.html,
@@ -227,7 +227,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-09,Madrid,"Madrid, Comunidad de",,,,53,8,469,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-09,Melilla,Melilla,,,,0,0,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-09,Murcia,"Murcia, Región de",,,,0,0,4,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-09,Navarra,"Navarra, Comunidad Foral de",,,,1,0,3,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-08,Navarra,"Navarra, Comunidad Foral de",,,,1,0,3,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-09,"Rioja, La","Rioja, La",,,,1,0,81,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-10,Teruel,Aragón,3,,3,,0,3,,https://www.lacomarca.net/tres-casos-coronavirus-residencia-ancianos-provincia-teruel/,
 2020-03-10,Zaragoza,Aragón,6,33,16,,3,36,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/relmenu.9/id.257233,
@@ -238,7 +238,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-10,La Palma,Canarias,0,,,,0,2,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-28-casos-activos-de-coronavirus-covid-19-y-cinco-altas-en-canarias/,
 2020-03-10,Lanzarote,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-28-casos-activos-de-coronavirus-covid-19-y-cinco-altas-en-canarias/,
 2020-03-10,Tenerife,Canarias,7,,,,0,20,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-28-casos-activos-de-coronavirus-covid-19-y-cinco-altas-en-canarias/,
-2020-03-10,Barcelona,Cataluña,,,,,,86,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-10,Barcelona,Cataluña,,,,,3,86,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-10,Lleida,Cataluña,,,,,,3,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-10,Badajoz,Extremadura,1,,,0,0,5,0,http://www.juntaex.es/comunicacion/noticia?idPub=29900#.XnOVMnJ7mM8,
 2020-03-10,Cáceres,Extremadura,0,,,0,0,3,1,http://www.juntaex.es/comunicacion/noticia?idPub=29900#.XnOVMnJ7mM9,
@@ -252,7 +252,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-10,Madrid,"Madrid, Comunidad de",,,,77,21,782,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-10,Melilla,Melilla,,,,0,0,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-10,Murcia,"Murcia, Región de",,,,0,0,9,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-10,Navarra,"Navarra, Comunidad Foral de",,,,2,0,12,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-09,Navarra,"Navarra, Comunidad Foral de",,,,2,0,12,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-10,"Rioja, La","Rioja, La",,,,1,1,144,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-11,Huesca,Aragón,,,,,0,0,,https://www.heraldo.es/noticias/aragon/huesca/2020/03/12/el-concejal-de-vox-en-huesca-primer-caso-de-coronavirus-conocido-en-la-provincia-1363617.html,
 2020-03-11,Teruel,Aragón,0,3,3,,0,3,,http://www.aragonhoy.net/index.php/mod.noticias/mem.detalle/relmenu.9/id.257332,
@@ -264,7 +264,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-11,La Palma,Canarias,0,,,,0,2,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-46-casos-activos-de-coronavirus-covid-19-y-5-altas/,
 2020-03-11,Lanzarote,Canarias,0,,,,0,0,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-46-casos-activos-de-coronavirus-covid-19-y-5-altas/,
 2020-03-11,Tenerife,Canarias,14,,,,0,34,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-46-casos-activos-de-coronavirus-covid-19-y-5-altas/,
-2020-03-11,Barcelona,Cataluña,,,,,,144,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-11,Barcelona,Cataluña,,,,,3,144,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-11,Girona,Cataluña,,,,,,21,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-11,Lleida,Cataluña,,,,,,4,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-11,Tarragona,Cataluña,4,,,,0,4,,https://tarragonadigital.com/area-metropolitana/cas-coronavirus-tarragona,
@@ -280,7 +280,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-11,Madrid,"Madrid, Comunidad de",,,,102,31,1024,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-11,Melilla,Melilla,,,,0,0,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-11,Murcia,"Murcia, Región de",,,,0,0,11,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-11,Navarra,"Navarra, Comunidad Foral de",,,,3,0,46,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-10,Navarra,"Navarra, Comunidad Foral de",34,46,10,5,0,46,0,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,los activos son de flourish de rtve
 2020-03-11,"Rioja, La","Rioja, La",,,,1,2,179,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-12,Huesca,Aragón,1,,,,0,1,,https://www.heraldo.es/noticias/aragon/huesca/2020/03/12/el-concejal-de-vox-en-huesca-primer-caso-de-coronavirus-conocido-en-la-provincia-1363617.html,
 2020-03-12,Teruel,Aragón,,,,,0,4,,https://www.diariodeteruel.es/noticia.asp?notid=1022484,
@@ -292,7 +292,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-12,La Palma,Canarias,0,,,,0,2,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-63-casos-activos-de-coronavirus-covid-19-y-7-altas/,
 2020-03-12,Lanzarote,Canarias,2,,,,0,2,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-63-casos-activos-de-coronavirus-covid-19-y-7-altas/,
 2020-03-12,Tenerife,Canarias,16,,,,0,50,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-63-casos-activos-de-coronavirus-covid-19-y-7-altas/,
-2020-03-12,Barcelona,Cataluña,,,,,,289,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-12,Barcelona,Cataluña,,,,,4,289,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-12,Girona,Cataluña,3,,,,,24,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-12,Lleida,Cataluña,,,,,,17,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-12,Tarragona,Cataluña,3,,,,0,7,,https://tarragonadigital.com/area-metropolitana/set-casos-coronavirus-tarragona-marc-2020,
@@ -308,7 +308,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-12,Madrid,"Madrid, Comunidad de",,,,135,56,1388,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-12,Melilla,Melilla,,,,0,0,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-12,Murcia,"Murcia, Región de",,,,1,0,26,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-12,Navarra,"Navarra, Comunidad Foral de",,,,3,0,73,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-11,Navarra,"Navarra, Comunidad Foral de",27,73,17,5,0,73,0,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-12,"Rioja, La","Rioja, La",,,,1,2,205,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-13,Almería,Andalucía,0,,,0,0,9,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
 2020-03-13,Cádiz,Andalucía,1,,,1,0,19,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233232.html,
@@ -342,7 +342,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-13,Soria,Castilla y León,1,,,,0,1,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-13,Valladolid,Castilla y León,7,,,,0,11,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-13,Zamora,Castilla y León,3,,,,0,5,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-03-13,Barcelona,Cataluña,,,,,,477,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-13,Barcelona,Cataluña,,,,,4,477,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-13,Girona,Cataluña,8,,,,,32,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-13,Lleida,Cataluña,,,,,,26,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-13,Tarragona,Cataluña,1,,,,0,8,,https://www.naciodigital.cat/tarragona/noticia/35741/ja/son/vuit/infectats/coronavirus/al/camp/tarragona,
@@ -361,7 +361,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-13,Madrid,"Madrid, Comunidad de",,,,180,81,1990,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-13,Melilla,Melilla,,,,0,0,2,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-13,Murcia,"Murcia, Región de",,,,1,0,35,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-13,Navarra,"Navarra, Comunidad Foral de",,,,4,0,130,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-12,Navarra,"Navarra, Comunidad Foral de",57,130,28,6,0,130,0,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-13,"Rioja, La","Rioja, La",,,,2,2,243,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-14,Almería,Andalucía,0,,,0,0,14,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
 2020-03-14,Cádiz,Andalucía,7,,,1,0,29,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233259.html,Comunicado a las 20h.
@@ -395,7 +395,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-14,Soria,Castilla y León,3,,,,0,4,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-14,Valladolid,Castilla y León,10,,,,0,21,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-14,Zamora,Castilla y León,0,,,,0,5,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-03-14,Barcelona,Cataluña,,,,,,825,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-14,Barcelona,Cataluña,,,,,6,825,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-14,Girona,Cataluña,3,,,,,35,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-14,Lleida,Cataluña,,,,,,34,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-14,Tarragona,Cataluña,11,,,,0,19,,http://reusdigital.cat/noticies/el-camp/cinc-nou-casos-eleven-dinou-els-positius-coronavirus-la-demarcacio-de-tarragona,
@@ -414,7 +414,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-14,Madrid,"Madrid, Comunidad de",,,,,86,2940,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-14,Melilla,Melilla,,,,,0,3,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-14,Murcia,"Murcia, Región de",,,,,0,47,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-14,Navarra,"Navarra, Comunidad Foral de",,,,,0,146,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-13,Navarra,"Navarra, Comunidad Foral de",16,146,28,7,0,146,0,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-14,"Rioja, La","Rioja, La",,,,,3,278,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-15,Almería,Andalucía,1,,,0,0,14,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
 2020-03-15,Cádiz,Andalucía,8,,,1,0,34,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233263.html,Comunicado a las 9h.
@@ -448,7 +448,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-15,Soria,Castilla y León,1,,,,0,5,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-15,Valladolid,Castilla y León,19,,,,0,40,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-15,Zamora,Castilla y León,3,,,,0,8,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-03-15,Barcelona,Cataluña,,,,,,1239,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-15,Barcelona,Cataluña,,,,,8,1239,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-15,Girona,Cataluña,13,,,,,48,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-15,Lleida,Cataluña,,,,,,36,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-15,Tarragona,Cataluña,5,,,,0,24,,https://tarragonadigital.com/area-metropolitana/minut-minut-coronavirus-tarragona-15-marc,
@@ -467,7 +467,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-15,Madrid,"Madrid, Comunidad de",,,,,213,3544,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-15,Melilla,Melilla,,,,,0,8,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-15,Murcia,"Murcia, Región de",,,,,0,71,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-15,Navarra,"Navarra, Comunidad Foral de",,,,,0,183,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-14,Navarra,"Navarra, Comunidad Foral de",37,182,34,9,1,183,0,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-15,"Rioja, La","Rioja, La",,,,,3,300,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-16,Almería,Andalucía,3,,,1,0,26,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
 2020-03-16,Cádiz,Andalucía,3,,,1,0,56,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233307.html,Comunicado a las 9h.
@@ -501,7 +501,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-16,Soria,Castilla y León,5,,,,0,10,1,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-16,Valladolid,Castilla y León,16,,,,0,56,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-16,Zamora,Castilla y León,4,,,,0,12,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-03-16,Barcelona,Cataluña,,,,,,1753,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-16,Barcelona,Cataluña,,,,,12,1753,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-16,Girona,Cataluña,17,,,,,65,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-16,Lleida,Cataluña,,,,,,41,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-16,Tarragona,Cataluña,7,,,,0,31,,https://www.diarimes.com/noticies/tarragona/2020/03/16/sis_nous_casos_eleven_els_positius_per_coronavirus_demarcacio_tarragona_78459_1091.html,
@@ -520,7 +520,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-16,Madrid,"Madrid, Comunidad de",,,,253,213,4165,474,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-16,Melilla,Melilla,,,,0,0,8,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-16,Murcia,"Murcia, Región de",,,,2,0,77,1,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-16,Navarra,"Navarra, Comunidad Foral de",,,,5,1,274,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-15,Navarra,"Navarra, Comunidad Foral de",91,273,58,11,1,274,0,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-16,"Rioja, La","Rioja, La",,,,13,4,312,2,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-17,Almería,Andalucía,3,,,,0,26,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
 2020-03-17,Cádiz,Andalucía,3,,,,0,56,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233362.html,
@@ -554,7 +554,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-17,Soria,Castilla y León,7,,,,2,17,2,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-17,Valladolid,Castilla y León,18,,,,0,74,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-17,Zamora,Castilla y León,4,,,,0,16,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-03-17,Barcelona,Cataluña,,,,,,2319,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-17,Barcelona,Cataluña,,,,,15,2319,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-17,Girona,Cataluña,38,,,,1,103,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-17,Lleida,Cataluña,,,,,1,51,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-17,Tarragona,Cataluña,10,,,,1,41,,https://tarragonadigital.com/area-metropolitana/minut-minut-coronavirus-tarragona-17-marc-2020,
@@ -573,7 +573,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-17,Madrid,"Madrid, Comunidad de",,,,340,355,4871,951,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-17,Melilla,Melilla,,,,0,0,17,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-17,Murcia,"Murcia, Región de",,,,3,0,97,1,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-17,Navarra,"Navarra, Comunidad Foral de",,,,10,2,313,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-16,Navarra,"Navarra, Comunidad Foral de",39,311,72,12,2,313,0,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-17,"Rioja, La","Rioja, La",,,,13,5,355,2,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-18,Almería,Andalucía,3,,,,0,30,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
 2020-03-18,Cádiz,Andalucía,3,,,,0,74,0,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233400.html,
@@ -602,7 +602,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-18,Soria,Castilla y León,23,,,5,4,40,4,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-18,Valladolid,Castilla y León,8,,,8,0,82,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-18,Zamora,Castilla y León,10,,,4,1,26,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-03-18,Barcelona,Cataluña,,,,,,2956,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-18,Barcelona,Cataluña,,,,,37,2956,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-18,Girona,Cataluña,31,,,,1,134,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-18,Lleida,Cataluña,,,,,2,66,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-18,Tarragona,Cataluña,0,,,,1,41,,https://www.diarimes.com/noticies/camp_tarragona/2020/03/18/cap_positiu_per_coronavirus_camp_tarragona_terres_ebre_durant_dia_avui_78632_1093.html,
@@ -621,7 +621,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-18,Madrid,"Madrid, Comunidad de",,,,491,390,5637,951,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-18,Melilla,Melilla,,,,0,0,20,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-18,Murcia,"Murcia, Región de",,,,4,0,122,1,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-18,Navarra,"Navarra, Comunidad Foral de",,,,10,3,386,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-17,Navarra,"Navarra, Comunidad Foral de",73,383,93,12,3,386,0,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-18,"Rioja, La","Rioja, La",,,,13,5,419,2,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-19,Almería,Andalucía,7,,,,0,37,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-19,Cádiz,Andalucía,15,,,,0,84,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
@@ -655,7 +655,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-19,Soria,Castilla y León,,49,,,5,58,4,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-19,Valladolid,Castilla y León,,111,,,3,115,1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-19,Zamora,Castilla y León,,29,,,1,31,1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
-2020-03-19,Barcelona,Cataluña,,,,,,3791,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-19,Barcelona,Cataluña,,,,,48,3791,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-19,Girona,Cataluña,47,,,,2,181,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-19,Lleida,Cataluña,,,,,3,78,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-19,Tarragona,Cataluña,18,,18,10,2,59,,https://infocamp.cat/arxiu-seccio-societat/item/37098-segona-mort-per-coronavirus-i-disset-nous-positius-a-la-demarcacio-de-tarragona-que-ja-en-te-59,
@@ -678,7 +678,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-19,Madrid,"Madrid, Comunidad de",,5338,,590,498,6777,941,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-19,Melilla,Melilla,,23,,0,0,23,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-19,Murcia,"Murcia, Región de",,214,,6,0,167,1,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-19,Navarra,"Navarra, Comunidad Foral de",,476,,11,4,482,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-18,Navarra,"Navarra, Comunidad Foral de",96,478,132,13,4,482,0,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-19,"Rioja, La","Rioja, La",,461,,15,5,468,2,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-20,Almería,Andalucía,,49,,,0,49,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-20,Cádiz,Andalucía,,102,,,1,103,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
@@ -712,14 +712,14 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-20,Soria,Castilla y León,,71,,,5,80,4,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-20,Valladolid,Castilla y León,,193,,,5,201,3,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-20,Zamora,Castilla y León,,42,,,1,46,3,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
-2020-03-20,Barcelona,Cataluña,,,,,,4812,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-20,Barcelona,Cataluña,,,,,73,4812,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-20,Girona,Cataluña,40,,,,4,221,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-20,Lleida,Cataluña,,,,,3,109,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-20,Tarragona,Cataluña,40,,18,10,2,99,,https://tarragonadigital.com/area-metropolitana/positius-coronavirus-tarragona-ebre-20-marc-2020,
 2020-03-20,Alicante/Alacant,Comunitat Valenciana,,348,,,17,372,7,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
 2020-03-20,Castellón/Castelló,Comunitat Valenciana,,102,,,1,104,1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
 2020-03-20,Valencia/València,Comunitat Valenciana,,600,,,15,627,12,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
-2020-03-20,Badajoz,Extremadura,14,86,12,1,0,91,4,http://www.juntaex.es/comunicacion/noticia?idPub=29953#.XnYvbXJ7mM8,http://www.juntaex.es/comunicacion/noticia?idPub=29953#.XnYvbXJ7mM8
+2020-03-20,Badajoz,Extremadura,14,87,12,1,0,91,4,http://www.juntaex.es/comunicacion/noticia?idPub=29953#.XnYvbXJ7mM8,http://www.juntaex.es/comunicacion/noticia?idPub=29953#.XnYvbXJ7mM8
 2020-03-20,Cáceres,Extremadura,42,194,29,3,10,206,2,http://www.juntaex.es/comunicacion/noticia?idPub=29953#.XnYvbXJ7mM8,http://www.juntaex.es/comunicacion/noticia?idPub=29953#.XnYvbXJ7mM8
 2020-03-20,"Coruña, A",Galicia,,267,,,3,270,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
 2020-03-20,Lugo,Galicia,,45,,,1,46,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
@@ -735,7 +735,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-20,Madrid,"Madrid, Comunidad de",,5351,,678,628,7165,1186,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-20,Melilla,Melilla,,24,,1,0,24,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-20,Murcia,"Murcia, Región de",,213,,11,0,204,1,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-20,Navarra,"Navarra, Comunidad Foral de",,582,,19,5,554,1,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-19,Navarra,"Navarra, Comunidad Foral de",72,549,172,21,5,554,0,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-20,"Rioja, La","Rioja, La",,477,,15,7,497,13,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-21,Almería,Andalucía,,53,,,0,53,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-21,Cádiz,Andalucía,,126,,,0,126,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
@@ -769,15 +769,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-21,Soria,Castilla y León,,71,,,6,119,5,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-21,Valladolid,Castilla y León,,193,,,10,241,13,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
 2020-03-21,Zamora,Castilla y León,,42,,,2,59,3,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,
-2020-03-21,Barcelona,Cataluña,,,,,,5645,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-21,Barcelona,Cataluña,,,,,106,5645,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-21,Girona,Cataluña,35,,,,11,256,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-21,Lleida,Cataluña,,,,,3,149,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-21,Tarragona,Cataluña,0,,18,10,2,99,,no hay comunicado oficial,
 2020-03-21,Alicante/Alacant,Comunitat Valenciana,,348,,,17,372,7,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
 2020-03-21,Castellón/Castelló,Comunitat Valenciana,,102,,,1,104,1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
 2020-03-21,Valencia/València,Comunitat Valenciana,,600,,,15,627,12,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
-2020-03-21,Badajoz,Extremadura,20,104,16,2,1,111,4,http://www.juntaex.es/comunicacion/noticia?idPub=29957#.XnYxUHJ7mM8,
-2020-03-21,Cáceres,Extremadura,37,231,47,4,11,243,2,http://www.juntaex.es/comunicacion/noticia?idPub=29957#.XnYxUHJ7mM8,
+2020-03-21,Badajoz,Extremadura,20,106,16,2,1,111,4,http://www.juntaex.es/comunicacion/noticia?idPub=29957#.XnYxUHJ7mM8,
+2020-03-21,Cáceres,Extremadura,37,230,47,4,11,243,2,http://www.juntaex.es/comunicacion/noticia?idPub=29957#.XnYxUHJ7mM8,
 2020-03-21,"Coruña, A",Galicia,,326,,,3,329,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
 2020-03-21,Lugo,Galicia,,53,,,1,54,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
 2020-03-21,Ourense,Galicia,,74,,,0,74,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263,¹La Xunta no especifica el lugar de las altas.
@@ -792,7 +792,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-21,Madrid,"Madrid, Comunidad de",,6931,7388,767,804,8921,1542,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-21,Melilla,Melilla,,25,8,1,0,25,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-21,Murcia,"Murcia, Región de",,213,61,14,1,240,1,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-21,Navarra,"Navarra, Comunidad Foral de",,652,222,25,9,664,1,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-20,Navarra,"Navarra, Comunidad Foral de",110,654,222,25,9,664,1,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-21,"Rioja, La","Rioja, La",,536,128,17,15,564,18,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-22,Almería,Andalucía,,53,,,1,58,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-22,Cádiz,Andalucía,,126,,,2,134,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
@@ -826,15 +826,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-22,Soria,Castilla y León,,71,,,8,119,5,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,
 2020-03-22,Valladolid,Castilla y León,,193,,,11,241,13,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,
 2020-03-22,Zamora,Castilla y León,,42,,,3,59,3,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,
-2020-03-22,Barcelona,Cataluña,,,,,,6345,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-22,Barcelona,Cataluña,,,,,170,6345,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-22,Girona,Cataluña,104,,,,14,360,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-22,Lleida,Cataluña,,,,,5,163,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-22,Tarragona,Cataluña,0,,18,10,2,99,,no hay comunicado oficial,
 2020-03-22,Alicante/Alacant,Comunitat Valenciana,,325,,,40,372,7,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
 2020-03-22,Castellón/Castelló,Comunitat Valenciana,,99,,,4,104,1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
 2020-03-22,Valencia/València,Comunitat Valenciana,,590,,,25,627,12,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
-2020-03-22,Badajoz,Extremadura,29,104,29,2,1,140,4,http://www.juntaex.es/comunicacion/noticia?idPub=29960#.XoGrenJS-M8,
-2020-03-22,Cáceres,Extremadura,16,231,65,7,13,259,2,http://www.juntaex.es/comunicacion/noticia?idPub=29960#.XoGrenJS-M8,
+2020-03-22,Badajoz,Extremadura,29,135,29,2,1,140,4,http://www.juntaex.es/comunicacion/noticia?idPub=29960#.XoGrenJS-M8,
+2020-03-22,Cáceres,Extremadura,16,244,65,7,13,259,2,http://www.juntaex.es/comunicacion/noticia?idPub=29960#.XoGrenJS-M8,
 2020-03-22,"Coruña, A",Galicia,,326,,,5,384,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Xunta no especifica el lugar de las altas.
 2020-03-22,Lugo,Galicia,,53,,,1,58,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Xunta no especifica el lugar de las altas.
 2020-03-22,Ourense,Galicia,,74,,,0,95,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 19h.,¹La Xunta no especifica el lugar de las altas.
@@ -849,7 +849,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-22,Madrid,"Madrid, Comunidad de",,6931,8441,834,1021,9702,1899,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-22,Melilla,Melilla,,25,12,1,0,25,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-22,Murcia,"Murcia, Región de",,213,78,16,1,296,1,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-22,Navarra,"Navarra, Comunidad Foral de",,652,288,30,14,794,4,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-21,Navarra,"Navarra, Comunidad Foral de",130,776,288,30,14,794,4,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-22,"Rioja, La","Rioja, La",,536,134,17,18,654,18,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-23,Almería,Andalucía,,72,,,2,74,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-23,Cádiz,Andalucía,,175,,,3,178,0,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
@@ -883,14 +883,14 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-23,Soria,Castilla y León,,121,,,11,140,8,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,
 2020-03-23,Valladolid,Castilla y León,,318,,,14,349,17,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,
 2020-03-23,Zamora,Castilla y León,,81,,,4,90,5,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,
-2020-03-23,Barcelona,Cataluña,,,,,,7386,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-23,Barcelona,Cataluña,,,,,204,7386,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-23,Girona,Cataluña,183,,,,28,543,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-23,Lleida,Cataluña,,,,,8,201,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-23,Tarragona,Cataluña,92,,111,29,5,191,,https://www.diarimes.com/noticies/camp_tarragona/2020/03/23/92_nous_casos_coronavirus_camp_terres_eleven_xifra_total_afectats_191_78926_1093.html,
 2020-03-23,Alicante/Alacant,Comunitat Valenciana,,541,,,50,603,12,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,Hay 3 casos más que no son residencia en la Comunitat Valenciana.
 2020-03-23,Castellón/Castelló,Comunitat Valenciana,,203,,,7,211,1,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,Hay 3 casos más que no son residencia en la Comunitat Valenciana.
 2020-03-23,Valencia/València,Comunitat Valenciana,,1024,,,37,1084,23,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,Hay 3 casos más que no son residencia en la Comunitat Valenciana.
-2020-03-23,Badajoz,Extremadura,28,161,34,3,1,168,4,http://www.juntaex.es/comunicacion/noticia?idPub=29964#.XoGqmXJS-M8,
+2020-03-23,Badajoz,Extremadura,28,163,34,3,1,168,4,http://www.juntaex.es/comunicacion/noticia?idPub=29964#.XoGqmXJS-M8,
 2020-03-23,Cáceres,Extremadura,66,306,97,10,17,325,2,http://www.juntaex.es/comunicacion/noticia?idPub=29964#.XoGqmXJS-M8,
 2020-03-23,"Coruña, A",Galicia,,512,,,12,524,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Xunta no especifica el lugar de las altas.
 2020-03-23,Lugo,Galicia,,60,,,2,62,,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 21h.,¹La Xunta no especifica el lugar de las altas.
@@ -906,7 +906,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-23,Madrid,"Madrid, Comunidad de",,7249,9561,942,1263,10575,2063,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-23,Melilla,Melilla,,28,12,1,0,28,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-23,Murcia,"Murcia, Región de",,381,80,23,2,345,1,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-23,Navarra,"Navarra, Comunidad Foral de",,855,339,40,24,886,7,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-22,Navarra,"Navarra, Comunidad Foral de",92,851,339,40,24,886,11,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-23,"Rioja, La","Rioja, La",,707,166,22,22,747,18,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-24,Almería,Andalucía,,86,,,5,91,,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
 2020-03-24,Cádiz,Andalucía,,242,,,3,245,,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,¹La Junta no especifica el lugar de las altas y algunas de ellas corresponden a seguimiento domiciliario.
@@ -937,7 +937,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-24,Soria,Castilla y León,,152,,,13,179,14,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,
 2020-03-24,Valladolid,Castilla y León,,369,,,17,410,24,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,
 2020-03-24,Zamora,Castilla y León,,82,,,7,100,11,Descargado 2020.03.25 00.35h https://public.flourish.studio/visualisation/1451263/,
-2020-03-24,Barcelona,Cataluña,,,,,,8740,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-24,Barcelona,Cataluña,,,,,232,8740,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-24,Girona,Cataluña,163,,,,32,706,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-24,Lleida,Cataluña,,,,,13,259,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-24,Tarragona,Cataluña,37,,124,36,5,228,,https://www.diarimes.com/noticies/camp_tarragona/2020/03/24/37_nous_casos_coronavirus_tarragona_eleven_228_total_infectats_78992_1093.html,
@@ -960,7 +960,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-24,Madrid,"Madrid, Comunidad de",,8526,10443,1050,1535,12352,2291,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-24,Melilla,Melilla,,28,12,1,0,28,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-24,Murcia,"Murcia, Región de",,467,99,26,3,385,1,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-24,Navarra,"Navarra, Comunidad Foral de",,972,405,45,31,1014,11,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-23,Navarra,"Navarra, Comunidad Foral de",128,972,405,45,31,1014,11,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-24,"Rioja, La","Rioja, La",,748,206,24,30,802,24,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-25,Almería,Andalucía,,105,,,5,115,5,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
 2020-03-25,Cádiz,Andalucía,,270,,,4,278,4,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h.,
@@ -987,7 +987,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-25,Soria,Castilla y León,,230,61,14,14,263,19,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h. Hospitalizaciones: https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-25,Valladolid,Castilla y León,,444,290,40,21,501,36,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h. Hospitalizaciones: https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-25,Zamora,Castilla y León,,79,49,10,8,103,16,Flourish de RTVE: https://public.flourish.studio/visualisation/1451263 Actualización: 22:30h. Hospitalizaciones: https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-03-25,Barcelona,Cataluña,,,,,,10049,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-25,Barcelona,Cataluña,,,,,450,10049,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-25,Girona,Cataluña,171,,,,37,877,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-25,Lleida,Cataluña,,,,,20,319,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-25,Tarragona,Cataluña,44,,98,41,9,272,,https://tarragonadigital.com/area-metropolitana/casos-coronavirus-tarragona-25-marc,
@@ -1010,7 +1010,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-25,Madrid,"Madrid, Comunidad de",,9741,11153,1150,1825,14597,3031,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-25,Melilla,Melilla,,37,14,2,0,38,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-25,Murcia,"Murcia, Región de",,579,127,33,5,477,4,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-25,Navarra,"Navarra, Comunidad Foral de",,1141,506,51,33,1197,23,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-24,Navarra,"Navarra, Comunidad Foral de",183,1141,506,51,33,1197,23,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-25,"Rioja, La","Rioja, La",,848,254,33,37,928,43,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-26,Almería,Andalucía,,122,,,7,134,5,,
 2020-03-26,Cádiz,Andalucía,,290,,,5,299,4,,
@@ -1044,15 +1044,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-26,Soria,Castilla y León,76,291,80,14,16,339,32,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-26,Valladolid,Castilla y León,97,521,332,48,27,598,50,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-26,Zamora,Castilla y León,3,73,50,11,9,106,24,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-03-26,Barcelona,Cataluña,,,,,,11924,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-26,Barcelona,Cataluña,,,,,591,11924,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-26,Girona,Cataluña,42,,,,46,919,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-26,Lleida,Cataluña,,,,,22,352,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-26,Tarragona,Cataluña,81,,134,49,13,353,,https://www.diarimes.com/noticies/camp_tarragona/2020/03/26/quatre_morts_mes_demarcacio_tarragona_per_coronavirus_van_tretze_79136_1093.html,
 2020-03-26,Alicante/Alacant,Comunitat Valenciana,181,941,410,72,81,1039,17,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8498622/200326+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-03-26,Castellón/Castelló,Comunitat Valenciana,102,355,144,30,14,373,4,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8498622/200326+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-03-26,Valencia/València,Comunitat Valenciana,301,1680,724,128,72,1788,36,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8498622/200326+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
-2020-03-26,Badajoz,Extremadura,72,316,79,14,8,329,20,http://www.juntaex.es/comunicacion/noticia?idPub=29977#.XoGtAHJS-M8,
-2020-03-26,Cáceres,Extremadura,155,587,162,20,50,640,4,http://www.juntaex.es/comunicacion/noticia?idPub=29977#.XoGtAHJS-M8,
+2020-03-26,Badajoz,Extremadura,72,301,79,14,8,329,20,http://www.juntaex.es/comunicacion/noticia?idPub=29977#.XoGtAHJS-M8,
+2020-03-26,Cáceres,Extremadura,155,586,162,20,50,640,4,http://www.juntaex.es/comunicacion/noticia?idPub=29977#.XoGtAHJS-M8,
 2020-03-26,"Coruña, A",Galicia,,789,,,23,824,,,"¹La Xunta no especifica el lugar de las altas, por lo que el total de casos es aproximado."
 2020-03-26,Lugo,Galicia,,128,,,4,145,,,"¹La Xunta no especifica el lugar de las altas, por lo que el total de casos es aproximado."
 2020-03-26,Ourense,Galicia,,231,,,4,246,,,"¹La Xunta no especifica el lugar de las altas, por lo que el total de casos es aproximado."
@@ -1067,7 +1067,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-26,Madrid,"Madrid, Comunidad de",,11194,12440,1221,2090,17166,3882,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-26,Melilla,Melilla,,38,16,2,1,39,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-26,Murcia,"Murcia, Región de",,660,172,36,8,596,9,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-26,Navarra,"Navarra, Comunidad Foral de",,1327,649,54,49,1411,35,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-25,Navarra,"Navarra, Comunidad Foral de",214,1327,649,54,49,1411,35,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-26,"Rioja, La","Rioja, La",,904,316,36,43,995,48,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-27,Almería,Andalucía,,128,,,8,142,6,Falta fuente,
 2020-03-27,Cádiz,Andalucía,,336,,,6,348,6,Falta fuente,
@@ -1101,15 +1101,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-27,Soria,Castilla y León,33,,91,13,20,372,39,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-27,Valladolid,Castilla y León,94,,385,60,39,692,83,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-27,Zamora,Castilla y León,18,,59,12,12,124,27,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-03-27,Barcelona,Cataluña,,,,,,13184,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-27,Barcelona,Cataluña,,,,,770,13184,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-27,Girona,Cataluña,50,,,,56,969,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-27,Lleida,Cataluña,,,,,36,494,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-27,Tarragona,Cataluña,51,,144,55,18,404,,https://tarragonadigital.com/area-metropolitana/casos-coronavirus-tarragona-27-marc,
 2020-03-27,Alicante/Alacant,Comunitat Valenciana,54,,413,81,91,1093,,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8500717/200327+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-03-27,Castellón/Castelló,Comunitat Valenciana,39,,169,31,19,412,,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8500717/200327+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-03-27,Valencia/València,Comunitat Valenciana,239,,840,140,88,2027,,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8500717/200327+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
-2020-03-27,Badajoz,Extremadura,61,352,91,18,10,390,27,http://www.juntaex.es/comunicacion/noticia?idPub=29981#.XoGvGnJS-M8,
-2020-03-27,Cáceres,Extremadura,201,777,186,23,59,841,4,http://www.juntaex.es/comunicacion/noticia?idPub=29981#.XoGvGnJS-M8,
+2020-03-27,Badajoz,Extremadura,61,353,91,18,10,390,27,http://www.juntaex.es/comunicacion/noticia?idPub=29981#.XoGvGnJS-M8,
+2020-03-27,Cáceres,Extremadura,201,778,186,23,59,841,4,http://www.juntaex.es/comunicacion/noticia?idPub=29981#.XoGvGnJS-M8,
 2020-03-27,"Coruña, A",Galicia,,1000,,,27,1049,,Falta fuente,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado."
 2020-03-27,Lugo,Galicia,,140,,,4,157,,Falta fuente,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado."
 2020-03-27,Ourense,Galicia,,302,,,5,321,,Falta fuente,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado."
@@ -1124,7 +1124,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-27,Madrid,"Madrid, Comunidad de",,11787,13580,1312,2412,19243,5044,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-27,Melilla,Melilla,,41,18,2,1,42,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-27,Murcia,"Murcia, Región de",,771,209,53,15,714,12,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-27,Navarra,"Navarra, Comunidad Foral de",,1513,732,75,58,1641,70,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-26,Navarra,"Navarra, Comunidad Foral de",230,1513,732,75,58,1641,70,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-27,"Rioja, La","Rioja, La",,1119,388,43,55,1236,62,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-28,Almería,Andalucía,,173,72,,10,173,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233791.html,"47,63"
 2020-03-28,Cádiz,Andalucía,,406,156,,7,406,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233791.html,"47,63"
@@ -1158,15 +1158,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-28,Soria,Castilla y León,59,,105,17,26,431,49,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-28,Valladolid,Castilla y León,115,,423,74,45,807,114,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-28,Zamora,Castilla y León,44,,87,11,16,168,11,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-03-28,Barcelona,Cataluña,,,,,,14191,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-28,Barcelona,Cataluña,,,,,950,14191,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-28,Girona,Cataluña,,,,,59,683,,https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-28,Lleida,Cataluña,,,,,40,604,,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-28,Tarragona,Cataluña,87,,167,60,21,491,,https://tarragonadigital.com/area-metropolitana/casos-coronavirus-tarragona-28-marc-2020,
 2020-03-28,Alicante/Alacant,Comunitat Valenciana,229,,548,98,109,1322,20,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8502313/200328+NOTA+DE+PRENSA+CORONAVIRUS+.pdf),
 2020-03-28,Castellón/Castelló,Comunitat Valenciana,37,,182,32,21,449,4,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8502313/200328+NOTA+DE+PRENSA+CORONAVIRUS+.pdf),
 2020-03-28,Valencia/València,Comunitat Valenciana,236,,964,152,104,2263,68,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8502313/200328+NOTA+DE+PRENSA+CORONAVIRUS+.pdf),
-2020-03-28,Badajoz,Extremadura,47,437,102,18,11,437,38,http://www.juntaex.es/comunicacion/noticia?idPub=29985#.XoGwR3JS-M8,"124,38"
-2020-03-28,Cáceres,Extremadura,116,957,210,23,77,957,11,http://www.juntaex.es/comunicacion/noticia?idPub=29985#.XoGwR3JS-M8,"124,38"
+2020-03-28,Badajoz,Extremadura,47,388,102,18,11,437,38,http://www.juntaex.es/comunicacion/noticia?idPub=29985#.XoGwR3JS-M8,"124,38"
+2020-03-28,Cáceres,Extremadura,116,869,210,23,77,957,11,http://www.juntaex.es/comunicacion/noticia?idPub=29985#.XoGwR3JS-M8,"124,38"
 2020-03-28,"Coruña, A",Galicia,,1114,,,31,1177,,https://public.flourish.studio/visualisation/1451263/,"98,43"
 2020-03-28,Lugo,Galicia,,219,,,4,239,,https://public.flourish.studio/visualisation/1451263/,"98,43"
 2020-03-28,Ourense,Galicia,,371,,,6,396,,https://public.flourish.studio/visualisation/1451263/,"98,43"
@@ -1181,7 +1181,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-28,Madrid,"Madrid, Comunidad de",,12437,14211,1404,2757,21520,6326,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-28,Melilla,Melilla,,41,22,2,1,45,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-28,Murcia,"Murcia, Región de",,804,231,58,17,802,12,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-28,Navarra,"Navarra, Comunidad Foral de",,1661,827,84,70,1829,98,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-27,Navarra,"Navarra, Comunidad Foral de",188,1661,827,84,70,1829,98,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-28,"Rioja, La","Rioja, La",,1436,458,43,65,1436,364,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-29,Almería,Andalucía,,102,86,,12,200,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
 2020-03-29,Cádiz,Andalucía,,268,170,,9,447,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233796.html,
@@ -1215,15 +1215,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-29,Soria,Castilla y León,92,,120,20,30,523,61,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-29,Valladolid,Castilla y León,79,,434,80,57,886,127,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-29,Zamora,Castilla y León,24,,96,12,18,192,30,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-03-29,Barcelona,Cataluña,,,,,,14888,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-29,Barcelona,Cataluña,,,,,1090,14888,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-29,Girona,Cataluña,59,,,,66,742,,https://www.diaridegirona.cat/comarques/2020/03/30/comarques-gironines-lamenten-set-noves/1036980.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-29,Lleida,Cataluña,,,,,44,680,76,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-29,Tarragona,Cataluña,83,,193,65,26,574,,https://www.diaridetarragona.com/tarragona/Cinco-muertos-mas-por-coronavirus-en-Tarragona-20200329-0051.html,
 2020-03-29,Alicante/Alacant,Comunitat Valenciana,412,,651,104,115,1734,45,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8503378/200329+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-03-29,Castellón/Castelló,Comunitat Valenciana,93,,213,37,25,542,8,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8503378/200329+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-03-29,Valencia/València,Comunitat Valenciana,245,,1010,168,127,2508,362,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8503378/200329+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
-2020-03-29,Badajoz,Extremadura,28,,101,17,17,465,40,http://www.juntaex.es/comunicacion/noticia?idPub=29987#.XoG1inJS-M8,
-2020-03-29,Cáceres,Extremadura,34,,212,24,83,991,11,http://www.juntaex.es/comunicacion/noticia?idPub=29987#.XoG1inJS-M8,
+2020-03-29,Badajoz,Extremadura,28,408,101,17,17,465,40,http://www.juntaex.es/comunicacion/noticia?idPub=29987#.XoG1inJS-M8,
+2020-03-29,Cáceres,Extremadura,34,897,212,24,83,991,11,http://www.juntaex.es/comunicacion/noticia?idPub=29987#.XoG1inJS-M8,
 2020-03-29,"Coruña, A",Galicia,,1261,,,40,1351,,https://public.flourish.studio/visualisation/1451264,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado."
 2020-03-29,Lugo,Galicia,,244,,,4,270,,https://public.flourish.studio/visualisation/1451264,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado."
 2020-03-29,Ourense,Galicia,,415,,,8,458,,https://public.flourish.studio/visualisation/1451264,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado."
@@ -1238,7 +1238,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-29,Madrid,"Madrid, Comunidad de",,,14454,1429,3082,22677,7491,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-29,Melilla,Melilla,,,24,2,1,48,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-29,Murcia,"Murcia, Región de",,,260,58,20,872,16,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-29,Navarra,"Navarra, Comunidad Foral de",,,896,90,84,2011,125,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-28,Navarra,"Navarra, Comunidad Foral de",182,1802,896,90,84,2011,125,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-29,"Rioja, La","Rioja, La",,,497,43,68,1629,397,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-30,Almería,Andalucía,,113,96,,14,223,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233830.html,
 2020-03-30,Cádiz,Andalucía,,287,207,,13,507,,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233830.html,
@@ -1272,15 +1272,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-30,Soria,Castilla y León,27,,112,19,37,550,71,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-30,Valladolid,Castilla y León,43,,465,82,66,929,145,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-30,Zamora,Castilla y León,17,,99,14,20,209,36,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-03-30,Barcelona,Cataluña,,,,,,16080,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-30,Barcelona,Cataluña,,,,,1245,16080,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-30,Girona,Cataluña,66,,,,83,808,,https://www.diaridegirona.cat/comarques/2020/03/30/girona-registra-record-morts-coronavirus/1037115.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-30,Lleida,Cataluña,,,,,50,752,91,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-30,Tarragona,Cataluña,82,,220,71,32,656,,https://tarragonadigital.com/area-metropolitana/casos-coronavirus-tarragona-30-marc-2020,
 2020-03-30,Alicante/Alacant,Comunitat Valenciana,105,,714,118,135,1839,46,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8504871/200330+NOTA+DE+PRENSA+CORONAVIRUSok.pdf),
 2020-03-30,Castellón/Castelló,Comunitat Valenciana,44,,241,38,32,586,9,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8504871/200330+NOTA+DE+PRENSA+CORONAVIRUSok.pdf),
 2020-03-30,Valencia/València,Comunitat Valenciana,177,,1087,180,143,2685,130,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8504871/200330+NOTA+DE+PRENSA+CORONAVIRUSok.pdf),
-2020-03-30,Badajoz,Extremadura,50,449,122,18,18,515,49,http://www.juntaex.es/comunicacion/noticia?idPub=29993#.XoS0HXJS-M8,
-2020-03-30,Cáceres,Extremadura,54,945,231,25,88,1045,11,http://www.juntaex.es/comunicacion/noticia?idPub=29993#.XoS0HXJS-M8,
+2020-03-30,Badajoz,Extremadura,50,448,122,18,18,515,49,http://www.juntaex.es/comunicacion/noticia?idPub=29993#.XoS0HXJS-M8,
+2020-03-30,Cáceres,Extremadura,54,946,231,25,88,1045,11,http://www.juntaex.es/comunicacion/noticia?idPub=29993#.XoS0HXJS-M8,
 2020-03-30,"Coruña, A",Galicia,,1261,,,40,1351,,https://public.flourish.studio/visualisation/1451263/ 2020.03.31 02.07h,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado."
 2020-03-30,Lugo,Galicia,,244,,,4,270,,https://public.flourish.studio/visualisation/1451263/ 2020.03.31 02.07h,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado."
 2020-03-30,Ourense,Galicia,,415,,,8,458,,https://public.flourish.studio/visualisation/1451263/ 2020.03.31 02.07h,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado."
@@ -1295,7 +1295,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-30,Madrid,"Madrid, Comunidad de",,12397,14917,1460,3392,24090,8301,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-30,Melilla,Melilla,,50,27,3,1,51,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-30,Murcia,"Murcia, Región de",,920,265,58,25,939,17,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-30,Navarra,"Navarra, Comunidad Foral de",,1883,955,96,102,2146,161,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-29,Navarra,"Navarra, Comunidad Foral de",135,1883,955,96,102,2146,161,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-30,"Rioja, La","Rioja, La",,1231,517,43,71,1733,431,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-31,Almería,Andalucía,,,108,15,16,251,6,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
 2020-03-31,Cádiz,Andalucía,,,216,19,14,539,16,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/233967.html,
@@ -1329,15 +1329,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-31,Soria,Castilla y León,5,,118,19,44,555,87,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
 2020-03-31,Valladolid,Castilla y León,59,,498,89,77,988,187,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
 2020-03-31,Zamora,Castilla y León,8,,100,14,23,217,43,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,Hay 2 casos más que no son residencia en la Comunitat Valenciana.
-2020-03-31,Barcelona,Cataluña,,,,,,17315,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-03-31,Barcelona,Cataluña,,,,,1480,17315,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-03-31,Girona,Cataluña,180,,,,96,988,,https://www.diaridegirona.cat/comarques/2020/03/31/girona-registra-repunt-nous-casos/1037299.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-03-31,Lleida,Cataluña,,,,,55,825,108,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-03-31,Tarragona,Cataluña,32,,240,60,41,688,,https://tarragonadigital.com/area-metropolitana/casos-coronavirus-tarragona-31-marc-2020,
 2020-03-31,Alicante/Alacant,Comunitat Valenciana,182,,780,126,147,2021,53,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8507287/200331+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-03-31,Castellón/Castelló,Comunitat Valenciana,27,,231,40,34,613,9,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8507287/200331+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-03-31,Valencia/València,Comunitat Valenciana,189,,1178,190,158,2874,138,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8507287/200331+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
-2020-03-31,Badajoz,Extremadura,46,480,130,24,20,561,62,http://www.juntaex.es/comunicacion/noticia?idPub=30001#.XoS2RHJS-M8,
-2020-03-31,Cáceres,Extremadura,22,924,241,27,113,1067,29,http://www.juntaex.es/comunicacion/noticia?idPub=30001#.XoS2RHJS-M8,
+2020-03-31,Badajoz,Extremadura,46,479,130,24,20,561,62,http://www.juntaex.es/comunicacion/noticia?idPub=30001#.XoS2RHJS-M8,
+2020-03-31,Cáceres,Extremadura,22,925,241,27,113,1067,29,http://www.juntaex.es/comunicacion/noticia?idPub=30001#.XoS2RHJS-M8,
 2020-03-31,"Coruña, A",Galicia,,1573,,,54,1687,,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado.",
 2020-03-31,Lugo,Galicia,,371,,,7,402,,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado.",
 2020-03-31,Ourense,Galicia,,520,,,12,570,,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado.",
@@ -1352,7 +1352,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-03-31,Madrid,"Madrid, Comunidad de",,14576,15140,1514,3603,27509,9330,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-31,Melilla,Melilla,,53,27,3,1,54,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-03-31,Murcia,"Murcia, Región de",,920,283,59,34,974,20,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-03-31,Navarra,"Navarra, Comunidad Foral de",,2000,1035,99,113,2305,192,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-30,Navarra,"Navarra, Comunidad Foral de",159,2000,1035,99,113,2305,192,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-03-31,"Rioja, La","Rioja, La",,1229,575,51,85,1810,496,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-01,Almería,Andalucía,,231,124,18,17,262,14,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234014.html,
 2020-04-01,Cádiz,Andalucía,,611,266,22,17,645,17,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234014.html,
@@ -1386,15 +1386,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-01,Soria,Castilla y León,104,525,148,20,44,659,90,https://analisis.datosabiertos.jcyl.es/pages/coronavirus,
 2020-04-01,Valladolid,Castilla y León,121,758,447,95,89,1109,262,https://analisis.datosabiertos.jcyl.es/pages/coronavirus,
 2020-04-01,Zamora,Castilla y León,9,150,97,14,25,226,51,https://analisis.datosabiertos.jcyl.es/pages/coronavirus,
-2020-04-01,Barcelona,Cataluña,,,,,,18441,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-04-01,Barcelona,Cataluña,,,,,1615,18441,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-04-01,Girona,Cataluña,192,,,,119,1180,,https://www.diaridegirona.cat/comarques/2020/04/01/girona-arriba-al-pic-mes/1037492.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-04-01,Lleida,Cataluña,,,,,62,897,124,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-04-01,Tarragona,Cataluña,52,,210,70,53,740,,https://tarragonadigital.com/area-metropolitana/dades-coronavirus-tarragona-1-abril-2020,
 2020-04-01,Alicante/Alacant,Comunitat Valenciana,152,1944,792,133,167,2173,62,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8510074/200401+NOTA+DE+PRENSA+CORONAVIRUS.pdf),Hay 2 casos más que no son residencia en la Comunitat Valenciana.
 2020-04-01,Castellón/Castelló,Comunitat Valenciana,47,609,213,40,42,660,9,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8510074/200401+NOTA+DE+PRENSA+CORONAVIRUS.pdf),Hay 2 casos más que no son residencia en la Comunitat Valenciana.
 2020-04-01,Valencia/València,Comunitat Valenciana,215,2734,1184,192,186,3089,169,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8510074/200401+NOTA+DE+PRENSA+CORONAVIRUS.pdf),Hay 2 casos más que no son residencia en la Comunitat Valenciana.
-2020-04-01,Badajoz,Extremadura,25,482,129,29,23,586,82,http://www.juntaex.es/comunicacion/noticia?idPub=30009#.XoS5QHJS-M8,
-2020-04-01,Cáceres,Extremadura,26,932,243,29,129,1093,31,http://www.juntaex.es/comunicacion/noticia?idPub=30009#.XoS5QHJS-M8,
+2020-04-01,Badajoz,Extremadura,25,481,129,29,23,586,82,http://www.juntaex.es/comunicacion/noticia?idPub=30009#.XoS5QHJS-M8,
+2020-04-01,Cáceres,Extremadura,26,933,243,29,129,1093,31,http://www.juntaex.es/comunicacion/noticia?idPub=30009#.XoS5QHJS-M8,
 2020-04-01,"Coruña, A",Galicia,,1706,,,58,1854,,https://public.flourish.studio/visualisation/1451263/,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado."
 2020-04-01,Lugo,Galicia,,456,,,9,500,,https://public.flourish.studio/visualisation/1451263/,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado."
 2020-04-01,Ourense,Galicia,,559,,,18,626,,https://public.flourish.studio/visualisation/1451263/,"¹La Xunta no especifica el lugar de las altas y solo da el número de casos activos, por lo que el total de casos es aproximado."
@@ -1409,7 +1409,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-01,Madrid,"Madrid, Comunidad de",,15148,15227,1514,3865,29840,10827,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-01,Melilla,Melilla,,61,32,3,1,62,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-01,Murcia,"Murcia, Región de",,999,304,59,37,1041,43,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-04-01,Navarra,"Navarra, Comunidad Foral de",,2131,1120,104,130,2497,236,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-03-31,Navarra,"Navarra, Comunidad Foral de",192,2131,1120,104,130,2497,236,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-04-01,"Rioja, La","Rioja, La",,1301,619,54,90,1960,569,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-02,Almería,Andalucía,,258,129,19,18,290,22,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234073.html,
 2020-04-02,Cádiz,Andalucía,,661,295,23,19,697,22,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234073.html,
@@ -1443,15 +1443,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-02,Soria,Castilla y León,27,545,154,22,46,686,95,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-02,Valladolid,Castilla y León,79,750,442,96,105,1188,333,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-02,Zamora,Castilla y León,52,189,101,15,28,278,61,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-04-02,Barcelona,Cataluña,,,,,,19307,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-04-02,Barcelona,Cataluña,,,,,1837,19307,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-04-02,Girona,Cataluña,128,,,,128,1300,,https://www.diaridegirona.cat/comarques/2020/04/02/nombre-victimes-coronavirus-girona-baixa/1037655.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-04-02,Lleida,Cataluña,,,,,69,961,152,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-04-02,Tarragona,Cataluña,97,,256,73,59,837,,https://tarragonadigital.com/area-metropolitana/dades-coronavirus-tarragona-2-abril-2020,
 2020-04-02,Alicante/Alacant,Comunitat Valenciana,147,1960,772,141,188,2320,172,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8510841/200402+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-04-02,Castellón/Castelló,Comunitat Valenciana,37,624,214,42,45,697,28,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8510841/200402+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-04-02,Valencia/València,Comunitat Valenciana,202,2849,1189,196,210,3291,232,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8510841/200402+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
-2020-04-02,Badajoz,Extremadura,39,505,145,30,27,625,94,http://www.juntaex.es/comunicacion/noticia?idPub=30022#.XootLHJS-M9,"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
-2020-04-02,Cáceres,Extremadura,119,1012,267,32,154,1212,45,http://www.juntaex.es/comunicacion/noticia?idPub=30022#.XootLHJS-M9,"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
+2020-04-02,Badajoz,Extremadura,39,504,145,30,27,625,94,http://www.juntaex.es/comunicacion/noticia?idPub=30022#.XootLHJS-M9,"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
+2020-04-02,Cáceres,Extremadura,119,1013,267,32,154,1212,45,http://www.juntaex.es/comunicacion/noticia?idPub=30022#.XootLHJS-M9,"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
 2020-04-02,"Coruña, A",Galicia,,1788,,,67,1969,,https://app.flourish.studio/visualisation/1451263/ (22:55),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
 2020-04-02,Lugo,Galicia,,520,,,11,586,,https://app.flourish.studio/visualisation/1451263/ (22:55),"¹Canarias no especifica el lugar de las altas, lo que impide calcular los casos activos por isla. Se muestra el dato acumulado de la comunidad autónoma."
 2020-04-02,Ourense,Galicia,,660,,,22,751,,https://app.flourish.studio/visualisation/1451263/ (22:55),
@@ -1466,7 +1466,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-02,Madrid,"Madrid, Comunidad de",,15580,15227,1528,4175,32155,12400,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-02,Melilla,Melilla,,64,32,3,1,62,0,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-02,Murcia,"Murcia, Región de",,1009,389,68,42,1084,45,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-04-02,Navarra,"Navarra, Comunidad Foral de",,2263,1181,108,141,2682,278,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-04-01,Navarra,"Navarra, Comunidad Foral de",185,2263,1181,108,141,2682,278,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-04-02,"Rioja, La","Rioja, La",,1341,660,57,101,2083,641,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-03,Almería,Andalucía,,284,145,25,20,301,8,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html;https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
 2020-04-03,Cádiz,Andalucía,,756,319,42,22,754,28,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234131.html;https://app.flourish.studio/visualisation/1451263/ (3-abr 22:55),
@@ -1500,15 +1500,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-03,Soria,Castilla y León,66,,155,20,49,752,111,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-03,Valladolid,Castilla y León,102,,446,103,114,1290,381,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-03,Zamora,Castilla y León,18,,103,11,30,296,67,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-04-03,Barcelona,Cataluña,,,,,,20224,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-04-03,Barcelona,Cataluña,,,,,2039,20224,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-04-03,Girona,Cataluña,150,,,,144,1450,,https://www.diaridegirona.cat/comarques/2020/04/03/coronavirus-deixa-setze-noves-victimes/1037819.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-04-03,Lleida,Cataluña,,,,,75,991,176,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-04-03,Tarragona,Cataluña,79,,252,72,77,916,,https://www.diaridetarragona.com/tarragona/Tarragona-registra-77-fallecidos-por-coronavirus-18-en-las-ultimas-24-horas-20200403-0072.html,
 2020-04-03,Alicante/Alacant,Comunitat Valenciana,125,,740,144,219,2445,209,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8512276/200403+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-04-03,Castellón/Castelló,Comunitat Valenciana,43,,219,43,50,740,35,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8512276/200403+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-04-03,Valencia/València,Comunitat Valenciana,148,,1105,199,242,3439,348,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8512276/200403+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
-2020-04-03,Badajoz,Extremadura,20,511,156,31,28,645,107,http://www.juntaex.es/comunicacion/noticia?idPub=30029#.XootIXJS-M8,
-2020-04-03,Cáceres,Extremadura,36,1018,259,33,172,1248,57,http://www.juntaex.es/comunicacion/noticia?idPub=30029#.XootIXJS-M8,
+2020-04-03,Badajoz,Extremadura,20,510,156,31,28,645,107,http://www.juntaex.es/comunicacion/noticia?idPub=30029#.XootIXJS-M8,
+2020-04-03,Cáceres,Extremadura,36,1019,259,33,172,1248,57,http://www.juntaex.es/comunicacion/noticia?idPub=30029#.XootIXJS-M8,
 2020-04-03,Araba/Álava,País Vasco,,92,319,,184,2539,,https://twitter.com/osakidetzaEJGV/status/1246389273953095681;https://app.flourish.studio/visualisation/1451263/ (22:55);https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
 2020-04-03,Bizkaia,País Vasco,,200,1177,,224,4224,,https://twitter.com/osakidetzaEJGV/status/1246389273953095681;https://app.flourish.studio/visualisation/1451263/ (22:55);https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
 2020-04-03,Gipuzkoa,País Vasco,,68,362,,69,1424,,https://twitter.com/osakidetzaEJGV/status/1246389273953095681;https://app.flourish.studio/visualisation/1451263/ (22:55);https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
@@ -1519,7 +1519,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-03,Madrid,"Madrid, Comunidad de",,15855,15050,1506,4483,34188,13850,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-03,Melilla,Melilla,,68,34,3,2,70,4,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-03,Murcia,"Murcia, Región de",,1024,405,72,46,1145,90,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-04-03,Navarra,"Navarra, Comunidad Foral de",,2391,1284,119,151,2836,294,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-04-02,Navarra,"Navarra, Comunidad Foral de",154,2391,1284,119,151,2836,294,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-04-03,"Rioja, La","Rioja, La",,1370,738,64,109,2224,745,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-04,Almería,Andalucía,,,146,27,22,319,37,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234170.html,
 2020-04-04,Cádiz,Andalucía,,,345,48,27,796,62,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234170.html,
@@ -1553,15 +1553,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-04,Soria,Castilla y León,17,,137,19,52,769,136,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-04,Valladolid,Castilla y León,62,,438,103,125,1352,439,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-04,Zamora,Castilla y León,27,,112,12,35,323,83,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-04-04,Barcelona,Cataluña,,,,,,20802,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-04-04,Barcelona,Cataluña,,,,,2194,20802,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-04-04,Girona,Cataluña,158,,,,157,1608,,https://www.diaridegirona.cat/comarques/2020/04/04/tretze-noves-morts-comarques-girona/1037937.html ,
 2020-04-04,Lleida,Cataluña,,,,,79,1037,213,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-04-04,Tarragona,Cataluña,42,,219,76,78,958,,https://www.naciodigital.cat/tarragona/noticia/36155/coronavirus/segueix/creixent/tarragona/vuitantena/morts/gaireb/1000/infectats,
 2020-04-04,Alicante/Alacant,Comunitat Valenciana,114,,684,143,245,2559,214,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8513691/200404+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-04-04,Castellón/Castelló,Comunitat Valenciana,47,,242,43,56,787,56,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8513691/200404+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-04-04,Valencia/València,Comunitat Valenciana,116,,1051,200,270,3555,425,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8513691/200404+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
-2020-04-04,Badajoz,Extremadura,17,513,133,32,30,662,120,http://www.juntaex.es/comunicacion/noticia?idPub=30036#.XootV3JS-M8,
-2020-04-04,Cáceres,Extremadura,69,1053,256,32,178,1317,85,http://www.juntaex.es/comunicacion/noticia?idPub=30036#.XootV3JS-M8,
+2020-04-04,Badajoz,Extremadura,17,512,133,32,30,662,120,http://www.juntaex.es/comunicacion/noticia?idPub=30036#.XootV3JS-M8,
+2020-04-04,Cáceres,Extremadura,69,1054,256,32,178,1317,85,http://www.juntaex.es/comunicacion/noticia?idPub=30036#.XootV3JS-M8,
 2020-04-04,Araba/Álava,País Vasco,100,288,,,194,2639,,https://twitter.com/osakidetzaEJGV/status/1246750350805172225;https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
 2020-04-04,Bizkaia,País Vasco,265,1124,,,242,4489,,https://twitter.com/osakidetzaEJGV/status/1246750350805172225;https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
 2020-04-04,Gipuzkoa,País Vasco,76,345,,,79,1500,,https://twitter.com/osakidetzaEJGV/status/1246750350805172225;https://app.flourish.studio/visualisation/1451263/ (4-abr 23:20),"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
@@ -1572,7 +1572,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-04,Madrid,"Madrid, Comunidad de",,16164,14741,1498,4723,36249,15362,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-04,Melilla,Melilla,,70,37,3,2,79,9,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-04,Murcia,"Murcia, Región de",,1046,434,79,51,1188,113,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-04-04,Navarra,"Navarra, Comunidad Foral de",,2507,1341,120,171,2972,311,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-04-03,Navarra,"Navarra, Comunidad Foral de",136,2490,1341,120,171,2972,311,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-04-04,"Rioja, La","Rioja, La",,1434,805,64,128,2405,843,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-05,Almería,Andalucía,,,151,30,22,346,39,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234183.html,
 2020-04-05,Cádiz,Andalucía,,,365,49,31,846,88,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234183.html,
@@ -1606,15 +1606,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-05,Soria,Castilla y León,34,,137,20,61,803,149,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-05,Valladolid,Castilla y León,51,,446,100,133,1403,465,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-05,Zamora,Castilla y León,16,,108,12,37,339,93,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-04-05,Barcelona,Cataluña,,,,,,21164,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-04-05,Barcelona,Cataluña,,,,,2312,21164,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-04-05,Girona,Cataluña,167,,,,167,1731,,http://www.acn.cat/text/item/les-comarques-de-girona-registren-deu-noves-morts-i-123-contagis-mes-per-coronavirus-les-darreres-24-hores,
 2020-04-05,Lleida,Cataluña,,,,,80,1063,221,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-04-05,Tarragona,Cataluña,0,,219,76,78,958,,no hay comunicado oficial,
 2020-04-05,Alicante/Alacant,Comunitat Valenciana,68,,640,140,263,2627,259,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8514700/200405+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-04-05,Castellón/Castelló,Comunitat Valenciana,65,,244,44,64,852,73,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8514700/200405+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-04-05,Valencia/València,Comunitat Valenciana,146,,1017,197,286,3701,480,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8514700/200405+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
-2020-04-05,Badajoz,Extremadura,10,,155,33,32,672,130,http://www.juntaex.es/comunicacion/noticia?idPub=30038#.XoovEXJS-M8,
-2020-04-05,Cáceres,Extremadura,58,,262,33,186,1375,85,http://www.juntaex.es/comunicacion/noticia?idPub=30038#.XoovEXJS-M8,
+2020-04-05,Badajoz,Extremadura,10,510,155,33,32,672,130,http://www.juntaex.es/comunicacion/noticia?idPub=30038#.XoovEXJS-M8,
+2020-04-05,Cáceres,Extremadura,58,1104,262,33,186,1375,85,http://www.juntaex.es/comunicacion/noticia?idPub=30038#.XoovEXJS-M8,
 2020-04-05,Araba/Álava,País Vasco,36,,277,,201,2675,,https://twitter.com/osakidetzaEJGV/status/1247113889973665793;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/5_abril_Boletin.pdf,"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
 2020-04-05,Bizkaia,País Vasco,114,,1134,,266,4603,,https://twitter.com/osakidetzaEJGV/status/1247113889973665793;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/5_abril_Boletin.pdf,"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
 2020-04-05,Gipuzkoa,País Vasco,32,,345,,81,1532,,https://twitter.com/osakidetzaEJGV/status/1247113889973665793;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/5_abril_Boletin.pdf,"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
@@ -1625,7 +1625,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-05,Madrid,"Madrid, Comunidad de",,16100,14551,1499,4941,37584,16543,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-05,Melilla,Melilla,,70,38,3,2,83,11,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-05,Murcia,"Murcia, Región de",,1035,447,80,59,1235,130,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-04-05,Navarra,"Navarra, Comunidad Foral de",,2561,1399,123,178,3073,334,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-04-04,Navarra,"Navarra, Comunidad Foral de",101,2561,1399,123,178,3073,334,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-04-05,"Rioja, La","Rioja, La",,1554,855,66,134,2592,904,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-06,Almería,Andalucía,,,153,32,23,371,49,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234228.html,
 2020-04-06,Cádiz,Andalucía,,,367,56,31,862,104,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234228.html,
@@ -1659,15 +1659,15 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-06,Soria,Castilla y León,21,,114,21,64,824,164,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/#situacin-actual,
 2020-04-06,Valladolid,Castilla y León,42,,456,103,145,1445,487,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/#situacin-actual,
 2020-04-06,Zamora,Castilla y León,1,,103,12,38,340,100,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/#situacin-actual,
-2020-04-06,Barcelona,Cataluña,43,18,,,,21879,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv;https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp,
+2020-04-06,Barcelona,Cataluña,43,18,,,2410,21879,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv;https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-04-06,Girona,Cataluña,40,11,,,181,1771,,https://www.diaridegirona.cat/comarques/2020/04/06/sestabilitza-nombre-morts-coronavirus-baixen/1038208.html;https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp,
 2020-04-06,Lleida,Cataluña,,,,,82,1098,224,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html;,
 2020-04-06,Tarragona,Cataluña,140,2696,242,74,87,1098,,https://tarragonadigital.com/area-metropolitana/dades-coronavirus-tarragona-ebre-6-abril;https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp,
 2020-04-06,Alicante/Alacant,Comunitat Valenciana,46,,639,141,269,2673,284,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8516281/200406+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-04-06,Castellón/Castelló,Comunitat Valenciana,17,,229,44,70,869,85,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8516281/200406+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-04-06,Valencia/València,Comunitat Valenciana,87,,1041,199,298,3788,561,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8516281/200406+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
-2020-04-06,Badajoz,Extremadura,,520,,,33,689,136,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),
-2020-04-06,Cáceres,Extremadura,,1097,,,195,1379,87,https://app.flourish.studio/visualisation/1451263/ (6-abr 23:00),
+2020-04-06,Badajoz,Extremadura,17,520,158,32,33,689,136,http://www.juntaex.es/comunicacion/noticia?idPub=30040#.XosFUHJS-M8,
+2020-04-06,Cáceres,Extremadura,4,1097,260,31,195,1379,87,http://www.juntaex.es/comunicacion/noticia?idPub=30040#.XosFUHJS-M8,
 2020-04-06,Araba/Álava,País Vasco,69,,271,,212,2744,,https://twitter.com/osakidetzaEJGV/status/1247477653780692998;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/6_abril_Boletin.pdf,"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
 2020-04-06,Bizkaia,País Vasco,114,,1105,,292,4717,,https://twitter.com/osakidetzaEJGV/status/1247477653780692998;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/6_abril_Boletin.pdf,"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
 2020-04-06,Gipuzkoa,País Vasco,28,,349,,82,1560,,https://twitter.com/osakidetzaEJGV/status/1247477653780692998;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/6_abril_Boletin.pdf,"¹El Gobierno Vasco no especifica el lugar de las altas, por lo que se muestra el total de casos activos en la comunidad autónoma."
@@ -1678,10 +1678,10 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-06,Madrid,"Madrid, Comunidad de",,16265,14501,1510,5136,38723,17322,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-06,Melilla,Melilla,,79,38,3,2,86,11,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-06,Murcia,"Murcia, Región de",,1012,468,81,68,1259,156,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-04-06,Navarra,"Navarra, Comunidad Foral de",,2664,1432,124,187,3231,380,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-04-05,Navarra,"Navarra, Comunidad Foral de",158,2664,1432,124,187,3231,380,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-04-06,"Rioja, La","Rioja, La",,1614,888,66,141,2719,964,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-04-07,Badajoz,Extremadura,,501,,,38,708,169,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/,
-2020-04-07,Cáceres,Extremadura,,1075,,,220,1408,113,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/,
+2020-04-07,Badajoz,Extremadura,19,501,151,32,38,708,169,http://www.juntaex.es/comunicacion/noticia?idPub=30049#.Xoxs7HJS-M8,
+2020-04-07,Cáceres,Extremadura,29,1075,239,32,220,1408,113,http://www.juntaex.es/comunicacion/noticia?idPub=30049#.Xoxs7HJS-M8,
 2020-04-07,Almería,Andalucía,,,154,32,23,371,50,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234293.html,
 2020-04-07,Cádiz,Andalucía,,,370,56,32,881,109,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234293.html,
 2020-04-07,Córdoba,Andalucía,,,408,50,39,1055,84,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234293.html,
@@ -1711,12 +1711,14 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-07,Soria,Castilla y León,13,,113,21,64,837,172,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-07,Valladolid,Castilla y León,157,,423,99,153,1602,553,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-07,Zamora,Castilla y León,2,,103,12,39,342,107,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-04-07,Barcelona,Cataluña,,,,,,22615,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
-2020-04-08,Barcelona,Cataluña,,,,,,23284,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
-2020-04-09,Barcelona,Cataluña,,,,,,23838,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
-2020-04-10,Barcelona,Cataluña,,,,,,23982,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,
+2020-04-07,Barcelona,Cataluña,,,,,2526,22615,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-04-07,Lleida,Cataluña,,,,,86,1123,246,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-04-07,Tarragona,Cataluña,54,,255,75,97,1152,,https://tarragonadigital.com/area-metropolitana/dades-coronavirus-tarragona-7-abril-2020,
+2020-04-07,Girona,Cataluña,,,,,199,1844,,https://www.diaridegirona.cat/comarques/2020/04/07/girona-ja-frega-200-morts/1038408.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
+2020-04-08,Barcelona,Cataluña,,,,,2614,23284,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
+2020-04-08,Lleida,Cataluña,,,,,88,1154,273,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
+2020-04-08,Girona,Cataluña,,,,,232,1941,,https://www.diaridegirona.cat/comarques/2020/04/08/girona-registra-record-morts-coronavirus/1038567.html,
+2020-04-08,Tarragona,Cataluña,,,239,71,107,1206,,https://tarragonadigital.com/area-metropolitana/dades-coronavirus-tarragona-8-abril-2020,
 2020-04-07,Alicante/Alacant,Comunitat Valenciana,41,,607,143,283,2714,371,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8518241/200407+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-04-07,Castellón/Castelló,Comunitat Valenciana,7,,228,44,78,876,107,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8518241/200407+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
 2020-04-07,Valencia/València,Comunitat Valenciana,61,,1052,197,311,3849,625,http://www.san.gva.es/comunicados-coronavirus (http://www.san.gva.es/documents/151311/8518241/200407+NOTA+DE+PRENSA+CORONAVIRUS.pdf),
@@ -1726,7 +1728,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-07,Huesca,Aragón,,315,185,27,42,419,62,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258516,"¹El Gobierno de Aragón ha informado de 35 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 312."
 2020-04-07,Teruel,Aragón,,271,187,27,32,396,93,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258516,"¹El Gobierno de Aragón ha informado de 35 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 312."
 2020-04-07,Zaragoza,Aragón,,1946,1280,192,237,2599,416,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258516,"¹El Gobierno de Aragón ha informado de 35 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 312."
-2020-04-07,Girona,Cataluña,,,,,199,1844,,https://www.diaridegirona.cat/comarques/2020/04/07/girona-ja-frega-200-morts/1038408.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
+2020-04-09,Barcelona,Cataluña,,,,,2694,23838,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-04-07,Asturias,"Asturias, Principado de",,,889,91,96,1679,244,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-07,"Balears, Illes","Balears, Illes",,,705,124,84,1369,537,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-07,Cantabria,Cantabria,,,677,66,85,1501,129,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
@@ -1734,18 +1736,18 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-07,Madrid,"Madrid, Comunidad de",,,13950,1494,5371,40469,18410,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-07,Melilla,Melilla,,,40,3,2,92,11,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-07,Murcia,"Murcia, Región de",,,500,84,78,1283,193,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-04-07,Navarra,"Navarra, Comunidad Foral de",,,1488,124,202,3355,421,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-04-06,Navarra,"Navarra, Comunidad Foral de",124,2732,1488,124,202,3355,421,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-04-07,"Rioja, La","Rioja, La",,,918,66,160,2846,994,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-08,Huesca,Aragón,,309,190,28,51,428,68,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258578,"¹El Gobierno de Aragón ha informado de 36 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 349."
 2020-04-08,Teruel,Aragón,,273,191,29,34,406,99,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258578,"¹El Gobierno de Aragón ha informado de 36 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 349."
 2020-04-08,Zaragoza,Aragón,,1932,1324,197,263,2679,484,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ y http://aragonhoy.net/index.php/mod.noticias/mem.detalle/area.1050/id.258578,"¹El Gobierno de Aragón ha informado de 36 casos que residen en otra provincia española o en los que no consta y en consecuencia están en investigación para determinar su lugar de residencia. También del fallecimiento de otra persona cuyo origen es desconocido, por lo que el total en la comunidad asciende a 349."
-2020-04-08,Badajoz,Extremadura,,502,,,43,731,186,,
-2020-04-08,Cáceres,Extremadura,,1083,,,228,1453,142,,
-2020-04-08,Lleida,Cataluña,,,,,88,1154,273,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
+2020-04-08,Badajoz,Extremadura,23,502,144,33,43,731,186,http://www.juntaex.es/comunicacion/noticia?idPub=30056#.Xo29JnJS-Cg,
+2020-04-08,Cáceres,Extremadura,45,1083,257,33,228,1453,142,http://www.juntaex.es/comunicacion/noticia?idPub=30056#.Xo29JnJS-Cg,
+2020-04-09,Lleida,Cataluña,,,,,90,1220,307,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-04-08,Araba/Álava,País Vasco,62,,219,,237,2868,,https://twitter.com/osakidetzaEJGV/status/1248200163258179584;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/8_abril_Boletin.pdf,
 2020-04-08,Bizkaia,País Vasco,214,,951,,349,5182,,https://twitter.com/osakidetzaEJGV/status/1248200163258179584;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/8_abril_Boletin.pdf,
 2020-04-08,Gipuzkoa,País Vasco,78,,315,,103,1756,,https://twitter.com/osakidetzaEJGV/status/1248200163258179584;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/8_abril_Boletin.pdf,
-2020-04-08,Girona,Cataluña,,,,,232,1941,,https://www.diaridegirona.cat/comarques/2020/04/08/girona-registra-record-morts-coronavirus/1038567.html,
+2020-04-09,Girona,Cataluña,,,,,244,1986,,https://www.diaridegirona.cat/comarques/2020/04/09/dotze-persones-mes-moren-coronavirus/1038709.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
 2020-04-08,Almería,Andalucía,,,161,32,26,378,54,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234360.html,
 2020-04-08,Cádiz,Andalucía,,,385,55,36,901,118,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234360.html,
 2020-04-08,Córdoba,Andalucía,,,419,50,42,1069,101,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234360.html,
@@ -1759,7 +1761,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-08,Cuenca,Castilla - La Mancha,,682,141,,107,,,Notas de prensa JCCM [23:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/177-hospitalizados-menos-y-204-altas-epidemiol%C3%B3gicas-en-las-%C3%BAltimas-24-horas-alivian-la-presi%C3%B3n,
 2020-04-08,Guadalajara,Castilla - La Mancha,,973,248,,133,,,Notas de prensa JCCM [23:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/177-hospitalizados-menos-y-204-altas-epidemiol%C3%B3gicas-en-las-%C3%BAltimas-24-horas-alivian-la-presi%C3%B3n,
 2020-04-08,Toledo,Castilla - La Mancha,,2597,662,,352,,,Notas de prensa JCCM [23:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/177-hospitalizados-menos-y-204-altas-epidemiol%C3%B3gicas-en-las-%C3%BAltimas-24-horas-alivian-la-presi%C3%B3n,
-2020-04-08,Tarragona,Cataluña,,,239,71,107,1206,,https://tarragonadigital.com/area-metropolitana/dades-coronavirus-tarragona-8-abril-2020,
+2020-04-09,Tarragona,Cataluña,,,240,66,120,1307,,https://tarragonadigital.com/area-metropolitana/dades-coronavirus-tarragona-9-abril-2020,
 2020-04-08,Asturias,"Asturias, Principado de",,,958,91,102,1705,294,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-08,"Balears, Illes","Balears, Illes",,,731,129,89,1412,616,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-08,Cantabria,Cantabria,,,700,69,92,1572,175,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
@@ -1767,7 +1769,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-08,Madrid,"Madrid, Comunidad de",,,13289,1450,5586,42450,19836,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-08,Melilla,Melilla,,,40,3,2,93,12,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-08,Murcia,"Murcia, Región de",,,515,86,85,1326,203,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
-2020-04-08,Navarra,"Navarra, Comunidad Foral de",,,1526,124,206,3467,450,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
+2020-04-07,Navarra,"Navarra, Comunidad Foral de",112,2811,1526,124,206,3467,450,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-04-08,"Rioja, La","Rioja, La",,,955,68,177,2951,1061,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-04-08,Ávila,Castilla y León,27,,163,13,85,793,272,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-08,Burgos,Castilla y León,29,,205,53,124,1053,416,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
@@ -1788,10 +1790,10 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-08,La Palma,Canarias,,,,,4,70,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1834-casos-acumulados-de-coronavirus-covid-19/,
 2020-04-08,El Hierro,Canarias,,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1834-casos-acumulados-de-coronavirus-covid-19/,
 2020-04-08,La Gomera,Canarias,,,,,0,7,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-registra-1834-casos-acumulados-de-coronavirus-covid-19/,
-2020-04-09,Lleida,Cataluña,,,,,90,1220,307,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
+2020-04-10,Barcelona,Cataluña,,,,,2752,23982,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-04-10,Lleida,Cataluña,,,,,92,1252,343,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
-2020-04-11,Lleida,Cataluña,,,,,96,1293,361,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
-2020-04-12,Lleida,Cataluña,,,,,98,1310,386,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
+2020-04-10,Girona,Cataluña,,,,,259,2164,,https://www.diaridegirona.cat/comarques/2020/04/10/quinze-persones-moren-coronavirus-comarques/1038830.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
+2020-04-10,Tarragona,Cataluña,,,207,67,128,1350,,https://tarragonadigital.com/area-metropolitana/continuen-positius-defuncions-coronavirus-demarcacio-tarragona-abril-2020,
 2020-04-09,Araba/Álava,País Vasco,40,,214,,245,2908,,https://twitter.com/osakidetzaEJGV/status/1248566574996430849;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/9_abril_Boletin.pdf,
 2020-04-09,Bizkaia,País Vasco,210,,912,,377,5392,,https://twitter.com/osakidetzaEJGV/status/1248566574996430849;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/9_abril_Boletin.pdf,
 2020-04-09,Gipuzkoa,País Vasco,47,,290,,107,1803,,https://twitter.com/osakidetzaEJGV/status/1248566574996430849;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/9_abril_Boletin.pdf,
@@ -1804,10 +1806,10 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-12,Araba/Álava,País Vasco,15,,212,,266,3034,,https://twitter.com/osakidetzaEJGV/status/1249653648612823042;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/12_abril_Boletin.pdf,
 2020-04-12,Bizkaia,País Vasco,135,,862,,431,5933,,https://twitter.com/osakidetzaEJGV/status/1249653648612823042;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/12_abril_Boletin.pdf,
 2020-04-12,Gipuzkoa,País Vasco,96,,278,,134,2051,,https://twitter.com/osakidetzaEJGV/status/1249653648612823042;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/12_abril_Boletin.pdf,
-2020-04-09,Girona,Cataluña,,,,,244,1986,,https://www.diaridegirona.cat/comarques/2020/04/09/dotze-persones-mes-moren-coronavirus/1038709.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
-2020-04-10,Girona,Cataluña,,,,,259,2164,,https://www.diaridegirona.cat/comarques/2020/04/10/quinze-persones-moren-coronavirus-comarques/1038830.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
+2020-04-11,Barcelona,Cataluña,,,,,2834,,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
+2020-04-11,Lleida,Cataluña,,,,,96,1293,361,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-04-11,Girona,Cataluña,,,,,263,2213,,https://www.diaridegirona.cat/comarques/2020/04/11/quatre-morts-girona-dada-mes/1038981.html;https://github.com/nachotronic/covid19/blob/master/casos_girona.csv,
-2020-04-12,Girona,Cataluña,,,,,274,2266,,https://www.diaridegirona.cat/girona/2020/04/12/repunt-morts-coronavirus-girona-onze/1039103.html,
+2020-04-11,Tarragona,Cataluña,,,200,67,138,1420,,https://tarragonadigital.com/area-metropolitana/dades-coronavirus-tarragona-11-abril-2020,
 2020-04-09,Almería,Andalucía,,,168,32,27,395,63,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234409.html,
 2020-04-09,Cádiz,Andalucía,,,403,58,45,915,128,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234409.html,
 2020-04-09,Córdoba,Andalucía,,,424,52,45,1084,131,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234409.html,
@@ -1816,7 +1818,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-09,Jaén,Andalucía,,,548,51,84,1021,80,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234409.html,
 2020-04-09,Málaga,Andalucía,,,1158,111,147,2074,355,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234409.html,
 2020-04-09,Sevilla,Andalucía,,,874,114,141,1825,191,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234409.html,
-2020-04-09,Tarragona,Cataluña,,,240,66,120,1307,,https://tarragonadigital.com/area-metropolitana/dades-coronavirus-tarragona-9-abril-2020,
+2020-04-12,Barcelona,Cataluña,,,,,2931,,,https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv,Importante: muertes calculadas por la diferencia de Cataluña menos las reportadas en las otras tres provincias. Script: https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/analysis/evolution_spain_provinces.R
 2020-04-09,Albacete,Castilla - La Mancha,,3.212,650,,280,,,Notas de prensa JCCM [23:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/contin%C3%BAa-descendiendo-el-n%C3%BAmero-de-hospitalizados-y-pacientes-cr%C3%ADticos-la-vez-que-aumentan-las-altas-1,
 2020-04-09,Ciudad Real,Castilla - La Mancha,,4720,907,,428,,,Notas de prensa JCCM [23:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/contin%C3%BAa-descendiendo-el-n%C3%BAmero-de-hospitalizados-y-pacientes-cr%C3%ADticos-la-vez-que-aumentan-las-altas-2,
 2020-04-09,Cuenca,Castilla - La Mancha,,800,136,,110,,,Notas de prensa JCCM [23:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/contin%C3%BAa-descendiendo-el-n%C3%BAmero-de-hospitalizados-y-pacientes-cr%C3%ADticos-la-vez-que-aumentan-las-altas-3,
@@ -1849,16 +1851,16 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-09,Madrid,"Madrid, Comunidad de",,,12853,1433,5800,43877,21121,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
 2020-04-09,Melilla,Melilla,,,40,3,2,93,16,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
 2020-04-09,Murcia,"Murcia, Región de",,,533,87,88,1356,219,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
-2020-04-09,Navarra,"Navarra, Comunidad Foral de",,,1526,124,214,3575,462,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
+2020-04-08,Navarra,"Navarra, Comunidad Foral de",108,2899,1556,124,214,3575,462,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-04-09,Huesca,Aragón,,312,,,58,444,74,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,"¹El Gobierno de Aragón ha informado de 37 en investigación, por lo que el total de casos asciende a 3.685. También hay 718 dadas de alta en toda la comunidad, nueve de ellas correspondientes a los casos en investigación. Además, los fallecidos en Aragón suman 385, uno de ellos en investigación."
 2020-04-09,Teruel,Aragón,,276,,,39,416,101,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,"¹El Gobierno de Aragón ha informado de 37 en investigación, por lo que el total de casos asciende a 3.685. También hay 718 dadas de alta en toda la comunidad, nueve de ellas correspondientes a los casos en investigación. Además, los fallecidos en Aragón suman 385, uno de ellos en investigación."
 2020-04-09,Zaragoza,Aragón,,1967,,,287,2788,534,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,"¹El Gobierno de Aragón ha informado de 37 en investigación, por lo que el total de casos asciende a 3.685. También hay 718 dadas de alta en toda la comunidad, nueve de ellas correspondientes a los casos en investigación. Además, los fallecidos en Aragón suman 385, uno de ellos en investigación."
-2020-04-09,Badajoz,Extremadura,,508,,,48,760,204,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,
-2020-04-09,Cáceres,Extremadura,,1101,,,235,1513,177,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,
-2020-04-10,Badajoz,Extremadura,,506,,,49,768,213,Flourish de RTVE https://app.flourish.studio/visualisation/1845449/ ,
-2020-04-10,Cáceres,Extremadura,,1141,,,239,1564,184,Flourish de RTVE https://app.flourish.studio/visualisation/1845449/ ,
-2020-04-11,Badajoz,Extremadura,,531,,,54,821,236,Flourish de RTVE (act. 23:00): https://app.flourish.studio/visualisation/1845449/,
-2020-04-11,Cáceres,Extremadura,,1190,,,249,1665,226,Flourish de RTVE (act. 23:00): https://app.flourish.studio/visualisation/1845449/,
+2020-04-09,Badajoz,Extremadura,29,508,144,34,48,760,204,http://www.juntaex.es/comunicacion/noticia?idPub=30062#.Xo75NnJS-M8,
+2020-04-09,Cáceres,Extremadura,60,1101,254,31,235,1513,177,http://www.juntaex.es/comunicacion/noticia?idPub=30062#.Xo75NnJS-M8,
+2020-04-10,Badajoz,Extremadura,61,531,122,33,54,821,236,http://www.juntaex.es/comunicacion/noticia?idPub=30067#.XpH375lS-M8,
+2020-04-10,Cáceres,Extremadura,152,1190,270,30,249,1665,226,http://www.juntaex.es/comunicacion/noticia?idPub=30067#.XpH375lS-M8,
+2020-04-11,Badajoz,Extremadura,38,552,114,30,55,859,252,http://www.juntaex.es/comunicacion/noticia?idPub=30070#.XpMpFplS-M8,
+2020-04-11,Cáceres,Extremadura,56,1235,260,30,257,1721,229,http://www.juntaex.es/comunicacion/noticia?idPub=30070#.XpMpFplS-M8,
 2020-04-10,Almería,Andalucía,,,169,33,29,400,73,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234422.html,
 2020-04-10,Cádiz,Andalucía,,,413,64,49,929,144,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234422.html,
 2020-04-10,Córdoba,Andalucía,,,439,54,48,1116,159,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234422.html,
@@ -1867,7 +1869,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-10,Jaén,Andalucía,,,557,56,92,1055,111,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234422.html,
 2020-04-10,Málaga,Andalucía,,,1182,123,154,2127,451,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234422.html,
 2020-04-10,Sevilla,Andalucía,,,900,124,150,1887,200,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234422.html,
-2020-04-10,Tarragona,Cataluña,,,207,67,128,1350,,https://tarragonadigital.com/area-metropolitana/continuen-positius-defuncions-coronavirus-demarcacio-tarragona-abril-2020,
+2020-04-12,Lleida,Cataluña,,,,,98,1310,386,https://www.segre.com/es/noticias/lleida/2020/03/24/lleida_suma_morts_positius_coronavirus_sol_dia_102336_1092.html,
 2020-04-10,Albacete,Castilla - La Mancha,,3343,595,,299,,,Notas de prensa JCCM [22:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/contin%C3%BAan-descendiendo-el-n%C3%BAmero-de-hospitalizados-y-los-pacientes-que-necesitan-respirador-la-vez,
 2020-04-10,Ciudad Real,Castilla - La Mancha,,4917,804,,479,,,Notas de prensa JCCM [22:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/contin%C3%BAan-descendiendo-el-n%C3%BAmero-de-hospitalizados-y-los-pacientes-que-necesitan-respirador-la-vez,
 2020-04-10,Cuenca,Castilla - La Mancha,,845,134,,123,,,Notas de prensa JCCM [22:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/contin%C3%BAan-descendiendo-el-n%C3%BAmero-de-hospitalizados-y-los-pacientes-que-necesitan-respirador-la-vez,
@@ -1893,7 +1895,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-10,Madrid,"Madrid, Comunidad de",,,12432,1399,5972,44783,22414,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
 2020-04-10,Melilla,Melilla,,,41,3,2,95,17,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
 2020-04-10,Murcia,"Murcia, Región de",,,533,88,90,1383,255,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
-2020-04-10,Navarra,"Navarra, Comunidad Foral de",,,1620,124,218,3748,560,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
+2020-04-09,Navarra,"Navarra, Comunidad Foral de",173,2970,1620,124,218,3748,560,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-04-11,Asturias,"Asturias, Principado de",,,1147,105,128,1827,414,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
 2020-04-11,"Balears, Illes","Balears, Illes",,,778,137,102,1507,757,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
 2020-04-11,Cantabria,Cantabria,,,773,75,107,1719,281,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
@@ -1902,7 +1904,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-11,Madrid,"Madrid, Comunidad de",,,11894,1376,6084,45849,23663,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
 2020-04-11,Melilla,Melilla,,,43,3,2,98,18,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
 2020-04-11,Murcia,"Murcia, Región de",,,533,88,94,1413,275,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
-2020-04-11,Navarra,"Navarra, Comunidad Foral de",,,1641,124,227,3817,603,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
+2020-04-10,Navarra,"Navarra, Comunidad Foral de",69,2987,1641,124,227,3817,603,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-04-10,Huesca,Aragón,,331,,,64,478,83,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,"¹El Gobierno de Aragón ha informado de 41 en investigación, por lo que el total de casos asciende a 3.831. También hay 797 dadas de alta en toda la comunidad, diez de ellas correspondientes a los casos en investigación. Además, los fallecidos en Aragón suman 409, uno de ellos en investigación."
 2020-04-10,Teruel,Aragón,,275,,,41,423,107,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,"¹El Gobierno de Aragón ha informado de 41 en investigación, por lo que el total de casos asciende a 3.831. También hay 797 dadas de alta en toda la comunidad, diez de ellas correspondientes a los casos en investigación. Además, los fallecidos en Aragón suman 409, uno de ellos en investigación."
 2020-04-10,Zaragoza,Aragón,,1989,,,303,2889,597,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/ ,"¹El Gobierno de Aragón ha informado de 41 en investigación, por lo que el total de casos asciende a 3.831. También hay 797 dadas de alta en toda la comunidad, diez de ellas correspondientes a los casos en investigación. Además, los fallecidos en Aragón suman 409, uno de ellos en investigación."
@@ -1924,7 +1926,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-11,Jaén,Andalucía,,,561,57,96,1097,156,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234431.html,
 2020-04-11,Málaga,Andalucía,,,1199,137,170,2143,523,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234431.html,
 2020-04-11,Sevilla,Andalucía,,,922,126,159,1947,221,https://www.juntadeandalucia.es/organismos/saludyfamilias/actualidad/noticias/detalle/234431.html,
-2020-04-11,Tarragona,Cataluña,,,200,67,138,1420,,https://tarragonadigital.com/area-metropolitana/dades-coronavirus-tarragona-11-abril-2020,
+2020-04-12,Girona,Cataluña,,,,,274,2266,,https://www.diaridegirona.cat/girona/2020/04/12/repunt-morts-coronavirus-girona-onze/1039103.html,
 2020-04-11,Albacete,Castilla - La Mancha,,3.404,562,,309,,,Notas de prensa JCCM [23:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/castilla-la-mancha-supera-las-2200-altas-epidemiol%C3%B3gicas-mientras-contin%C3%BAa-el-descenso-de-las,
 2020-04-11,Ciudad Real,Castilla - La Mancha,,5138,736,,503,,,Notas de prensa JCCM [23:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/castilla-la-mancha-supera-las-2200-altas-epidemiol%C3%B3gicas-mientras-contin%C3%BAa-el-descenso-de-las,
 2020-04-11,Cuenca,Castilla - La Mancha,,874,120,,129,,,Notas de prensa JCCM [23:30h] https://www.castillalamancha.es/actualidad/notasdeprensa/castilla-la-mancha-supera-las-2200-altas-epidemiol%C3%B3gicas-mientras-contin%C3%BAa-el-descenso-de-las,
@@ -1940,7 +1942,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-11,Valladolid,Castilla y León,138,,322,92,195,2123,804,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-11,Zamora,Castilla y León,2,,83,12,51,408,148,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-11,Alicante/Alacant,Comunitat Valenciana,31,,422,124,327,2993,764,https://www.gva.es/es/inicio/area_de_prensa/ap_notas_prensa?zona=21&idioma=ES&tipoContenido=26&busquedadescripcion=Coronavirus|covid19|covid-19&busquedacategoria=0&busquedaorganismo=3.07&busquedafechaini=&busquedafechafin=&botonBuscar=Buscar (https://www.gva.es/va/inicio/area_de_prensa/not_detalle_area_prensa?id=853916),
-2020-04-11,https://www.gva.es/es/inicio/area_de_prensa/ap_notas_prensa?zona=21&idioma=ES&tipoContenido=26&busquedadescripcion=Coronavirus|covid19|covid-19&busquedacategoria=0&busquedaorganismo=3.07&busquedafechaini=&busquedafechafin=&botonBuscar=Buscar (https://www.gva.es/va/inicio/area_de_prensa/not_detalle_area_prensa?id=853916);,Comunitat Valenciana,57,,230,43,99,1054,241,https://www.gva.es/es/inicio/area_de_prensa/ap_notas_prensa?zona=21&idioma=ES&tipoContenido=26&busquedadescripcion=Coronavirus|covid19|covid-19&busquedacategoria=0&busquedaorganismo=3.07&busquedafechaini=&busquedafechafin=&botonBuscar=Buscar (https://www.gva.es/va/inicio/area_de_prensa/not_detalle_area_prensa?id=853916),
+2020-04-11,Castellón/Castelló,Comunitat Valenciana,57,,230,43,99,1054,241,https://www.gva.es/es/inicio/area_de_prensa/ap_notas_prensa?zona=21&idioma=ES&tipoContenido=26&busquedadescripcion=Coronavirus|covid19|covid-19&busquedacategoria=0&busquedaorganismo=3.07&busquedafechaini=&busquedafechafin=&botonBuscar=Buscar (https://www.gva.es/va/inicio/area_de_prensa/not_detalle_area_prensa?id=853916),
 2020-04-11,Valencia/València,Comunitat Valenciana,159,,805,165,392,4526,1301,https://www.gva.es/es/inicio/area_de_prensa/ap_notas_prensa?zona=21&idioma=ES&tipoContenido=26&busquedadescripcion=Coronavirus|covid19|covid-19&busquedacategoria=0&busquedaorganismo=3.07&busquedafechaini=&busquedafechafin=&botonBuscar=Buscar (https://www.gva.es/va/inicio/area_de_prensa/not_detalle_area_prensa?id=853916),
 2020-04-11,Tenerife,Canarias,,,,,62,1226,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1918-casos-acumulados-de-coronavirus-covid-19/,
 2020-04-11,Gran Canaria,Canarias,,,,,26,495,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1918-casos-acumulados-de-coronavirus-covid-19/,
@@ -1965,7 +1967,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-12,Madrid,"Madrid, Comunidad de",,,11424,1332,6278,46587,24683,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
 2020-04-12,Melilla,Melilla,,,43,3,2,98,18,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
 2020-04-12,Murcia,"Murcia, Región de",,,537,91,97,1449,344,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
-2020-04-12,Navarra,"Navarra, Comunidad Foral de",,,1663,124,232,3969,650,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
+2020-04-11,Navarra,"Navarra, Comunidad Foral de",152,3087,1663,124,232,3969,650,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
 2020-04-12,Tarragona,Cataluña,,,215,68,139,1474,,https://tarragonadigital.com/area-metropolitana/dades-coronavirus-tarragona-12-abril-2020,
 2020-04-12,Albacete,Castilla - La Mancha,46,3450,517,,315,,,Notas de prensa JCCM [23:00h] https://www.castillalamancha.es/actualidad/notasdeprensa/160-altas-epidemiol%C3%B3gicas-m%C3%A1s-y-131-hospitalizados-menos-en-las-%C3%BAltimas-24-horas-alivian-la,
 2020-04-12,Ciudad Real,Castilla - La Mancha,129,5267,680,,533,,,Notas de prensa JCCM [23:00h] https://www.castillalamancha.es/actualidad/notasdeprensa/160-altas-epidemiol%C3%B3gicas-m%C3%A1s-y-131-hospitalizados-menos-en-las-%C3%BAltimas-24-horas-alivian-la,
@@ -1992,9 +1994,29 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-13,Madrid,"Madrid, Comunidad de",,,11233,1327,6423,47146,25385,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
 2020-04-13,Melilla,Melilla,,,43,3,2,101,18,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
 2020-04-13,Murcia,"Murcia, Región de",,,543,94,101,1463,353,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
-2020-04-13,Navarra,"Navarra, Comunidad Foral de",,,1693,124,239,4092,695,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,
-2020-04-12,Badajoz,Extremadura,,552,,,55,859,252,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/,
-2020-04-12,Cáceres,Extremadura,,1235,,,257,1721,229,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/,
+2020-04-12,Navarra,"Navarra, Comunidad Foral de",123,3158,1693,124,239,4092,695,https://gobiernoabierto.navarra.es/es/open-data/datos/datos-evolutivos-covid-19,
+2020-04-12,Badajoz,Extremadura,23,550,111,29,58,882,274,http://www.juntaex.es/comunicacion/noticia?idPub=30074#.XpRBNplS-M8,
+2020-04-12,Cáceres,Extremadura,55,1276,258,30,263,1776,237,http://www.juntaex.es/comunicacion/noticia?idPub=30074#.XpRBNplS-M8,
 2020-04-12,Huesca,Aragón,,332,,,67,502,103,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/,"¹El Gobierno de Aragón ha informado de 47 en investigación, por lo que el total de casos asciende a 4.070. También hay 934 dadas de alta en toda la comunidad, diez de ellas correspondientes a los casos en investigación. Además, los fallecidos en Aragón suman 450, uno de ellos en investigación."
 2020-04-12,Teruel,Aragón,,301,,,48,464,115,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/,"¹El Gobierno de Aragón ha informado de 47 en investigación, por lo que el total de casos asciende a 4.070. También hay 934 dadas de alta en toda la comunidad, diez de ellas correspondientes a los casos en investigación. Además, los fallecidos en Aragón suman 450, uno de ellos en investigación."
 2020-04-12,Zaragoza,Aragón,,2017,,,334,3057,706,Flourish de RTVE (act. 23:30): https://app.flourish.studio/visualisation/1845449/,"¹El Gobierno de Aragón ha informado de 47 en investigación, por lo que el total de casos asciende a 4.070. También hay 934 dadas de alta en toda la comunidad, diez de ellas correspondientes a los casos en investigación. Además, los fallecidos en Aragón suman 450, uno de ellos en investigación."
+2020-04-12,Tenerife,Canarias,,,,,63,1237,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1944-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-12,Gran Canaria,Canarias,,,,,26,500,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1944-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-12,Fuerteventura,Canarias,,,,,0,38,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1944-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-12,Lanzarote,Canarias,,,,,3,76,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1944-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-12,La Palma,Canarias,,,,,4,80,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1944-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-12,El Hierro,Canarias,,,,,0,3,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1944-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-12,La Gomera,Canarias,,,,,0,10,,https://www3.gobiernodecanarias.org/noticias/la-consejeria-de-sanidad-constata-1944-casos-acumulados-de-coronavirus-covid-19/,
+2020-04-13,Tarragona,Cataluña,,,212,69,143,1512,,https://tarragonadigital.com/area-metropolitana/dades-coronavirus-tarragona-13-abril-2020,
+2020-04-13,Ávila,Castilla y León,35,,128,12,96,952,354,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-13,Burgos,Castilla y León,25,,183,47,141,1232,517,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-13,León,Castilla y León,104,,258,46,255,1679,811,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-13,Palencia,Castilla y León,16,,98,21,50,636,177,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-13,Salamanca,Castilla y León,64,,289,44,258,2257,627,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-13,Segovia,Castilla y León,68,,150,20,151,1913,530,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-13,Soria,Castilla y León,23,,99,20,85,1013,242,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-13,Valladolid,Castilla y León,135,,321,86,210,2492,846,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-13,Zamora,Castilla y León,40,,75,12,53,454,162,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-13,Alicante/Alacant,Comunitat Valenciana,79,,420,120,342,3212,1046,https://www.gva.es/es/inicio/area_de_prensa/ap_notas_prensa?zona=21&idioma=ES&tipoContenido=26&busquedadescripcion=Coronavirus|covid19|covid-19&busquedacategoria=0&busquedaorganismo=3.07&busquedafechaini=&busquedafechafin=&botonBuscar=Buscar (https://www.gva.es/va/inicio/area_de_prensa/not_detalle_area_prensa?id=854036),
+2020-04-13,Castellón/Castelló,Comunitat Valenciana,27,,222,38,109,1116,270,https://www.gva.es/es/inicio/area_de_prensa/ap_notas_prensa?zona=21&idioma=ES&tipoContenido=26&busquedadescripcion=Coronavirus|covid19|covid-19&busquedacategoria=0&busquedaorganismo=3.07&busquedafechaini=&busquedafechafin=&botonBuscar=Buscar (https://www.gva.es/va/inicio/area_de_prensa/not_detalle_area_prensa?id=854036),
+2020-04-13,Valencia/València,Comunitat Valenciana,113,,786,158,425,4727,1487,https://www.gva.es/es/inicio/area_de_prensa/ap_notas_prensa?zona=21&idioma=ES&tipoContenido=26&busquedadescripcion=Coronavirus|covid19|covid-19&busquedacategoria=0&busquedaorganismo=3.07&busquedafechaini=&busquedafechafin=&botonBuscar=Buscar (https://www.gva.es/va/inicio/area_de_prensa/not_detalle_area_prensa?id=854036),
