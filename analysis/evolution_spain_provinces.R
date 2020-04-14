@@ -10,8 +10,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: ProvidencialData19. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: montera34.com | Datos: recopilado por Providencialdata19 (lab.montera34.com/covid19, bit.ly/amadrinaunaccaa)"
-period <- "2020.02.27 - 04.12"
-filter_date <- as.Date("2020-04-13")
+period <- "2020.02.27 - 04.13"
+filter_date <- as.Date("2020-04-14")
 
 # Load Data ---------
 # / Population -------------
@@ -738,7 +738,7 @@ data_cases_sp_provinces %>%
                  expand = c(0,0.1) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date + 11)),
+               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date + 14)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -779,7 +779,7 @@ data_cases_sp_provinces %>%
   scale_color_manual(values = colors_prov) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +9)),
+               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +12)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
