@@ -9,7 +9,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------  
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_f <- "Gráfico: montera34.com. Datos: OpenCOVID19-fr"
-periodo_f <- "2020.03.04 - 04.13"
+periodo_f <- "2020.03.04 - 04.14"
 
 # COVID-19 in France-----------
 
@@ -72,10 +72,12 @@ data_f2_cases$date <- as.Date(data_f2_cases$date)
 data_f2_cases <- data_f2_cases %>% group_by(maille_nom,date) %>% 
   mutate( deceassed = max(deces),
           cases = max(cas_confirmes) )
+
 names(data_f2_cases)
 
-names(data_f2_cases)  <- c("date","granularite","region_code","region","cases_registered","deces","deces_ehpad","reanimation","hospitalises",
+names(data_f2_cases)  <- c("date","granularite","region_code","region","cases_registered","cas_ehpad","cas_confirmes_ehpad","cas_possibles_ehpad","deces","deces_ehpad","reanimation","hospitalises",
                            "gueris","depistes","source_nom","source_url","source_archive","source_type","deceassed", "cases"  )
+
 
 # write.csv(data_f2_cases, file = "data/output/france/covid19-cases-registered-region-france-by-day-accumulated.csv", row.names = FALSE)
 
