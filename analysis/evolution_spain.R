@@ -11,7 +11,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 04.14"
+period <- "2020.02.27 - 04.15"
 
 # Load Data ---------
 # / Population -------------  
@@ -2664,6 +2664,49 @@ data_all_export %>%
 dev.off()
 
 # 7. Deaths vs weekly deaths ------
+# lineal --------
+png(filename=paste("img/spain/regions/covid19_trayectoria-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1200,height = 700)
+data_all_export %>%
+  ggplot() +
+  geom_line(aes(deceassed,deaths_last_week,group=region, color=region), size= 1 ) +
+  geom_point(aes(deceassed,deaths_last_week,color=region), size= 1.5 ) +
+  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date),  region != "Total"),
+                  aes(deceassed,deaths_last_week, color=region, label=paste( region)),
+                  nudge_x = 0.2, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_color_manual(values = colors ) +
+  # scale_y_log10(
+  #   breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
+  #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  # ) +
+  # scale_x_log10(
+  #   breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
+  #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  # ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España",
+       subtitle = paste0("Por comunidad autónoma. ",period),
+       y = "fallecidos última semana (log)",
+       x = "total de fallecidos (log)",
+       caption = paste0("", caption , "| Ver web https://aatishb.com/covidtrends/" ) )
+dev.off()
+
+
 # log --------
 png(filename=paste("img/spain/regions/covid19_trayectoria-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1200,height = 700)
 data_all_export %>%
