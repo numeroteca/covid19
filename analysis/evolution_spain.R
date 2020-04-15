@@ -1426,8 +1426,8 @@ data_death %>% filter( CCAA != "Total") %>%
     legend.position = "none"
   ) +
   labs(title = "Media de muertes por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "fallecidos por día (media 6 días) (escala logarítmica)",
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       y = "fallecidos por día (media 6 días) (escala lineal)",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -1694,8 +1694,8 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Media de muertes por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-       y = "fallecidos por día (media 6 días) (escala logarítmica)",
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       y = "fallecidos por día (media 6 días) (escala lineal)",
        x = "fecha",
        caption = caption)
 dev.off()
