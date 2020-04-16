@@ -83,9 +83,6 @@ ggplot(NULL) +
   )
 dev.off()
 
-
-
-
 png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_casos_bbdd_log.png", sep = ""), width = 1300, height = 900)
 ggplot(NULL) +
   geom_line( data = resumen_pr_ca, aes( date-1, cases_accumulated, group=region), color = "#e7298a", size = 1.5 ) +

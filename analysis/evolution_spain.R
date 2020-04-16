@@ -2701,8 +2701,8 @@ data_all_export %>%
   ) +
   labs(title = "Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma. ",period),
-       y = "fallecidos última semana (log)",
-       x = "total de fallecidos (log)",
+       y = "fallecidos última semana (lineal)",
+       x = "total de fallecidos (lineal)",
        caption = paste0("", caption , "| Ver web https://aatishb.com/covidtrends/" ) )
 dev.off()
 
