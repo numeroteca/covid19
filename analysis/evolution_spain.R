@@ -11,7 +11,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 04.15"
+period <- "2020.02.27 - 04.16"
 
 # Load Data ---------
 # / Population -------------  
@@ -1800,7 +1800,7 @@ data_all_export %>%
   scale_x_date(date_breaks = "3 day",
                date_labels = "%d",
                # limits=c( min(data_all_export$date), max(data_all_export$date + 1.5)),
-               expand = c(0,1),
+               expand = c(0,0),
                limits = c(as.Date("2020-03-16"),max(data_all_export$date) )
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
