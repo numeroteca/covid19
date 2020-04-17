@@ -87,7 +87,7 @@ data_altas<- data_altas %>% group_by(CCAA) %>%
 # add population data
 data_altas <- merge( data_altas, data_cases %>% filter (date == as.Date("2020-02-27") ) %>% select(CCAA,poblacion), by.x = "CCAA", by.y = "CCAA" , all.x = TRUE  )
 # calculate values per 
-data_altas$altas_per_cienmil <- round( data_altas$value / data_altas$poblacion * 1000000, digits = 2)
+data_altas$altas_per_cienmil <- round( data_altas$value / data_altas$poblacion * 100000, digits = 2)
 
 #  hospitalizados
 data_hosp <- melt(data_hosp_original, id.vars = c("CCAA","cod_ine"))
@@ -149,7 +149,9 @@ data_all_export <- data_all_export %>% filter(!is.na(region))
 write.csv(data_all_export, file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv", row.names = FALSE)
 
 data_all_export <- data_all_export %>% group_by(region) %>%
-    arrange(date) %>% mutate( daily_deaths = deceassed - lag(deceassed),
+    arrange(date) %>% mutate(
+                            daily_cases = cases_registered - lag(cases_registered),
+                            daily_deaths = deceassed - lag(deceassed),
                             daily_deaths_inc = round((deceassed - lag(deceassed)) / lag(deceassed) * 100, digits = 1),
                             # lag2 = lag(deceassed,2),
                             daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) ) / 6, digits = 1 ), # average of dayly deaths of 6 last days
@@ -163,7 +165,7 @@ data_all_export <- data_all_export %>% group_by(region) %>%
                              )
 
 # For small multiples
-data_all_export_sm <- data_all_export
+data_all_export_sm <- data_all_export %>% ungroup
 data_all_export_sm$region_cp <-data_all_export_sm$region
 
 export_uniprovinciales <- data_all_export %>% select(date,region,hospitalized,intensive_care,deceassed,cases_registered, recovered) %>% 
@@ -2749,3 +2751,231 @@ data_all_export %>%
        caption = paste0("", caption , "| Ver web https://aatishb.com/covidtrends/" ) )
 dev.off()
   
+# 8. Mix ------------
+# // 8.1 Small multiple ------------
+
+# /// Comunidades autónomas small multiple --------------
+
+# Escala lineal
+png(filename=paste("img/spain/regions/covid19_mix-comunidad-autonoma-lineal.png", sep = ""),width = 1200,height = 700)
+data_all_export %>% 
+  ggplot() +
+  # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
+  #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
+  geom_line(aes(date,cases_registered,group=region, color="#2222BB"), size = 1 ) +
+  geom_line(aes(date,recovered,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,deceassed,group=region,color="black"), size = 1 ) +
+  scale_color_identity(
+    guide = "legend",
+    labels = c("Casos", "Recuperados", "Muertos"),
+  ) +
+  facet_wrap( ~region) +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  scale_x_date(date_breaks = "5 day", 
+               date_labels = "%d",
+               expand = c(0,0)
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9),
+    # strip.text = element_text( vjust = 0, debug = TRUE ),
+    strip.placement = "inside" 
+    # legend.position = "bottom"
+  ) +
+  labs(title = "Casos, recuperados y fallecidos acumulados de COVID-19 en España",
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       y = "casos registrados",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+# Escala logarítmica
+png(filename=paste("img/spain/regions/covid19_mix-comunidad-autonoma-log.png", sep = ""),width = 1200,height = 700)
+data_all_export %>% 
+  ggplot() +
+  # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
+  #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
+  geom_line(aes(date,cases_registered,group=region, color="#2222BB"), size = 1 ) +
+  geom_line(aes(date,recovered,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,deceassed,group=region,color="black"), size = 1 ) +
+  scale_color_identity(
+    guide = "legend",
+    labels = c("Casos", "Recuperados", "Muertos"),
+    ) +
+  scale_y_log10(
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
+  facet_wrap( ~region) +
+  scale_x_date(date_breaks = "5 day", 
+               date_labels = "%d",
+               expand = c(0,0)
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9)
+  ) +
+  labs(title = "Casos, recuperados y fallecidos acumulados de COVID-19 en España",
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       y = "casos registrados",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+# per 100.000 inhab ----------
+# Escala lineal
+png(filename=paste("img/spain/regions/covid19_mix-comunidad-autonoma-per-cienmil-lineal.png", sep = ""),width = 1200,height = 700)
+data_all_export %>% 
+  ggplot() +
+  # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
+  #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
+  geom_line(aes(date,cases_per_100000,group=region, color="#2222BB"), size = 1 ) +
+  geom_line(aes(date,recovered_per_100000,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,deceassed_per_100000,group=region,color="black"), size = 1 ) +
+  scale_color_identity(
+    guide = "legend",
+    labels = c("Casos", "Recuperados", "Muertos"),
+  ) +
+  facet_wrap( ~region) +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  scale_x_date(date_breaks = "5 day", 
+               date_labels = "%d",
+               expand = c(0,0)
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9),
+    # strip.text = element_text( vjust = 0, debug = TRUE ),
+    strip.placement = "inside" 
+    # legend.position = "bottom"
+  ) +
+  labs(title = "Casos, recuperados y fallecidos acumulados de COVID-19 por 100.000 hab. en España",
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       y = "casos registrados",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+# Escala logarítmica
+png(filename=paste("img/spain/regions/covid19_mix-comunidad-autonoma-per-cienmil-log.png", sep = ""),width = 1200,height = 700)
+data_all_export %>% 
+  ggplot() +
+  # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
+  #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
+  geom_line(aes(date,cases_per_100000,group=region, color="#2222BB"), size = 1 ) +
+  geom_line(aes(date,recovered_per_100000,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,deceassed_per_100000,group=region,color="black"), size = 1 ) +
+  scale_color_identity(
+    guide = "legend",
+    labels = c("Casos", "Recuperados", "Muertos"),
+  ) +
+  scale_y_log10(
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
+  facet_wrap( ~region) +
+  scale_x_date(date_breaks = "5 day", 
+               date_labels = "%d",
+               expand = c(0,0)
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9)
+  ) +
+  labs(title = "Casos, recuperados y fallecidos acumulados de COVID-19 por 100.000 hab. en España",
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       y = "casos registrados",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+
+
+# Daily data ------------
+
+# Escala lineal
+png(filename=paste("img/spain/regions/covid19_mix-daily-comunidad-autonoma-lineal.png", sep = ""),width = 1200,height = 700)
+data_all_export %>% 
+  ggplot() +
+  # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
+  #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
+  geom_line(aes(date,daily_cases,group=region, color="#2222BB"), size = 1 ) +
+  geom_line(aes(date,daily_recovered,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,daily_deaths,group=region,color="black"), size = 1 ) +
+  scale_color_identity(
+    guide = "legend",
+    labels = c("Casos", "Recuperados", "Muertos"),
+  ) +
+  facet_wrap( ~region) +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  scale_x_date(date_breaks = "5 day", 
+               date_labels = "%d",
+               expand = c(0,0)
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9),
+    # strip.text = element_text( vjust = 0, debug = TRUE ),
+    strip.placement = "inside" 
+    # legend.position = "bottom"
+  ) +
+  labs(title = "Nuevos casos, recuperados y fallecidos por día de COVID-19 en España",
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       y = "casos registrados",
+       x = "fecha",
+       caption = caption)
+dev.off()
+
+# Escala logarítmica
+png(filename=paste("img/spain/regions/covid19_mix-daily-comunidad-autonoma-log.png", sep = ""),width = 1200,height = 700)
+data_all_export %>% 
+  ggplot() +
+  # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
+  #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
+  geom_line(aes(date,daily_cases,group=region, color="#2222BB"), size = 1 ) +
+  geom_line(aes(date,daily_recovered,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,daily_deaths,group=region,color="black"), size = 1 ) +
+  scale_color_identity(
+    guide = "legend",
+    labels = c("Casos", "Recuperados", "Muertos"),
+  ) +
+  scale_y_log10(
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
+  facet_wrap( ~region) +
+  scale_x_date(date_breaks = "5 day", 
+               date_labels = "%d",
+               expand = c(0,0)
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9)
+  ) +
+  labs(title = "Nuevos casos, recuperados y fallecidos por día de COVID-19 en España",
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       y = "casos registrados",
+       x = "fecha",
+       caption = caption)
+dev.off()
