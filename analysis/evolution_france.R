@@ -9,7 +9,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------  
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_f <- "Gráfico: montera34.com. Datos: OpenCOVID19-fr"
-periodo_f <- "2020.03.04 - 04.15"
+periodo_f <- "2020.03.04 - 04.16"
 
 # COVID-19 in France-----------
 
@@ -464,7 +464,7 @@ data_f2_cases %>%
   geom_point(aes(date,deceassed, color=region), size= 1.5 ) +
   geom_text_repel(data=filter( data_f2_cases, date==max(data_f2_cases$date)), 
                   aes(date, deceassed, color=region, 
-                    label=paste0(format(deceassed, nsmall=1, big.mark="."),region, " (+", daily_deaths,", +", daily_deaths_inc ,"%)")),
+                    label=paste0(format( as.integer(deceassed), nsmall=1, big.mark="."), " ",region, " (+", daily_deaths,", +", daily_deaths_inc ,"%)")),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
