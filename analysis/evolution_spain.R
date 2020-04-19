@@ -11,7 +11,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 04.16"
+period <- "2020.02.27 - 04.19"
+warning <- " Nota: Se quitan datos de Galicia y Cataluña desde 2020.04.16 por ser no consistentes"
 
 # Load Data ---------
 # / Population -------------  
@@ -151,6 +152,7 @@ write.csv(data_all_export, file = "data/output/covid19-cases-uci-deaths-by-ccaa-
 data_all_export <- data_all_export %>% group_by(region) %>%
     arrange(date) %>% mutate(
                             daily_cases = cases_registered - lag(cases_registered),
+                            daily_cases_avg =  round( ( daily_cases + lag(daily_cases,1) + lag(daily_cases,2) + lag(daily_cases,3) + lag(daily_cases,4) + lag(daily_cases,5) ) / 6, digits = 1 ), # average of dayly deaths of 6 last days
                             daily_deaths = deceassed - lag(deceassed),
                             daily_deaths_inc = round((deceassed - lag(deceassed)) / lag(deceassed) * 100, digits = 1),
                             # lag2 = lag(deceassed,2),
@@ -174,7 +176,6 @@ export_uniprovinciales <- data_all_export %>% select(date,region,hospitalized,in
             region == "La Rioja" )
 
 write.csv(export_uniprovinciales, file = "data/output/spain/covid19-data-uniprovinciales.csv", row.names = FALSE)
-
 
 # colors ---------
 # extends color paletter
@@ -205,6 +206,9 @@ plot(test$value_d)
 
 # /// Comunidades autónomas small multiple --------------
 
+# because of Warning
+
+
 # create temp dataframes to be able to plot all the values in small multiples
 data_cases_sm <-data_cases
 data_cases_sm$ccaa_cp <- data_cases_sm$CCAA
@@ -219,7 +223,7 @@ ggplot() +
   geom_point(aes(date,value,group=CCAA), size = 0.5 ) +
   facet_wrap( ~CCAA) +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  scale_x_date(date_breaks = "2 day", 
+  scale_x_date(date_breaks = "3 day", 
                 date_labels = "%d",
                expand = c(0,0)
   ) + 
@@ -250,7 +254,7 @@ ggplot() +
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
   facet_wrap( ~CCAA) +
-  scale_x_date(date_breaks = "2 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                expand = c(0,0)
   ) + 
@@ -277,7 +281,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   geom_line(aes(date,per_cienmil,group=CCAA) ) +
   geom_point(aes(date,per_cienmil,group=CCAA), size = 0.5 ) +
   facet_wrap( ~CCAA) +
-  scale_x_date(date_breaks = "2 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                expand = c(0,0)
   ) + 
@@ -307,7 +311,7 @@ data_cases %>% filter( CCAA != "Total") %>%
     limits = c(0.2,max(data_cases$per_cienmil)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 3000, 100) )) +
   facet_wrap( ~CCAA) +
-  scale_x_date(date_breaks = "2 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                expand = c(0,0)
   ) + 
@@ -1006,11 +1010,20 @@ crec2 <- data_unique2
 crec2$y_percent2 <- y_percent2
 
 # create temp dataframes to be able to plot all the values in small multiples -----
+date==as.Date("2020-04-16") & country == "France"
+
+# Warning: remove Cataluña last
+dateunique <- data_death %>% select(date) %>% ungroup() %>% unique() %>% filter(date > as.Date("2020-04-16") ) %>% ungroup() 
+data_death  <- data_death %>% filter( ! (date %in% dateunique$date & CCAA == "Cataluña"  ) )
+
+# Create small multiple df
 data_death_sm <-data_death
 data_death_sm$ccaa_cp <- data_death_sm$CCAA
 # data_death_sm <- data_death_sm %>% filter(CCAA != "Total") %>% ungroup() %>% select(date,death,ccaa_cp,-CCAA) 
 
 # // 3.1 Fallecimientos Small multiple ---------- 
+
+# Because of Warning, remove days and regions:
 
 # Acumulativo
 # Escala lineal
@@ -1149,11 +1162,13 @@ dev.off()
 # // 3.2 Fallecimientos superpuestos ----------
 # // CCAA -------------------
 png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%
+data_all_export %>%  filter( ! (date %in% dateunique$date & region == "Cataluña"  ) ) %>%
   ggplot() +
   geom_line(aes(date,deceassed,group=region, color=region), size= 1 ) +
   geom_point(aes(date,deceassed, color=region), size= 1.5 ) +
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
+  geom_text_repel(data=filter( data_all_export, (date==max(data_all_export$date) & region != "Cataluña" ) | 
+                                 (date==as.Date("2020-04-16") & region == "Cataluña" )
+                               ),
                   aes(date,deceassed, color=region, label=paste(format(deceassed, nsmall=1, big.mark="."),region)),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
@@ -1181,7 +1196,7 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period, warning),
        y = "fallecidos",
        x = "fecha",
        caption = caption)
@@ -1226,19 +1241,21 @@ data_all_export %>%
 dev.off()
 
 png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%
+data_all_export %>%  filter( ! (date %in% dateunique$date & region == "Cataluña"  ) ) %>%
   ggplot() +
   geom_line(aes(date,deceassed,group=region, color=region), size= 1 ) +
   geom_point(aes(date,deceassed, color=region), size= 1.5 ) +
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
-                  aes(date,deceassed, color=region, label=paste0(format(deceassed, nsmall=1, big.mark="."), " ",region, " (+", daily_deaths,", +", daily_deaths_inc ,"%)")),
-                  nudge_x = 1, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  direction="y",
-                  segment.size = 0.1,
-                  segment.color="#777777"
+  geom_text_repel(data=filter( data_all_export, (date==max(data_all_export$date) & region != "Cataluña" ) | 
+                                 (date==as.Date("2020-04-16") & region == "Cataluña" )
+                                  ),
+                                  aes(date,deceassed, color=region, label=paste(format(deceassed, nsmall=1, big.mark="."),region)),
+                                  nudge_x = 2, # adjust the starting y position of the text label
+                                  size=5,
+                                  hjust=0,
+                                  family = "Roboto Condensed",
+                                  direction="y",
+                                  segment.size = 0.15,
+                                  segment.color="#777777"
   ) +
   scale_color_manual(values = colors ) +
   scale_y_log10(
@@ -1298,20 +1315,23 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period, warning),
        y = "fallecidos",
        x = "fecha",
        caption = caption)
 dev.off()
 
+
 # deaths per 100.000
 png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) ) %>%
   ggplot() +
   geom_line(aes(date,deceassed_per_100000,group=region, color=region), size= 1 ) +
   geom_point(aes(date,deceassed_per_100000, color=region), size= 1.5 ) +
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date),  region != "Total"),
-                  aes(date,deceassed_per_100000, color=region, label=paste(format(deceassed_per_100000, nsmall=1, big.mark="."),region)),
+  geom_text_repel(data=filter( data_all_export, (date==max(data_all_export$date) & region != "Cataluña" ) | 
+                                 (date==as.Date("2020-04-16") & region == "Cataluña" )
+                  ),
+                  aes(date,deceassed_per_100000, color=region, label=paste(format(deceassed_per_100000, nsmall=1, big.mark=".", decimal.mark = ","),region)),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -1334,36 +1354,38 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
-       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period, warning),
        y = "fallecidos por 100.000 habitantes",
        x = "fecha",
        caption = caption)
 dev.off()
 
 png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-per-cienmil-log.png", sep = ""),width = 1200,height = 700)
-data_all_export %>% 
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) ) %>%
   ggplot() +
   geom_line(aes(date,deceassed_per_100000,group=region, color=region), size= 1 ) +
   geom_point(aes(date,deceassed_per_100000, color=region), size= 1.5 ) +
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date),  region != "Total"),
-                  aes(date,deceassed_per_100000, color=region, label=paste(format(deceassed_per_100000, nsmall=1, big.mark="."),region)),
-                  nudge_x = 1, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  direction="y",
-                  segment.size = 0.1,
-                  segment.color="#777777"
+  geom_text_repel(data=filter( data_all_export, (date==max(data_all_export$date) & region != "Cataluña" ) | 
+                                 (date==as.Date("2020-04-16") & region == "Cataluña" )
+                        ),
+                        aes(date,deceassed_per_100000, color=region, label=paste(format(deceassed_per_100000, nsmall=1, big.mark=".", decimal.mark = ","),region)),
+                        nudge_x = 5, # adjust the starting y position of the text label
+                        size=5,
+                        hjust=0,
+                        family = "Roboto Condensed",
+                        direction="y",
+                        segment.size = 0.1,
+                        segment.color="#777777"
   ) +
   scale_color_manual(values = colors ) +
   scale_y_log10(  
     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ),
-    expand = c(0,0.1)
+    expand = c(0,0.4)
   ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits=c( min(data_all_export$date) + 6, max(data_all_export$date + 7)),
+               limits=c( min(data_all_export$date) + 6, max(data_all_export$date + 12)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -1393,7 +1415,7 @@ data_death %>% filter( CCAA != "Total") %>%
   geom_point(aes(date,daily_deaths, color=CCAA), size= 1.5, alpha = 0.5) +
   geom_smooth(aes(date,daily_deaths_avg6,group=CCAA, color=CCAA), size= 1, se = FALSE, span = 0.35 ) +
   # geom_point(data=filter( data_death, date==max(data_death$date) & CCAA != "Total"), aes(date, daily_deaths_avg6, color=CCAA), size= 1.5, alpha = 0.3 ) +
-  geom_text_repel(data=filter( data_death, date==max(data_death$date),  CCAA != "Total"),
+  geom_text_repel(data=filter( data_death, date==max(data_death$date) & CCAA != "Total"),
                   aes(date,daily_deaths_avg6, 
                       label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","))),
                   nudge_x = 2, # adjust the starting y position of the text label
@@ -1443,7 +1465,7 @@ data_death %>% filter( CCAA != "Total") %>%
   geom_point(aes(date,daily_deaths, color=CCAA), size= 1.5, alpha = 0.5) +
   geom_smooth(aes(date,daily_deaths_avg6,group=CCAA, color=CCAA), size= 1, se = FALSE, span = 0.35 ) +
   # geom_point(data=filter( data_death, date==max(data_death$date) & CCAA != "Total"), aes(date, daily_deaths_avg6, color=CCAA), size= 1.5, alpha = 0.3 ) +
-  geom_text_repel(data=filter( data_death, date==max(data_death$date),  CCAA != "Total"),
+  geom_text_repel(data=filter( data_death, date==max(data_death$date) &  CCAA != "Total" ),
                   aes(date,daily_deaths_avg6, 
                       label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","))),
                   nudge_x = 2, # adjust the starting y position of the text label
@@ -1478,7 +1500,7 @@ data_death %>% filter( CCAA != "Total") %>%
     legend.position = "none"
   ) +
   labs(title = "Media de muertes por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period, warning),
        y = "fallecidos por día (media 6 días) (escala logarítmica)",
        x = "fecha",
        caption = caption)
@@ -1487,12 +1509,14 @@ dev.off()
 # 4.2 Superpuesto ---------
 # lineal ----
 png(filename=paste("img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) ) %>%
   ggplot() +
   # geom_line(data=hubei, aes(date+50,daily_deaths,group=region), size= 4, color="#aaaaaa"  ) +
   geom_line(aes(date,daily_deaths,group=region, color=region), size= 1 ) +
   geom_point(aes(date,daily_deaths, color=region), size= 1.5 ) +
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date),  region != "Total"),
+  geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) &  region != "Total"  &  region != "Cataluña" ) |
+                                 ( date==as.Date("2020-04-16") &  region == "Cataluña" )
+                               ),
                   aes(date,daily_deaths, color=region, label=paste(format(daily_deaths, nsmall=1, big.mark="."),region)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
@@ -1505,7 +1529,7 @@ data_all_export %>%
   scale_color_manual(values = colors ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits=c( min(data_all_export$date + 6), max(data_all_export$date) + 8),
+               limits=c( min(data_all_export$date + 6), max(data_all_export$date) + 12),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -1517,7 +1541,7 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Número de muertes por COVID-19 registradas por día en España",
-       subtitle = paste0("Por comunidad autónoma (escala lineal) ",period),
+       subtitle = paste0("Por comunidad autónoma (escala lineal) ",period, warning),
        y = "fallecidos por día",
        x = "fecha",
        caption = caption)
@@ -1525,11 +1549,13 @@ dev.off()
 
 # log --------
 png(filename=paste("img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) ) %>%
   ggplot() +
   geom_line(aes(date,daily_deaths,group=region, color=region), size= 1 ) +
   geom_point(aes(date,daily_deaths, color=region), size= 1.5 ) +
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date),  region != "Total"),
+  geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) &  region != "Total"  &  region != "Cataluña" ) |
+                                 ( date==as.Date("2020-04-16") &  region == "Cataluña" )
+  ),
                   aes(date,daily_deaths, color=region, label=paste(format(daily_deaths, nsmall=1, big.mark="."),region)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
@@ -1547,7 +1573,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits=c( min(data_all_export$date + 6), max(data_all_export$date + 8)),
+               limits=c( min(data_all_export$date + 6), max(data_all_export$date + 12)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -1559,7 +1585,7 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Número de muertes por COVID-19 registradas por día en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period, warning),
        y = "fallecidos por día (escala logarítmica)",
        x = "fecha",
        caption = caption)
@@ -1567,15 +1593,17 @@ dev.off()
 
 # average log --------
 png(filename=paste("img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-superpuesto-log_media.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) ) %>%
   ggplot() +
   # geom_smooth( data=hubei, aes(date+40,daily_deaths_avg6,group=region, color=region), size= 3, color="#aaaaaa", se = FALSE, span = 0.35 ) +
   geom_smooth(aes(date,daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
   geom_point(aes(date,daily_deaths, color=region), size= 1.5 ) +
   geom_point(data=filter( data_all_export, date==max(data_all_export$date)), aes(date, daily_deaths_avg6, color=region), size= 1, alpha = 0.3 ) +
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date) ),
+  geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) &  region != "Total"  &  region != "Cataluña" ) |
+                                 ( date==as.Date("2020-04-16") &  region == "Cataluña" )
+  ),
                   aes(date,daily_deaths_avg6, color=region, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),region)),
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  nudge_x = 4, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -1616,7 +1644,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits=c( min(data_all_export$date + 7), max(data_all_export$date + 8)),
+               limits=c( min(data_all_export$date + 7), max(data_all_export$date + 12)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -1628,7 +1656,7 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Media de muertes por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period, warning),
        y = "fallecidos por día (media 6 días) (escala logarítmica)",
        x = "fecha",
        caption = caption)
@@ -1636,14 +1664,16 @@ dev.off()
 
 # lineal average --------
 png(filename=paste("img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-superpuesto-lineal_media.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) ) %>%
   ggplot() +
   geom_smooth(aes(date,daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
   geom_point(aes(date,daily_deaths, color=region), size= 1.5 ) +
   geom_point(data=filter( data_all_export, date==max(data_all_export$date)), aes(date, daily_deaths_avg6, color=region), size= 1.5, alpha = 0.3 ) +
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
+  geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) &  region != "Total"  &  region != "Cataluña" ) |
+                                 ( date==as.Date("2020-04-16") &  region == "Cataluña" )
+  ),
                   aes(date,daily_deaths_avg6, color=region, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),region)),
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  nudge_x = 4, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -1684,7 +1714,7 @@ data_all_export %>%
   # ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits=c( min(data_all_export$date + 11), max(data_all_export$date + 7)),
+               limits=c( min(data_all_export$date + 11), max(data_all_export$date + 11)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -1696,7 +1726,7 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Media de muertes por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period, warning),
        y = "fallecidos por día (media 6 días) (escala lineal)",
        x = "fecha",
        caption = caption)
@@ -1746,7 +1776,7 @@ dev.off()
 # Acumulativo
 # Escala lineal
 png(filename=paste("img/spain/regions/covid19_altas-por-comunidad-autonoma-lineal.png", sep = ""),width = 1200,height = 700)
-data_all_export %>% 
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%
   ggplot() +
   geom_line(data = data_all_export_sm %>% ungroup() %>% select(date,recovered,region_cp,-region),
             aes(date,recovered,group=region_cp), color="#CACACA" ) +
@@ -1770,7 +1800,7 @@ data_all_export %>%
     # legend.position = "bottom"
   ) +
   labs(title = "Número de altas acumuladas por COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period,warning),
        y = "altas",
        x = "fecha",
        caption = caption)
@@ -1778,7 +1808,7 @@ dev.off()
 
 # Escala logarítmica
 png(filename=paste("img/spain/regions/covid19_altas-por-comunidad-autonoma-log.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%  
+data_all_export %>%  filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%
   ggplot() +
   geom_line(data = data_all_export_sm %>% ungroup() %>% select(date,recovered,region_cp,-region),
             aes(date,recovered,group=region_cp), color="#CACACA" ) +
@@ -1814,7 +1844,7 @@ data_all_export %>%
     legend.position = "bottom"
   ) +
   labs(title = "Número de altas acumuladas por COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas",
        x = "fecha",
        caption = caption)
@@ -1822,14 +1852,14 @@ dev.off()
 
 # Escala lineal / 100.000 hab
 png(filename=paste("img/spain/regions/covid19_altas-por-comunidad-autonoma-per-cienmil-lineal.png", sep = ""),width = 1200,height = 700)
-data_all_export %>% 
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%
   ggplot() +
   geom_line(data = data_all_export_sm %>% ungroup() %>% select(date,recovered_per_100000,region_cp,-region),
             aes(date,recovered_per_100000,group=region_cp), color="#CACACA" ) +
   geom_line(aes(date,recovered_per_100000,group=region) ) +
   geom_point(aes(date,recovered_per_100000), size=0.5 ) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "2 day",
+  scale_x_date(date_breaks = "3 day",
                date_labels = "%d",
                expand = c(0,0),
                limits = c(as.Date("2020-03-16"),max(data_all_export$date) )
@@ -1843,7 +1873,7 @@ data_all_export %>%
     # legend.position = "bottom"
   ) +
   labs(title = "Número de altas acumuladas por COVID-19 por 100.000 habitantes en España",
-       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period,warning),
        y = "altas por 100.000 habitantes ",
        x = "fecha",
        caption = caption)
@@ -1851,7 +1881,7 @@ dev.off()
 
 # Escala logarítmica
 png(filename=paste("img/spain/regions/covid19_altas-por-comunidad-autonoma-per-cienmil-log.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%  
+data_all_export %>%  filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%
   ggplot() +
   geom_line(data = data_all_export_sm %>% ungroup() %>% select(date,recovered_per_100000,region_cp,-region),
             aes(date,recovered_per_100000,group=region_cp), color="#CACACA" ) +
@@ -1873,7 +1903,7 @@ data_all_export %>%
     # legend.position = "bottom"
   ) +
   labs(title = "Número de altas acumuladas por COVID-19 por 100.000 habitantes en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas",
        x = "fecha",
        caption = caption)
@@ -1983,13 +2013,16 @@ dev.off()
 # // 5.2 Altas superpuestos ----------
 # // region -------------------
 png(filename=paste("img/spain/regions/covid19_altas-por-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%  
+data_all_export %>%  filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%
   ggplot() +
   geom_line(aes(date,recovered,group=region, color=region), size= 1 ) +
   geom_point(aes(date,recovered, color=region), size= 1.5 ) +
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
+  geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) & region != "Cataluña" & region != "Galicia" ) |
+                                ( date== as.Date("2020-04-16") &  region == "Cataluña" ) |
+                                (  date== as.Date("2020-04-16") &  region == "Galicia" )
+                               ),
                   aes(date,recovered, color=region, label=paste(format(recovered, nsmall=1, big.mark="."),region)),
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  nudge_x = 4, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -2003,7 +2036,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits = c(as.Date("2020-03-16"),max(data_all_export$date) + 5 ),
+               limits = c(as.Date("2020-03-16"),max(data_all_export$date) + 10),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -2015,7 +2048,7 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Número de altas acumuladas por COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period,warning),
        y = "altas",
        x = "fecha",
        caption = caption)
@@ -2060,13 +2093,16 @@ dev.off()
 # dev.off()
 
 png(filename=paste("img/spain/regions/covid19_altas-por-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%
   ggplot() +
   geom_line(aes(date,recovered,group=region, color=region), size= 1 ) +
   geom_point(aes(date,recovered, color=region), size= 1.5 ) +
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date),  region != "Total"),
+  geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) & region != "Cataluña" & region != "Galicia" ) |
+                                 ( date== as.Date("2020-04-16") &  region == "Cataluña" ) |
+                                 (  date== as.Date("2020-04-16") &  region == "Galicia" )
+  ),
                   aes(date,recovered, color=region, label=paste0(format(recovered, nsmall=1, big.mark="."), " ",region, " (+", daily_recovered,", +", daily_recovered_inc ,"%)" )), 
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  nudge_x = 4, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -2082,7 +2118,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits = c(as.Date("2020-03-16"),max(data_all_export$date) + 8 )
+               limits = c(as.Date("2020-03-16"),max(data_all_export$date) + 12 )
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -2093,7 +2129,7 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Número de altas acumuladas por COVID-19 en España ",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas (escala logarítmica)",
        x = "fecha",
        caption = caption)
@@ -2355,13 +2391,16 @@ dev.off()
 
 # Altas per 100.000 -----------------
 png(filename=paste("img/spain/regions/covid19_altas-por-comunidad-autonoma-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1200,height = 700)
-data_all_export %>% 
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%
   ggplot() +
   geom_line(aes(date,recovered_per_100000,group=region, color=region), size= 1 ) +
   geom_point(aes(date,recovered_per_100000, color=region), size= 1.5 ) +
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
+  geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) & region != "Cataluña" & region != "Galicia" ) |
+                                 ( date== as.Date("2020-04-16") &  region == "Cataluña" ) |
+                                 (  date== as.Date("2020-04-16") &  region == "Galicia" )
+  ),
                   aes(date,recovered_per_100000, color=region, label=paste(format(recovered_per_100000, nsmall=1, big.mark=".", decimal.mark = ","),region)),
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  nudge_x = 4, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -2372,7 +2411,7 @@ data_all_export %>%
   scale_color_manual(values = colors ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits = c(as.Date("2020-03-16"),max(data_all_export$date) + 5 )
+               limits = c(as.Date("2020-03-16"),max(data_all_export$date) + 11 )
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -2383,20 +2422,23 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Número de altas acumuladas por COVID-19 por 100.000 habitantes en España",
-       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period,warning),
        y = "altas por 100.000 habitantes",
        x = "fecha",
        caption = caption)
 dev.off()
 
 png(filename=paste("img/spain/regions/covid19_altas-por-comunidad-autonoma-superpuesto-per-cienmil-log.png", sep = ""),width = 1200,height = 700)
-data_all_export %>% filter( region != "Total") %>%
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%
   ggplot() +
   geom_line(aes(date,recovered_per_100000,group=region, color=region), size= 1 ) +
   geom_point(aes(date,recovered_per_100000, color=region), size= 1.5 ) +
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date),  region != "Total"),
+  geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) & region != "Cataluña" & region != "Galicia" ) |
+                                 ( date== as.Date("2020-04-16") &  region == "Cataluña" ) |
+                                 (  date== as.Date("2020-04-16") &  region == "Galicia" )
+  ),
                   aes(date,recovered_per_100000, color=region, label=paste(format(recovered_per_100000, nsmall=1, big.mark=".", decimal.mark = ","),region)),
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  nudge_x = 4, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -2412,7 +2454,7 @@ data_all_export %>% filter( region != "Total") %>%
   ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits = c(as.Date("2020-03-16"),max(data_all_export$date) + 6 ),
+               limits = c(as.Date("2020-03-16"),max(data_all_export$date) + 12 ),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -2424,7 +2466,7 @@ data_all_export %>% filter( region != "Total") %>%
     legend.position = "none"
   ) +
   labs(title = "Número de altas acumuladas por COVID-19 por 100.000 habitantes en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas por 100.000 habitantes",
        x = "fecha",
        caption = caption)
@@ -2435,9 +2477,11 @@ dev.off()
 # 4.1 Small multiple ---------------
 # Daily recovered lineal average SM --------
 png(filename=paste("img/spain/regions/covid19_altas-por-dia-comunidad-autonoma-lineal_media.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%
   ggplot() +
-  geom_smooth(data = data_all_export_sm %>% ungroup() %>% select(date,daily_recovered_avg6,region_cp,-region),
+  geom_smooth(data = data_all_export_sm %>% ungroup() %>% 
+                filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%
+                select(date,daily_recovered_avg6,region_cp,-region),
             aes(date,daily_recovered_avg6,group=region_cp), color="#CACACA", se = FALSE, span = 0.35, size= 0.5 ) +
   geom_point(aes(date,daily_recovered, color=region), size= 1.5, alpha = 0.5) +
   geom_smooth(aes(date,daily_recovered_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
@@ -2476,7 +2520,7 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas por día (media 6 días) (escala logarítmica)",
        x = "fecha",
        caption = caption)
@@ -2484,9 +2528,11 @@ dev.off()
 
 # Daily recovered log average SM --------
 png(filename=paste("img/spain/regions/covid19_altas-por-dia-comunidad-autonoma-log_media.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%
   ggplot() +
-  geom_smooth(data = data_all_export_sm %>%  ungroup() %>% select(date,daily_recovered_avg6,region_cp,-region),
+  geom_smooth(data = data_all_export_sm %>%  ungroup() %>% 
+                filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%
+                select(date,daily_recovered_avg6,region_cp,-region),
             aes(date,daily_recovered_avg6,group=region_cp), color="#CACACA", se = FALSE, span = 0.35, size= 0.5) +
   geom_point(aes(date,daily_recovered, color=region), size= 1.5, alpha = 0.5) +
   geom_smooth(aes(date,daily_recovered_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
@@ -2525,7 +2571,7 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas por día (media 6 días) (escala logarítmica)",
        x = "fecha",
        caption = caption)
@@ -2535,15 +2581,18 @@ dev.off()
 
 # average log --------
 png(filename=paste("img/spain/regions/covid19_altas-por-dia-comunidad-autonoma-superpuesto-log_media.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%
   ggplot() +
   # geom_smooth( data=hubei, aes(date+40,daily_deaths_avg6,group=region, color=region), size= 3, color="#aaaaaa", se = FALSE, span = 0.35 ) +
   geom_smooth(aes(date,daily_recovered_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
   geom_point(aes(date,daily_recovered, color=region), size= 1.5 ) +
   geom_point(data=filter( data_all_export, date==max(data_all_export$date)), aes(date, daily_recovered_avg6, color=region), size= 1, alpha = 0.3 ) +
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date) ),
+  geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) & region != "Cataluña" & region != "Galicia" ) |
+                                 ( date== as.Date("2020-04-16") &  region == "Cataluña" ) |
+                                 (  date== as.Date("2020-04-16") &  region == "Galicia" )
+  ),
                   aes(date,daily_recovered_avg6, color=region, label=paste(format(daily_recovered_avg6, nsmall=1, big.mark=".", decimal.mark = ","),region)),
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  nudge_x = 4, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -2584,7 +2633,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits=c( min(data_all_export$date + 19), max(data_all_export$date + 8)),
+               limits=c( min(data_all_export$date + 19), max(data_all_export$date + 12)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -2596,7 +2645,7 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas por día (media 6 días) (escala logarítmica)",
        x = "fecha",
        caption = caption)
@@ -2604,14 +2653,17 @@ dev.off()
 
 # lineal average --------
 png(filename=paste("img/spain/regions/covid19_altas-por-dia-comunidad-autonoma-superpuesto-lineal_media.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%
   ggplot() +
   geom_smooth(aes(date,daily_recovered_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
   geom_point(aes(date,daily_recovered, color=region), size= 1.5 ) +
   geom_point(data=filter( data_all_export, date==max(data_all_export$date)), aes(date, daily_recovered_avg6, color=region), size= 1.5, alpha = 0.3 ) +
-  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
+  geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) & region != "Cataluña" & region != "Galicia" ) |
+                                 ( date== as.Date("2020-04-16") &  region == "Cataluña" ) |
+                                 (  date== as.Date("2020-04-16") &  region == "Galicia" )
+  ),
                   aes(date,daily_recovered_avg6, color=region, label=paste(format(daily_recovered_avg6, nsmall=1, big.mark=".", decimal.mark = ","),region)),
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  nudge_x = 4, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -2647,7 +2699,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "1 day",
                date_labels = "%d",
-               limits=c( min(data_all_export$date + 19), max(data_all_export$date + 7)),
+               limits=c( min(data_all_export$date + 19), max(data_all_export$date + 11)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -2659,16 +2711,16 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas por día (media 6 días) (escala logarítmica)",
        x = "fecha",
        caption = caption)
 dev.off()
 
-# 7. Deaths vs weekly deaths ------
+# 7. Trajectory.  Deaths vs weekly deaths ------
 # lineal --------
 png(filename=paste("img/spain/regions/covid19_trayectoria-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) ) %>%
   ggplot() +
   geom_line(aes(deceassed,deaths_last_week,group=region, color=region), size= 1 ) +
   geom_point(aes(deceassed,deaths_last_week,color=region), size= 1.5 ) +
@@ -2702,7 +2754,7 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma. ",period),
+       subtitle = paste0("Por comunidad autónoma. ",period, warning),
        y = "fallecidos última semana (lineal)",
        x = "total de fallecidos (lineal)",
        caption = paste0("", caption , "| Ver web https://aatishb.com/covidtrends/" ) )
@@ -2711,7 +2763,7 @@ dev.off()
 
 # log --------
 png(filename=paste("img/spain/regions/covid19_trayectoria-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1200,height = 700)
-data_all_export %>%
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) ) %>%
   ggplot() +
   geom_line(aes(deceassed,deaths_last_week,group=region, color=region), size= 1 ) +
   geom_point(aes(deceassed,deaths_last_week,color=region), size= 1.5 ) +
@@ -2745,7 +2797,7 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma. ",period),
+       subtitle = paste0("Por comunidad autónoma. ",period, warning),
        y = "fallecidos última semana (log)",
        x = "total de fallecidos (log)",
        caption = paste0("", caption , "| Ver web https://aatishb.com/covidtrends/" ) )
@@ -2758,7 +2810,7 @@ dev.off()
 
 # Escala lineal
 png(filename=paste("img/spain/regions/covid19_mix-comunidad-autonoma-lineal.png", sep = ""),width = 1200,height = 700)
-data_all_export %>% 
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>% 
   ggplot() +
   # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
   #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
@@ -2787,15 +2839,16 @@ data_all_export %>%
     # legend.position = "bottom"
   ) +
   labs(title = "Casos, recuperados y fallecidos acumulados de COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period, warning),
        y = "casos registrados",
        x = "fecha",
-       caption = caption)
+       caption = caption,
+       colour = "")
 dev.off()
 
 # Escala logarítmica
 png(filename=paste("img/spain/regions/covid19_mix-comunidad-autonoma-log.png", sep = ""),width = 1200,height = 700)
-data_all_export %>% 
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>% 
   ggplot() +
   # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
   #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
@@ -2823,16 +2876,17 @@ data_all_export %>%
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Casos, recuperados y fallecidos acumulados de COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period, warning),
        y = "casos registrados",
        x = "fecha",
-       caption = caption)
+       caption = caption,
+       colour = "")
 dev.off()
 
 # per 100.000 inhab ----------
 # Escala lineal
 png(filename=paste("img/spain/regions/covid19_mix-comunidad-autonoma-per-cienmil-lineal.png", sep = ""),width = 1200,height = 700)
-data_all_export %>% 
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%  
   ggplot() +
   # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
   #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
@@ -2861,7 +2915,7 @@ data_all_export %>%
     # legend.position = "bottom"
   ) +
   labs(title = "Casos, recuperados y fallecidos acumulados de COVID-19 por 100.000 hab. en España",
-       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period, warning),
        y = "casos registrados",
        x = "fecha",
        caption = caption)
@@ -2869,7 +2923,7 @@ dev.off()
 
 # Escala logarítmica
 png(filename=paste("img/spain/regions/covid19_mix-comunidad-autonoma-per-cienmil-log.png", sep = ""),width = 1200,height = 700)
-data_all_export %>% 
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>% 
   ggplot() +
   # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
   #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
@@ -2897,7 +2951,7 @@ data_all_export %>%
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Casos, recuperados y fallecidos acumulados de COVID-19 por 100.000 hab. en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period, warning),
        y = "casos registrados",
        x = "fecha",
        caption = caption)
@@ -2909,7 +2963,7 @@ dev.off()
 
 # Escala lineal
 png(filename=paste("img/spain/regions/covid19_mix-daily-comunidad-autonoma-lineal.png", sep = ""),width = 1200,height = 700)
-data_all_export %>% 
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>% 
   ggplot() +
   # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
   #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
@@ -2938,15 +2992,16 @@ data_all_export %>%
     # legend.position = "bottom"
   ) +
   labs(title = "Nuevos casos, recuperados y fallecidos por día de COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period, warning),
        y = "casos registrados",
        x = "fecha",
-       caption = caption)
+       caption = caption,
+       colour = "")
 dev.off()
 
 # Escala logarítmica
 png(filename=paste("img/spain/regions/covid19_mix-daily-comunidad-autonoma-log.png", sep = ""),width = 1200,height = 700)
-data_all_export %>% 
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>% 
   ggplot() +
   # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
   #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
@@ -2974,8 +3029,122 @@ data_all_export %>%
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Nuevos casos, recuperados y fallecidos por día de COVID-19 en España",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period, warning),
        y = "casos registrados",
        x = "fecha",
-       caption = caption)
+       caption = caption,
+       colour = "")
 dev.off()
+
+
+
+# Daily data avg------------
+
+# Escala lineal
+png(filename=paste("img/spain/regions/covid19_mix-daily-avg-comunidad-autonoma-lineal.png", sep = ""),width = 1200,height = 700)
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>% 
+  ggplot() +
+  # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
+  #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
+  geom_line(aes(date,daily_cases_avg,group=region, color="#2222BB"), size = 1 ) +
+  geom_line(aes(date,daily_recovered_avg6,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,daily_deaths_avg6,group=region,color="black"), size = 1 ) +
+  scale_color_identity(
+    guide = "legend",
+    labels = c("Casos", "Recuperados", "Muertos"),
+  ) +
+  facet_wrap( ~region) +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  scale_x_date(date_breaks = "5 day", 
+               date_labels = "%d",
+               expand = c(0,0)
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9),
+    # strip.text = element_text( vjust = 0, debug = TRUE ),
+    strip.placement = "inside" 
+    # legend.position = "bottom"
+  ) +
+  labs(title = "Nuevos casos, recuperados y fallecidos por día de COVID-19 en España (media 6 días)",
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period, warning),
+       y = "casos registrados",
+       x = "fecha",
+       caption = caption,
+       colour = "")
+dev.off()
+
+# Escala logarítmica
+png(filename=paste("img/spain/regions/covid19_mix-daily-avg-comunidad-autonoma-log.png", sep = ""),width = 1200,height = 700)
+data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) & ! (date %in% dateunique$date & region == "Galicia"  ) ) %>%  
+  ggplot() +
+  # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
+  #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
+  geom_line(aes(date,daily_cases_avg,group=region, color="#2222BB"), size = 1 ) +
+  geom_line(aes(date,daily_recovered_avg6,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,daily_deaths_avg6,group=region,color="black"), size = 1 ) +
+  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date) & region != "Cataluña" & region != "Galicia" ),
+                  aes(date + 13,daily_cases_avg, label=paste(format(daily_cases_avg, nsmall=1, big.mark="."))),
+                  color="#2222BB",
+                  nudge_x = 0, # adjust the starting y position of the text label
+                  size=4,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  # segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date) & region != "Cataluña" & region != "Galicia" ),
+                  aes(date + 11,daily_recovered_avg6, label=paste(format(daily_recovered_avg6, nsmall=1, big.mark="."))),
+                  color="#339922",
+                  nudge_x = 2, # adjust the starting y position of the text label
+                  size=4,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  # segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date) & region != "Cataluña" & region != "Galicia" ),
+                  aes(date + 9,daily_deaths_avg6, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark="."))),
+                  color="black",
+                  nudge_x = 4, # adjust the starting y position of the text label
+                  size=4,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  # segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_color_identity(
+    guide = "legend",
+    labels = c("Casos", "Recuperados", "Muertos"),
+  ) +
+  scale_y_log10(
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
+  facet_wrap( ~region) +
+  scale_x_date(date_breaks = "5 day", 
+               date_labels = "%d",
+               expand = c(0,0)
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9)
+  ) +
+  labs(title = "Nuevos casos, recuperados y fallecidos por día de COVID-19 en España (media 6 días)",
+       subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period, warning),
+       y = "casos registrados",
+       x = "fecha",
+       caption = caption,
+       colour = "")
+dev.off()
+
