@@ -63,9 +63,11 @@ When you go to any of the scripts you can run it and it will produce all the vis
 
 ### España (Spain)
 
-![Media de muertes por día en los 6 días anteriores por comunidad autónoma.. España. COVIC-19](https://lab.montera34.com/covid19-r/img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-superpuesto-log_media.png){ width=300px }
+![Media de muertes por día en los 6 días anteriores por comunidad autónoma.. España. COVIC-19](https://lab.montera34.com/covid19-r/img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-superpuesto-log_media.png)
+<img src="https://lab.montera34.com/covid19-r/img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-superpuesto-log_media.png"  width="300">
 
-![Fallecimientos acumulados por día desde el primer día que hubo 5 fallecimientos o más en regiones de España (CCAA), Italia y Francia. Escala logarítmica.. España. COVIC-19](https://lab.montera34.com/covid19-r/img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-5deceased.png){ width=300px }
+![Fallecimientos acumulados por día desde el primer día que hubo 5 fallecimientos o más en regiones de España (CCAA), Italia y Francia. Escala logarítmica.. España. COVIC-19](https://lab.montera34.com/covid19-r/img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-5deceased.png)
+<img src="https://lab.montera34.com/covid19-r/img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-5deceased.png"  width="300">
 
 #### Provincias
 
