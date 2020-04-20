@@ -1,4 +1,10 @@
-# Providencialdata19: Capturando datos por provincias en España
+# EsCOVID19data ~~Providencialdata19~~: Capturando datos por provincias en España
+
+------------------------------
+
+Este repositorio se muda a (EsCOVID19data](https://github.com/montera34/escovid19data). Sigue allí sus actualizaciones.
+
+------------------------------
 
 **IMPORTANTE** 
 Faltan datos de fallecimientos en Cataluña.

@@ -1,23 +1,27 @@
 COVID19 en España e Italia / CODVID-19 in Spain and Italy
 =================
 
+![Media de muertes por día en los 6 días anteriores por comunidad autónoma.. España. COVIC-19](https://lab.montera34.com/covid19-r/img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-superpuesto-log_media.png =300x)
+
+![Fallecimientos acumulados por día desde el primer día que hubo 5 fallecimientos o más en regiones de España (CCAA), Italia y Francia. Escala logarítmica.. España. COVIC-19](https://lab.montera34.com/covid19-r/img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-5deceased.png =300x)
+
+**EN**
+
 This is a repository that hosts two different projects:
 
- * R script to analyze COVID-19 in Spain and Italy. ebsite with upated charts: https://lab.montera34.com/covid19
- * Spanish data of COVID-19 by province (collected from various data sources). [More info](#provincias).
+ * R script to analyze COVID-19 in Spain, Italy and France. Website with upated charts: https://lab.montera34.com/covid19
+ * Data collection of COVID-19 by province in spain (collected from various data sources). [More info](https://github.com/montera34/escovid19data). It is currently moving as an independent project.
+
+**ES**
 
 Este repositorio contiene dos proyectos diferentes:
 
-  * Script de R para facilitar el análisis del COVID19 en España e Italia. Puedes ver los gráficos producidos en la web que hemos montado en montera34: https://lab.montera34.com/covid19
-  * Los datos de COVID-19 por provincias. Una iniciativa ciudadana para recolectarlos de diferentes fuentes, en vista de que el gobierno no lo facilita. [Más información](#provincias).
-
-![Media de muertes por día en los 6 días anteriores por comunidad autónoma.. España. COVIC-19](https://lab.montera34.com/covid19-r/img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-superpuesto-log_media.png)
-
-![Fallecimientos acumulados por día desde el primer día que hubo 5 fallecimientos o más en regiones de España (CCAA), Italia y Francia. Escala logarítmica.. España. COVIC-19](https://lab.montera34.com/covid19-r/img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-5deceased.png)
+  * Script de R para facilitar el análisis del COVID19 en España, Italia y Francia. Puedes ver los gráficos producidos en la web que hemos montado en montera34: https://lab.montera34.com/covid19
+  * Los datos de COVID-19 por provincias. Una iniciativa ciudadana para recolectarlos de diferentes fuentes, en vista de que el gobierno no lo facilita. [Más información](https://github.com/montera34/escovid19data). Se está mudando actualmente a un repositorio independiente.
 
 ## Licencia / License
 
-[GNU GENERAL PUBLIC LICENSE. Version 3 (GNU GPLv3)](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/LICENSE.md).
+[GNU GENERAL PUBLIC LICENSE. V3 (GNU GPLv3)](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/LICENSE.md).
 
 ## Cómo usarlo / how to use it
 
@@ -65,10 +69,9 @@ When you go to any of the scripts you can run it and it will produce all the vis
 
 #### Provincias
 
-Más información sobre la recogidade datos por provincias (proyecto Providencialdata19) en   [README_providencialdata19.md](https://code.montera34.com:4443/numeroteca/covid19/-/tree/master/README_providencialdata19.md).
+Más información sobre la recogida de datos por provincias en [EsCOVID19data](https://github.com/montera34/escovid19data).
 
-Read more information at [README_providencialdata19.md](https://code.montera34.com:4443/numeroteca/covid19/-/tree/master/README_providencialdata19.md).
-                                          
+Read more information at [EsCOVID19data](https://github.com/montera34/escovid19data).
 
 #### Comunidades autónomas
 
@@ -124,6 +127,8 @@ Italian data: https://github.com/pcm-dpc/COVID-19
 
 ### France
 
+Warning: this section needs update.
+
 Working on it. Meanwhile: data/original/france/covid19-france.csv
 
 Official data from national government: https://www.data.gouv.fr/fr/datasets/cas-confirmes-dinfection-au-covid-19-par-region/
@@ -176,7 +181,7 @@ This is the structure:
 
 Direct link to this dataset: https://github.com/opencovid19-fr/data/blob/master/data-sources/sante-publique-france/covid_hospit.csv
 
-## Authorship
+## Autoría | Authorship
 
 Pablo Rey Mazón ([@numeroteca](https://twitter.com/numeroteca)) y Alfonso Sánchez Uzábal ([@skotperez](https://twitter.com/skotperez))desde [montera34.com](https://montera34.com).
 
