@@ -1,10 +1,6 @@
 COVID19 en España e Italia / CODVID-19 in Spain and Italy
 =================
 
-![Media de muertes por día en los 6 días anteriores por comunidad autónoma.. España. COVIC-19](https://lab.montera34.com/covid19-r/img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-superpuesto-log_media.png =300x)
-
-![Fallecimientos acumulados por día desde el primer día que hubo 5 fallecimientos o más en regiones de España (CCAA), Italia y Francia. Escala logarítmica.. España. COVIC-19](https://lab.montera34.com/covid19-r/img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-5deceased.png =300x)
-
 **EN**
 
 This is a repository that hosts two different projects:
@@ -66,6 +62,10 @@ When you go to any of the scripts you can run it and it will produce all the vis
 ## Datos / Data 
 
 ### España (Spain)
+
+![Media de muertes por día en los 6 días anteriores por comunidad autónoma.. España. COVIC-19](https://lab.montera34.com/covid19-r/img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-superpuesto-log_media.png){ width=300px }
+
+![Fallecimientos acumulados por día desde el primer día que hubo 5 fallecimientos o más en regiones de España (CCAA), Italia y Francia. Escala logarítmica.. España. COVIC-19](https://lab.montera34.com/covid19-r/img/compare/covid19_fallecimientos-por-region-superpuesto-offset-log_since-5deceased.png){ width=300px }
 
 #### Provincias
 
