@@ -9,7 +9,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------  
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_f <- "Gráfico: montera34.com. Datos: OpenCOVID19-fr"
-periodo_f <- "2020.03.04 - 04.18"
+periodo_f <- "2020.03.04 - 04.19"
 
 # COVID-19 in France-----------
 
@@ -619,8 +619,10 @@ dev.off()
 png(filename=paste("img/france/covid19_muertes-por-dia-region-superpuesto-log_media.png", sep = ""),width = 1100,height = 800)
 data_f2_cases_death %>% 
   ggplot() +
-  geom_smooth(aes(date, daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE ) +
-  geom_point(aes(date, daily_deaths, color=region), size= 1.5 ) +
+  # geom_smooth(aes(date, daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE ) +
+  geom_line(aes(date, daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE  ) +
+  geom_line(aes(date, daily_deaths, color=region, group=region), size= 0.3, alpha=0.5) +
+  geom_point(aes(date, daily_deaths, color=region), size= 0.6, alpha=0.5 ) +
   geom_text_repel(data=filter( data_f2_cases_death, date==max(data_f2_cases_death$date),  region != "Total"), 
                   aes(date, daily_deaths_avg6, color=region, label=paste(format( daily_deaths_avg6, nsmall=1, big.mark="."),region)),
                   nudge_x = 1, # adjust the starting y position of the text label

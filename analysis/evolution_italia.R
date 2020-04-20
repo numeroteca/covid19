@@ -8,7 +8,7 @@ library(ggrepel) # for geom_text_repel to prevent   overlapping
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de losS datos
 caption_i <- "Gráfico: @numeroteca (montera34.com). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 04.18"
+periodo_i <- "2020.02.24 - 04.19"
 
 # COVID-19 in Italy -----------
 # Load data
@@ -522,9 +522,9 @@ data_i_cases %>%
   ) +
   scale_y_log10( 
     limits = c(1,max(data_i_cases$deceassed)),
-    breaks = c(0,1,5,10,20,50,100,200,500,1000,2000,5000 ),
+    breaks = c(0,1,5,10,20,50,100,200,500,1000,2000,5000,10000,20000 ),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
-    minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+    minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000), seq(10000 , 100000, 10000)),
     expand = c(0,0.1)
     ) +
   scale_x_date(date_breaks = "2 day", 
@@ -596,11 +596,13 @@ dev.off()
 png(filename=paste("img/italia/covid19_muertes-por-dia-region-superpuesto-log_media.png", sep = ""),width = 1100,height = 800)
 data_i_cases %>%
   ggplot() +
-  geom_smooth(aes(date, daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE  ) +
+  # geom_smooth(aes(date, daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE  ) +
+  geom_line(aes(date, daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE  ) +
   # geom_smooth(aes(date, daily_deaths_avg2,group=region, color=region), size= 1, se = FALSE  ) +
   # geom_smooth(aes(date, daily_deaths_avg3,group=region, color=region), size= 1, se = FALSE  ) +
   # geom_smooth(aes(date, daily_deaths_avg4,group=region, color=region), size= 1, se = FALSE  ) +
-  geom_point(aes(date, daily_deaths, color=region), size= 1.5 ) +
+  geom_line(aes(date, daily_deaths, color=region, group=region), size= 0.3, alpha=0.5) +
+  geom_point(aes(date, daily_deaths, color=region), size= 0.6, alpha=0.5 ) +
   # geom_point(aes(date, daily_deaths_avg6, color=region), size= 1.5, alpha = 0.5 ) +
   geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date)), 
                   aes(date, daily_deaths_avg6, color=region, label=paste(format( daily_deaths_avg6, nsmall=1, big.mark="."),region)),
@@ -625,7 +627,7 @@ data_i_cases %>%
   ) +
   # marca la línea
   geom_text_repel(data=filter( data_i_cases, date==as.Date("2020-04-06"), region == "Lombardia" ),
-                  aes(date+0.5,330, label=paste("media de 6 días")),
+                  aes(date+0.5,326, label=paste("media de 6 días")),
                   nudge_y = 5, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -684,8 +686,8 @@ data_i_cases %>%
   scale_y_log10( 
     # limits = c(0.1,max(data_i_cases$deceassed_per_100000)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
-    breaks = c(0,1,5,10,20,50 ),
-    minor_breaks = c(seq(0.1 , 1, 0.1),seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)),
+    breaks = c(0,1,5,10,20,50,100,200 ),
+    minor_breaks = c(seq(0.1 , 1, 0.1),seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
     expand = c(0,0.1)  ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
@@ -700,7 +702,7 @@ data_i_cases %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en Italia",
+  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en Italia.",
        subtitle = paste0("Por región (escala logarítmica). ",periodo_i),
        y = "fallecidospor 100.000 habitantes",
        x = "fecha",
