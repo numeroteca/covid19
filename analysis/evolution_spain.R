@@ -11,7 +11,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 04.19"
+period <- "2020.02.27 - 04.20"
 warning <- " Nota: Se quitan datos de Galicia y Cataluña desde 2020.04.16 por ser no consistentes"
 
 # Load Data ---------
@@ -1248,7 +1248,8 @@ data_all_export %>%  filter( ! (date %in% dateunique$date & region == "Cataluña
   geom_text_repel(data=filter( data_all_export, (date==max(data_all_export$date) & region != "Cataluña" ) | 
                                  (date==as.Date("2020-04-16") & region == "Cataluña" )
                                   ),
-                                  aes(date,deceassed, color=region, label=paste(format(deceassed, nsmall=1, big.mark="."),region)),
+                                    aes(date,deceassed, color=region, label=paste0(format(deceassed, nsmall=1, big.mark="."),
+                                                                 " ",region, " (+", daily_deaths,", +", daily_deaths_inc ,"%)")),
                                   nudge_x = 2, # adjust the starting y position of the text label
                                   size=5,
                                   hjust=0,
@@ -1596,8 +1597,9 @@ png(filename=paste("img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma
 data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) ) %>%
   ggplot() +
   # geom_smooth( data=hubei, aes(date+40,daily_deaths_avg6,group=region, color=region), size= 3, color="#aaaaaa", se = FALSE, span = 0.35 ) +
-  geom_smooth(aes(date,daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
-  geom_point(aes(date,daily_deaths, color=region), size= 1.5 ) +
+  geom_line(aes(date,daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
+  geom_point(aes(date,daily_deaths, color=region), size= 0.7, alpha=0.6 ) +
+  geom_line(aes(date,daily_deaths, color=region, group=region), size= 0.3, alpha=0.6  ) +
   geom_point(data=filter( data_all_export, date==max(data_all_export$date)), aes(date, daily_deaths_avg6, color=region), size= 1, alpha = 0.3 ) +
   geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) &  region != "Total"  &  region != "Cataluña" ) |
                                  ( date==as.Date("2020-04-16") &  region == "Cataluña" )
@@ -1612,8 +1614,8 @@ data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"
                   segment.color="#777777"
   ) +
   # marca un día
-  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-03-23") &  region == "Madrid" ),
-                  aes(date,daily_deaths, label=paste("muertes en un día en una provincia")),
+  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-03") &  region == "Madrid" ),
+                  aes(date,daily_deaths, label=paste("muertes en un día en una comunidad autónoma")),
                   nudge_y = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -1623,8 +1625,8 @@ data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"
                   segment.color="#777777"
   ) +
   # marca la línea
-  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-04") &  region == "Madrid" ),
-                  aes(date+0.5,270, label=paste("media de 6 días")),
+  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-17") &  region == "Madrid" ),
+                  aes(date+0.5,144, label=paste("media de 6 días")),
                   nudge_y = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
