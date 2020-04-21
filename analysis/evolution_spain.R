@@ -2757,11 +2757,44 @@ data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"
   ) +
   labs(title = "Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma. ",period, warning),
-       y = "fallecidos última semana (lineal)",
+       y = "fallecidos en últimos 7 días (lineal)",
        x = "total de fallecidos (lineal)",
        caption = paste0("", caption , "| Ver web https://aatishb.com/covidtrends/" ) )
 dev.off()
 
+
+
+for ( i in 1:20  ) {
+  la_ccaa <- unique(data_all_export$region)[i]
+  png(filename=paste("img/spain/regions/small_multiple/covid19_trayectoria-comunidad-autonoma-superpuesto-lineal",substr(la_ccaa,1,5) ,".png", sep = ""),width = 1200,height = 700)
+    the_chart <- data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"  ) ) %>% filter ( !is.na(region) ) %>% filter ( region == la_ccaa ) %>%
+    ggplot() +
+    geom_line(aes(deceassed,deaths_last_week,group=region, color=region), size= 3 ) +
+    geom_point(aes(deceassed,deaths_last_week,color=region), size= 1.5 ) +
+    scale_color_manual(values = colors ) +
+    theme_minimal(base_family = "Roboto Condensed",base_size = 37) +
+      scale_y_log10() +
+      scale_x_log10() +
+    theme(
+      panel.grid.minor.x = element_blank(),
+      # panel.grid.major.x = element_blank(),
+      panel.grid.minor.y = element_blank(),
+      axis.ticks.x = element_line(color = "#000000"),
+      legend.position = "none"
+    ) +
+    labs(title = paste0(la_ccaa), # ". Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España"),
+         # subtitle = paste0("Por comunidad autónoma. ",period, warning),
+         y = "fallecidos en últimos 7 días",
+         x = "total de fallecidos"
+         # caption = paste0("", caption , "" ) 
+         )
+  print(the_chart)
+  dev.off()
+  
+}
+
+# make tiled image with imagemagick from command line
+# montage c* -geometry 400x tiles_02.png
 
 # log --------
 png(filename=paste("img/spain/regions/covid19_trayectoria-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1200,height = 700)
@@ -2800,7 +2833,7 @@ data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"
   ) +
   labs(title = "Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma. ",period, warning),
-       y = "fallecidos última semana (log)",
+       y = "fallecidos en últimos 7 días (log)",
        x = "total de fallecidos (log)",
        caption = paste0("", caption , "| Ver web https://aatishb.com/covidtrends/" ) )
 dev.off()
