@@ -11,8 +11,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 04.20"
-warning <- " Nota: Se quitan datos de Galicia y Cataluña desde 2020.04.16 por ser no consistentes"
+period <- "2020.02.27 - 04.21"
+warning <- " Nota: no se incluyen Galicia y Cataluña desde 2020.04.16"
 
 # Load Data ---------
 # / Population -------------  
@@ -614,7 +614,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   geom_line(aes(date,per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,per_cienmil, color=CCAA), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
-                  aes(date,per_cienmil, color=CCAA, label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
+                  aes(date,per_cienmil, color=CCAA, label=paste(format(per_cienmil, nsmall=1, big.mark=".", decimal.mark = ","),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -649,7 +649,7 @@ data_cases %>% filter( CCAA != "Total") %>%
   geom_line(aes(date,per_cienmil,group=CCAA, color=CCAA), size= 1 ) +
   geom_point(aes(date,per_cienmil, color=CCAA), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  CCAA != "Total"), 
-                  aes(date,per_cienmil, color=CCAA, label=paste(format(per_cienmil, nsmall=1, big.mark="."),CCAA)),
+                  aes(date,per_cienmil, color=CCAA, label=paste(format(per_cienmil, nsmall=1, big.mark=".", decimal.mark = ","),CCAA)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -1626,7 +1626,7 @@ data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"
   ) +
   # marca la línea
   geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-17") &  region == "Madrid" ),
-                  aes(date+0.5,144, label=paste("media de 6 días")),
+                  aes(date+0.5,149, label=paste("media de 6 días")),
                   nudge_y = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -3183,3 +3183,246 @@ data_all_export %>% filter( ! (date %in% dateunique$date & region == "Cataluña"
        colour = "")
 dev.off()
 
+# 9. Set 0 day ------------------
+# compare_countries with "umbral" or more deceassed accumulated
+umbral <- 5
+
+# Select the date when a region had for the first time had n (umbral = n) or more cases
+data_all_export_offset_ncases <- data_all_export %>% filter(deceassed >= umbral) %>% group_by(region) %>% arrange(date) %>% 
+  filter( row_number()==1 ) %>%
+  select(region,date, deceassed) 
+data_all_export_offset_ncases <- data_all_export %>% filter(deceassed >= umbral) %>% group_by(region) %>% arrange(date) %>% 
+  filter( row_number()==1 ) %>%
+  select(region,date, deceassed) %>% mutate(offset = date - min(data_all_export_offset_ncases$date))
+
+test2 <- merge( data_all_export, select(data_all_export_offset_ncases,region,offset ), by = "region" , all.x = TRUE)
+# calculate in numer of days since first evaluated, without date
+test2$days_since <- as.numeric(test2$date - min(data_all_export_offset_ncases$date) ) - as.numeric(test2$offset)
+
+
+png(filename=paste("img/spain/regions/covid19_day0_fallecimientos-por-ccaa-acumulados-", umbral ,"-deceased.png", sep = ""),width = 1200,height = 700)
+test2 %>% 
+  # ptotal <- test %>% filter( country != "France") %>%
+  ggplot() +
+  geom_line(data =growth_2x, aes(days_since, value), size= 0.5, color = "#555555", linetype = 2 ) +
+  geom_line(data =growth_2x, aes(days_since, value3), size= 0.5, color = "#555555", linetype = 2 ) +
+  geom_line(data =growth_2x, aes(days_since, value4), size= 0.5, color = "#555555", linetype = 2 ) +
+  # geom_line(data =growth_2x, aes(days_since, value5), size= 0.5, color = "#555555", linetype = 2 ) +
+  geom_line(aes(days_since, deceassed, group= region, color= region), size= 2, alpha = 0.6 ) +
+  # points for interactive
+  # geom_point( aes(days_since, deceassed, color= country,
+  #                 text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")),
+  #             size= 0.6, alpha = 0.6  ) +
+  geom_point(data = filter(test2, date == max(test2$date) ),
+             aes(days_since, deceassed, color= region,
+                    text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")), 
+             size= 2, alpha = 0.6  ) +
+  # labels
+  geom_text_repel(data=filter( test2, date== as.Date("2020-04-21") ),
+          aes(days_since, deceassed, label=paste(format( round(deceassed, digits = 0), big.mark="."), region), color= region,),
+          # color= "#000000",
+          nudge_x = 20, # adjust the starting y position of the text label
+          size=6,
+          hjust=1,
+          # bg.color = "red", bg.r = 0.15,
+          family = "Roboto Condensed",
+          direction="y",
+          segment.size = 0.1,
+          segment.color="#333333"
+  ) +
+  scale_color_manual(values = colors ) +
+  coord_cartesian( 
+    ylim=c(umbral-1, max(test2[!is.na(test2$deceassed),]$deceassed)*1.3 ),
+    xlim=c(0,  65 ) #max(test[!is.na(test$deceassed),]$days_since) + 3
+  ) +
+  scale_y_log10(
+    breaks = c(5,10,20,50,100,200,500,1000,2000,5000),
+    # limits = c( umbral,max(test$deceassed)),
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks = c(  seq(1 , 10, 2), seq(10 , 100, 20), seq(100 , 1000, 200), seq(1000, 10000, 2000) ) ) +
+  scale_x_continuous(
+    breaks = c(0,5,10,15,20,25,30,35,40,45,50)
+    # limits=c( 0, max(test$days_since + 5))
+  ) +
+  theme_minimal(base_family = "Roboto Condensed", base_size = 20) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    plot.caption = element_text( color="#777777",size = 14, hjust = 1),
+    legend.position = "none"
+  ) +
+  labs(title = paste0("Número de fallecimientos acumulados de COVID-19 registrados (20.04.2020)"),
+       subtitle = paste0("Días desde ",umbral ," o más muertes (escala log).",warning),
+       y = "fallecimientos registrados (escala log.)",
+       x = paste0("días desde ", umbral , " o más fallecimientos"),
+       caption = caption ) +
+  geom_text(data = growth_2x[1,], aes(20,12000, label=paste0("pendiente: muertes doblan cada 2 días")),
+            size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") +
+  geom_text(data = growth_2x[1,], aes(35,12000, label=paste0("... doblan cada 3 días")),
+            size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") +
+  geom_text(data = growth_2x[1,], aes(40,12000, label=paste0("... doblan cada 4 días")),
+            size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555") 
+  # geom_text(data = growth_2x[1,], aes(50,4000, label=paste0("...doblan cada 5 días")),
+  #           size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555")
+dev.off()
+
+
+png(filename=paste("img/spain/regions/covid19_day0_fallecimientos-por-ccaa-acumulados-", umbral ,"-deceased_per-cienmil.png", sep = ""),width = 1200,height = 700)
+test2 %>% 
+  ggplot() +
+  geom_line(aes(days_since, deceassed_per_100000, group= region, color= region), size= 2, alpha = 0.6 ) +
+  geom_point(data = filter(test2, date == max(test2$date) ),
+             aes(days_since, deceassed_per_100000, color= region,
+                 text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed_per_100000, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")), 
+             size= 4, alpha = 0.6  ) +
+  # labels
+  geom_text_repel(data=filter( test2, date== as.Date("2020-04-21") ),
+                  aes(days_since, deceassed_per_100000, label=paste(format( round(deceassed_per_100000, digits = 1), big.mark=".", decimal.mark = ","), region), color= region,),
+                  # color= "#000000",
+                  nudge_x = 15, # adjust the starting y position of the text label
+                  size=6,
+                  hjust=1,
+                  # bg.color = "red", bg.r = 0.15,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#333333"
+  ) +
+  scale_color_manual(values = colors ) +
+  coord_cartesian( 
+    ylim=c(0.1, max(test2[!is.na(test2$deceassed_per_100000),]$deceassed_per_100000)*1.3 ),
+    xlim=c(0,  65 ) #max(test[!is.na(test$deceassed),]$days_since) + 3
+  ) +
+  scale_x_continuous(
+    breaks = c(0,5,10,15,20,25,30,35,40,45,50)
+    # limits=c( 0, max(test$days_since + 5))
+  ) +
+  theme_minimal(base_family = "Roboto Condensed", base_size = 20) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    plot.caption = element_text( color="#777777",size = 14, hjust = 1),
+    legend.position = "none"
+  ) +
+  labs(title = paste0("Número de fallecimientos de COVID-19 acumulados por 100.000 habitantes  (20.04.2020)"),
+       subtitle = paste0("Días desde ",umbral ," o más muertes (escala log).",warning),
+       y = "fallecimientos registrados (escala log.)",
+       x = paste0("días desde ", umbral , " o más fallecimientos"),
+       caption = caption ) +
+  scale_y_log10(
+  # breaks = c(5,10,20,50,100,200,500,1000,2000,5000),
+  # limits = c( umbral,max(test$deceassed)),
+  labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  minor_breaks = c(  seq(1 , 10, 2), seq(10 , 100, 20), seq(100 , 1000, 200), seq(1000, 10000, 2000) )
+  ) 
+dev.off()
+
+
+png(filename=paste0("img/spain/regions/covid19_muertes-dia-por-ccaa-superpuesto-offset-lineal_since-", umbral ,"deceased.png"), width = 1300,height = 700)
+test2 %>% 
+  ggplot() +
+  geom_line(aes(days_since, daily_deaths_avg6, group= region, color= region), size= 2, alpha = 0.6, se = FALSE ) +
+  geom_point(data = filter(test2, date == max(test2$date) ),  
+             aes(days_since, daily_deaths_avg6, color= region, 
+                 text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")), 
+             size= 3 ) +
+  geom_text_repel(data=filter( test2, date== as.Date("2020-04-21")  
+  ),
+  aes(days_since, daily_deaths_avg6, label=paste(region), color= region),
+  # color= "#000000",
+  nudge_x = 7, # adjust the starting y position of the text label
+  size=7,
+  hjust=1,
+  # bg.color = "red", bg.r = 0.15,
+  family = "Roboto Condensed",
+  direction="y",
+  segment.size = 0.3,
+  segment.color="#333333"
+  ) +
+  scale_color_manual(values = colors ) +
+  coord_cartesian( 
+    ylim=c(1, max(test2[!is.na(test2$daily_deaths_avg6),]$daily_deaths_avg6)*1.15 ),
+    xlim=c(0,  60) #max(test[!is.na(test$deceassed),]$days_since) + 3
+  ) +
+  scale_y_continuous(
+    # breaks = c(1,2,5,10,20,50,100,200,500,1000,2000,5000),
+    # limits = c( umbral,max(test$deceassed)),
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    # minor_breaks = c(  seq(1 , 10, 2), seq(10 , 100, 20), seq(100 , 1000, 200), seq(1000, 10000, 2000) ) 
+    ) +
+  scale_x_continuous(
+    breaks = c(0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100),
+    expand = c(0,0)
+    # limits=c( 0, max(test$days_since + 5))
+  ) +
+  theme_minimal(base_family = "Roboto Condensed", base_size = 20) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    plot.caption = element_text( color="#777777",size = 14, hjust = 1),
+    legend.position = "none"
+  ) + 
+  labs(title = paste0("Media de muertes por día en los 6 días anteriores por COVID-19 (2020.04.20)"),
+       subtitle = paste0("Por comunidad autónoma en España. Días desde ",umbral ," o más muertes", warning),
+       y = "fallecimientos por día registrados",
+       x = paste0("días desde ", umbral , " o más fallecimientos"),
+       caption = caption)
+dev.off()
+
+png(filename=paste0("img/spain/regions/covid19_muertes-dia-por-ccaa-superpuesto-offset-log_since-", umbral ,"deceased.png"), width = 1300,height = 700)
+test2 %>% 
+  ggplot() +
+  geom_line(aes(days_since, daily_deaths_avg6, group= region, color= region), size= 2, alpha = 0.6, se = FALSE ) +
+  geom_point(data = filter(test2, date == max(test2$date) ),  
+             aes(days_since, daily_deaths_avg6, color= region, 
+              text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")), 
+             size= 3 ) +
+  geom_text_repel(data=filter( test2, date== as.Date("2020-04-21")  
+                          ),
+                          aes(days_since, daily_deaths_avg6, label=paste(region), color= region),
+                          # color= "#000000",
+                          nudge_x = 7, # adjust the starting y position of the text label
+                          size=7,
+                          hjust=1,
+                          # bg.color = "red", bg.r = 0.15,
+                          family = "Roboto Condensed",
+                          direction="y",
+                          segment.size = 0.3,
+                          segment.color="#333333"
+  ) +
+  scale_color_manual(values = colors ) +
+  coord_cartesian( 
+    ylim=c(1, max(test2[!is.na(test2$daily_deaths_avg6),]$daily_deaths_avg6)*1.15 ),
+    xlim=c(0,  60) #max(test[!is.na(test$deceassed),]$days_since) + 3
+  ) +
+  scale_y_log10(
+    breaks = c(1,2,5,10,20,50,100,200,500,1000,2000,5000),
+    # limits = c( umbral,max(test$deceassed)),
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+    minor_breaks = c(  seq(1 , 10, 2), seq(10 , 100, 20), seq(100 , 1000, 200), seq(1000, 10000, 2000) ) ) +
+  scale_x_continuous(
+    breaks = c(0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100),
+    expand = c(0,0)
+    # limits=c( 0, max(test$days_since + 5))
+  ) +
+  theme_minimal(base_family = "Roboto Condensed", base_size = 20) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    plot.caption = element_text( color="#777777",size = 14, hjust = 1),
+    legend.position = "none"
+  ) + 
+  labs(title = paste0("Media de muertes por día en los 6 días anteriores por COVID-19 (2020.04.20)"),
+                                  subtitle = paste0("Por comunidad autónoma en España. Días desde ",umbral ," o más muertes (escala log).", warning),
+                                  y = "fallecimientos por día registrados (escala log.)",
+                                  x = paste0("días desde ", umbral , " o más fallecimientos"),
+                                  caption = caption)
+dev.off()
