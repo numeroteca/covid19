@@ -353,7 +353,7 @@ wuhan <- wuhan %>% group_by(region) %>% arrange(date) %>% mutate(
 compare_countries <- rbind(
   as.data.frame( data_all_export %>% select( date, region, country, deceassed, daily_deaths, daily_deaths_inc, daily_deaths_avg6 ) ), 
   as.data.frame( data_i_cases %>% select( date, region, country, deceassed, daily_deaths, daily_deaths_inc, daily_deaths_avg6 ) ),
-  as.data.frame( wuhan ) %>% filter( date < as.Date("2020-04-21"))
+  as.data.frame( wuhan ) %>% filter( date < as.Date("2020-04-15"))
 )
 
 # adds FRance
@@ -459,10 +459,10 @@ ggplot() +
                   text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")), 
               size= 1, alpha = 0.6  ) +
   # labels
-  geom_text_repel(data=filter( test, date== as.Date("2020-04-20") & country == "Spain" |
-                                 date==as.Date("2020-04-20") & country == "Italia" | 
-                                 date==as.Date("2020-04-20") & country == "France" |
-                                 date==as.Date("2020-04-20") & country == "China"
+  geom_text_repel(data=filter( test, date== as.Date("2020-04-22") & country == "Spain" |
+                                 date==as.Date("2020-04-22") & country == "Italia" | 
+                                 date==as.Date("2020-04-22") & country == "France" |
+                                 date==as.Date("2020-04-15") & country == "China"
                             ),
                   aes(days_since, deceassed, label=paste(format( round(deceassed, digits = 0), big.mark="."), region)),
                   color= "#000000",
