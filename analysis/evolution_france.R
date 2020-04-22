@@ -8,8 +8,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 
 # Settings -------  
 # Cambia el pie del gráfico pero conserva la fuente de los datos
-caption_f <- "Gráfico: montera34.com. Datos: OpenCOVID19-fr"
-periodo_f <- "2020.03.04 - 04.20"
+caption_f <- "Gráfico: lab.montera34.com/covid19. Datos: OpenCOVID19-fr"
+periodo_f <- "2020.03.04 - 04.21"
 
 # COVID-19 in France-----------
 
@@ -94,7 +94,7 @@ data_f2_cases_death <- data_f2_cases %>% group_by(date,region) %>% arrange(date)
     # region = region,
     daily_deaths = max(daily_deaths, na.rm = TRUE)
     ) %>% group_by(region) %>% arrange(date) %>% mutate( 
-        daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)) / 3, digits = 1 ) # average of dayly deaths of 6 last days
+        daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5)+lag(daily_deaths,6)) / 7, digits = 1 ) # average of dayly deaths of 6 last days
     )
 
 # create temp dataframes to be able to plot all the   values in small multiples
@@ -655,8 +655,8 @@ data_f2_cases_death %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de muertes por día en los 3 días anteriores (último inclusive) por COVID-19 Francia",
-       subtitle = paste0("Por región (escala logarítmica). ",periodo_f),
+  labs(title = "Media de muertes por día en los 7 días anteriores (último inclusive) por COVID-19 Francia",
+       subtitle = paste0("Por región (escala logarítmica). Error en Pays de La Loire por dato del 2020.04.09 ",periodo_f),
        y = "fallecidos por día",
        x = "fecha",
        caption = caption_f)
