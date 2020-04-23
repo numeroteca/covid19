@@ -9,9 +9,9 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: ProvidencialData19. Check code.montera34.com/covid19"
-caption_provincia <- "Gráfico: montera34.com | Datos: recopilado por Providencialdata19 (lab.montera34.com/covid19, bit.ly/amadrinaunaccaa)"
-period <- "2020.02.27 - 04.20"
-filter_date <- as.Date("2020-04-21")
+caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: recopilados por esCOVID19data (lab.montera34.com/covid19, github.com/montera34/escovid19data)"
+period <- "2020.02.27 - 04.22"
+filter_date <- as.Date("2020-04-23")
 
 # Load Data ---------
 # / Population -------------
@@ -124,6 +124,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_
                                                   select(-source,-comments,source,comments)
 
 write.csv(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
+write.csv(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
 
 
 # colors ---------
@@ -1626,4 +1627,72 @@ data_cases_sp_provinces %>%
        caption = paste0( caption_provincia , " | Ver web https://aatishb.com/covidtrends/" )
   )
 
+dev.off()
+
+
+# 10. Scatter polots ------------
+
+last_day_available <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date,province) %>% 
+  filter( row_number()==n() ) %>%
+  select(province,date,cases_per_cienmil,deceassed_per_100000,ccaa) 
+
+# --------- Relaciones --------
+png(filename=paste("img/spain/provincias/covid19_muertes-vs-casos-provincia-relativo.png", sep = ""),width = 1200,height = 700)
+# data_all %>% 
+data_cases_sp_provinces %>% # filter(province == "Rioja, La") %>%
+  ggplot() +
+  # geom_line( aes(date,cases_per_cienmil, group=province, color=ccaa), size= 0.6) 
+  geom_line( aes(cases_per_cienmil,deceassed_per_100000, group=province, color=ccaa), size= 0.2) +
+  # geom_point( data = data_cases_sp_provinces %>% filter ( date == max(date) ),
+  #             aes(cases_per_cienmil,deceassed_per_100000, color=ccaa), size= 4,alpha=0.8 ) +
+  geom_point( data = last_day_available,
+              aes(cases_per_cienmil,deceassed_per_100000, color=ccaa), size= 4,alpha=0.8 ) +
+  # lines(x = c(0,0), y = c(20,1000)) +
+  # geom_abline(slope = 0.25) +
+  # Annotations
+  # geom_text(aes(cases_per_cienmil,death_per_cienmil+0.5, color=CCAA,label=paste( substr(date,7,10 ))), size= 3, color="#000000") +
+  # geom_text_repel(data= data_cases_sp_provinces %>% group_by(province) %>% filter(date==max(data_cases_sp_provinces[!is.na(data_cases_sp_provinces$date),]$date)),
+  #                 aes(cases_per_cienmil,deceassed_per_100000, color=ccaa, label=province),
+  #                 nudge_y = 5, # adjust the starting y position of the text label
+  #                 size=5,
+  #                 # hjust=0,
+  #                 family = "Roboto Condensed",
+  #                 direction="y",
+  #                 segment.size = 0.1,
+  #                 segment.color="#777777"
+  # ) +
+  geom_text_repel(data= last_day_available,
+                  aes(cases_per_cienmil,deceassed_per_100000, color=ccaa, label=province),
+                  nudge_y = 5, # adjust the starting y position of the text label
+                  size=5,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_color_manual(values = colors_prov ) +
+  scale_y_continuous( 
+    # breaks = c(200,400,600,800,1000,1200,1400,1600,1800,2000)
+    # minor_breaks = c(70,80,90,100)
+  ) +
+  scale_x_continuous( 
+    # breaks = c(50,100,150,200,250,300,350)
+    # minor_breaks = c(1000,1100,1200,1300)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = c(0.9,0.3)
+  ) +
+  labs(title = "Fallecimientos y casos acumulados COVID-19 en España",
+       subtitle = paste0("Por comunidad autónoma. [Falta Barcelona] ",period),
+       y = "fallecimientos por 100.000 habitantes",
+       x = "casos acumulados por 100.000 habitantes",
+       caption = caption_provincia,
+       color= ""
+       )
 dev.off()
