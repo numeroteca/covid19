@@ -10,8 +10,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: ProvidencialData19. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: recopilados por esCOVID19data (lab.montera34.com/covid19, github.com/montera34/escovid19data)"
-period <- "2020.02.27 - 04.22"
-filter_date <- as.Date("2020-04-23")
+period <- "2020.02.27 - 04.23"
+filter_date <- as.Date("2020-04-24")
 
 # Load Data ---------
 # / Population -------------
@@ -124,7 +124,20 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_
                                                   select(-source,-comments,source,comments)
 
 write.csv(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
+# saves data in the other repository
 write.csv(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
+
+
+# Finds which are the last update dates
+last_item_per_province <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date) %>%  filter( row_number()==n()) %>% mutate (
+  last_item = 1
+  ) %>% ungroup()
+
+# create unique value to merge both datasets
+last_item_per_province$dunique <- paste0(last_item_per_province$date,last_item_per_province$province)
+data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
+
+data_cases_sp_provinces <- merge(data_cases_sp_provinces,last_item_per_province %>% select(dunique,last_item), by.x = "dunique",  by.y = "dunique", all.x = TRUE)
 
 
 # colors ---------
@@ -735,14 +748,14 @@ data_cases_sp_provinces %>%
        caption = caption_provincia)
 dev.off()
 
-png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-log.png", sep = ""),width = 1200,height = 800)
+png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-log.png", sep = ""),width = 1300,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
   geom_line(aes(date, deceased,group=province, color=ccaa), size= 1 ) +
   geom_point(aes(date, deceased, color=ccaa), size= 1.5 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & deceased > 10), 
                   aes(date, deceased, color=ccaa, label=paste0(format(deceased, nsmall=1, big.mark="."), " ", province, " (+", daily_deaths,", +", daily_deaths_inc ,"%)")),
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -764,9 +777,9 @@ data_cases_sp_provinces %>%
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
                  minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
                  expand = c(0,0.1) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date + 14)),
+               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date + 16)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -775,7 +788,7 @@ data_cases_sp_provinces %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = c(0.1,0.6)
+    legend.position = c(0.07,0.7)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
        subtitle = paste0("Por provincia (escala logarítmica). ",period),
@@ -783,7 +796,6 @@ data_cases_sp_provinces %>%
        x = "fecha",
        caption = caption_provincia)
 dev.off()
-
 
 # Per 100.000 ---------
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-per-cienmil-lineal.png", sep = ""),width = 1200,height = 800)
