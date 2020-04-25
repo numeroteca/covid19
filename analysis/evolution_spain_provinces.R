@@ -8,19 +8,21 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
-caption_en <- "By: lab.montera34.com/covid19 | Data: ProvidencialData19. Check code.montera34.com/covid19"
+caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: recopilados por esCOVID19data (lab.montera34.com/covid19, github.com/montera34/escovid19data)"
-period <- "2020.02.27 - 04.23"
-filter_date <- as.Date("2020-04-24")
+period <- "2020.02.27 - 04.24. Nota: datos de CCAA uniprovinciales incluyen casos de PCR y TestAc+ a partir de 2020.04.15"
+filter_date <- as.Date("2020-04-25")
 
 # Load Data ---------
 # / Population -------------
-ccaa_poblacion <-  read.delim("data/original/spain/ccaa-poblacion.csv",sep = ";")
+# ccaa_poblacion <-  read.delim("data/original/spain/ccaa-poblacion.csv",sep = ";")
 provincias_poblacion <-  read.delim("data/original/spain/provincias-poblacion.csv",sep = ",")
 
 # / COVID-19 in Spain -----------
 # / By province -----------
 data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")
+# DOwnload Andalucía data from https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228
+andalucia_original <- read.delim("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=andalucia", sep=",")
 # data_cases_canarias <- read.delim("data/original/spain/covid19_canarias.csv",sep = ",")
 
 # Process data ------
@@ -69,6 +71,109 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,canarias_bind)
 # Remove last -usually incomplete- day
 data_cases_sp_provinces <- filter(data_cases_sp_provinces, !is.na(date))
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != filter_date) %>% arrange(date)
+
+# Remove existing Andalucia data and add new one from new source ---------------------
+
+# Remove existing Andalucia data
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( ccaa != "Andalucía")
+
+# prepare format for new Andalucía data
+andalucia <- andalucia_original %>% mutate(
+  date = as.Date(Fecha,"%d/%m/%Y"),
+  ccaa = "Andalucía"
+  ) %>% rename(
+    province = Territorio,
+    cases_accumulated = Confirmados ,
+    hospitalized = Hospitalizados ,
+    intensive_care = Total.UCI ,
+    deceased = Fallecimientos ,
+    recovered = Curados,
+    new_cases = Nuevos.casos
+  )  %>% mutate (
+    activos = NA, 
+    source="https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228",
+    comments=""
+  ) %>% select( -Fecha) %>% select( date, province, ccaa, new_cases, activos, hospitalized, intensive_care, deceased, cases_accumulated, recovered, source, comments) 
+
+# Add new Andalucía data
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces,andalucia)
+
+# Remove and add uniprovinciales -----
+
+# Remove existing Uniprovinciales data
+data_cases_sp_provinces <- data_cases_sp_provinces %>% 
+  filter( !(province == "Melilla" | province == "Asturias" | province == "Balears, Illes" | province == "Cantabria" |
+            province == "Ceuta" | province == "Murcia" | province == "Navarra" | province == "Madrid" |
+            province == "Rioja, La") )
+
+# import Instituto de Salud CIII 
+ciii_original <- read.delim("https://covid19.isciii.es/resources/serie_historica_acumulados.csv",sep = ",")  
+write.csv(ciii_original, file = "data/original/spain/iscii_data.csv", row.names = FALSE)
+
+ciii <- ciii_original %>% head(nrow(ciii_original) - 5) %>% #Cambia el número en función de las notas que incluya el csv original
+  ungroup() %>% mutate(
+  date = as.Date(FECHA, "%d/%m/%Y" ),
+  CCAA = CCAA %>% str_replace_all("AN", "Andalucía"),
+  CCAA = CCAA %>% str_replace_all("AR", "Aragón"),
+  CCAA = CCAA %>% str_replace_all("AS", "Asturias"),
+  CCAA = CCAA %>% str_replace_all("CB", "Cantabria"),
+  CCAA = CCAA %>% str_replace_all("CE", "Ceuta"),
+  CCAA = CCAA %>% str_replace_all("CL", "Castilla y León"),
+  CCAA = CCAA %>% str_replace_all("CM", "Castilla-La Mancha"),
+  CCAA = CCAA %>% str_replace_all("CN", "Canarias"),
+  CCAA = CCAA %>% str_replace_all("CT", "Cataluña"),
+  CCAA = CCAA %>% str_replace_all("EX", "Extremadura"),
+  CCAA = CCAA %>% str_replace_all("GA", "Galicia"),
+  CCAA = CCAA %>% str_replace_all("IB", "Baleares"),
+  CCAA = CCAA %>% str_replace_all("MC", "Murcia"),
+  CCAA = CCAA %>% str_replace_all("MD", "Madrid"),
+  CCAA = CCAA %>% str_replace_all("ML", "Melilla"),
+  CCAA = CCAA %>% str_replace_all("NC", "Navarra"),
+  CCAA = CCAA %>% str_replace_all("PV", "País Vasco"),
+  CCAA = CCAA %>% str_replace_all("RI", "La Rioja"),
+  CCAA = CCAA %>% str_replace_all("VC", "C. Valenciana"),
+) 
+# levels(ciii$region) <- c("Andalucía","Aragón", "Asturias", "Cantabria","Ceuta", "Castilla y León","Castilla-La Mancha", "Canarias","Cataluña" , "Extremadura", "Galicia", "Baleares",   "Murcia","Madrid", "Melilla", "Navarra",  "País Vasco","La Rioja","C. Valenciana")  
+
+names(ciii) <- c("region","fecha","cases_registered","PCR", "TestAc","hospitalized","intensive_care","deceassed","recovered","date")
+names(ciii)
+# rename comunidades autónomas
+# remake factors to remove footer of csv
+# levels(ciii$region)  <- factor(ciii$region) 
+# levels(ciii$region)
+#                          "AN"         "AR"    "AS"       "CB"        "CE"     "CL"               "CM"                 "CN"          "CT"        "EX"           "GA"        "IB"        "MC"          "MD"      "ML"        "NC"                   "PV"       "RI"           "VC"
+# levels(ciii$region) <- c("Andalucía","Aragón", "Asturias", "Cantabria","Ceuta", "Castilla y León","Castilla-La Mancha", "Canarias","Cataluña" , "Extremadura", "Galicia", "Baleares",   "Murcia","Madrid", "Melilla", "Navarra",  "País Vasco","La Rioja","C. Valenciana")  
+# levels(ciii$region) <- c("Andalucía","Aragón", "Asturias", "Cantabria","Ceuta", "Castilla y León","Castilla-La Mancha", "Canarias","Cataluña" , "Extremadura", "Galicia", "Baleares",   "Murcia","Madrid", "Melilla", "Navarra",  "País Vasco","La Rioja","C. Valenciana")  
+
+# Filters and get only uniprovinciales
+uniprovinciales <- ciii %>% 
+  filter( region == "Melilla" | region == "Asturias" | region == "Baleares" | region == "Cantabria" |
+            region == "Ceuta" | region == "Murcia" | region == "Navarra" | region == "Madrid" |
+            region == "La Rioja" ) %>% mutate(
+              ccaa = region,
+              activos = NA,
+              source="Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019",
+              comments= "",
+              new_cases = NA,
+              deceased = deceassed,
+              cases_accumulated = ifelse( is.na(cases_registered), PCR + TestAc, cases_registered)
+              ) %>% rename(
+              province = region,
+              # cases_accumulated = cases_registered,
+            ) %>% select( date, province, ccaa, new_cases, activos, hospitalized, intensive_care, deceased, cases_accumulated, recovered, source, comments) %>%
+          mutate(
+            ccaa = ccaa %>% str_replace_all("La Rioja", "Rioja, La"),
+            province = province %>% str_replace_all("La Rioja", "Rioja, La"),
+            ccaa = ccaa %>% str_replace_all("Asturias", "Asturias, Principado de"),
+            ccaa = ccaa %>% str_replace_all("Baleares", "Balears, Illes"),
+            province = province %>% str_replace_all("Baleares", "Balears, Illes"),
+            ccaa = ccaa %>% str_replace_all("Madrid", "Madrid, Comunidad de"),
+            ccaa = ccaa %>% str_replace_all("Murcia", "Murcia, Región de"),
+            ccaa = ccaa %>% str_replace_all("Navarra", "Navarra, Comunidad Foral de"),
+              )
+
+# Add new Andalucía data
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces,uniprovinciales)
 
 # Add missin Barcelona data -------- 
 # # Do not use as data have been hasd coded in the original data
@@ -128,17 +233,18 @@ write.csv(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-
 write.csv(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
 
 
-# Finds which are the last update dates
-last_item_per_province <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date) %>%  filter( row_number()==n()) %>% mutate (
-  last_item = 1
-  ) %>% ungroup()
-
-# create unique value to merge both datasets
-last_item_per_province$dunique <- paste0(last_item_per_province$date,last_item_per_province$province)
-data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
-
-data_cases_sp_provinces <- merge(data_cases_sp_provinces,last_item_per_province %>% select(dunique,last_item), by.x = "dunique",  by.y = "dunique", all.x = TRUE)
-
+# Finds which are the last update dates (it is not used) ----
+# last_item_per_province <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date) %>%  filter( row_number()==n()) %>% mutate (
+#   last_item = 1
+#   ) %>% ungroup()
+# 
+# # create unique value to merge both datasets
+# last_item_per_province$dunique <- paste0(last_item_per_province$date,last_item_per_province$province)
+# data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
+# 
+# data_cases_sp_provinces <- merge(data_cases_sp_provinces,last_item_per_province %>% select(dunique,last_item), by.x = "dunique",  by.y = "dunique", all.x = TRUE)
+# 
+# data_cases_sp_provinces <- data_cases_sp_provinces %>% select(-dunique)
 
 # colors ---------
 # extends color paletter
@@ -271,7 +377,7 @@ data_cases_sp_provinces %>%
   geom_text_repel(data=filter( data_cases_sp_provinces,  
                                (date==max(data_cases_sp_provinces$date) & cases_accumulated > 400 )  
                           ), 
-        aes(date, cases_accumulated, color=ccaa, label=paste(format(cases_accumulated, nsmall=1, big.mark="."),province)),
+        aes(date, cases_accumulated, color=ccaa, label=paste(format(cases_accumulated, nsmall=1, big.mark=".", decimal.mark = ","),province)),
               nudge_x = 3, # adjust the starting y position of the text label
               size=5,
               hjust=0,
@@ -324,7 +430,7 @@ data_cases_sp_provinces %>%
   geom_text_repel(data=filter( data_cases_sp_provinces,  
                                (date==max(data_cases_sp_provinces$date) & cases_accumulated > 400 )  
                       ), 
-                      aes(date, cases_accumulated, color=ccaa, label=paste(format(cases_accumulated, nsmall=1, big.mark="."),province)),
+                      aes(date, cases_accumulated, color=ccaa, label=paste(format(cases_accumulated, nsmall=1, big.mark=".", decimal.mark = ","),province)),
                       nudge_x = 2, # adjust the starting y position of the text label
                       size=5,
                       hjust=0,
@@ -1404,8 +1510,16 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
     geom_point(aes(date, daily_deaths, color=province), size= 1.5 ) +
     # geom_point(aes(date, daily_deaths_avg6 ), size= 2, color= "#999999" ) +
     # geom_point(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), aes(date, daily_deaths_avg6, color=province), size= 1.5, alpha = 0.3 ) +
-    geom_text_repel(data= data_cases_sp_provinces %>% filter (ccaa == prov ) %>% filter(date==max(data_cases_sp_provinces[data_cases_sp_provinces$ccaa == prov,]$date) & (ccaa == prov )), 
-                    aes(date, daily_deaths_avg6, color=province, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),province)),
+    # geom_shadowtext( 
+    #       aes(date, daily_deaths, label = paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),province) ), 
+    #                 hjust=0, 
+    #                 vjust = 0, 
+    #                 data = . %>% group_by(province) %>% top_n(1, date), bg.color = "white") +
+    geom_text_repel(
+      # data= data_cases_sp_provinces %>% filter (ccaa == prov ) %>% filter(date==max(data_cases_sp_provinces[data_cases_sp_provinces$ccaa == prov,]$date) & (ccaa == prov )),
+      data = data_cases_sp_provinces %>% filter( ccaa == prov ) %>% group_by(province) %>% top_n(1, date),
+                    aes(date, daily_deaths_avg6, color=province, 
+                        label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),province)),
                     nudge_x = 1, # adjust the starting y position of the text label
                     size=5,
                     hjust=0,
@@ -1480,7 +1594,9 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   geom_point(aes(date, daily_deaths, color=province), size= 1.5 ) +
   # geom_point(aes(date, daily_deaths_avg6 ), size= 2, color= "#999999" ) +
   # geom_point(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), aes(date, daily_deaths_avg6, color=province), size= 1.5, alpha = 0.3 ) +
-  geom_text_repel(data= data_cases_sp_provinces %>% filter (ccaa == prov ) %>% filter(date==max(data_cases_sp_provinces[data_cases_sp_provinces$ccaa == prov,]$date) & (ccaa == prov )), 
+  geom_text_repel(
+    data = data_cases_sp_provinces %>% filter( ccaa == prov ) %>% group_by(province) %>% top_n(1, date),
+    # data= data_cases_sp_provinces %>% filter (ccaa == prov ) %>% filter(date==max(data_cases_sp_provinces[data_cases_sp_provinces$ccaa == prov,]$date) & (ccaa == prov )), 
                   aes(date, daily_deaths_avg6, color=province, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),province)),
                   nudge_x = 1, # adjust the starting y position of the text label
                   size=5,
@@ -1545,6 +1661,57 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
 
 
 # 7. Deaths vs weekly deaths ------
+# lineal --------
+png(filename=paste("img/spain/provincias/covid19_trayectoria-provincia-facet-lineal.png", sep = ""),width = 1300,height = 800)
+data_cases_sp_provinces %>%
+  ggplot() +
+  geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(deaths_cum_last_week,deaths_last_week,province_cp,-province),
+            aes(deaths_cum_last_week,deaths_last_week,group=province_cp), se = FALSE, span = 0.6, color="#CACACA", size=0.5 ) +
+  geom_line(aes(deaths_cum_last_week,deaths_last_week,group=province), size= 0.4 ) +
+  # geom_smooth(aes(deaths_cum_last_week,deaths_last_week,group=province), size= 0.5, se = FALSE, color = "black") +
+  # geom_point(aes(deaths_cum_last_week,deaths_last_week ), size= 0.2 ) +
+  geom_text_repel(
+    data= data_cases_sp_provinces %>% group_by(province) %>% top_n(1, date),
+    # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
+                  aes(deaths_cum_last_week,deaths_last_week, color=ccaa, label= province ),
+                  nudge_x = 0.8, # adjust the starting y position of the text label
+                  size=4,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  facet_wrap( ~ccaa ) +
+  scale_color_manual(values = colors_prov ) +
+  # scale_y_log10(
+  #   breaks = c(0,1,5,10,50,100,500,1000,5000 ),
+  #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  # ) +
+  # scale_x_log10(
+  #   breaks = c(0,1,5,10,50,100,500,1000,5000 ),
+  #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  # ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 19) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text = element_text(size =9 ),
+    legend.position = "none"
+  ) +
+  labs(title = "Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España",
+       subtitle = paste0("Por provincia. ", period),
+       y = "fallecidos 7 días anteriores (log)",
+       x = "total de fallecidos (log)",
+       caption = paste0( caption_provincia , " | Ver web https://aatishb.com/covidtrends/" )
+  )
+
+dev.off()
+
 # log --------
 png(filename=paste("img/spain/provincias/covid19_trayectoria-provincia-facet-log.png", sep = ""),width = 1300,height = 800)
 data_cases_sp_provinces %>%
@@ -1554,7 +1721,9 @@ data_cases_sp_provinces %>%
   geom_line(aes(deaths_cum_last_week,deaths_last_week,group=province), size= 0.4 ) +
   # geom_smooth(aes(deaths_cum_last_week,deaths_last_week,group=province), size= 0.5, se = FALSE, color = "black") +
   # geom_point(aes(deaths_cum_last_week,deaths_last_week ), size= 0.2 ) +
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
+  geom_text_repel(
+                  # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
+                  data= data_cases_sp_provinces %>% group_by(province) %>% top_n(1, date),
                   aes(deaths_cum_last_week,deaths_last_week, color=ccaa, label= province ),
                   nudge_x = 0.8, # adjust the starting y position of the text label
                   size=4,
@@ -1595,6 +1764,55 @@ data_cases_sp_provinces %>%
 dev.off()
 
 
+# lineal --------
+png(filename=paste("img/spain/provincias/covid19_trayectoria-provincia-superpuesto-lineal.png", sep = ""),width = 1300,height = 800)
+data_cases_sp_provinces %>%
+  ggplot() +
+  geom_line(aes(deaths_cum_last_week,deaths_last_week,group=province,color=ccaa), size= 0.4 ) +
+  # geom_smooth(aes(deaths_cum_last_week,deaths_last_week,group=province,color=ccaa), size= 0.5, se = FALSE ) +
+  # geom_point(aes(deaths_cum_last_week,deaths_last_week ), size= 0.2 ) +
+  geom_text_repel(
+    data= data_cases_sp_provinces %>% group_by(province) %>% top_n(1, date),
+    # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
+                  aes(deaths_cum_last_week,deaths_last_week, color=ccaa, label= province ),
+                  nudge_x = 0.8, # adjust the starting y position of the text label
+                  size=4,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  # direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_color_manual(values = colors_prov ) +
+  # scale_y_log10(
+  #   breaks = c(0,1,5,10,50,100,500,1000,5000 ),
+  #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  # ) +
+  # scale_x_log10(
+  #   breaks = c(0,1,5,10,50,100,500,1000,5000 ),
+  #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  # ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 19) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text = element_text(size =9 ),
+    legend.position = "none"
+  ) +
+  labs(title = "Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España",
+       subtitle = paste0("Por provincia. ", period),
+       y = "fallecidos 7 días anteriores (log)",
+       x = "total de fallecidos (log)",
+       caption = paste0( caption_provincia , " | Ver web https://aatishb.com/covidtrends/" )
+  )
+
+dev.off()
+
+
 # log --------
 png(filename=paste("img/spain/provincias/covid19_trayectoria-provincia-superpuesto-log.png", sep = ""),width = 1300,height = 800)
 data_cases_sp_provinces %>%
@@ -1602,7 +1820,9 @@ data_cases_sp_provinces %>%
   geom_line(aes(deaths_cum_last_week,deaths_last_week,group=province,color=ccaa), size= 0.4 ) +
   # geom_smooth(aes(deaths_cum_last_week,deaths_last_week,group=province,color=ccaa), size= 0.5, se = FALSE ) +
   # geom_point(aes(deaths_cum_last_week,deaths_last_week ), size= 0.2 ) +
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
+  geom_text_repel(
+                  # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
+                  data= data_cases_sp_provinces %>% group_by(province) %>% top_n(1, date),
                   aes(deaths_cum_last_week,deaths_last_week, color=ccaa, label= province ),
                   nudge_x = 0.8, # adjust the starting y position of the text label
                   size=4,
