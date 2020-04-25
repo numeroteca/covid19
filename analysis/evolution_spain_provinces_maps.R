@@ -21,7 +21,7 @@ provincias@data <- left_join(provincias@data, data_cases_sp_provinces %>% filter
 
 # tmap numer of listings MAP ----------------
 colores <- c("#ededed", "#0cb2ff")
-breaks.n <- c(seq(0,1200,by = 100))
+breaks.n <- c(seq(0,2000,by = 200))
 
 ppp <- provincias@data
 names(ppp)
@@ -105,4 +105,4 @@ for (i in 8:length( unique(data_cases_sp_provinces$date) )) {
   
 }
 
-# convert -delay 30 -loop 0 mapa-coropletas-muertos-per-100000_2*.png myimage.gif
+# convert -delay 40 -loop 0 mapa-coropletas-muertos-per-100000_2*.png animated-map-by-million-cumulative-deaths.gif

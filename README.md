@@ -29,19 +29,24 @@ When you go to any of the scripts you can run it and it will produce all the vis
 
 ```
 ├── coronavirus.Rproj                     # R project
-├── analysis                              # scripts to process data
+├── analysis                              # scripts to process data and generate charts
+│   ├── comparativa-bases-de-datos.R      # R script: to compare databases: ISCII, datadista and esCOVID19data
+│   ├── count_catalunya.R                 # R script: to process Catalunya data
 │   ├── evolution_compare.R               # R script: process and create plots compare countries
 │   ├── evolution_france.R                # R script: process and create plots France  
 │   ├── evolution_italia.R                # R script: process and create plots Italia  
 │   ├── evolution_spain.R                 # R script: process and create plots Spain by comunidades autonomas
+│   ├── evolution_spain_provinces_maps.R                 # R script: generate map by provinces to make animated gif
 │   └── evolution_spain_provinces.R                 # R script: process and create plots Spain by provinces
 ├── data
 │   ├── original                                  # original data
 │   │   └── spain
 │   │       ├── ccaa-poblacion.csv            # population per region
 │   │       ├── provincias-poblacion.csv      # population per province
-│   │       └── covid10_spain_provincias.csv  # covid19 data by province.  
+│   │       └── covid10_spain_provincias.csv  # covid19 data by province downloaded from spreasheer 
 │   └── output                                # processed data: by date and comunidad autónoma in Spain
+│       ├── spain
+│       │    ├── covid19-provincias-spain_consolidated.csv  # exported province data
 │       ├── covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv     # merge all variables
 │       ├── covid19-casos-registrados-por-ccaa-espana-por-dia-acumulado.csv   # registered cases accumulated
 │       ├── covid19-fallecimientos-por-ccaa-espana-por-dia-acumulado.csv      # deceassed
