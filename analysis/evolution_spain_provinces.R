@@ -10,12 +10,11 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: recopilados por esCOVID19data (lab.montera34.com/covid19, github.com/montera34/escovid19data)"
-period <- "2020.02.27 - 04.24. Nota: datos de CCAA uniprovinciales incluyen casos de PCR y TestAc+ a partir de 2020.04.15"
-filter_date <- as.Date("2020-04-25")
+period <- "Actualizado: 2020.04.26. Nota: datos de CCAA uniprovinciales incluyen casos de PCR y TestAc+ a partir de 2020.04.15"
+filter_date <- as.Date("2020-04-26")
 
 # Load Data ---------
 # / Population -------------
-# ccaa_poblacion <-  read.delim("data/original/spain/ccaa-poblacion.csv",sep = ";")
 provincias_poblacion <-  read.delim("data/original/spain/provincias-poblacion.csv",sep = ",")
 
 # / COVID-19 in Spain -----------
@@ -78,7 +77,8 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != filter_da
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( ccaa != "Andalucía")
 
 # prepare format for new Andalucía data
-andalucia <- andalucia_original %>% mutate(
+andalucia <- andalucia_original %>% filter( Territorio != "Andalucía" ) %>%
+  mutate(
   date = as.Date(Fecha,"%d/%m/%Y"),
   ccaa = "Andalucía"
   ) %>% rename(
@@ -130,26 +130,25 @@ ciii <- ciii_original %>% head(nrow(ciii_original) - 5) %>% #Cambia el número e
   CCAA = CCAA %>% str_replace_all("ML", "Melilla"),
   CCAA = CCAA %>% str_replace_all("NC", "Navarra"),
   CCAA = CCAA %>% str_replace_all("PV", "País Vasco"),
-  CCAA = CCAA %>% str_replace_all("RI", "La Rioja"),
-  CCAA = CCAA %>% str_replace_all("VC", "C. Valenciana"),
-) 
-# levels(ciii$region) <- c("Andalucía","Aragón", "Asturias", "Cantabria","Ceuta", "Castilla y León","Castilla-La Mancha", "Canarias","Cataluña" , "Extremadura", "Galicia", "Baleares",   "Murcia","Madrid", "Melilla", "Navarra",  "País Vasco","La Rioja","C. Valenciana")  
-
-names(ciii) <- c("region","fecha","cases_registered","PCR", "TestAc","hospitalized","intensive_care","deceassed","recovered","date")
-names(ciii)
-# rename comunidades autónomas
-# remake factors to remove footer of csv
-# levels(ciii$region)  <- factor(ciii$region) 
-# levels(ciii$region)
-#                          "AN"         "AR"    "AS"       "CB"        "CE"     "CL"               "CM"                 "CN"          "CT"        "EX"           "GA"        "IB"        "MC"          "MD"      "ML"        "NC"                   "PV"       "RI"           "VC"
-# levels(ciii$region) <- c("Andalucía","Aragón", "Asturias", "Cantabria","Ceuta", "Castilla y León","Castilla-La Mancha", "Canarias","Cataluña" , "Extremadura", "Galicia", "Baleares",   "Murcia","Madrid", "Melilla", "Navarra",  "País Vasco","La Rioja","C. Valenciana")  
-# levels(ciii$region) <- c("Andalucía","Aragón", "Asturias", "Cantabria","Ceuta", "Castilla y León","Castilla-La Mancha", "Canarias","Cataluña" , "Extremadura", "Galicia", "Baleares",   "Murcia","Madrid", "Melilla", "Navarra",  "País Vasco","La Rioja","C. Valenciana")  
+  CCAA = CCAA %>% str_replace_all("RI", "Rioja, La"),
+  CCAA = CCAA %>% str_replace_all("VC", "C. Valenciana")
+    ) %>% rename(
+    region = CCAA,
+    fecha = FECHA,
+    cases_registered = CASOS,
+    PCR = PCR.,
+    TestAc =TestAc.,
+    hospitalized = Hospitalizados,
+    intensive_care = UCI,
+    deceassed = Fallecidos,
+    recovered = Recuperados
+  )
 
 # Filters and get only uniprovinciales
 uniprovinciales <- ciii %>% 
   filter( region == "Melilla" | region == "Asturias" | region == "Baleares" | region == "Cantabria" |
             region == "Ceuta" | region == "Murcia" | region == "Navarra" | region == "Madrid" |
-            region == "La Rioja" ) %>% mutate(
+            region == "Rioja, La" ) %>% mutate(
               ccaa = region,
               activos = NA,
               source="Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019",
@@ -220,7 +219,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
           daily_deaths_inc = round((deceased - lag(deceased)) /lag(deceased) * 100, digits = 1),
           daily_deaths_avg3 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2) ) / 3, digits = 1 ), # average of daily deaths of 3 last days
           daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+
-                                          lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5) ) / 6, digits = 1 ),  # average of dayly deaths of 6 last days
+                                          lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5)+lag(daily_deaths,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
           deaths_cum_last_week = ( deceased + lag(deceased,1) + lag(deceased,2) + lag(deceased,3) + lag(deceased,4) + lag(deceased,5) + lag(deceased,6) ) / 7,  
           deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)  
   )
@@ -525,7 +524,7 @@ data_cases_sp_provinces %>%
   geom_text_repel(data=filter( data_cases_sp_provinces, 
                                date==max(data_cases_sp_provinces$date) & cases_per_cienmil > 100
                       ), 
-                      aes(date,cases_per_cienmil, color=ccaa, label=paste(format(cases_per_cienmil, nsmall=1, big.mark=".", digits = 1), province)),
+                      aes(date,cases_per_cienmil, color=ccaa, label=paste(format(cases_per_cienmil, nsmall=1, big.mark=".", digits = 1, decimal.mark = ","), province)),
                               nudge_x = 5, # adjust the starting y position of the text label
                               size=5,
                               hjust=0,
@@ -537,7 +536,7 @@ data_cases_sp_provinces %>%
                       ) +
   scale_color_manual(values = colors_prov) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
-                 limits = c(1,max(data_cases_sp_provinces$cases_per_cienmil)*1.1),
+                 limits = c(1,max(data_cases_sp_provinces$cases_per_cienmil)*1.5),
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
@@ -1039,7 +1038,7 @@ data_cases_sp_provinces %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = c(0.1,0.6)
   ) +
-  labs(title = "Muertes por día en los 5 días anteriores por COVID-19 en España",
+  labs(title = "Muertes por día (7 días) por COVID-19 en España",
        subtitle = paste0("Por provincia (escala lineal). ",period),
        y = "fallecidos por día",
        x = "fecha",
@@ -1119,9 +1118,9 @@ data_cases_sp_provinces %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = c(0.1,0.6)
   ) +
-  labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
+  labs(title = "Media de muertes por día (7 días) por COVID-19 en España",
        subtitle = paste0("Por provincia (escala lineal). ",period),
-       y = "fallecidos por día",
+       y = "Meded de fallecidos por día",
        x = "fecha",
        caption = caption_provincia)
 dev.off()
@@ -1157,9 +1156,9 @@ data_cases_sp_provinces %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = c(0.1,0.6)
   ) +
-  labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
+  labs(title = "Media de muertes por día (7 días) por COVID-19 en España",
        subtitle = paste0("Por provincia (escala logarítmica). ",period),
-       y = "fallecidos por día",
+       y = "media de fallecidos por día",
        x = "fecha",
        caption = caption_provincia)
 dev.off()
@@ -1205,9 +1204,9 @@ data_cases_sp_provinces %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = c(0.1,0.6)
   ) +
-  labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
+  labs(title = "Media de muertes por día (media 7 días) por COVID-19 en España",
        subtitle = paste0("Por provincia (escala logarítmica). ",period),
-       y = "fallecidos por día",
+       y = "media de fallecidos por día",
        x = "fecha",
        caption = caption_provincia)
 dev.off()
@@ -1251,9 +1250,9 @@ data_cases_sp_provinces %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = c(0.1,0.6)
   ) +
-  labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
+  labs(title = "Media de muertes por día (medía 7 días) por COVID-19 en España",
        subtitle = paste0("Por provincia (escala logarítmica). ",period),
-       y = "fallecidos por día",
+       y = "media fallecidos por día",
        x = "fecha",
        caption = caption_provincia)
 dev.off()
@@ -1379,7 +1378,7 @@ data_cases_sp_provinces %>%
   ) +
   # marca la línea
   geom_text_repel(data=filter( data_cases_sp_provinces, date==as.Date("2020-04-02") &  province == "Madrid" ),
-                  aes(date+0.5,294, label=paste("media de 6 días")),
+                  aes(date+0.5,294, label=paste("media de 7 días")),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -1410,9 +1409,9 @@ data_cases_sp_provinces %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = c(0.1,0.6)
   ) +
-  labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
+  labs(title = "Media de muertes por día (media 7 días) por COVID-19 en España",
        subtitle = paste0("Por provincia. Escala logarítmica  ",period),
-       y = "fallecidos por día (media 6 días)",
+       y = "fallecidos por día (media 7 días)",
        x = "fecha",
        caption = caption_provincia)
 dev.off()
@@ -1447,7 +1446,7 @@ data_cases_sp_provinces %>%
   ) +
   # marca la línea
   geom_text_repel(data=filter( data_cases_sp_provinces, date==as.Date("2020-04-11") &  province == "Madrid" ),
-                  aes(date+0.5,200, label=paste("media de 6 días")),
+                  aes(date+0.5,200, label=paste("media de 7 días")),
                   nudge_y = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -1476,9 +1475,9 @@ data_cases_sp_provinces %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = c(0.1,0.6)
   ) +
-  labs(title = "Media de muertes por día en los 5 días anteriores por COVID-19 en España",
+  labs(title = "Media de muertes por día (media 7 días) por COVID-19 en España",
        subtitle = paste0("Por provincia. Escala logarítmica  ",period),
-       y = "fallecidos por día (media 6 días)",
+       y = "fallecidos por día (media 7 días)",
        x = "fecha",
        caption = caption_provincia)
 dev.off()
@@ -1487,7 +1486,7 @@ dev.off()
 # Superpuesto Log por CCAA -------------
 
 for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
-# for ( i in 2:2  ) {
+# for ( i in 3:3  ) {
   
   prov <- levels(data_cases_sp_provinces$ccaa)[i]
   unaprov <- data_cases_sp_provinces %>% filter (ccaa == prov ) %>% select (province) %>% first() 
@@ -1543,8 +1542,9 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
     # coord_cartesian(
     #   ylim = c(1,500)
     # ) +
-    scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
-                   expand = c(0,0.2) ) +
+    scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+                   # expand = c(0,0.2)
+                   ) +
     scale_x_date(date_breaks = "1 day", 
                  date_labels = "%d",
                  limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +9)),
@@ -1558,9 +1558,9 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
       axis.ticks.x = element_line(color = "#000000"),
       legend.position =  "none"
     ) +
-    labs(title = paste0("Media de muertes por día en los 5 días anteriores por COVID-19 en ",prov ),
+    labs(title = paste0("Media de muertes por día (media 7 días) por COVID-19 en ",prov ),
          subtitle = paste0("Por provincia. Escala logarítmica  ",period),
-         y = "fallecidos por día (media 6 días)",
+         y = "fallecidos por día (media 7 días)",
          x = "fecha",
          caption = caption_provincia)
   
@@ -1648,9 +1648,9 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
     axis.ticks.x = element_line(color = "#000000"),
     legend.position =  "none"
   ) +
-  labs(title = paste0("Media de muertes por día en los 5 días anteriores por COVID-19 en ",prov ),
+  labs(title = paste0("Media de muertes por día (media 7 días) por COVID-19 en ",prov ),
        subtitle = paste0("Por provincia. Escala logarítmica  ",period),
-       y = "fallecidos por día (media 6 días)",
+       y = "fallecidos por día (media 7 días)",
        x = "fecha",
        caption = caption_provincia)
 
