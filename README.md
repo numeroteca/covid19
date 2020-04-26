@@ -35,7 +35,8 @@ When you go to any of the scripts you can run it and it will produce all the vis
 │   ├── evolution_compare.R               # R script: process and create plots compare countries
 │   ├── evolution_france.R                # R script: process and create plots France  
 │   ├── evolution_italia.R                # R script: process and create plots Italia  
-│   ├── evolution_spain.R                 # R script: process and create plots Spain by comunidades autonomas
+│   ├── process_spain_regions_data.R      # R script: process Spain by comunidades autonomas data
+│   ├── charts_spain_regions.R            # R script: create charts Spain by comunidades autonomas
 │   ├── evolution_spain_provinces_maps.R                 # R script: generate map by provinces to make animated gif
 │   └── evolution_spain_provinces.R                 # R script: process and create plots Spain by provinces
 ├── data
