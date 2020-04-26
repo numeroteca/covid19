@@ -10,8 +10,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
-caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: Varias fuentes. Ver lab.montera34.com"
-period <- "2020.02.27 - 04.23 (Actualizado: 2020.04.24)"
+period <- "Actualizado: 2020.04.26. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.04.26"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -149,27 +149,61 @@ data_all_export <- data_all_export %>% select(date, region_code, region, country
 data_all_export <- data_all_export %>% filter(!is.na(region))
 
 
-# Use Instituto de Salud Carlos III data instead ------------
+# ISCiii Use Instituto de Salud Carlos III data instead ------------
 # import Instituto de Salud CIII 
 ciii_original <- read.delim("https://covid19.isciii.es/resources/serie_historica_acumulados.csv",sep = ",")  
 write.csv(ciii_original, file = "data/original/spain/iscii_data.csv", row.names = FALSE)
 
-ciii <- ciii_original %>% head(nrow(ciii_original) - 5) %>% ungroup() #Cambia el número en función de las notas que incluya el csv original
-ciii$date <- as.Date(ciii$FECHA, "%d/%m/%Y" )
-names(ciii) <- c("region","fecha","cases_registered","hospitalized","intensive_care","deceassed","recovered","date")
+ciii <- ciii_original %>% head(nrow(ciii_original) - 5) %>% #Cambia el número en función de las notas que incluya el csv original
+  ungroup() %>% mutate(
+    date = as.Date(FECHA, "%d/%m/%Y" ),
+    CCAA = CCAA %>% str_replace_all("AN", "Andalucía"),
+    CCAA = CCAA %>% str_replace_all("AR", "Aragón"),
+    CCAA = CCAA %>% str_replace_all("AS", "Asturias"),
+    CCAA = CCAA %>% str_replace_all("CB", "Cantabria"),
+    CCAA = CCAA %>% str_replace_all("CE", "Ceuta"),
+    CCAA = CCAA %>% str_replace_all("CL", "Castilla y León"),
+    CCAA = CCAA %>% str_replace_all("CM", "Castilla-La Mancha"),
+    CCAA = CCAA %>% str_replace_all("CN", "Canarias"),
+    CCAA = CCAA %>% str_replace_all("CT", "Cataluña"),
+    CCAA = CCAA %>% str_replace_all("EX", "Extremadura"),
+    CCAA = CCAA %>% str_replace_all("GA", "Galicia"),
+    CCAA = CCAA %>% str_replace_all("IB", "Baleares"),
+    CCAA = CCAA %>% str_replace_all("MC", "Murcia"),
+    CCAA = CCAA %>% str_replace_all("MD", "Madrid"),
+    CCAA = CCAA %>% str_replace_all("ML", "Melilla"),
+    CCAA = CCAA %>% str_replace_all("NC", "Navarra"),
+    CCAA = CCAA %>% str_replace_all("PV", "País Vasco"),
+    CCAA = CCAA %>% str_replace_all("RI", "La Rioja"),
+    CCAA = CCAA %>% str_replace_all("VC", "C. Valenciana"),
+  ) %>% rename(
+    region = CCAA,
+    fecha = FECHA,
+    cases_registered = CASOS,
+    PCR = PCR.,
+    TestAc =TestAc.,
+    hospitalized = Hospitalizados,
+    intensive_care = UCI,
+    deceassed = Fallecidos,
+    recovered = Recuperados
+  ) %>% mutate (
+    cases_registered = ifelse( is.na(cases_registered), PCR + TestAc, cases_registered)
+  )
+
+# names(ciii) <- c("region","fecha","cases_registered","PCR", "TestAc","hospitalized","intensive_care","deceassed","recovered","date")
 ciii$region <- factor(ciii$region)
 # translate iniciales
-levels(ciii$region)
+# levels(ciii$region)
 # rename comunidades autónomas
 #                          "AN"         "AR"    "AS"       "CB"        "CE"     "CL"               "CM"                 "CN"          "CT"        "EX"           "GA"        "IB"        "MC"          "MD"      "ML"        "NC"                   "PV"       "RI"           "VC"
 # levels(ciii$region) <- c("Andalucía","Aragón", "Asturias", "Cantabria","Ceuta", "Castilla y León","Castilla-La Mancha", "Canarias","Cataluña" , "Extremadura", "Galicia", "Baleares",   "Murcia","Madrid", "Melilla", "Navarra",  "País Vasco","La Rioja","C. Valenciana")  
-levels(ciii$region) <- c("Andalucía","Aragón", "Asturias", "Cantabria","Ceuta", "Castilla y León","Castilla-La Mancha", "Canarias","Cataluña" , "Extremadura", "Galicia", "Baleares",   "Murcia","Madrid", "Melilla", "Navarra",  "País Vasco","La Rioja","C. Valenciana")  
+# levels(ciii$region) <- c("Andalucía","Aragón", "Asturias", "Cantabria","Ceuta", "Castilla y León","Castilla-La Mancha", "Canarias","Cataluña" , "Extremadura", "Galicia", "Baleares",   "Murcia","Madrid", "Melilla", "Navarra",  "País Vasco","La Rioja","C. Valenciana")  
 
 # rename población by ccaa data
-ccaa_poblacion$ccaa <- c("Andalucía","Aragón", "Asturias", "Baleares", "Canarias",
-                         "Cantabria","Castilla y León","Castilla-La Mancha","Cataluña","C. Valenciana",
-                         "Extremadura", "Galicia",   "Madrid", "Murcia","Navarra","País Vasco","La Rioja",
-                         "Ceuta", "Melilla"  )  
+# ccaa_poblacion$ccaa <- c("Andalucía","Aragón", "Asturias", "Baleares", "Canarias",
+#                          "Cantabria","Castilla y León","Castilla-La Mancha","Cataluña","C. Valenciana",
+#                          "Extremadura", "Galicia",   "Madrid", "Murcia","Navarra","País Vasco","La Rioja",
+#                          "Ceuta", "Melilla"  )  
 # Reorder order of regions
 ciii$region <- factor(ciii$region, levels = c("Andalucía","Aragón", "Asturias", "Baleares", "Canarias",
                                               "Cantabria","Castilla y León","Castilla-La Mancha","Cataluña","C. Valenciana",
@@ -189,8 +223,6 @@ ciii <- ciii %>% mutate(
 )
 
 ciii$country <- "Spain"
-head(ciii)
-head(as.data.frame(data_all_export))
 
 ciii <- ciii %>% rename( region_code = id, population = poblacion) %>%
   arrange(region, date) %>% select(date, region_code, region, country, population, cases_registered, cases_per_100000,
@@ -483,9 +515,9 @@ data_all_export %>%
   ) +
   scale_y_continuous( 
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 6)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 10)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -560,9 +592,9 @@ data_all_export %>%
   scale_color_manual(values = colors ) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 7)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 11)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -598,9 +630,9 @@ data_all_export %>%
   scale_color_manual(values = colors ) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 7)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 11)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -675,9 +707,9 @@ data_all_export %>%
                   segment.color="#333333"
   ) +
   scale_color_manual(values = colors ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 7)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 11)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -714,9 +746,9 @@ data_all_export %>%
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
                  limits = c(0.1,max(data_all_export$cases_per_100000)),
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 7)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 11)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -754,9 +786,9 @@ data_all_export %>%
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
                  limits = c(0.1,max(data_all_export$cases_per_100000)),
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 7)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 11)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -898,16 +930,16 @@ data_all_export %>%
                   aes(date,intensive_care, color=region, label=paste(format(intensive_care, nsmall=1, big.mark="."),region)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  # hjust=0,
+                  hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
   scale_color_manual(values = colors ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 1.5)),
+               limits=c( min(data_all_export$date), max(data_all_export$date + 8)),
                
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -934,7 +966,7 @@ data_all_export %>%
                   aes(date,intensive_care, color=region, label=paste(format(intensive_care, nsmall=1, big.mark="."),region)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  # hjust=0,
+                  hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
@@ -942,9 +974,9 @@ data_all_export %>%
   ) +
   scale_color_manual(values = colors ) +
   scale_y_log10( minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 2.5)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 7)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -970,16 +1002,16 @@ data_all_export %>%
                   aes(date,intensive_care_per_100000, color = region, label=paste(format(intensive_care_per_100000, nsmall=1, big.mark="."),region)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  # hjust=0,
+                  hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
   scale_color_manual(values = colors ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 2.5)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 7)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1005,7 +1037,7 @@ data_all_export %>%
                   aes(date,intensive_care_per_100000, color = region, label=paste(format(intensive_care_per_100000, nsmall=1, big.mark="."),region)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  # hjust=0,
+                  hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
@@ -1013,9 +1045,9 @@ data_all_export %>%
   ) +
   scale_color_manual(values = colors ) +
   scale_y_log10( minor_breaks = c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 2.5)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 8)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -3251,7 +3283,7 @@ test2  %>%
     plot.caption = element_text( color="#777777",size = 14, hjust = 1),
     legend.position = "none"
   ) +
-  labs(title = paste0("Número de fallecimientos acumulados de COVID-19 registrados (24.04.2020)"),
+  labs(title = paste0("Número de fallecimientos acumulados de COVID-19 registrados (",updata_date,")"),
        subtitle = paste0("Días desde ",umbral ," o más muertes (escala log).",warning),
        y = "fallecimientos registrados (escala log.)",
        x = paste0("días desde ", umbral , " o más fallecimientos"),
@@ -3365,7 +3397,7 @@ test2  %>%
     plot.caption = element_text( color="#777777",size = 14, hjust = 1),
     legend.position = "none"
   ) + 
-  labs(title = paste0("Media de muertes por día en los 6 días anteriores por COVID-19 (2020.04.24)"),
+  labs(title = paste0("Media de muertes por día en los 6 días anteriores por COVID-19 (",updata_date,")"),
        subtitle = paste0("Por comunidad autónoma en España. Días desde ",umbral ," o más muertes", warning),
        y = "fallecimientos por día registrados",
        x = paste0("días desde ", umbral , " o más fallecimientos"),
@@ -3416,7 +3448,7 @@ test2  %>%
     plot.caption = element_text( color="#777777",size = 14, hjust = 1),
     legend.position = "none"
   ) + 
-  labs(title = paste0("Media de muertes por día en los 6 días anteriores por COVID-19 (2020.04.24)"),
+  labs(title = paste0("Media de muertes por día en los 6 días anteriores por COVID-19 (",updata_date,")"),
                                   subtitle = paste0("Por comunidad autónoma en España. Días desde ",umbral ," o más muertes (escala log).", warning),
                                   y = "fallecimientos por día registrados (escala log.)",
                                   x = paste0("días desde ", umbral , " o más fallecimientos"),
