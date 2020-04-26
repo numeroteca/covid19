@@ -8,7 +8,7 @@ library(ggrepel) # for geom_text_repel to prevent   overlapping
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de losS datos
 caption_i <- "Gráfico: @numeroteca (montera34.com). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 04.25"
+periodo_i <- "2020.02.24 - 04.26"
 
 # COVID-19 in Italy -----------
 # Load data
@@ -75,7 +75,7 @@ data_i_cases %>%
   geom_point(aes(date,cases_registered,group=region), size = 0.5 ) +
   facet_wrap( ~region) +
   scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)) +
-  scale_x_date(date_breaks = "3 day", 
+  scale_x_date(date_breaks = "4 day", 
                date_labels = "%d"
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -106,7 +106,7 @@ data_i_cases %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "3 day", 
+  scale_x_date(date_breaks = "4 day", 
                date_labels = "%d"
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -132,7 +132,7 @@ data_i_cases %>%
   geom_line(aes(date,cases_per_100000,group=region) ) +
   geom_point(aes(date,cases_per_100000,group=region), size = 0.5 ) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "3 day",
+  scale_x_date(date_breaks = "4 day",
                date_labels = "%d"
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -161,7 +161,7 @@ data_i_cases %>%
     limits = c(0.04,max(data_i_cases$cases_per_100000)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 3000, 100) )) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "3 day",
+  scale_x_date(date_breaks = "4 day",
                date_labels = "%d"
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -383,7 +383,7 @@ data_i_cases %>%
   geom_point(aes(date,deceassed), size= 0.5 ) +
   facet_wrap( ~region) +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  scale_x_date(date_breaks = "3 day", 
+  scale_x_date(date_breaks = "4 day", 
                date_labels = "%d",
                limits=c( min(data_i_cases$date), max(data_i_cases$date)) 
   ) + 
@@ -415,7 +415,7 @@ data_i_cases %>%
     limits = c(1,max(data_i_cases$deceassed)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
-  scale_x_date(date_breaks = "3 day", 
+  scale_x_date(date_breaks = "4 day", 
                date_labels = "%d",
                limits=c( min(data_i_cases$date), max(data_i_cases$date)) 
   ) + 
@@ -448,7 +448,7 @@ data_i_cases %>%
     # limits = c( 0 , max(data_i_cases$deceassed_per_100000) ),
     labels= function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
-  scale_x_date(date_breaks = "3 day", 
+  scale_x_date(date_breaks = "4 day", 
                date_labels = "%d",
                limits=c( min(data_i_cases$date), max(data_i_cases$date)) 
   ) + 
