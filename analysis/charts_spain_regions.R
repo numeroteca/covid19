@@ -19,8 +19,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Para ISCiii
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es)"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es)"
-period <- "Actualizado: 2020.04.26. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.04.26"
+period <- "Actualizado: 2020.04.27. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.04.27"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -199,7 +199,6 @@ crec <- data.frame(x = data_unique, y_percent = y_percent)
 #          Rate = round(Diff_growth / lag(y10) * 100, digits = 1)
 #   ) 
 
-# ------ CCAA  ----------
 png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1200,height = 700)
 data_all_export %>%
   ggplot() +
@@ -219,7 +218,7 @@ data_all_export %>%
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 5.5)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 10)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -302,7 +301,7 @@ data_all_export %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 3)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 10)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -339,7 +338,7 @@ data_all_export %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 11)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 12)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -377,7 +376,7 @@ data_all_export %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 11)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 12)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1273,9 +1272,9 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de muertes por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de muertes por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
-       y = "fallecidos por día (media 6 días) (escala lineal)",
+       y = "fallecidos por día (media 7 días) (escala lineal)",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -1323,9 +1322,9 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de muertes por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de muertes por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period, warning),
-       y = "fallecidos por día (media 6 días) (escala logarítmica)",
+       y = "fallecidos por día (media 7 días) (escala logarítmica)",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -1446,7 +1445,7 @@ data_all_export %>%
   ) +
   # marca la línea
   geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-17") &  region == "Madrid" ),
-                  aes(date+0.5,149, label=paste("media de 6 días")),
+                  aes(date+0.5,149, label=paste("media de 7 días")),
                   nudge_y = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -1477,9 +1476,9 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de muertes por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de muertes por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period, warning),
-       y = "fallecidos por día (media 6 días) (escala logarítmica)",
+       y = "fallecidos por día (media 7 días) (escala logarítmica)",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -1514,7 +1513,7 @@ data_all_export %>%
   ) +
   # marca la línea
   geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-04") &  region == "Madrid" ),
-                  aes(date,275, label=paste("media de 6 días")),
+                  aes(date,275, label=paste("media de 7 días")),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -1545,9 +1544,9 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de muertes por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de muertes por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period, warning),
-       y = "fallecidos por día (media 6 días) (escala lineal)",
+       y = "fallecidos por día (media 7 días) (escala lineal)",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -1736,9 +1735,9 @@ dev.off()
 #     axis.ticks.x = element_line(color = "#000000"),
 #     legend.position = "none"
 #   ) +
-#   labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+#   labs(title = "Media de altas por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
 #        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-#        y = "fallecidos por día (media 6 días) (escala logarítmica)",
+#        y = "fallecidos por día (media 7 días) (escala logarítmica)",
 #        x = "fecha",
 #        caption = caption)
 # dev.off()
@@ -1786,9 +1785,9 @@ dev.off()
 #     axis.ticks.x = element_line(color = "#000000"),
 #     legend.position = "none"
 #   ) +
-#   labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+#   labs(title = "Media de altas por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
 #        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-#        y = "fallecidos por día (media 6 días) (escala logarítmica)",
+#        y = "fallecidos por día (media 7 días) (escala logarítmica)",
 #        x = "fecha",
 #        caption = caption)
 # dev.off()
@@ -2067,7 +2066,7 @@ dev.off()
 #   ) +
 #   # marca la línea
 #   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date )-4,  region == "Madrid" ),
-#                   aes(date+0.5,300, color=region, label=paste("media de 6 días")),
+#                   aes(date+0.5,300, color=region, label=paste("media de 7 días")),
 #                   nudge_y = 2, # adjust the starting y position of the text label
 #                   size=5,
 #                   hjust=0,
@@ -2098,9 +2097,9 @@ dev.off()
 #     axis.ticks.x = element_line(color = "#000000"),
 #     legend.position = "none"
 #   ) +
-#   labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+#   labs(title = "Media de altas por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
 #        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-#        y = "fallecidos por día (media 6 días) (escala logarítmica)",
+#        y = "fallecidos por día (media 7 días) (escala logarítmica)",
 #        x = "fecha",
 #        caption = caption)
 # dev.off()
@@ -2135,7 +2134,7 @@ dev.off()
 #   ) +
 #   # marca la línea
 #   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date )-4,  region == "Madrid" ),
-#                   aes(date+0.5,300, color=region, label=paste("media de 6 días")),
+#                   aes(date+0.5,300, color=region, label=paste("media de 7 días")),
 #                   nudge_y = 2, # adjust the starting y position of the text label
 #                   size=5,
 #                   hjust=0,
@@ -2166,9 +2165,9 @@ dev.off()
 #     axis.ticks.x = element_line(color = "#000000"),
 #     legend.position = "none"
 #   ) +
-#   labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+#   labs(title = "Media de altas por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
 #        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
-#        y = "fallecidos por día (media 6 días) (escala logarítmica)",
+#        y = "fallecidos por día (media 7 días) (escala logarítmica)",
 #        x = "fecha",
 #        caption = caption)
 # dev.off()
@@ -2299,9 +2298,9 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de altas por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
-       y = "altas por día (media 6 días) (escala logarítmica)",
+       y = "altas por día (media 7 días) (escala logarítmica)",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -2350,9 +2349,9 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de altas por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
-       y = "altas por día (media 6 días) (escala logarítmica)",
+       y = "altas por día (media 7 días) (escala logarítmica)",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -2391,7 +2390,7 @@ data_all_export %>%
   ) +
   # marca la línea
   geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-04") &  region == "Madrid" ),
-                  aes(date+0.5,1360, label=paste("media de 6 días")),
+                  aes(date+0.5,1360, label=paste("media de 7 días")),
                   nudge_y = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -2422,9 +2421,9 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de altas por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
-       y = "altas por día (media 6 días) (escala logarítmica)",
+       y = "altas por día (media 7 días) (escala logarítmica)",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -2460,7 +2459,7 @@ data_all_export %>%
   ) +
   # marca la línea
   geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-06") &  region == "Madrid" ),
-                  aes(date,1330, label=paste("media de 6 días")),
+                  aes(date,1330, label=paste("media de 7 días")),
                   nudge_x = 1, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -2486,9 +2485,9 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de altas por día en los 6 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de altas por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
-       y = "altas por día (media 6 días) (escala logarítmica)",
+       y = "altas por día (media 7 días) (escala logarítmica)",
        x = "fecha",
        caption = caption)
 dev.off()
@@ -2879,7 +2878,7 @@ data_all_export %>%
     strip.placement = "inside" 
     # legend.position = "bottom"
   ) +
-  labs(title = "Nuevos casos, recuperados y fallecidos por día de COVID-19 en España (media 6 días)",
+  labs(title = "Nuevos casos, recuperados y fallecidos por día de COVID-19 en España (media 7 días)",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period, warning),
        y = "casos registrados",
        x = "fecha",
@@ -2949,7 +2948,7 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     axis.text.x = element_text(size = 9)
   ) +
-  labs(title = "Nuevos casos, recuperados y fallecidos por día de COVID-19 en España (media 6 días)",
+  labs(title = "Nuevos casos, recuperados y fallecidos por día de COVID-19 en España (media 7 días)",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period, warning),
        y = "casos registrados",
        x = "fecha",
@@ -2973,6 +2972,56 @@ test2 <- merge( data_all_export, select(data_all_export_offset_ncases,region,off
 # calculate in numer of days since first evaluated, without date
 test2$days_since <- as.numeric(test2$date - min(data_all_export_offset_ncases$date) ) - as.numeric(test2$offset)
 
+
+# growth curve --
+# Contribution by @lorezmt
+x <- 1:50
+growth_2x <- vector(length = length(x))
+growth_2x <- as.data.frame(growth_2x)
+growth_2x$value[1] <- 5
+growth_2x$value[2] <- 7
+growth_2x$value[3] <- 2 * growth_2x$value[1]
+growth_2x$value[4] <- 2 * growth_2x$value[2]
+growth_2x$value[5] <- 2 * growth_2x$value[3]
+
+growth_2x$value3[1] <- 5
+growth_2x$value3[2] <- 6.2
+growth_2x$value3[3] <- 8
+growth_2x$value3[4] <- 2 * growth_2x$value3[1]
+growth_2x$value3[5] <- 2 * growth_2x$value3[2]
+
+growth_2x$value4[1] <- 5
+growth_2x$value4[2] <- 5.9
+growth_2x$value4[3] <- 6.9
+growth_2x$value4[4] <- 8.4
+growth_2x$value4[5] <- 2 * growth_2x$value4[1]
+
+growth_2x$value5[1] <- 5
+growth_2x$value5[2] <- 5.59
+growth_2x$value5[3] <- 6.4
+growth_2x$value5[4] <- 7.65
+growth_2x$value5[5] <- 8.55
+
+growth_2x$days_since <- 0
+growth_2x$days_since[1] <- 0
+growth_2x$days_since[2] <- 1
+growth_2x$days_since[3] <- 2
+growth_2x$days_since[4] <- 3
+growth_2x$days_since[5] <- 4
+
+for (i in 6:length(x)) {
+  growth_2x$value[i] <- growth_2x$value[i-2]*2   ## doubling time 2 days
+  growth_2x$value3[i] <- growth_2x$value3[i-3]*2   ## doubling time 2 days
+  growth_2x$value4[i] <- growth_2x$value4[i-4]*2   ## doubling time 2 days
+  growth_2x$value5[i] <- growth_2x$value5[i-5]*2   ## doubling time 2 days
+  growth_2x$days_since[i] <- i-1
+}
+
+growth_2x %>%
+  ggplot() +
+  # geom_line(aes(days_since, value), size= 1, color = "#000000" ) +
+  # geom_line(aes(days_since, value3), size= 1, color = "#000000" )
+  geom_line(aes(days_since, value5), size= 1, color = "#000000" )
 
 png(filename=paste("img/spain/regions/covid19_day0_fallecimientos-por-ccaa-acumulados-", umbral ,"-deceased.png", sep = ""),width = 1200,height = 700)
 test2  %>% 
@@ -3029,7 +3078,7 @@ test2  %>%
     legend.position = "none"
   ) +
   labs(title = paste0("Número de fallecimientos acumulados de COVID-19 registrados (",updata_date,")"),
-       subtitle = paste0("Días desde ",umbral ," o más muertes (escala log).",warning),
+       subtitle = paste0("Días desde que hubo ",umbral ," o más muertes acumuladas (escala log).",warning),
        y = "fallecimientos registrados (escala log.)",
        x = paste0("días desde ", umbral , " o más fallecimientos"),
        caption = caption ) +
@@ -3083,8 +3132,8 @@ test2  %>%
     plot.caption = element_text( color="#777777",size = 14, hjust = 1),
     legend.position = "none"
   ) +
-  labs(title = paste0("Número de fallecimientos de COVID-19 acumulados por 100.000 habitantes  (24.04.2020)"),
-       subtitle = paste0("Días desde ",umbral ," o más muertes (escala log).",warning),
+  labs(title = paste0("Número de fallecimientos de COVID-19 acumulados por 100.000 habitantes (",updata_date,")"),
+       subtitle = paste0("Días desde ",umbral ," o más muertes acumuladas (escala log).",warning),
        y = "fallecimientos registrados (escala log.)",
        x = paste0("días desde ", umbral , " o más fallecimientos"),
        caption = caption ) +
@@ -3098,7 +3147,7 @@ dev.off()
 
 
 png(filename=paste0("img/spain/regions/covid19_muertes-dia-por-ccaa-superpuesto-offset-lineal_since-", umbral ,"deceased.png"), width = 1300,height = 700)
-test2  %>% 
+test2 %>% 
   ggplot() +
   geom_line(aes(days_since, daily_deaths_avg6, group= region, color= region), size= 2, alpha = 0.6, se = FALSE ) +
   geom_point(data = filter(test2,  date == max(test2$date)  ),
@@ -3142,7 +3191,7 @@ test2  %>%
     plot.caption = element_text( color="#777777",size = 14, hjust = 1),
     legend.position = "none"
   ) + 
-  labs(title = paste0("Media de muertes por día en los 6 días anteriores por COVID-19 (",updata_date,")"),
+  labs(title = paste0("Media de muertes por día en los 7 días anteriores por COVID-19 (",updata_date,")"),
        subtitle = paste0("Por comunidad autónoma en España. Días desde ",umbral ," o más muertes", warning),
        y = "fallecimientos por día registrados",
        x = paste0("días desde ", umbral , " o más fallecimientos"),
@@ -3193,7 +3242,7 @@ test2  %>%
     plot.caption = element_text( color="#777777",size = 14, hjust = 1),
     legend.position = "none"
   ) + 
-  labs(title = paste0("Media de muertes por día en los 6 días anteriores por COVID-19 (",updata_date,")"),
+  labs(title = paste0("Media de muertes por día en los 7 días anteriores por COVID-19 (",updata_date,")"),
                                   subtitle = paste0("Por comunidad autónoma en España. Días desde ",umbral ," o más muertes (escala log).", warning),
                                   y = "fallecimientos por día registrados (escala log.)",
                                   x = paste0("días desde ", umbral , " o más fallecimientos"),

@@ -151,7 +151,7 @@ data_all_export <- data_all_export %>% filter(!is.na(region))
 ciii_original <- read.delim("https://covid19.isciii.es/resources/serie_historica_acumulados.csv",sep = ",")  
 write.csv(ciii_original, file = "data/original/spain/iscii_data.csv", row.names = FALSE)
 
-ciii <- ciii_original %>% head(nrow(ciii_original) - 5) %>% #Cambia el número en función de las notas que incluya el csv original
+ciii <- ciii_original %>% head(nrow(ciii_original) - 6) %>% #Cambia el número en función de las notas que incluya el csv original
   ungroup() %>% mutate(
     date = as.Date(FECHA, "%d/%m/%Y" ),
     CCAA = CCAA %>% str_replace_all("AN", "Andalucía"),
@@ -247,7 +247,7 @@ data_all_export <- data_all_export %>% group_by(region) %>%
                             daily_recovered = recovered - lag(recovered),
                             daily_recovered_inc = round((recovered - lag(recovered)) /lag(recovered) * 100, digits = 1),
                             daily_recovered_avg6 =  round( ( daily_recovered + lag(daily_recovered,1)+lag(daily_recovered,2)+
-                                                               lag(daily_recovered,3)+lag(daily_recovered,4)+lag(daily_recovered,5) ) / 6, digits = 1 ), # average of dayly recovered of 6 last days
+                                                               lag(daily_recovered,3)+lag(daily_recovered,4)+lag(daily_recovered,5)+lag(daily_recovered,6) ) / 7, digits = 1 ), # average of dayly recovered of 6 last days
                             deaths_cum_last_week = ( deceassed + lag(deceassed,1) + lag(deceassed,2) + lag(deceassed,3) + lag(deceassed,4) + lag(deceassed,5) + lag(deceassed,6) ) / 7,  
                             deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)  
                             

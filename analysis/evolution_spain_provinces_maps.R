@@ -61,6 +61,7 @@ tm_shape(provincias) +
 dev.off()
 
 for (i in 8:length( unique(data_cases_sp_provinces$date) )) {
+  print(unique(data_cases_sp_provinces$date)[i])
   provincias <- readOGR("data/original/spain/shapes/recintos_provinciales_inspire_peninbal_etrs89.json")
   
   provincias@data$ine_code <- substr(provincias@data$NATCODE,5,6) 
