@@ -14,6 +14,8 @@ provincias_poblacion <-  read.delim("data/original/spain/provincias-poblacion.cs
 # / COVID-19 in Spain -----------
 # / By province -----------
 data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")
+write.csv(read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ","), file = "../escovid19data/data/original/covid19_spain_provincias.csv", row.names = FALSE)
+
 # Download Andalucía data from https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228
 # that is uploaded manually to our own spreadsheet in google spreadsheet
 andalucia_original <- read.delim("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=andalucia", sep=",")

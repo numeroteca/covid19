@@ -1472,7 +1472,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-23,Segovia,Castilla y León,75,,104,12,182,2630,705,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-24,Segovia,Castilla y León,35,,88,11,184,2665,713,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-25,Segovia,Castilla y León,25,,91,11,186,2690,730,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-04-26,Segovia,Castilla y León,30,,88,11,187,2720,738,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-26,Segovia,Castilla y León,30,,88,11,187,272,738,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-13,Soria,Castilla y León,1,,,,0,1,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-14,Soria,Castilla y León,3,,,,0,4,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-15,Soria,Castilla y León,1,,,,0,5,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
@@ -1561,7 +1561,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-22,Valladolid,Castilla y León,92,,213,65,270,3290,1135,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-23,Valladolid,Castilla y León,132,,208,63,277,3422,1166,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-24,Valladolid,Castilla y León,55,,208,61,284,3477,1177,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
-2020-04-25,Valladolid,Castilla y León,103,,179,56,272,3580,1143,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
+2020-04-25,Valladolid,Castilla y León,103,,179,56,290,3580,1143,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-04-26,Valladolid,Castilla y León,95,,186,57,295,3675,1226,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-13,Zamora,Castilla y León,3,,,,0,5,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
 2020-03-14,Zamora,Castilla y León,0,,,,0,5,0,https://analisis.datosabiertos.jcyl.es/pages/coronavirus/,
@@ -2512,6 +2512,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-22,Araba/Álava,País Vasco,44,,143,,327,3368,,https://twitter.com/osakidetzaEJGV/status/1253273331534528514;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/22_abril_Boletin.pdf,
 2020-04-23,Araba/Álava,País Vasco,85,,143,,331,3453,,https://twitter.com/osakidetzaEJGV/status/1253634641539579906;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/23_abril_Boletin.pdf,
 2020-04-24,Araba/Álava,País Vasco,98,,146,,332,3551,,https://twitter.com/osakidetzaEJGV/status/1254026157789454339;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/24_abril_Boletin.pdf,
+2020-04-25,Araba/Álava,País Vasco,39,,141,,336,3590,,https://twitter.com/osakidetzaEJGV/status/1254366709152133121;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/25_abril_Boletin.pdf,
 2020-02-24,Bizkaia,País Vasco,0,,,,,0,,https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,
 2020-02-25,Bizkaia,País Vasco,0,,,,,0,,https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,
 2020-02-26,Bizkaia,País Vasco,0,,,,,0,,https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,
@@ -2573,6 +2574,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-22,Bizkaia,País Vasco,305,,498,,611,7633,,https://twitter.com/osakidetzaEJGV/status/1253273331534528514;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/22_abril_Boletin.pdf,
 2020-04-23,Bizkaia,País Vasco,195,,475,,627,7828,,https://twitter.com/osakidetzaEJGV/status/1253634641539579906;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/23_abril_Boletin.pdf,
 2020-04-24,Bizkaia,País Vasco,197,,448,,642,8025,,https://twitter.com/osakidetzaEJGV/status/1254026157789454339;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/24_abril_Boletin.pdf,
+2020-04-25,Bizkaia,País Vasco,104,,404,,649,8129,,https://twitter.com/osakidetzaEJGV/status/1254366709152133121;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/25_abril_Boletin.pdf,
 2020-02-24,Gipuzkoa,País Vasco,0,,,,,0,,https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,
 2020-02-25,Gipuzkoa,País Vasco,0,,,,,0,,https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,
 2020-02-26,Gipuzkoa,País Vasco,0,,,,,0,,https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/3_abril_Boletin.pdf,
@@ -2634,6 +2636,7 @@ date,province,ccaa,new_cases,activos,hospitalized,intensive_care,deceased,cases_
 2020-04-22,Gipuzkoa,País Vasco,43,,197,,229,2435,,https://twitter.com/osakidetzaEJGV/status/1253273331534528514;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/22_abril_Boletin.pdf,
 2020-04-23,Gipuzkoa,País Vasco,64,,183,,235,2499,,https://twitter.com/osakidetzaEJGV/status/1253634641539579906;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/23_abril_Boletin.pdf,
 2020-04-24,Gipuzkoa,País Vasco,57,,175,,238,2556,,https://twitter.com/osakidetzaEJGV/status/1254026157789454339;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/24_abril_Boletin.pdf,
+2020-04-25,Gipuzkoa,País Vasco,40,,157,,245,2596,,https://twitter.com/osakidetzaEJGV/status/1254366709152133121;https://www.euskadi.eus/contenidos/informacion/boletin_coronavirus/es_def/adjuntos/25_abril_Boletin.pdf,
 2020-02-27,"Rioja, La","Rioja, La",,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-02-28,"Rioja, La","Rioja, La",,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
 2020-02-29,"Rioja, La","Rioja, La",,,,,,0,,Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019,los activos son de flourish de rtve
