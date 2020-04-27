@@ -7,8 +7,8 @@ library(ggrepel) # for geom_text_repel to prevent   overlapping
 
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de losS datos
-caption_i <- "Gráfico: @numeroteca (montera34.com). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 04.26"
+caption_i <- "Gráfico: @numeroteca (lab.montera34.com/covid19). Datos: Protezione Civile (Italia)"
+periodo_i <- "2020.02.24 - 04.27"
 
 # COVID-19 in Italy -----------
 # Load data
