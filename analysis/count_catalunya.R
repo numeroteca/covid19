@@ -4,12 +4,12 @@ catalunya_original <-  read.delim("data/original/spain/catalunya/Registre_de_tes
 catalunya <- catalunya_original
 
 # creates date variable
-catalunya$date <- as.Date(catalunya$Data, "%d/%m/%Y")
+catalunya$date <- as.Date(catalunya$TipusCasData, "%d/%m/%Y")
 # extracts first charatcter of zipcode to select province code
 catalunya$provincia_code <- ifelse(catalunya$MunicipiCodi < 10000, paste0(substr(as.character(catalunya$MunicipiCodi),1,1)), substr(as.character(catalunya$MunicipiCodi),1,2))     
 
 # iterates through data to count positives
-catalunya_new <- catalunya %>% group_by(date,provincia_code) %>% arrange(date) %>% filter( ResultatCovidDescripcio == "Positiu" ) %>%
+catalunya_new <- catalunya %>% group_by(date,provincia_code) %>% arrange(date) %>% filter( TipusCasDescripcio == "Positiu" ) %>%
 # catalunya_new <- catalunya %>% group_by(date,provincia_code) %>% arrange(date) %>% filter( ResultatCovidDescripcio == "Positiu" |  ResultatCovidDescripcio == "Probable" ) %>%
   summarise ( 
     by_day = sum(NumCasos)
