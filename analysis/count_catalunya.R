@@ -58,20 +58,25 @@ ggplot(cattotal) +
   geom_line(data = filter (data_cases_sp_provinces, ccaa =="Cataluña" ) , aes(date,cases_accumulated, group = province),size = 0.5) +
   scale_y_log10()
 
+
 ggplot(cattotal) +
-  geom_line(aes(date,cases_accumulated, group = provincia_code), color = "red") +
+  geom_line(data = filter (data_cases_sp_provinces, ccaa =="Cataluña" ) , aes(date,cases_accumulated, group = province, color ="#000000"),size = 1) +
+  geom_point(data = filter (data_cases_sp_provinces, ccaa =="Cataluña" ) , aes(date,cases_accumulated ),size = 1) +
+  geom_line(aes(date,cases_accumulated, group = provincia_code, color = "#DD0000")) +
   geom_point(aes(date,cases_accumulated), color = "red", size = 0.5) +
-  geom_line(data = filter (data_cases_sp_provinces, ccaa =="Cataluña" ) , aes(date,cases_accumulated, group = province),size = 0.5) +
-  geom_point(data = filter (data_cases_sp_provinces, ccaa =="Cataluña" ) , aes(date,cases_accumulated ),size = 0.5) +
-  scale_y_log10()+
+  scale_color_identity(
+    guide = "legend",
+    labels = c("esCovid19data", "transparenciacatalunya.cat"),
+  ) +
+  scale_y_log10() +
   facet_grid(~province)
 
 
-ggplot(cattotal) +
-  geom_line(aes(date,cases_accumulated, group = provincia_code)) +
-  facet_grid(~province)+
-  scale_y_log10()
-
-ggplot(cattotal) +
-  geom_line(aes(date,cases_accumulated, group = provincia_code)) +
-  facet_grid(~province) 
+# ggplot(cattotal) +
+#   geom_line(aes(date,cases_accumulated, group = provincia_code)) +
+#   facet_grid(~province)+
+#   scale_y_log10()
+# 
+# ggplot(cattotal) +
+#   geom_line(aes(date,cases_accumulated, group = provincia_code)) +
+#   facet_grid(~province) 
