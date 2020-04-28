@@ -19,8 +19,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Para ISCiii
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es)"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es)"
-period <- "Actualizado: 2020.04.27. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.04.27"
+period <- "Actualizado: 2020.04.28. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.04.28"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -164,7 +164,7 @@ dev.off()
 # Contribution by @lorezmt
 crec <- ""
 # create shorted dataframe
-data_cases2 <- data_all_export %>% filter(date >= "2020-03-23") # sets starting day
+data_cases2 <- data_all_export %>% filter(date >= "2020-03-23", region =="Andalucía") # sets starting day
 
 slope <- 3
 
@@ -255,7 +255,7 @@ data_all_export %>%
                   segment.color="#777777"
   ) +
   coord_cartesian( 
-    ylim=c(1, max(data_all_export$value)*1.05 )
+    # ylim=c(1, max(data_all_export$value)*1.05 )
   ) +
   scale_y_continuous( 
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
@@ -281,7 +281,7 @@ dev.off()
 png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-superpuesto-log_with-curve.png", sep = ""),width = 1200,height = 700)
 data_all_export %>%
   ggplot() +
-  geom_line(data = crec, aes(y = y_percent, x = date), linetype = 2, size = 2, color ="#444444") +
+  geom_line(data = crec, aes(y = y_percent, x = x.date), linetype = 2, size = 2, color ="#444444") +
   geom_line(aes(date, cases_registered, group=region, color=region), size= 1 ) +
   geom_point(aes(date, cases_registered, color=region), size= 1.5 ) +
   geom_text(data = crec[1,],aes(as.Date("2020-03-23"),12000,label=paste0("línea: un ", slope, "% más de casos cada día")), 
@@ -2857,6 +2857,39 @@ data_all_export %>%
   geom_line(aes(date,daily_cases_avg,group=region, color="#2222BB"), size = 1 ) +
   geom_line(aes(date,daily_recovered_avg6,group=region, color="#339922"), size = 1 ) +
   geom_line(aes(date,daily_deaths_avg6,group=region,color="black"), size = 1 ) +
+  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date) ),
+                  aes(date + 13,daily_cases_avg, label=paste(format(daily_cases_avg, nsmall=1, big.mark="."))),
+                  color="#2222BB",
+                  nudge_x = 0, # adjust the starting y position of the text label
+                  size=4,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  # segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date) ),
+                  aes(date + 11,daily_recovered_avg6, label=paste(format(daily_recovered_avg6, nsmall=1, big.mark="."))),
+                  color="#339922",
+                  nudge_x = 2, # adjust the starting y position of the text label
+                  size=4,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  # segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date) ),
+                  aes(date + 9,daily_deaths_avg6, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark="."))),
+                  color="black",
+                  nudge_x = 4, # adjust the starting y position of the text label
+                  size=4,
+                  # hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  # segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
   scale_color_identity(
     guide = "legend",
     labels = c("Casos", "Recuperados", "Muertos"),
