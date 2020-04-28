@@ -60,7 +60,8 @@ tm_shape(provincias) +
             legend.title.size = 2) 
 dev.off()
 
-for (i in 8:length( unique(data_cases_sp_provinces$date) )) {
+# for (i in 8:length( unique(data_cases_sp_provinces$date) )) {
+for (i in 55:length( unique(data_cases_sp_provinces$date) )) {
   print(unique(data_cases_sp_provinces$date)[i])
   provincias <- readOGR("data/original/spain/shapes/recintos_provinciales_inspire_peninbal_etrs89.json")
   

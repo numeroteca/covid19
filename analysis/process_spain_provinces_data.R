@@ -208,6 +208,7 @@ data_cases_sp_provinces <- merge( data_cases_sp_provinces, select(provincias_pob
 data_cases_sp_provinces$cases_per_cienmil <- round( data_cases_sp_provinces$cases_accumulated / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 data_cases_sp_provinces$intensive_care_per_1000000 <- round( data_cases_sp_provinces$intensive_care / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 data_cases_sp_provinces$deceassed_per_100000 <- round( data_cases_sp_provinces$deceased / data_cases_sp_provinces$poblacion * 100000, digits = 2)
+data_cases_sp_provinces$hospitalized_per_100000 <- round( data_cases_sp_provinces$hospitalized / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 
 # Calculates daily deaths
 data_cases_sp_provinces <- data_cases_sp_provinces %>% 
@@ -223,6 +224,10 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_code,everything()) %>%
                                                   select(-source,-comments,source,comments)
+
+# Re calculates factors to remove things like Andaluc'ia for provinces
+data_cases_sp_provinces$province <- factor(data_cases_sp_provinces$province)
+data_cases_sp_provinces$ccaa <- factor(data_cases_sp_provinces$ccaa)
 
 write.csv(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
 saveRDS(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-spain_consolidated.rds")
