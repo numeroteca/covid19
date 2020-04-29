@@ -19,8 +19,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Para ISCiii
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es)"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es)"
-period <- "Actualizado: 2020.04.28. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.04.28"
+period <- "Actualizado: 2020.04.29. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.04.29"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -51,7 +51,7 @@ ggplot() +
   geom_point(aes(date, cases_registered, group=region), size = 0.5 ) +
   facet_wrap( ~region) +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  scale_x_date(date_breaks = "3 day", 
+  scale_x_date(date_breaks = "5 day", 
                 date_labels = "%d",
                expand = c(0,0)
   ) + 
@@ -82,7 +82,7 @@ ggplot() +
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "3 day", 
+  scale_x_date(date_breaks = "5 day", 
                date_labels = "%d",
                expand = c(0,0)
   ) + 
@@ -109,7 +109,7 @@ data_all_export %>%
   geom_line(aes(date,cases_per_100000,group=region) ) +
   geom_point(aes(date,cases_per_100000,group=region), size = 0.5 ) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "3 day", 
+  scale_x_date(date_breaks = "5 day", 
                date_labels = "%d",
                expand = c(0,0)
   ) + 
@@ -139,7 +139,7 @@ data_all_export %>%
     limits = c(0.2,max(data_cases$cases_per_100000)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 3000, 100) )) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "3 day", 
+  scale_x_date(date_breaks = "5 day", 
                date_labels = "%d",
                expand = c(0,0)
   ) + 
@@ -216,7 +216,7 @@ data_all_export %>%
   ) +
   scale_color_manual(values = colors ) +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                limits=c( min(data_all_export$date), max(data_all_export$date + 10)) 
   ) + 
@@ -259,7 +259,7 @@ data_all_export %>%
   ) +
   scale_y_continuous( 
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  scale_x_date(date_breaks = "2 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                limits=c( min(data_all_export$date), max(data_all_export$date + 10)) 
   ) + 
@@ -299,7 +299,7 @@ data_all_export %>%
   scale_color_manual(values = colors ) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                limits=c( min(data_all_export$date), max(data_all_export$date + 10)) 
   ) + 
@@ -336,7 +336,7 @@ data_all_export %>%
   scale_color_manual(values = colors ) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
-  scale_x_date(date_breaks = "2 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                limits=c( min(data_all_export$date), max(data_all_export$date + 12)) 
   ) + 
@@ -374,7 +374,7 @@ data_all_export %>%
   scale_color_manual(values = colors ) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
-  scale_x_date(date_breaks = "2 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                limits=c( min(data_all_export$date), max(data_all_export$date + 12)) 
   ) + 
