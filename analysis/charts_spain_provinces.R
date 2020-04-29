@@ -271,7 +271,8 @@ data_cases_sp_provinces %>%
           segment.color="#333333"
   ) +
   scale_color_manual(values = colors_prov) +
-  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".",small.mark = ",", scientific = FALSE),
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".",small.mark = ",", scientific = FALSE)
+                      
                  ) +
   scale_x_date(date_breaks = "1 day", 
                date_labels = "%d",
@@ -299,7 +300,7 @@ data_cases_sp_provinces %>%
   geom_line(aes(date, cases_per_cienmil,group= province, color= ccaa), size= 1 ) +
   geom_point(aes(date,cases_per_cienmil, color=ccaa), size= 1 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, 
-                               date==max(data_cases_sp_provinces$date) & cases_per_cienmil > 100
+                               date==max(data_cases_sp_provinces$date) & cases_per_cienmil > 200
                       ), 
                       aes(date,cases_per_cienmil, color=ccaa, label=paste(format(cases_per_cienmil, nsmall=1, big.mark=".", digits = 1, decimal.mark = ","), province)),
                               nudge_x = 5, # adjust the starting y position of the text label
@@ -313,7 +314,7 @@ data_cases_sp_provinces %>%
                       ) +
   scale_color_manual(values = colors_prov) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
-                 limits = c(1,max(data_cases_sp_provinces$cases_per_cienmil)*1.9),
+                 limits = c(1,max( data_cases_sp_provinces[!is.na(data_cases_sp_provinces$cases_per_cienmil),]$cases_per_cienmil)*2),
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
@@ -347,11 +348,12 @@ data_cases_sp_provinces %>%
   ggplot() +
   geom_line(data = data_cases_sp_provinces_sm %>% ungroup() %>% select(date,deceased,province_cp,-province),
             aes(date,deceased,group=province_cp), color="#CACACA" ) +
-  geom_line(aes(date, deceased,group=province) ) +
+  geom_line(aes(date, deceased,group=province),size=1 ) +
   geom_point(aes(date, deceased), size= 0.5 ) +
-  geom_text(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
+  geom_text(
+            data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
                   aes(date,max(data_cases_sp_provinces[!is.na(data_cases_sp_provinces$deceased),]$deceased)/4, label=paste(format(deceased, nsmall=1, big.mark="."))),
-                  size=3,
+                  size=5,
                   hjust=1,
                   family = "Roboto Condensed"
   ) +
@@ -385,11 +387,11 @@ data_cases_sp_provinces %>%
   ggplot() +
   geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(date,deceased,province_cp,-province),
             aes(date,deceased,group=province_cp), color="#CACACA" ) +
-  geom_line(aes(date, deceased,group=province) ) +
+  geom_line(aes(date, deceased,group=province), size = 1 ) +
   geom_point(aes(date, deceased), size= 0.5 ) +
-  geom_text(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
-            aes(date,max(data_cases_sp_provinces[!is.na(data_cases_sp_provinces$deceased),]$deceased)/4, label=paste(format(deceased, nsmall=1, big.mark="."))),
-            size=3,
+  geom_text(data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
+            aes(date,9, label=paste(format(deceased, nsmall=1, big.mark="."))),
+            size=4,
             hjust=1,
             family = "Roboto Condensed"
   ) +
@@ -440,12 +442,10 @@ data_cases_sp_provinces %>%
   # ) +
   # all the provinces 
   geom_line(aes(date, deceased,group=province), size= 0.7 ) +
-  geom_point(aes(date, deceased), size= 0.5 ) +
-  geom_text_repel(data=filter( data_cases_sp_provinces, 
-                               date==max(data_cases_sp_provinces$date) & deceased > 0
-                                ), 
-                                aes(date+1, deceased, label=paste(format(deceased, nsmall=1, big.mark="."), substr(province,1,2) ) ),
-                                nudge_x = 2, # adjust the starting x position of the text label
+  # geom_point(aes(date, deceased), size= 0.5 ) +
+  geom_text_repel(data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
+                                aes(date+1, deceased, label=paste(format(deceased, nsmall=1, big.mark="."), substr(province,1,3) ) ),
+                                nudge_x = 1, # adjust the starting x position of the text label
                                 size=4,
                                 hjust=0,
                                 family = "Roboto Condensed",
@@ -455,7 +455,7 @@ data_cases_sp_provinces %>%
                                 ) +
   facet_wrap(~ccaa) +
   coord_cartesian(
-    xlim = c( min(data_cases_sp_provinces$date + 9), max(data_cases_sp_provinces$date +10)),
+    xlim = c( min(data_cases_sp_provinces$date + 9), max(data_cases_sp_provinces$date +18)),
     ylim = c(1, max( data_cases_sp_provinces[!is.na(data_cases_sp_provinces$deceased),]$deceased))
   ) +
   scale_y_log10( 
@@ -486,12 +486,22 @@ data_cases_sp_provinces %>%
   ggplot() +
   geom_line(data = data_cases_sp_provinces_sm %>% ungroup() %>% select(date,deceassed_per_100000,province_cp,-province),
             aes(date,deceassed_per_100000,group=province_cp), color="#CACACA" ) +
-  geom_line(aes(date, deceassed_per_100000,group=province)) +
-  geom_point(aes(date, deceassed_per_100000), size= 0.5 ) +
+  geom_line(aes(date, deceassed_per_100000,group=province), size = 1) +
+  # geom_point(aes(date, deceassed_per_100000), size= 0.5 ) +
+  geom_text_repel(data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
+                  aes(min(data_cases_sp_provinces$date)+15, 200, label=paste(format(deceassed_per_100000, nsmall=1, big.mark=".", decimal.mark = ",") ) ),
+                  nudge_x = 1, # adjust the starting x position of the text label
+                  size=4,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
   facet_wrap(~province) +
   scale_x_date(date_breaks = "5 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date)),
+               limits=c( min(data_cases_sp_provinces$date)+12, max(data_cases_sp_provinces$date)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -515,15 +525,25 @@ data_cases_sp_provinces %>%
   ggplot() +
   geom_line(data = data_cases_sp_provinces_sm %>% ungroup() %>% select(date,deceassed_per_100000,province_cp,-province),
             aes(date,deceassed_per_100000,group=province_cp), color="#CACACA" ) +
-  geom_line(aes(date, deceassed_per_100000,group=province)) +
-  geom_point(aes(date, deceassed_per_100000), size= 0.5 ) +
+  geom_line(aes(date, deceassed_per_100000,group=province), size = 1) +
+  # geom_point(aes(date, deceassed_per_100000), size= 0.5 ) +
+  geom_text_repel(data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
+                  aes(date, 0.3, label=paste(format(deceassed_per_100000, nsmall=1, big.mark=".", decimal.mark = ",") ) ),
+                  nudge_x = 1, # adjust the starting x position of the text label
+                  size=4,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
   facet_wrap(~province) +
   scale_y_log10(  
     limits = c(0.05,max(data_cases_sp_provinces$deceassed_per_100000)),
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date) ),
+               limits=c( min(data_cases_sp_provinces$date)+15, max(data_cases_sp_provinces$date) ),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -580,7 +600,8 @@ data_cases_sp_provinces %>%
   geom_line(aes(date, deceased,group=province, color=ccaa), size= 1 ) +
   geom_point(aes(date, deceased, color=ccaa), size= 1 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, 
-                               date==max(data_cases_sp_provinces$date) & deceased > 200 
+                               ( date==max(data_cases_sp_provinces$date) & deceased > 200 ) |
+                                 (date==as.Date("2020-04-27") & province == "Barcelona")
                                ), 
                   aes(date, deceased, color=ccaa, label=paste(format(deceased, nsmall=1, big.mark="."),province)),
                   nudge_x = 2, # adjust the starting y position of the text label
@@ -591,9 +612,9 @@ data_cases_sp_provinces %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
-  # geom_text(data=filter( data_cases_sp_provinces, date==as.Date("2020-04-14") & province == "Barcelona"),
+  # geom_text(data=filter( data_cases_sp_provinces, date==as.Date("2020-04-27") & province == "Barcelona"),
   #           aes(date, deceased, color=ccaa, label=paste(format(deceased, nsmall=1, big.mark="."),province)),
-  #           nudge_x = 2, # adjust the starting y position of the text label
+  #           nudge_x = 0, # adjust the starting y position of the text label
   #           size=5,
   #           hjust=0,
   #           family = "Roboto Condensed",
@@ -627,7 +648,12 @@ data_cases_sp_provinces %>%
   ggplot() +
   geom_line(aes(date, deceased,group=province, color=ccaa), size= 1 ) +
   geom_point(aes(date, deceased, color=ccaa), size= 1 ) +
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & deceased > 10), 
+  geom_text_repel(
+    data=filter( data_cases_sp_provinces, 
+                                 ( date==max(data_cases_sp_provinces$date) & deceased > 100 ) |
+                                   (date==as.Date("2020-04-27") & province == "Barcelona")
+                    ), 
+                  
                   aes(date, deceased, color=ccaa, label=paste0(format(deceased, nsmall=1, big.mark="."), " ", province, " (+", daily_deaths,", +", daily_deaths_inc ,"%)")),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,

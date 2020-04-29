@@ -1,6 +1,7 @@
 # cataluña
 # Donwloaded from https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data
 catalunya_original <-  read.delim("data/original/spain/catalunya/Registre_de_test_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
+# Datos del panel de control
 powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",")
 catalunya <- catalunya_original
 

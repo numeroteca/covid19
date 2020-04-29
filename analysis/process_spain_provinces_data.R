@@ -17,9 +17,10 @@ data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provinc
 write.csv(read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ","), file = "../escovid19data/data/original/covid19_spain_provincias.csv", row.names = FALSE)
 
 # Download Andalucía data from https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228
-# that is uploaded manually to our own spreadsheet in google spreadsheet
+# that is uploaded manually to our own spreadsheet in google spreadsheet 
 andalucia_original <- read.delim("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=andalucia", sep=",")
-# data_cases_canarias <- read.delim("data/original/spain/covid19_canarias.csv",sep = ",")
+# TODO: make it work from direct source
+# andalucia_original <- read.delim("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=4dcace2a-394f-4e86-9d7b-fede695f0c92&type=3&foto=si&ejecutaDesde=&codConsulta=38228&consTipoVisua=JP", sep=";")
 
 # Process data ------
 # Create date variable
@@ -39,6 +40,7 @@ tenerife <- canarias %>% filter(province == "La Gomera" | province =="La Palma" 
   deceased = sum(deceased),
   cases_accumulated = sum(cases_accumulated),
   recovered = sum(recovered),
+  source_name = "Gobierno de Canarias",
   source = paste(source, collapse = ";"),
   comments = paste(comments, collapse = ";")
 )
@@ -52,6 +54,7 @@ palmas <- canarias %>% filter(province == "Fuerteventura" | province =="Lanzarot
   deceased = sum(deceased),
   cases_accumulated = sum(cases_accumulated),
   recovered = sum(recovered),
+  source_name = "Gobierno de Canarias",
   source = paste(source, collapse = ";"),
   comments = paste(comments, collapse = ";")
 )
@@ -87,10 +90,11 @@ andalucia <- andalucia_original %>% filter( Territorio != "Andalucía" ) %>%
     recovered = Curados,
     new_cases = Nuevos.casos
   )  %>% mutate (
-    activos = NA, 
+    activos = NA,
+    source_name = "Junta de Andalucía",
     source="https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228",
     comments=""
-  ) %>% select( -Fecha) %>% select( date, province, ccaa, new_cases, activos, hospitalized, intensive_care, deceased, cases_accumulated, recovered, source, comments) 
+  ) %>% select( -Fecha) %>% select( date, province, ccaa, new_cases, activos, hospitalized, intensive_care, deceased, cases_accumulated, recovered, source_name, source, comments) 
 
 # Add new Andalucía data
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,andalucia)
@@ -148,6 +152,7 @@ uniprovinciales <- ciii %>%
             region == "Rioja, La" ) %>% mutate(
               ccaa = region,
               activos = NA,
+              source_name = "Ministerio de Sanidad (Datadista)",
               source="Datadista (Ministerio de Sanidad) https://github.com/datadista/datasets/tree/master/COVID%2019",
               comments= "",
               new_cases = NA,
@@ -156,7 +161,7 @@ uniprovinciales <- ciii %>%
               ) %>% rename(
               province = region,
               # cases_accumulated = cases_registered,
-            ) %>% select( date, province, ccaa, new_cases, activos, hospitalized, intensive_care, deceased, cases_accumulated, recovered, source, comments) %>%
+            ) %>% select( date, province, ccaa, new_cases, activos, hospitalized, intensive_care, deceased, cases_accumulated, recovered, source_name, source,comments) %>%
           mutate(
             ccaa = ccaa %>% str_replace_all("La Rioja", "Rioja, La"),
             province = province %>% str_replace_all("La Rioja", "Rioja, La"),
@@ -168,7 +173,7 @@ uniprovinciales <- ciii %>%
             ccaa = ccaa %>% str_replace_all("Navarra", "Navarra, Comunidad Foral de"),
               )
 
-# Add new Andalucía data
+# Add uniprovinciales data
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,uniprovinciales)
 
 # Overwrite Catalunya provinces death data ------------------
@@ -184,7 +189,8 @@ data_cases_sp_provinces <- merge(data_cases_sp_provinces, powerbi %>% select(-da
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   deceased = ifelse( ccaa == "Cataluña", deceased_cat, deceased),
   # add source of cataluña death data
-  source = ifelse( ccaa == "Cataluña", paste0(source,";https://app.powerbi.com/view?r=eyJrIjoiZTkyNTcwNjgtNTQ4Yi00ZTg0LTk1OTctNzM3ZGEzNWE4OTIxIiwidCI6IjNiOTQyN2RjLWQzMGUtNDNiYy04YzA2LWZmNzI1MzY3NmZlYyIsImMiOjh9" ), source),
+  source_name = ifelse( ccaa == "Cataluña","Generalitat de Catalunya", as.character(source_name) ),
+  source = ifelse( ccaa == "Cataluña", paste0(source,";https://app.powerbi.com/view?r=eyJrIjoiZTkyNTcwNjgtNTQ4Yi00ZTg0LTk1OTctNzM3ZGEzNWE4OTIxIiwidCI6IjNiOTQyN2RjLWQzMGUtNDNiYy04YzA2LWZmNzI1MzY3NmZlYyIsImMiOjh9" ), as.character(source) ),
 )
 # Add missing Barcelona data -------- 
 # # Do not use as data have been hasd coded in the original data
@@ -249,16 +255,3 @@ saveRDS(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-sp
 # saves data in the other repository
 write.csv(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
 saveRDS(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.rds")
-
-# Finds which are the last update dates (it is not used) ----
-# last_item_per_province <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date) %>%  filter( row_number()==n()) %>% mutate (
-#   last_item = 1
-#   ) %>% ungroup()
-# 
-# # create unique value to merge both datasets
-# last_item_per_province$dunique <- paste0(last_item_per_province$date,last_item_per_province$province)
-# data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
-# 
-# data_cases_sp_provinces <- merge(data_cases_sp_provinces,last_item_per_province %>% select(dunique,last_item), by.x = "dunique",  by.y = "dunique", all.x = TRUE)
-# 
-# data_cases_sp_provinces <- data_cases_sp_provinces %>% select(-dunique)
