@@ -95,7 +95,32 @@ ggplot(powerbi) +
   geom_point(aes(date,deceased), color = "red", size = 0.5) +
   scale_color_identity(
     guide = "legend",
-    labels = c("esCovid19data", "powerbi"),
+    labels = c("esCovid19data", "Gencat (Salut-powerbi)"),
   ) +
   scale_y_log10() +
-  facet_grid(~province)
+  coord_cartesian(
+    xlim = c( min(data_cases_sp_provinces$date + 20), max(data_cases_sp_provinces$date +1)),
+  ) +
+  scale_x_date(date_breaks = "5 day", 
+               date_labels = "%d",
+               expand = c(0,0)
+  ) + 
+  facet_grid(~province) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    # panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    # axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9),
+    legend.position = "top"
+  ) +
+  labs(
+    title = "Fallecidos acumulados por provinicas en Cataluña (28.04.2020)",
+       subtitle = paste0("Comparativa de bases de datos. Gencat - esCOVID19data "),
+       y = "fallecidos (escala lineal)",
+       x = "fecha",
+    color = "Fuente",
+       caption = caption_provincia
+    )
+
