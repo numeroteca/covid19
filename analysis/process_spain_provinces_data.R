@@ -171,7 +171,20 @@ uniprovinciales <- ciii %>%
 # Add new Andalucía data
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,uniprovinciales)
 
-# Add missin Barcelona data -------- 
+# Overwrite Catalunya provinces death data ------------------
+powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",")
+powerbi$date <- as.Date(powerbi$fecha, "%d/%m/%y")
+
+data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
+powerbi$dunique <- paste0(powerbi$date,powerbi$province)
+
+data_cases_sp_provinces <- merge(data_cases_sp_provinces, powerbi %>% select(-date) %>% select(-province) %>% rename(deceased_cat = deceased ) , 
+                                 by.x="dunique", by.y="dunique", all.x = TRUE)
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+  deceased = ifelse( ccaa == "Cataluña", deceased_cat, deceased)
+)
+# Add missing Barcelona data -------- 
 # # Do not use as data have been hasd coded in the original data
 # #  select all the cataluña provinces (Barcelona is not available) to calculate how many deaths
 # prov_cat <- data_cases_sp_provinces %>% filter( ccaa == "Cataluña" & province != "Barcelona"  & date > as.Date("2020-03-08") ) %>%

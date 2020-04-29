@@ -1,8 +1,10 @@
 # cataluña
 # Donwloaded from https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data
 catalunya_original <-  read.delim("data/original/spain/catalunya/Registre_de_test_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
+powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",")
 catalunya <- catalunya_original
 
+# cases -------------
 # creates date variable
 catalunya$date <- as.Date(catalunya$TipusCasData, "%d/%m/%Y")
 # extracts first charatcter of zipcode to select province code
@@ -80,3 +82,20 @@ ggplot(cattotal) +
 # ggplot(cattotal) +
 #   geom_line(aes(date,cases_accumulated, group = provincia_code)) +
 #   facet_grid(~province) 
+
+
+# Fallecimientos ------
+
+powerbi$date <- as.Date(powerbi$fecha, "%d/%m/%y")
+
+ggplot(powerbi) +
+  geom_line(data = filter (data_cases_sp_provinces, ccaa =="Cataluña" ) , aes(date, deceased, group = province, color ="#000000"),size = 1) +
+  geom_point(data = filter (data_cases_sp_provinces, ccaa =="Cataluña" ) , aes(date,deceased ),size = 1) +
+  geom_line(aes(date,deceased, group = province, color = "#DD0000")) +
+  geom_point(aes(date,deceased), color = "red", size = 0.5) +
+  scale_color_identity(
+    guide = "legend",
+    labels = c("esCovid19data", "powerbi"),
+  ) +
+  scale_y_log10() +
+  facet_grid(~province)
