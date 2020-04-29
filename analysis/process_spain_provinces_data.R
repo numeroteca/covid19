@@ -107,7 +107,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
 ciii_original <- read.delim("https://covid19.isciii.es/resources/serie_historica_acumulados.csv",sep = ",")  
 write.csv(ciii_original, file = "data/original/spain/iscii_data.csv", row.names = FALSE)
 
-ciii <- ciii_original %>% head(nrow(ciii_original) - 5) %>% #Cambia el número en función de las notas que incluya el csv original
+ciii <- ciii_original %>% head(nrow(ciii_original) - 6) %>% #TODO: Cambia el número en función de las notas que incluya el csv original
   ungroup() %>% mutate(
   date = as.Date(FECHA, "%d/%m/%Y" ),
   CCAA = CCAA %>% str_replace_all("AN", "Andalucía"),
@@ -182,7 +182,9 @@ data_cases_sp_provinces <- merge(data_cases_sp_provinces, powerbi %>% select(-da
                                  by.x="dunique", by.y="dunique", all.x = TRUE)
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
-  deceased = ifelse( ccaa == "Cataluña", deceased_cat, deceased)
+  deceased = ifelse( ccaa == "Cataluña", deceased_cat, deceased),
+  # add source of cataluña death data
+  source = ifelse( ccaa == "Cataluña", paste0(source,";https://app.powerbi.com/view?r=eyJrIjoiZTkyNTcwNjgtNTQ4Yi00ZTg0LTk1OTctNzM3ZGEzNWE4OTIxIiwidCI6IjNiOTQyN2RjLWQzMGUtNDNiYy04YzA2LWZmNzI1MzY3NmZlYyIsImMiOjh9" ), source),
 )
 # Add missing Barcelona data -------- 
 # # Do not use as data have been hasd coded in the original data
