@@ -19,8 +19,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Para ISCiii
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es)"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es)"
-period <- "Actualizado: 2020.04.29. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.04.29"
+period <- "Actualizado: 2020.04.30. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.04.30"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -32,6 +32,7 @@ colourCount <- length(unique(data_cases$CCAA))
 getPalette <- colorRampPalette(brewer.pal(9, "Set1"))
 colors <- getPalette(colourCount )
 # Change yellow to blue
+colors_prov[1] <- "#d60000"
 colors[12] <- "#84d3e7"
 
 
@@ -1241,7 +1242,7 @@ data_all_export %>%
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
                   aes(date,daily_deaths_avg6, 
                       label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","))),
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  nudge_x = 1, # adjust the starting y position of the text label
                   size=4,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -1261,7 +1262,7 @@ data_all_export %>%
   # ) +
   scale_x_date(date_breaks = "4 day",
                date_labels = "%d",
-               limits=c( date_limit_init_death, max(data_all_export$date + 5)),
+               limits=c( date_limit_init_death, max(data_all_export$date + 10)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -1291,7 +1292,7 @@ data_all_export %>%
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date) ),
                   aes(date,daily_deaths_avg6, 
                       label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","))),
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  nudge_x = 1, # adjust the starting y position of the text label
                   size=4,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -1311,7 +1312,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "4 day",
                date_labels = "%d",
-               limits=c( date_limit_init_death, max(data_all_export$date + 5)),
+               limits=c( date_limit_init_death, max(data_all_export$date + 10)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -1335,8 +1336,8 @@ png(filename=paste("img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma
 data_all_export %>% 
   ggplot() +
   # geom_line(data=hubei, aes(date+50,daily_deaths,group=region), size= 4, color="#aaaaaa"  ) +
-  geom_line(aes(date,daily_deaths,group=region, color=region), size= 1 ) +
-  geom_point(aes(date,daily_deaths, color=region), size= 1.5 ) +
+  geom_line(aes(date,daily_deaths,group=region, color=region), size= 0.9 ) +
+  geom_point(aes(date,daily_deaths, color=region), size= 1 ) +
   geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) )  
                                ),
                   aes(date,daily_deaths, color=region, label=paste(format(daily_deaths, nsmall=1, big.mark="."),region)),
@@ -1362,7 +1363,7 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de muertes por COVID-19 registradas por día en España",
+  labs(title = "Muertes por COVID-19 registradas por día en España",
        subtitle = paste0("Por comunidad autónoma (escala lineal) ",period, warning),
        y = "fallecidos por día",
        x = "fecha",
@@ -1373,8 +1374,8 @@ dev.off()
 png(filename=paste("img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-superpuesto-log.png", sep = ""),width = 1200,height = 700)
 data_all_export %>% 
   ggplot() +
-  geom_line(aes(date,daily_deaths,group=region, color=region), size= 1 ) +
-  geom_point(aes(date,daily_deaths, color=region), size= 1.5 ) +
+  geom_line(aes(date,daily_deaths,group=region, color=region), size= 0.9 ) +
+  geom_point(aes(date,daily_deaths, color=region), size= 1 ) +
   geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) )  
   ),
                   aes(date,daily_deaths, color=region, label=paste(format(daily_deaths, nsmall=1, big.mark="."),region)),
@@ -1422,7 +1423,7 @@ data_all_export %>%
   geom_line(aes(date,daily_deaths, color=region, group=region), size= 0.3, alpha=0.6  ) +
   geom_point(data=filter( data_all_export, date==max(data_all_export$date)), aes(date, daily_deaths_avg6, color=region), size= 1, alpha = 0.3 ) +
   geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date)  ) 
-  ),
+                    ),
                   aes(date,daily_deaths_avg6, color=region, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),region)),
                   nudge_x = 4, # adjust the starting y position of the text label
                   size=5,
@@ -1433,9 +1434,9 @@ data_all_export %>%
                   segment.color="#777777"
   ) +
   # marca un día
-  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-03") &  region == "Madrid" ),
+  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-03-24") &  region == "Madrid" ),
                   aes(date,daily_deaths, label=paste("muertes en un día en una comunidad autónoma")),
-                  nudge_y = 3, # adjust the starting y position of the text label
+                  nudge_y = 4, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -1444,8 +1445,8 @@ data_all_export %>%
                   segment.color="#777777"
   ) +
   # marca la línea
-  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-17") &  region == "Madrid" ),
-                  aes(date+0.5,149, label=paste("media de 7 días")),
+  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-08") &  region == "Madrid" ),
+                  aes(date+0.5,214, label=paste("media de 7 días")),
                   nudge_y = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -1456,7 +1457,7 @@ data_all_export %>%
   ) +
   scale_color_manual(values = colors ) +
   coord_cartesian(
-    ylim = c(1,max(data_all_export[!is.na(data_all_export$daily_deaths_avg6) & ( data_all_export$region != "Total"),]$daily_deaths_avg6))
+    ylim = c(1,max(data_all_export[!is.na(data_all_export$daily_deaths_avg6) & ( data_all_export$region != "Total"),]$daily_deaths_avg6) * 1.3)
   ) +
   scale_y_log10(
     breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
@@ -1476,7 +1477,7 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de muertes por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de muertes por día (ventana de por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period, warning),
        y = "fallecidos por día (media 7 días) (escala logarítmica)",
        x = "fecha",
@@ -1516,7 +1517,7 @@ data_all_export %>%
                   aes(date,275, label=paste("media de 7 días")),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
-                  hjust=0,
+                  hjust=1,
                   family = "Roboto Condensed",
                   # direction="x",
                   segment.size = 0.5,
@@ -1640,7 +1641,7 @@ data_all_export %>%
   geom_line(aes(date,recovered_per_100000,group=region) ) +
   geom_point(aes(date,recovered_per_100000), size=0.5 ) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "3 day",
+  scale_x_date(date_breaks = "5 day",
                date_labels = "%d",
                expand = c(0,0),
                limits = c(as.Date("2020-03-16"),max(data_all_export$date) )
@@ -1672,7 +1673,7 @@ data_all_export %>%
     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) )) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "2 day",
+  scale_x_date(date_breaks = "5 day",
                date_labels = "%d",
                expand = c(0,0),
                limits = c(as.Date("2020-03-16"),max(data_all_export$date) )
@@ -1899,7 +1900,7 @@ data_all_export %>%
     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000), seq(10000 , 100000, 10000) )
   ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits = c(as.Date("2020-03-16"),max(data_all_export$date) + 12 )
   ) +
@@ -2267,7 +2268,7 @@ data_all_export %>%
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
                   aes(date,daily_recovered_avg6, 
                       label=paste(format(daily_recovered_avg6, nsmall=1, big.mark=".", decimal.mark = ","))),
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  nudge_x = 1, # adjust the starting y position of the text label
                   size=4,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -2287,7 +2288,7 @@ data_all_export %>%
   # ) +
   scale_x_date(date_breaks = "4 day",
                date_labels = "%d",
-               limits=c( min(data_all_export$date + 20), max(data_all_export$date + 5)),
+               limits=c( min(data_all_export$date + 20), max(data_all_export$date + 10)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -2310,15 +2311,14 @@ png(filename=paste("img/spain/regions/covid19_altas-por-dia-comunidad-autonoma-l
 data_all_export %>% 
   ggplot() +
   geom_smooth(data = data_all_export_sm %>%  ungroup() %>% 
-                
                 select(date,daily_recovered_avg6,region_cp,-region),
             aes(date,daily_recovered_avg6,group=region_cp), color="#CACACA", se = FALSE, span = 0.35, size= 0.5) +
-  geom_point(aes(date,daily_recovered, color=region), size= 1.5, alpha = 0.5) +
+  geom_point(aes(date,daily_recovered, color=region), size= 1, alpha = 0.5) +
   geom_smooth(aes(date,daily_recovered_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
                   aes(date,daily_recovered_avg6, 
                       label=paste(format(daily_recovered_avg6, nsmall=1, big.mark=".", decimal.mark = ","))),
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  nudge_x = 1, # adjust the starting y position of the text label
                   size=4,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -2338,7 +2338,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "4 day",
                date_labels = "%d",
-               limits=c( min(data_all_export$date + 20), max(data_all_export$date + 5)),
+               limits=c( min(data_all_export$date + 20), max(data_all_export$date + 10)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -2389,8 +2389,8 @@ data_all_export %>%
                   segment.color="#777777"
   ) +
   # marca la línea
-  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-04") &  region == "Madrid" ),
-                  aes(date+0.5,1360, label=paste("media de 7 días")),
+  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-16") &  region == "Madrid" ),
+                  aes(date+0.5,1000, label=paste("media de 7 días")),
                   nudge_y = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -2401,7 +2401,7 @@ data_all_export %>%
   ) +
   scale_color_manual(values = colors ) +
   coord_cartesian(
-    ylim = c(1,max(data_all_export[!is.na(data_all_export$daily_recovered_avg6) & ( data_all_export$region != "Total"),]$daily_recovered_avg6))
+    ylim = c(1,max(data_all_export[!is.na(data_all_export$daily_recovered_avg6) & ( data_all_export$region != "Total"),]$daily_recovered_avg6)*1.3)
   ) +
   scale_y_log10(
     breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
