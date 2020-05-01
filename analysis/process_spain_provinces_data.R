@@ -5,7 +5,7 @@
 
 # Load libraries -----------
 library(tidyverse)
-library(reshape2)
+# library(reshape2)
   
 # Load Data ---------
 # / Population -------------
@@ -178,20 +178,22 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,uniprovinciales)
 
 # Overwrite Catalunya provinces death data ------------------
 powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",")
-powerbi$date <- as.Date(powerbi$fecha, "%d/%m/%y")
+powerbi$date <- as.Date(powerbi$Fecha, "%d/%m/%y")
 
 data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
-powerbi$dunique <- paste0(powerbi$date,powerbi$province)
+powerbi$dunique <- paste0(powerbi$date,powerbi$Territorio)
 
-data_cases_sp_provinces <- merge(data_cases_sp_provinces, powerbi %>% select(-date) %>% select(-province) %>% rename(deceased_cat = deceased ) , 
-                                 by.x="dunique", by.y="dunique", all.x = TRUE)
+data_cases_sp_provinces <- merge(data_cases_sp_provinces, powerbi %>% select(-date) %>% select(-Territorio) %>% select(dunique,Fallecimientos) %>% rename(deceased_cat = Fallecimientos ) , 
+                                 by.x="dunique", by.y="dunique", all.x = TRUE) %>% select(-dunique)
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   deceased = ifelse( ccaa == "Cataluña", deceased_cat, deceased),
   # add source of cataluña death data
   source_name = ifelse( ccaa == "Cataluña","Generalitat de Catalunya", as.character(source_name) ),
-  source = ifelse( ccaa == "Cataluña", paste0(source,";https://app.powerbi.com/view?r=eyJrIjoiZTkyNTcwNjgtNTQ4Yi00ZTg0LTk1OTctNzM3ZGEzNWE4OTIxIiwidCI6IjNiOTQyN2RjLWQzMGUtNDNiYy04YzA2LWZmNzI1MzY3NmZlYyIsImMiOjh9" ), as.character(source) ),
-)
+  source = ifelse( ccaa == "Cataluña", 
+                   paste0(source,";https://app.powerbi.com/view?r=eyJrIjoiZTkyNTcwNjgtNTQ4Yi00ZTg0LTk1OTctNzM3ZGEzNWE4OTIxIiwidCI6IjNiOTQyN2RjLWQzMGUtNDNiYy04YzA2LWZmNzI1MzY3NmZlYyIsImMiOjh9" ), 
+                   as.character(source) ),
+) %>% select(-deceased_cat)
 # Add missing Barcelona data -------- 
 # # Do not use as data have been hasd coded in the original data
 # #  select all the cataluña provinces (Barcelona is not available) to calculate how many deaths
@@ -244,7 +246,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
   )
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_code,everything()) %>%
-                                                  select(-source,-comments,source,comments)
+                                                  select(-source,-comments,source_name,source,comments)
 
 # Re calculates factors to remove things like Andaluc'ia for provinces
 data_cases_sp_provinces$province <- factor(data_cases_sp_provinces$province)

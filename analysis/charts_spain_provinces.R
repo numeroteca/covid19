@@ -13,9 +13,9 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
-caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: recopilados por esCOVID19data (lab.montera34.com/covid19, github.com/montera34/escovid19data)"
-period <- "Actualizado: 2020.04.29. Nota: para CCAA uniprovinciales: casos es la suma de PCR+ y TestAc+ a partir de 2020.04.15"
-filter_date <- as.Date("2020-04-29")
+caption_provincia <- "Nota: en revisión muertes Barcelona 28.04. Gráfico: @numeroteca (montera34.com) | Datos: recopilados por esCOVID19data (lab.montera34.com/covid19, github.com/montera34/escovid19data)"
+period <- "Actualizado: 2020.04.30. Nota: para CCAA uniprovinciales casos es la suma de PCR+ y TestAc+ a partir de 2020.04.15"
+filter_date <- as.Date("2020-04-30")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -112,17 +112,30 @@ data_cases_sp_provinces %>%
 dev.off()
 
 
-png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-region-grouped-log.png", sep = ""),width = 1200,height = 700)
+png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-region-grouped-log.png", sep = ""),width = 1200,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
   geom_line(data = select(data_cases_sp_provinces_sm,date,cases_accumulated,province_cp,-province),
             aes(date,cases_accumulated,group=province_cp), color="#CACACA" ) +
   geom_line(aes(date,cases_accumulated,group=province), size = 0.7 ) +
-  # geom_line(cattotal,aes(date,cases_accumulated,group=province), size = 1, color="red" ) +
-  # geom_point(aes(date,cases_accumulated,group=province), size = 0.5 ) +
+  geom_text_repel(data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(cases_accumulated) ) %>% top_n(1, date),
+                  aes(date+1, cases_accumulated, label=paste(format(cases_accumulated, nsmall=1, big.mark="."), substr(province,1,2) ) ),
+                  nudge_x = 1, # adjust the starting x position of the text label
+                  size=4,
+                  hjust=0,
+                  color = "#666666",
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  coord_cartesian(
+    xlim = c( min(data_cases_sp_provinces$date + 9), max(data_cases_sp_provinces$date +19))
+    # ylim = c(1, max( data_cases_sp_provinces[!is.na(data_cases_sp_provinces$deceased),]$deceased))
+  ) +
   scale_y_log10(
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
-    limits = c(1,max(data_cases_sp_provinces$cases_accumulated)),
+    limits = c(1,max(data_cases_sp_provinces$cases_accumulated)*1.2),
     minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
   facet_wrap( ~ccaa) +
   scale_x_date(date_breaks = "5 day", 
@@ -230,7 +243,7 @@ data_cases_sp_provinces %>%
   ) +
   scale_color_manual(values = colors_prov) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
-                 limits = c(1,max(data_cases_sp_provinces$cases_accumulated)*1.1),
+                 limits = c(1,max(data_cases_sp_provinces$cases_accumulated)*1.2),
                  # breaks = c(1,10,100,1000),
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
   scale_x_date(date_breaks = "1 day", 
@@ -442,12 +455,12 @@ data_cases_sp_provinces %>%
   # ) +
   # all the provinces 
   geom_line(aes(date, deceased,group=province), size= 0.7 ) +
-  # geom_point(aes(date, deceased), size= 0.5 ) +
   geom_text_repel(data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
                                 aes(date+1, deceased, label=paste(format(deceased, nsmall=1, big.mark="."), substr(province,1,3) ) ),
                                 nudge_x = 1, # adjust the starting x position of the text label
                                 size=4,
                                 hjust=0,
+                                color = "#666666",
                                 family = "Roboto Condensed",
                                 direction="y",
                                 segment.size = 0.1,
@@ -541,7 +554,7 @@ data_cases_sp_provinces %>%
   scale_y_log10(  
     limits = c(0.05,max(data_cases_sp_provinces$deceassed_per_100000)),
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
-  scale_x_date(date_breaks = "3 day", 
+  scale_x_date(date_breaks = "5 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date)+15, max(data_cases_sp_provinces$date) ),
                expand = c(0,0) 
@@ -561,20 +574,33 @@ data_cases_sp_provinces %>%
        caption = caption_provincia)
 dev.off()
 
-png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-per-cienmil-log-ccaa.png", sep = ""),width = 1000,height = 600)
+png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-per-cienmil-log-ccaa.png", sep = ""),width = 1200,height = 700)
 data_cases_sp_provinces %>% 
   ggplot() +
   geom_line(data = select(data_cases_sp_provinces_sm,date,deceassed_per_100000,province_cp,-province),
             aes(date,deceassed_per_100000,group=province_cp), color="#CACACA" ) +
-  geom_line(aes(date, deceassed_per_100000,group=province)) +
-  geom_point(aes(date, deceassed_per_100000), size= 0.5 ) +
+  geom_line(aes(date, deceassed_per_100000,group=province), size= 0.7 ) +
+  geom_text_repel(data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceassed_per_100000) ) %>% top_n(1, date),
+                  aes(date+1, deceassed_per_100000, label=paste(format( round(deceassed_per_100000, digits = 1), nsmall=1, big.mark=".", decimal.mark = ","), substr(province,1,3) ) ),
+                  nudge_x = 1, # adjust the starting x position of the text label
+                  size=4,
+                  hjust=0,
+                  color = "#666666",
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
   facet_wrap(~ccaa) +
+  coord_cartesian(
+    xlim = c( min(data_cases_sp_provinces$date + 9), max(data_cases_sp_provinces$date +18)),
+  ) +
   scale_y_log10(  
     limits = c(0.05,max(data_cases_sp_provinces$deceassed_per_100000)),
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
-  scale_x_date(date_breaks = "3 day", 
-               date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date) ) 
+  scale_x_date(date_breaks = "5 day", 
+               date_labels = "%d"
+               # limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date) ) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -591,8 +617,6 @@ data_cases_sp_provinces %>%
        caption = caption_provincia)
 dev.off()
 
-
-
 # // 3.2 Superpuesto----------------------
 png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-provincia-superpuesto-lineal.png", sep = ""),width = 1200,height = 800)
 data_cases_sp_provinces %>%
@@ -600,8 +624,9 @@ data_cases_sp_provinces %>%
   geom_line(aes(date, deceased,group=province, color=ccaa), size= 1 ) +
   geom_point(aes(date, deceased, color=ccaa), size= 1 ) +
   geom_text_repel(data=filter( data_cases_sp_provinces, 
-                               ( date==max(data_cases_sp_provinces$date) & deceased > 200 ) |
-                                 (date==as.Date("2020-04-27") & province == "Barcelona")
+                               ( date==max(data_cases_sp_provinces$date) & deceased > 200 ) 
+                               # |
+                               #   (date==as.Date("2020-04-27") & province == "Barcelona")
                                ), 
                   aes(date, deceased, color=ccaa, label=paste(format(deceased, nsmall=1, big.mark="."),province)),
                   nudge_x = 2, # adjust the starting y position of the text label
@@ -650,8 +675,9 @@ data_cases_sp_provinces %>%
   geom_point(aes(date, deceased, color=ccaa), size= 1 ) +
   geom_text_repel(
     data=filter( data_cases_sp_provinces, 
-                                 ( date==max(data_cases_sp_provinces$date) & deceased > 100 ) |
-                                   (date==as.Date("2020-04-27") & province == "Barcelona")
+                                 ( date==max(data_cases_sp_provinces$date) & deceased > 100 ) 
+                 # |
+                 #                   (date==as.Date("2020-04-27") & province == "Barcelona")
                     ), 
                   
                   aes(date, deceased, color=ccaa, label=paste0(format(deceased, nsmall=1, big.mark="."), " ", province, " (+", daily_deaths,", +", daily_deaths_inc ,"%)")),
@@ -801,7 +827,6 @@ data_cases_sp_provinces %>%
        x = "fecha",
        caption = caption_provincia)
 dev.off()
-  
 
 # 4. Daily deaths --------------
 
@@ -1020,6 +1045,7 @@ data_cases_sp_provinces %>%
                     nudge_x = 2, # adjust the starting x position of the text label
                     size=4,
                     hjust=0,
+                    color = "#666666",
                     family = "Roboto Condensed",
                     direction="y",
                     segment.size = 0.1,
@@ -1464,7 +1490,7 @@ interactive_dp  <- data_cases_sp_provinces %>% ungroup(province) %>%
                 size= 0.7, se = FALSE, span = 0.6 ) +
   geom_point(aes(date, daily_deaths, color=ccaa,
                  text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(daily_deaths, digits = 1), 
-                        big.mark=".", decimal.mark = ","), " muertes el d'ia " ,"<br>",date )),    
+                        big.mark=".", decimal.mark = ","), " muertes el día " ,"<br>",date )),    
                  size= 0.3
                           ) +
   scale_color_manual(values = colors_prov) +
@@ -1476,7 +1502,7 @@ interactive_dp  <- data_cases_sp_provinces %>% ungroup(province) %>%
                  expand = c(0,0.2) ) +
   scale_x_date(date_breaks = "3 day",
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date + 1)),
+               limits=c( min(data_cases_sp_provinces$date)+13, max(data_cases_sp_provinces$date + 1)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -2214,4 +2240,43 @@ data_cases_sp_provinces %>% # filter(province == "Rioja, La") %>%
        caption = caption_provincia,
        color= ""
        )
+dev.off()
+
+data_cases_sp_provinces$weekday <- weekdays(data_cases_sp_provinces$date)
+
+data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
+                                              "sábado","domingo" ) )
+
+png(filename=paste("tmp/jueves-01.png", sep = ""),width = 900,height = 400)
+data_cases_sp_provinces %>% filter ( ccaa == "País Vasco") %>%
+  ggplot() +
+  geom_col( aes(date,daily_deaths, fill=weekday) ) +
+  geom_line( aes(date,daily_deaths_avg6, group=province) ) +
+  # geom_col( data = data_cases_sp_provinces %>% filter(weekday == "jueves"), aes(date,daily_deaths, group=province, fill="#DD0000")) +
+  facet_wrap(~province) +
+  scale_fill_manual(values = c("#AAAAAA","#AAAAAA","#8888AA","#AAAAAA","#AAAAAA","#CCAAAA","#CCAAAA") ) +
+  scale_y_continuous( 
+    # breaks = c(200,400,600,800,1000,1200,1400,1600,1800,2000)
+    # minor_breaks = c(70,80,90,100)
+  ) + 
+  scale_x_date(date_breaks = "5 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases_sp_provinces$date)+20, max(data_cases_sp_provinces$date)),
+               expand = c(0,0)
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "top"
+  ) +
+  labs(title = "Muertes por día COVID-19 en Euskadi",
+       subtitle = paste0("Buscando un patrón para la fecha de notificación de fallecidos. Línea: media de 7 días"),
+       y = "fallecimientos por día",
+       x = "fecha",
+       caption = caption_provincia,
+       fill = "día de la semana"
+  )
 dev.off()
