@@ -5,7 +5,7 @@
 
 # Load libraries -----------
 library(tidyverse)
-# library(reshape2)
+library(reshape2)
   
 # Load Data ---------
 # / Population -------------
@@ -177,7 +177,7 @@ uniprovinciales <- ciii %>%
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,uniprovinciales)
 
 # Overwrite Catalunya provinces death data ------------------
-powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",")
+powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",") %>% select(Fecha,Territorio,Fallecimientos,Fallecimientos_cum)
 powerbi$date <- as.Date(powerbi$Fecha, "%d/%m/%y")
 
 data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
@@ -245,8 +245,8 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
           deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)  
   )
 
-data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_code,everything()) %>%
-                                                  select(-source,-comments,source_name,source,comments)
+data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_code,everything())  
+data_cases_sp_provinces <- data_cases_sp_provinces %>% select(-source, -source_name,-comments,source_name,source,comments)
 
 # Re calculates factors to remove things like Andaluc'ia for provinces
 data_cases_sp_provinces$province <- factor(data_cases_sp_provinces$province)
@@ -257,3 +257,4 @@ saveRDS(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-sp
 # saves data in the other repository
 write.csv(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
 saveRDS(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.rds")
+

@@ -187,6 +187,8 @@ ciii <- ciii_original %>% head(nrow(ciii_original) - 6) %>% #Cambia el número e
     cases_registered = ifelse( is.na(cases_registered), PCR + TestAc, cases_registered)
   )
 
+write.csv(ciii, file = "data/output/spain/iscii_processed_data.csv", row.names = FALSE)
+
 # names(ciii) <- c("region","fecha","cases_registered","PCR", "TestAc","hospitalized","intensive_care","deceassed","recovered","date")
 ciii$region <- factor(ciii$region)
 # translate iniciales
