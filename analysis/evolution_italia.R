@@ -8,7 +8,7 @@ library(ggrepel) # for geom_text_repel to prevent   overlapping
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de losS datos
 caption_i <- "Gráfico: @numeroteca (lab.montera34.com/covid19). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 05.01"
+periodo_i <- "2020.02.24 - 05.02"
 
 # COVID-19 in Italy -----------
 # Load data
@@ -196,7 +196,7 @@ data_i_cases %>%
                   segment.color="#777777"
   ) +
   scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                limits=c( min(data_i_cases$date), max(data_i_cases$date + 11)) 
   ) + 
@@ -234,7 +234,7 @@ data_i_cases %>%
                  limits = c(0.95,max(data_i_cases$cases_registered)),
                  # breaks = c(1,10,100,1000,12000),
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                limits=c( min(data_i_cases$date), max(data_i_cases$date +11)) 
   ) + 
@@ -269,7 +269,7 @@ data_i_cases %>%
                   segment.size = 0.1,
                   segment.color="#333333"
   ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                limits=c( min(data_i_cases$date), max(data_i_cases$date + 9)) 
   ) + 
@@ -308,7 +308,7 @@ data_i_cases %>%
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
                  limits = c(1,max(data_i_cases$cases_per_100000)),
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                limits=c( min(data_i_cases$date), max(data_i_cases$date + 9)) 
   ) + 
@@ -348,7 +348,7 @@ data_i_cases %>%
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
                  limits = c(1,max(data_i_cases$cases_per_100000)),
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                limits=c( min(data_i_cases$date), max(data_i_cases$date + 9)) 
   ) + 
@@ -529,7 +529,7 @@ data_i_cases %>%
     ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date +15)),
+               limits=c( min(data_i_cases$date), max(data_i_cases$date +19)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -574,7 +574,7 @@ data_i_cases %>%
   ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date +9)),
+               limits=c( min(data_i_cases$date), max(data_i_cases$date +14)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -647,7 +647,7 @@ data_i_cases %>%
   ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date +9)),
+               limits=c( min(data_i_cases$date), max(data_i_cases$date +14)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
