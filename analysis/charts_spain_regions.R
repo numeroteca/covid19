@@ -19,8 +19,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Para ISCiii
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es)"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es)"
-period <- "Actualizado: 2020.05.02. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.05.02"
+period <- "Actualizado: 2020.05.03. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.05.03"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -2747,10 +2747,32 @@ data_all_export %>%
     labels = c("Recuperados","Muertos"),
   ) +
   facet_wrap( ~region, scales = "free") +
+  geom_text(data=filter( data_all_export, date==max(data_all_export$date) ),
+                  aes(date + 1,cases_registered, label=paste(format( round(cases_registered, digits = 0), nsmall=0, big.mark="."))),
+                  color="#2222BB",
+                  size=4,
+                  hjust=0,
+                  family = "Roboto Condensed"
+  ) +
+  geom_text(data=filter( data_all_export, date==max(data_all_export$date) ),
+                  aes(date + 1,recovered/2 + deceassed, label=paste(format(round(recovered, digits = 0), nsmall=0, big.mark="."))),
+                  color="#339922",
+                  size=4,
+                  hjust=0,
+                  family = "Roboto Condensed"
+  ) +
+  geom_text(data=filter( data_all_export, date==max(data_all_export$date) ),
+                  aes(date + 1,deceassed/2, label=paste(format(round(deceassed, digits = 0), nsmall=0, big.mark="."))),
+                  color="black",
+                  size=4,
+                  hjust=0,
+                  family = "Roboto Condensed"
+  ) +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "7 day", 
                date_labels = "%d",
-               expand = c(0,0)
+               expand = c(0,2),
+               limits = c(min(data_all_export$date),max(data_all_export$date)+20 )
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -2760,8 +2782,8 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     axis.text.x = element_text(size = 9),
     # strip.text = element_text( vjust = 0, debug = TRUE ),
-    strip.placement = "inside" 
-    # legend.position = "bottom"
+    strip.placement = "inside",
+    legend.position = "top"
   ) +
   labs(title = "Casos, recuperados y fallecidos acumulados de COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period, warning),
@@ -3403,17 +3425,17 @@ dev.off()
 # 10. Scatter polots ------------
 
 # --------- Relaciones --------
-png(filename=paste("img/spain/regions/covid19_muertes-vs-casos-provincia-relativo.png", sep = ""),width = 1200,height = 700)
+png(filename=paste("img/spain/regions/covid19_muertes-vs-casos-ccaa-relativo.png", sep = ""),width = 1200,height = 700)
 data_all_export %>% filter ( date == max(date) ) %>%
 ggplot() +
   # geom_line( aes(cases_per_cienmil,deceassed_per_100000, group=region, color=region), size= 1 ) +
-  geom_point(aes(cases_per_100000,deceassed_per_100000*10, color=region), size= 4 ) +
+  geom_point(aes(cases_per_100000,deceassed_per_100000, color=region), size= 4 ) +
   # lines(x = c(0,0), y = c(20,1000)) +
   # geom_abline(slope = 0.25) +
   # Annotations
   # geom_text(aes(cases_per_cienmil,deceassed_per_100000+0.5, color=deceassed,label=paste( substr(date,7,10 ))), size= 3, color="#000000") +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export[!is.na(data_all_export$date),]$date)),
-                  aes(cases_per_100000,deceassed_per_100000*10, color=region, label=region),
+                  aes(cases_per_100000,deceassed_per_100000, color=region, label=region),
                   nudge_y = 5, # adjust the starting y position of the text label
                   size=5,
                   # hjust=0,
@@ -3423,7 +3445,7 @@ ggplot() +
                   segment.color="#777777"
   ) +
   scale_y_continuous( 
-    breaks = c(200,400,600,800,1000,1200)
+    breaks = c(20,40,60,80,100,120)
     ) +
   scale_x_continuous( 
     # breaks = c(50,100,150,200,250,300,350)
@@ -3438,7 +3460,7 @@ ggplot() +
   ) +
   labs(title = "Fallecimientos y casos acumulados COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma",period),
-       y = "fallecimientos por 1.000.000 habitantes",
+       y = "fallecimientos por 100.000 habitantes",
        x = "casos acumulados por 100.000 habitantes",
        caption = caption)
 dev.off()
