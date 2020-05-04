@@ -638,9 +638,9 @@ for (i in 1:4) {
     ggplot() +
     geom_line(aes(days_since, daily_deaths_avg6, group= region, color= country), size= 0.9, alpha = 0.6, se = FALSE ) +
     # for interactive
-    geom_point(aes(days_since, daily_deaths_avg6, color= country,
-               text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")),
-               size= 1, alpha = 0.6  ) +
+    # geom_point(aes(days_since, daily_deaths_avg6, color= country,
+    #            text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")),
+    #            size= 1, alpha = 0.6  ) +
     geom_point(data = filter(test, date == max(test$date) ),  aes(days_since, daily_deaths_avg6, color= country, 
                                                                   text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")), 
                size= 1, alpha = 0.6  ) +

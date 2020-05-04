@@ -1,11 +1,14 @@
 # Script para calcular casos positivos en Cataluña y comparar con otras bases de datos
 # También 
 
+library(tidyverse)
+library(reshape2)
+
 # Donwloaded from https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data
 catalunya_original <-  read.delim("data/original/spain/catalunya/Registre_de_test_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
 # Datos del panel de control (https://app.powerbi.com/view?r=eyJrIjoiZTkyNTcwNjgtNTQ4Yi00ZTg0LTk1OTctNzM3ZGEzNWE4OTIxIiwidCI6IjNiOTQyN2RjLWQzMGUtNDNiYy04YzA2LWZmNzI1MzY3NmZlYyIsImMiOjh9)
 # de Salut de Catalunya descargados a mano en la hoja de cálculo y descargados en CSV
-powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",")
+powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",",skip = 1)
 
 catalunya <- catalunya_original
 
@@ -91,9 +94,13 @@ ggplot(cattotal) +
 
 # Fallecimientos ------
 
-powerbi$date <- as.Date(powerbi$fecha, "%d/%m/%y")
+powerbi$date <- as.Date(powerbi$Fecha, "%d/%m/%y")
 
-ggplot(powerbi) +
+powerbi %>% rename ( 
+  province = Territorio,
+  deceased = Fallecimientos
+  ) %>% 
+ggplot() +
   geom_line(data = filter (data_cases_sp_provinces, ccaa =="Cataluña" ) , aes(date, deceased, group = province, color ="#000000"),size = 1) +
   geom_point(data = filter (data_cases_sp_provinces, ccaa =="Cataluña" ) , aes(date,deceased ),size = 1) +
   geom_line(aes(date,deceased, group = province, color = "#DD0000")) +

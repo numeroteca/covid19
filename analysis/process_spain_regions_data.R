@@ -184,7 +184,7 @@ ciii <- ciii_original %>% head(nrow(ciii_original) - 6) %>% #Cambia el número e
     deceassed = Fallecidos,
     recovered = Recuperados
   ) %>% mutate (
-    cases_registered = ifelse( is.na(cases_registered), PCR + TestAc, cases_registered)
+    cases_registered = ifelse( is.na(cases_registered), PCR + ifelse(is.na(TestAc),0,TestAc ), cases_registered)
   )
 
 write.csv(ciii, file = "data/output/spain/iscii_processed_data.csv", row.names = FALSE)

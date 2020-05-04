@@ -123,6 +123,14 @@ for (i in 8:length( unique(data_cases_sp_provinces$date) )) {
 # convert -delay 55 -loop 0 mapa-coropletas-muertos-per-100000_2*.png animated-map-by-million-cumulative-deaths.gif
 
 # Contagios en los últimos 15 días -----
+
+
+zzzzzzz <- data_cases_sp_provinces %>%  
+  select(ine_code,cases_per_cienmil,date) %>% mutate(
+    incidencia14 = round( (cases_per_cienmil - lag(cases_per_cienmil,14) ) * 10,digits = 0)
+  ) 
+# %>% filter(date == unique(data_cases_sp_provinces$date)[i] )
+
 for (i in 8:length( unique(data_cases_sp_provinces$date) )) {
   # for (i in 58:length( unique(data_cases_sp_provinces$date) )) {
   print(unique(data_cases_sp_provinces$date)[i])
@@ -131,10 +139,10 @@ for (i in 8:length( unique(data_cases_sp_provinces$date) )) {
   provincias@data$ine_code <- substr(provincias@data$NATCODE,5,6) 
   provincias@data$ine_code <- as.integer(provincias@data$ine_code)
   
-  provincias@data <- left_join(provincias@data, data_cases_sp_provinces %>% filter(date == unique(data_cases_sp_provinces$date)[i] ) %>% 
+    provincias@data <- left_join(provincias@data, data_cases_sp_provinces %>% 
                                  select(ine_code,cases_per_cienmil,date) %>% mutate(
                                    incidencia14 = round( (cases_per_cienmil - lag(cases_per_cienmil,14) ) * 10,digits = 0)
-                                 ),
+                                 ) %>% filter(date == unique(data_cases_sp_provinces$date)[i] ),
                                by= c("ine_code" = "ine_code"))
   
   provincias@data$label <- paste(provincias@data$incidencia14, substr(provincias@data$province,1,1))

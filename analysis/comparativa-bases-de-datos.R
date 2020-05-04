@@ -9,16 +9,41 @@ library(tidyverse)
 ciii_original <- read.delim("https://covid19.isciii.es/resources/serie_historica_acumulados.csv",sep = ",")  
 write.csv(ciii_original, file = "data/original/spain/iscii_data.csv", row.names = FALSE)
 
-ciii <- ciii_original %>% head(nrow(ciii_original) - 5) %>% ungroup() #Cambia el número en función de las notas que incluya el csv original
-ciii$date <- as.Date(ciii$FECHA, "%d/%m/%Y" )
-names(ciii) <- c("region","fecha","cases_registered","hospitalized","UVI","deceassed","recovered","date")
-ciii$region <- factor(ciii$region)
-# translate iniciales
-levels(ciii$region)
-# rename comunidades autónomas
-#                          "AN"         "AR"    "AS"       "CB"        "CE"     "CL"               "CM"                 "CN"          "CT"        "EX"           "GA"        "IB"        "MC"          "MD"      "ML"        "NC"                   "PV"       "RI"           "VC"
-# levels(ciii$region) <- c("Andalucía","Aragón", "Asturias", "Cantabria","Ceuta", "Castilla y León","Castilla-La Mancha", "Canarias","Cataluña" , "Extremadura", "Galicia", "Baleares",   "Murcia","Madrid", "Melilla", "Navarra",  "País Vasco","La Rioja","C. Valenciana")  
-levels(ciii$region) <- c("Andalucía","Aragón", "Asturias", "Cantabria","Ceuta", "Castilla y León","Castilla-La Mancha", "Canarias","Cataluña" , "Extremadura", "Galicia", "Baleares",   "Murcia","Madrid", "Melilla", "Navarra",  "País Vasco","La Rioja","C. Valenciana")  
+ciii <- ciii_original %>% head(nrow(ciii_original) - 6) %>% #Cambia el número en función de las notas que incluya el csv original
+  ungroup() %>% mutate(
+    date = as.Date(FECHA, "%d/%m/%Y" ),
+    CCAA = CCAA %>% str_replace_all("AN", "Andalucía"),
+    CCAA = CCAA %>% str_replace_all("AR", "Aragón"),
+    CCAA = CCAA %>% str_replace_all("AS", "Asturias"),
+    CCAA = CCAA %>% str_replace_all("CB", "Cantabria"),
+    CCAA = CCAA %>% str_replace_all("CE", "Ceuta"),
+    CCAA = CCAA %>% str_replace_all("CL", "Castilla y León"),
+    CCAA = CCAA %>% str_replace_all("CM", "Castilla-La Mancha"),
+    CCAA = CCAA %>% str_replace_all("CN", "Canarias"),
+    CCAA = CCAA %>% str_replace_all("CT", "Cataluña"),
+    CCAA = CCAA %>% str_replace_all("EX", "Extremadura"),
+    CCAA = CCAA %>% str_replace_all("GA", "Galicia"),
+    CCAA = CCAA %>% str_replace_all("IB", "Baleares"),
+    CCAA = CCAA %>% str_replace_all("MC", "Murcia"),
+    CCAA = CCAA %>% str_replace_all("MD", "Madrid"),
+    CCAA = CCAA %>% str_replace_all("ML", "Melilla"),
+    CCAA = CCAA %>% str_replace_all("NC", "Navarra"),
+    CCAA = CCAA %>% str_replace_all("PV", "País Vasco"),
+    CCAA = CCAA %>% str_replace_all("RI", "La Rioja"),
+    CCAA = CCAA %>% str_replace_all("VC", "C. Valenciana"),
+  ) %>% rename(
+    region = CCAA,
+    fecha = FECHA,
+    cases_registered = CASOS,
+    PCR = PCR.,
+    TestAc =TestAc.,
+    hospitalized = Hospitalizados,
+    intensive_care = UCI,
+    deceassed = Fallecidos,
+    recovered = Recuperados
+  ) %>% mutate (
+    cases_registered = ifelse( is.na(cases_registered), PCR + TestAc, cases_registered)
+  )
 
 write.csv(ciii, file = "data/output/spain/iscii_processed_data.csv", row.names = FALSE)
 

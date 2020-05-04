@@ -19,8 +19,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Para ISCiii
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es)"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es)"
-period <- "Actualizado: 2020.05.03. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.05.03"
+period <- "Actualizado: 2020.05.04. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.05.04"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -416,7 +416,7 @@ dev.off()
 #                  breaks = c(1,10,100,1000,12000),
 #                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) )
 #                   ) +
-#   scale_x_date(date_breaks = "1 day", 
+#   scale_x_date(date_breaks = "2 day", 
 #                date_labels = "%d",
 #                limits=c( min(data_i_cases$date), max(data_all_export$date + 1.5)) 
 #   ) + 
@@ -1006,7 +1006,7 @@ data_all_export %>%
   scale_y_continuous(
     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits=c( min(data_all_export$date) + 6, max(data_all_export$date + 8)),
                expand = c(0,0),
@@ -1046,7 +1046,7 @@ data_all_export %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits=c( date_limit_init_death, max(data_all_export$date + 1.5))
                
@@ -1089,7 +1089,7 @@ data_all_export %>%
     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
   ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits=c( date_limit_init_death, max(data_all_export$date + 9))
   ) +
@@ -1128,7 +1128,7 @@ data_all_export %>%
   ) +
   scale_color_manual(values = colors ) +
   scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits=c( date_limit_init_death, max(data_all_export$date + 1.5))
   ) +
@@ -1166,7 +1166,7 @@ data_all_export %>% # filter( ! (date %in% dateunique$date & region == "Cataluñ
                   segment.color="#777777"
   ) +
   scale_color_manual(values = colors ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits=c( date_limit_init_death, max(data_all_export$date + 6))
   ) +
@@ -1207,7 +1207,7 @@ data_all_export %>%
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ),
     expand = c(0,0.4)
   ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits=c( date_limit_init_death, max(data_all_export$date + 12)),
                expand = c(0,0)
@@ -1260,7 +1260,7 @@ data_all_export %>%
   #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
   #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
   # ) +
-  scale_x_date(date_breaks = "4 day",
+  scale_x_date(date_breaks = "6 day",
                date_labels = "%d",
                limits=c( date_limit_init_death, max(data_all_export$date + 10)),
                expand = c(0,0)
@@ -1273,7 +1273,7 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de muertes por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de muertes por día (ventana de 7 días) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
        y = "fallecidos por día (media 7 días) (escala lineal)",
        x = "fecha",
@@ -1310,7 +1310,7 @@ data_all_export %>%
     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
   ) +
-  scale_x_date(date_breaks = "4 day",
+  scale_x_date(date_breaks = "6 day",
                date_labels = "%d",
                limits=c( date_limit_init_death, max(data_all_export$date + 10)),
                expand = c(0,0)
@@ -1323,7 +1323,7 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de muertes por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de muertes por día (ventana de 7 días) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period, warning),
        y = "fallecidos por día (media 7 días) (escala logarítmica)",
        x = "fecha",
@@ -1350,7 +1350,7 @@ data_all_export %>%
                   segment.color="#777777"
   ) +
   scale_color_manual(values = colors ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits=c( date_limit_init_death, max(data_all_export$date) + 12),
                expand = c(0,0)
@@ -1393,7 +1393,7 @@ data_all_export %>%
     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
   ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits=c( date_limit_init_death, max(data_all_export$date + 12)),
                expand = c(0,0)
@@ -1445,8 +1445,8 @@ data_all_export %>%
                   segment.color="#777777"
   ) +
   # marca la línea
-  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-08") &  region == "Madrid" ),
-                  aes(date+0.5,214, label=paste("media de 7 días")),
+  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-22") &  region == "Madrid" ),
+                  aes(date+0.5,110, label=paste("media de 7 días")),
                   nudge_y = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -1464,7 +1464,7 @@ data_all_export %>%
     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
   ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits=c( date_limit_init_death, max(data_all_export$date + 12)),
                expand = c(0,0)
@@ -1477,7 +1477,7 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de muertes por día (ventana de por COVID-19 en España",
+  labs(title = "Media de muertes por día (ventana de 7 días) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period, warning),
        y = "fallecidos por día (media 7 días) (escala logarítmica)",
        x = "fecha",
@@ -1532,9 +1532,9 @@ data_all_export %>%
   #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
   #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
   # ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
-               limits=c( date_limit_init_death, max(data_all_export$date + 11)),
+               limits=c( date_limit_init_death, max(data_all_export$date + 14)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -1545,7 +1545,7 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de muertes por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de muertes por día (ventana de 7 días) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period, warning),
        y = "fallecidos por día (media 7 días) (escala lineal)",
        x = "fecha",
@@ -1773,7 +1773,7 @@ dev.off()
 #   #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
 #   #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
 #   # ) +
-#   scale_x_date(date_breaks = "1 day",
+#   scale_x_date(date_breaks = "2 day",
 #                date_labels = "%d",
 #                limits=c( min(data_all_export$date), max(data_all_export$date + 5)),
 #                expand = c(0,0)
@@ -1818,7 +1818,7 @@ data_all_export %>%
   scale_y_continuous(
     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits = c(as.Date("2020-03-16"),max(data_all_export$date) + 10),
                expand = c(0,0)
@@ -1857,7 +1857,7 @@ dev.off()
 #                   segment.size = 0.1,
 #                   segment.color="#777777"
 #   ) +
-#   scale_x_date(date_breaks = "1 day",
+#   scale_x_date(date_breaks = "2 day",
 #                date_labels = "%d",
 #                limits=c( min(data_all_export$date), max(data_all_export$date + 1.5))
 #   ) +
@@ -1939,7 +1939,7 @@ dev.off()
 #   ) +
 #   scale_color_manual(values = colors ) +
 #   scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
-#   scale_x_date(date_breaks = "1 day",
+#   scale_x_date(date_breaks = "2 day",
 #                date_labels = "%d",
 #                limits=c( min(data_all_export$date), max(data_all_export$date + 1.5))
 #   ) +
@@ -1975,7 +1975,7 @@ dev.off()
 #                   segment.color="#777777"
 #   ) +
 #   scale_color_manual(values = colors ) +
-#   scale_x_date(date_breaks = "1 day",
+#   scale_x_date(date_breaks = "2 day",
 #                date_labels = "%d",
 #                limits=c( min(data_all_export$date), max(data_all_export$date) + 4),
 #                expand = c(0,0)
@@ -2017,7 +2017,7 @@ dev.off()
 #     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
 #     minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
 #   ) +
-#   scale_x_date(date_breaks = "1 day",
+#   scale_x_date(date_breaks = "2 day",
 #                date_labels = "%d",
 #                limits=c( min(data_all_export$date), max(data_all_export$date + 4)),
 #                expand = c(0,0)
@@ -2085,7 +2085,7 @@ dev.off()
 #     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
 #     minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
 #   ) +
-#   scale_x_date(date_breaks = "1 day",
+#   scale_x_date(date_breaks = "2 day",
 #                date_labels = "%d",
 #                limits=c( min(data_all_export$date), max(data_all_export$date + 5)),
 #                expand = c(0,0)
@@ -2153,7 +2153,7 @@ dev.off()
 #   #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
 #   #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
 #   # ) +
-#   scale_x_date(date_breaks = "1 day",
+#   scale_x_date(date_breaks = "2 day",
 #                date_labels = "%d",
 #                limits=c( min(data_all_export$date), max(data_all_export$date + 5)),
 #                expand = c(0,0)
@@ -2191,7 +2191,7 @@ data_all_export %>%
                   segment.color="#777777"
   ) +
   scale_color_manual(values = colors ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits = c(as.Date("2020-03-16"),max(data_all_export$date) + 11 )
   ) +
@@ -2232,7 +2232,7 @@ data_all_export %>%
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ),
     expand = c(0,0.1)
   ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits = c(as.Date("2020-03-16"),max(data_all_export$date) + 12 ),
                expand = c(0,0)
@@ -2286,7 +2286,7 @@ data_all_export %>%
   #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
   #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
   # ) +
-  scale_x_date(date_breaks = "4 day",
+  scale_x_date(date_breaks = "6 day",
                date_labels = "%d",
                limits=c( min(data_all_export$date + 20), max(data_all_export$date + 10)),
                expand = c(0,0)
@@ -2299,7 +2299,7 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de altas por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de altas por día (ventana de 7 días) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas por día (media 7 días) (escala logarítmica)",
        x = "fecha",
@@ -2336,7 +2336,7 @@ data_all_export %>%
     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
   ) +
-  scale_x_date(date_breaks = "4 day",
+  scale_x_date(date_breaks = "6 day",
                date_labels = "%d",
                limits=c( min(data_all_export$date + 20), max(data_all_export$date + 10)),
                expand = c(0,0)
@@ -2349,7 +2349,7 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de altas por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de altas por día (ventana de 7 días) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas por día (media 7 días) (escala logarítmica)",
        x = "fecha",
@@ -2408,7 +2408,7 @@ data_all_export %>%
     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
   ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits=c( min(data_all_export$date + 19), max(data_all_export$date + 12)),
                expand = c(0,0)
@@ -2421,7 +2421,7 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de altas por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de altas por día (ventana de 7 días) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas por día (media 7 días) (escala logarítmica)",
        x = "fecha",
@@ -2472,7 +2472,7 @@ data_all_export %>%
   coord_cartesian(
     ylim = c(1,max(data_all_export[!is.na(data_all_export$daily_recovered_avg6) & ( data_all_export$region != "Total"),]$daily_recovered_avg6)*1.1)
   ) +
-  scale_x_date(date_breaks = "1 day",
+  scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
                limits=c( min(data_all_export$date + 19), max(data_all_export$date + 11)),
                expand = c(0,0)
@@ -2485,7 +2485,7 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de altas por día en los 7 días anteriores (último inclusive) por COVID-19 en España",
+  labs(title = "Media de altas por día (ventana de 7 días) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas por día (media 7 días) (escala logarítmica)",
        x = "fecha",
@@ -3364,7 +3364,7 @@ test2 %>%
     plot.caption = element_text( color="#777777",size = 14, hjust = 1),
     legend.position = "none"
   ) + 
-  labs(title = paste0("Media de muertes por día en los 7 días anteriores por COVID-19 (",updata_date,")"),
+  labs(title = paste0("Media de muertes por día (ventana de 7 días) por COVID-19 (",updata_date,")"),
        subtitle = paste0("Por comunidad autónoma en España. Días desde ",umbral ," o más muertes", warning),
        y = "fallecimientos por día registrados",
        x = paste0("días desde ", umbral , " o más fallecimientos"),

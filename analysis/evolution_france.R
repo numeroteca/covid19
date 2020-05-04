@@ -9,7 +9,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------  
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_f <- "Gráfico: lab.montera34.com/covid19. Datos: OpenCOVID19-fr"
-periodo_f <- "2020.03.04 - 05.02"
+periodo_f <- "2020.03.04 - 05.03"
 
 # COVID-19 in France-----------
 
@@ -476,7 +476,7 @@ data_f2_cases %>%
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_f2_cases$date) + 40, max(data_f2_cases$date + 17)) 
+               limits=c( min(data_f2_cases$date) + 43, max(data_f2_cases$date + 20)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -515,7 +515,7 @@ data_f2_cases %>% # filter( source_type != "opencovid19-fr" | (source_type == "o
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_f2_cases$date) + 40, max(data_f2_cases$date + 17)) 
+               limits=c( min(data_f2_cases$date) + 43, max(data_f2_cases$date + 20)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
