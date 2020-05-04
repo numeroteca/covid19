@@ -11,15 +11,15 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
   
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
-caption <- "Gráfico: lab.montera34.com/covid19 | Datos: Ministerio de Sanidad de España extraídos por Datadista.com"
 caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
-caption_provincia <- "Nota: en revisión muertes Barcelona 28.04. Gráfico: @numeroteca (montera34.com) | Datos: recopilados por esCOVID19data (lab.montera34.com/covid19, github.com/montera34/escovid19data)"
-period <- "Actualizado: 2020.05.01. Nota: para CCAA uniprovinciales casos es la suma de PCR+ y TestAc+ a partir de 2020.04.15"
-filter_date <- as.Date("2020-05-01")
+caption_provincia <- "Nota: Gráfico: @numeroteca (montera34.com) | Datos: recopilados por esCOVID19data (lab.montera34.com/covid19, github.com/montera34/escovid19data)"
+period <- "Actualizado: 2020.05.03. Nota: para CCAA uniprovinciales casos es la suma de PCR+ y TestAc+ a partir de 2020.04.15"
+filter_date <- as.Date("2020-05-03")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
 data_cases_sp_provinces <- readRDS(file = "data/output/spain/covid19-provincias-spain_consolidated.rds")
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( (date > as.Date("2020-02-25") ) & ( date < filter_date ) )
 
 
 # Set colors ---------
@@ -36,11 +36,9 @@ colors_prov[12] <- "#84d3e7"
 # Plots --------------------
 # / 1. Cases ------------
 
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter(date > as.Date("2020-02-25"))
-
 # create temp dataframes to be able to plot all the values in small multiples
-data_cases_sp_provinces_sm <- data_cases_sp_provinces %>% filter( date != filter_date)
-data_cases_sp_provinces_sm$province_cp <- data_cases_sp_provinces[data_cases_sp_provinces$date != filter_date,]$province 
+data_cases_sp_provinces_sm <- data_cases_sp_provinces %>% filter( date < filter_date)
+data_cases_sp_provinces_sm$province_cp <- data_cases_sp_provinces[data_cases_sp_provinces$date < filter_date,]$province 
 
 # Remove last day
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != filter_date)
@@ -59,7 +57,7 @@ data_cases_sp_provinces %>%
   scale_y_continuous(
     limits = c(0,max(data_cases_sp_provinces$cases_accumulated) ),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                expand = c(0,0)
   ) + 
@@ -92,7 +90,7 @@ data_cases_sp_provinces %>%
     limits = c(1,max(data_cases_sp_provinces$cases_accumulated)),
     minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
   facet_wrap( ~province) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                expand = c(0,0)
   ) + 
@@ -119,7 +117,7 @@ data_cases_sp_provinces %>%
             aes(date,cases_accumulated,group=province_cp), color="#CACACA" ) +
   geom_line(aes(date,cases_accumulated,group=province), size = 0.7 ) +
   geom_text_repel(data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(cases_accumulated) ) %>% top_n(1, date),
-                  aes(date+1, cases_accumulated, label=paste(format(cases_accumulated, nsmall=1, big.mark="."), substr(province,1,2) ) ),
+                  aes(date+1, cases_accumulated, label=paste(format(cases_accumulated, nsmall=0, big.mark="."), substr(province,1,2) ) ),
                   nudge_x = 1, # adjust the starting x position of the text label
                   size=4,
                   hjust=0,
@@ -138,7 +136,7 @@ data_cases_sp_provinces %>%
     limits = c(1,max(data_cases_sp_provinces$cases_accumulated)*1.2),
     minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
   facet_wrap( ~ccaa) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                expand = c(0,0)
   ) + 
@@ -151,7 +149,7 @@ data_cases_sp_provinces %>%
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Número de casos acumulados de COVID-19 registrados en España",
-       subtitle = paste0("Por comunidad autónoma y provincias (escala logarítmica). ",period),
+       subtitle = paste0("Por comunidad autónoma y provincias (escala log.). ",period),
        y = "casos registrados",
        x = "fecha",
        caption = caption_provincia)
@@ -246,7 +244,7 @@ data_cases_sp_provinces %>%
                  limits = c(1,max(data_cases_sp_provinces$cases_accumulated)*1.2),
                  # breaks = c(1,10,100,1000),
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 13)),
                expand = c(0,0)
@@ -287,7 +285,7 @@ data_cases_sp_provinces %>%
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".",small.mark = ",", scientific = FALSE)
                       
                  ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 12)),
                expand = c(0,0) 
@@ -329,7 +327,7 @@ data_cases_sp_provinces %>%
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
                  limits = c(1,max( data_cases_sp_provinces[!is.na(data_cases_sp_provinces$cases_per_cienmil),]$cases_per_cienmil)*2),
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
-  scale_x_date(date_breaks = "2 day", 
+  scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date + 18)),
                expand = c(0,0) 
@@ -374,7 +372,7 @@ data_cases_sp_provinces %>%
   scale_y_continuous(
     # limits = c(0,max(data_cases_sp_provinces$cases_accumulated) ),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date)+1),
                expand = c(0,0) 
@@ -412,7 +410,7 @@ data_cases_sp_provinces %>%
   scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
                  labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
                  ) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date)),
                expand = c(0,0) 
@@ -474,7 +472,7 @@ data_cases_sp_provinces %>%
   scale_y_log10( 
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                expand = c(0,1) 
   ) + 
@@ -512,7 +510,7 @@ data_cases_sp_provinces %>%
                   segment.color="#777777"
   ) +
   facet_wrap(~province) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date)+12, max(data_cases_sp_provinces$date)),
                expand = c(0,0) 
@@ -554,7 +552,7 @@ data_cases_sp_provinces %>%
   scale_y_log10(  
     limits = c(0.05,max(data_cases_sp_provinces$deceassed_per_100000)),
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date)+15, max(data_cases_sp_provinces$date) ),
                expand = c(0,0) 
@@ -598,7 +596,7 @@ data_cases_sp_provinces %>%
   scale_y_log10(  
     limits = c(0.05,max(data_cases_sp_provinces$deceassed_per_100000)),
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d"
                # limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date) ) 
   ) + 
@@ -845,7 +843,7 @@ data_cases_sp_provinces %>%
             family = "Roboto Condensed"
   ) +
   facet_wrap(~province) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date)+15, max(data_cases_sp_provinces$date)),
                expand = c(0,0) 
@@ -911,21 +909,55 @@ for ( i in 1:52 ) {
 
 
 # SM Lineal
+# png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-lineal.png", sep = ""),width = 1200,height = 800)
+# data_cases_sp_provinces %>%
+#   ggplot() +
+#   geom_smooth(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(date,daily_deaths_avg6,province_cp,-province),
+#               aes(date,daily_deaths_avg6,group=province_cp), se = FALSE, span = 0.6, color="#CACACA", size=0.5 ) +
+#   geom_smooth(aes(date, daily_deaths_avg6,group=province), size= 0.9, se = FALSE, span = 0.6, color  = "#444444") +
+#   geom_point(aes(date, daily_deaths), size= 0.5, alpha=0.3 ) +
+#   geom_text(data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
+#             aes(date,max(data_cases_sp_provinces[!is.na(data_cases_sp_provinces$daily_deaths_avg6),]$daily_deaths_avg6)/1.2, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark="."))),
+#             size=4,
+#             hjust=1,
+#             family = "Roboto Condensed"
+#   ) +
+#   facet_wrap(~province) +
+#   scale_x_date(date_breaks = "6 day", 
+#                date_labels = "%d",
+#                limits=c( min(data_cases_sp_provinces$date)+15, max(data_cases_sp_provinces$date)),
+#                expand = c(0,0) 
+#   ) + 
+#   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+#   theme(
+#     panel.grid.minor.x = element_blank(),
+#     panel.grid.major.x = element_blank(),
+#     panel.grid.minor.y = element_blank(),
+#     axis.ticks.x = element_line(color = "#000000"),
+#     legend.position = c(0.1,0.6),
+#     axis.text.x = element_text(size = 9)
+#   ) +
+#   labs(title = "Media de muertes por día (7 días) por COVID-19 en España",
+#        subtitle = paste0("Por provincia (escala lineal). ",period),
+#        y = "Meded de fallecidos por día",
+#        x = "fecha",
+#        caption = caption_provincia)
+# dev.off()
+
 png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-lineal.png", sep = ""),width = 1200,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_smooth(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(date,daily_deaths_avg6,province_cp,-province),
-              aes(date,daily_deaths_avg6,group=province_cp), se = FALSE, span = 0.6, color="#CACACA", size=0.5 ) +
-  geom_smooth(aes(date, daily_deaths_avg6,group=province), size= 0.7, se = FALSE, span = 0.6, color = ccaa ) +
+  geom_smooth(aes(date, daily_deaths_avg6,group=province), size= 1.1, se = FALSE, span = 0.6, color  = "#444444") +
   geom_point(aes(date, daily_deaths), size= 0.5, alpha=0.3 ) +
-  geom_text(data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
-            aes(date,max(data_cases_sp_provinces[!is.na(data_cases_sp_provinces$daily_deaths_avg6),]$daily_deaths_avg6)/1.2, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark="."))),
+  geom_text(data= data_cases_sp_provinces %>% group_by(province)%>% filter(!is.na(deceased) ) %>% top_n(1, date),
+            aes(max(data_cases_sp_provinces$date)-10, daily_deaths_avg6*2.5, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","))),
             size=4,
-            hjust=1,
+            hjust=0,
+            color  = "#666666",
             family = "Roboto Condensed"
   ) +
-  facet_wrap(~province) +
-  scale_x_date(date_breaks = "5 day", 
+  facet_wrap(~province, scale="free") +
+  scale_x_date(date_breaks = "7 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date)+15, max(data_cases_sp_provinces$date)),
                expand = c(0,0) 
@@ -936,7 +968,9 @@ data_cases_sp_provinces %>%
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = c(0.1,0.6)
+    legend.position = c(0.1,0.6),
+    axis.text.x = element_text(size = 9),
+    axis.text.y = element_text(size = 10)
   ) +
   labs(title = "Media de muertes por día (7 días) por COVID-19 en España",
        subtitle = paste0("Por provincia (escala lineal). ",period),
@@ -964,7 +998,7 @@ data_cases_sp_provinces %>%
   scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
                  labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date)+15, max(data_cases_sp_provinces$date)),
                expand = c(0,0) 
@@ -988,10 +1022,11 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-lineal_ccaa.png", sep = ""),width = 1200,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(date,daily_deaths_avg6,province_cp,-province),
-            aes(date,daily_deaths_avg6,group=province_cp), color="#CACACA" ) +
+  # geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(date,daily_deaths_avg6,province_cp,-province),
+  #           aes(date,daily_deaths_avg6,group=province_cp), color="#CACACA" ) +
   # geom_line(aes(date, daily_deaths_avg6,group=province) ) +
-  geom_smooth(aes(date, daily_deaths_avg6,group=province), size= 0.7, se = FALSE, span = 0.6, color="#000000" ) +
+  geom_smooth(aes(date, daily_deaths_avg6,group=province, color = ccaa ), size= 1.2, se = FALSE, span = 0.7 ) +
+  geom_line(aes(date, daily_deaths_avg6,group=province), size= 0.4, color="#777777", alpha = 0.6 ) +
   # geom_point(aes(date, daily_deaths_avg6), size= 0.5 ) +
   geom_text_repel(
                       data = data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
@@ -1002,9 +1037,10 @@ data_cases_sp_provinces %>%
                       family = "Roboto Condensed",
                       direction="y",
                       segment.size = 0.1,
+                      color = "#666666",
                       segment.color="#777777"
   ) +
-  facet_wrap(~ccaa) +
+  facet_wrap(~ccaa, scales = "free_y") +
   coord_cartesian(
     xlim= c( as.Date("2020-03-15"),max(data_cases_sp_provinces$date) )
   ) +
@@ -1012,9 +1048,9 @@ data_cases_sp_provinces %>%
     # minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
                  labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
-               expand = c(0,12) 
+               expand = c(0,15) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1022,13 +1058,15 @@ data_cases_sp_provinces %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = c(0.1,0.6)
+    legend.position =  "none"
   ) +
-  labs(title = "Media de muertes por día (media 7 días) por COVID-19 en España",
+  labs(
+        title = "Media de muertes por día (ventana 7 días) por COVID-19 en España",
        subtitle = paste0("Por provincia (escala logarítmica). ",period),
        y = "media de fallecidos por día",
        x = "fecha",
-       caption = caption_provincia)
+       caption = caption_provincia
+       )
 dev.off()
 
 png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-log_ccaa.png", sep = ""),width = 1200,height = 800)
@@ -1058,7 +1096,7 @@ data_cases_sp_provinces %>%
   scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
                  labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                expand = c(0,12) 
   ) + 
@@ -1077,11 +1115,9 @@ data_cases_sp_provinces %>%
        caption = caption_provincia)
 dev.off()
 
-
-
 # Superpuesto Lineal ------
 png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-lineal.png", sep = ""),width = 1200,height = 800)
-data_cases_sp_provinces %>% 
+data_cases_sp_provinces %>%
   ggplot() +
   geom_line(aes(date, daily_deaths,group=province, color=ccaa), size= 0.8 ) +
   geom_point(aes(date, daily_deaths, color=ccaa), size= 1 ) +
@@ -1172,10 +1208,12 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-superpuesto-lineal_media.png", sep = ""),width = 1200,height = 800)
 data_cases_sp_provinces %>% 
   ggplot() +
-  geom_smooth(aes(date, daily_deaths_avg6,group=province, color=ccaa), size= 1, se = FALSE, span = 0.6 ) +
-  geom_point(aes(date, daily_deaths, color=ccaa), size= 1.5 ) +
+  # geom_smooth(aes(date, daily_deaths_avg6,group=province, color=ccaa), size= 1, se = FALSE, span = 0.6 ) +
+  geom_line(aes(date, daily_deaths_avg6,group=province, color=ccaa), size= 1 ) +
+  geom_line(aes(date, daily_deaths,group=province, color=ccaa), size= 0.2 ) +
+  geom_point(aes(date, daily_deaths, color=ccaa), size= 0.5, alpha = 0.5 ) +
   # geom_point(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), aes(date, daily_deaths_avg6, color=province), size= 1.5, alpha = 0.3 ) +
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths > 5), 
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths_avg6 > 5), 
                   aes(date, daily_deaths_avg6, color=ccaa, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),province)),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
@@ -1216,7 +1254,7 @@ data_cases_sp_provinces %>%
   # scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
   #                minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
   #                expand = c(0,0.2) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +9)),
                expand = c(0,0) 
@@ -1282,7 +1320,7 @@ data_cases_sp_provinces %>%
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
                  minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
                  expand = c(0,0.2) ) +
-  scale_x_date(date_breaks = "1 day", 
+  scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +9)),
                expand = c(0,0) 
@@ -1557,7 +1595,7 @@ data_cases_sp_provinces %>%
   scale_y_continuous(
     # limits = c(0,max(data_cases_sp_provinces$cases_accumulated) ),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date)+1),
                expand = c(0,0) 
@@ -1595,7 +1633,7 @@ data_cases_sp_provinces %>%
   scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
                  labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date)),
                expand = c(0,0) 
@@ -1659,7 +1697,7 @@ geom_line(aes(date, hospitalized,group=province), size= 0.7 ) +
   scale_y_log10( 
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                expand = c(0,1) 
   ) + 
@@ -1687,7 +1725,7 @@ data_cases_sp_provinces %>%
   geom_line(aes(date, hospitalized_per_100000_per_100000,group=province)) +
   geom_point(aes(date, hospitalized_per_100000_per_100000), size= 0.5 ) +
   facet_wrap(~province) +
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date)),
                expand = c(0,0) 
@@ -2175,7 +2213,7 @@ data_cases_sp_provinces %>%
 dev.off()
 
 
-# 10. Scatter polots ------------
+# 10. Scatter polts ------------
 
 last_day_available <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date,province) %>% 
   filter( row_number()==n() ) %>%
@@ -2259,7 +2297,7 @@ data_cases_sp_provinces %>% filter ( ccaa == "País Vasco") %>%
     # breaks = c(200,400,600,800,1000,1200,1400,1600,1800,2000)
     # minor_breaks = c(70,80,90,100)
   ) + 
-  scale_x_date(date_breaks = "5 day", 
+  scale_x_date(date_breaks = "6 day", 
                date_labels = "%d",
                limits=c( min(data_cases_sp_provinces$date)+20, max(data_cases_sp_provinces$date)),
                expand = c(0,0)
