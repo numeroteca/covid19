@@ -92,7 +92,6 @@ andalucia <- andalucia_original %>% filter( Territorio != "Andalucía" ) %>%
   )  %>% mutate (
     activos = NA,
     source_name = "Junta de Andalucía",
-    source="https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228",
     comments=""
   ) %>% select( -Fecha) %>% select( date, province, ccaa, new_cases, activos, hospitalized, intensive_care, deceased, cases_accumulated, recovered, source_name, source, comments) 
 
@@ -111,7 +110,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
 ciii_original <- read.delim("https://covid19.isciii.es/resources/serie_historica_acumulados.csv",sep = ",")  
 write.csv(ciii_original, file = "data/original/spain/iscii_data.csv", row.names = FALSE)
 
-ciii <- ciii_original %>% head(nrow(ciii_original) - 6) %>% #TODO: Cambia el número en función de las notas que incluya el csv original
+ciii <- ciii_original %>% head(nrow(ciii_original) - 8) %>% #TODO: Cambia el número en función de las notas que incluya el csv original
   ungroup() %>% mutate(
   date = as.Date(FECHA, "%d/%m/%Y" ),
   CCAA = CCAA %>% str_replace_all("AN", "Andalucía"),
@@ -143,7 +142,7 @@ ciii <- ciii_original %>% head(nrow(ciii_original) - 6) %>% #TODO: Cambia el nú
     intensive_care = UCI,
     deceassed = Fallecidos,
     recovered = Recuperados
-  )
+  ) %>% filter ( !is.na(region)  )
 
 # Filters and get only uniprovinciales
 uniprovinciales <- ciii %>% 
@@ -157,7 +156,7 @@ uniprovinciales <- ciii %>%
               comments= "",
               new_cases = NA,
               deceased = deceassed,
-              cases_accumulated = ifelse( is.na(cases_registered), PCR + TestAc, cases_registered)
+              cases_accumulated = ifelse( is.na(cases_registered), PCR + ifelse(is.na(TestAc),0,TestAc ), cases_registered)
               ) %>% rename(
               province = region,
               # cases_accumulated = cases_registered,
@@ -176,24 +175,68 @@ uniprovinciales <- ciii %>%
 # Add uniprovinciales data
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,uniprovinciales)
 
+# Overwrite Catalunya provinces cases  data ------------------
+cattotal <- readRDS(file = "data/output/catalunya-cases-evolution-by-province.rds")
+cattotal$ccaa <- "Cataluña"
+
+# creates unique date-province id to merge
+cattotal$dunique <- paste0(cattotal$date,cattotal$province)
+data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
+
+data_cases_sp_provinces <- merge(data_cases_sp_provinces, 
+                                 cattotal %>%
+                                   select(date,dunique,cases_accumulated,province,ccaa) %>% 
+                                   rename(
+                                     cases_accumulated_cat = cases_accumulated, 
+                                     date_cat = date,
+                                     province_cat = province,
+                                     ccaa_cat = ccaa ) , 
+                                 by.x="dunique", by.y="dunique", all = TRUE) 
+# %>% select(-dunique) 
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+  # add source of cataluña cases data
+  province = ifelse( is.na(province), as.character(province_cat), as.character(province)),
+  ccaa = ifelse( is.na(ccaa), as.character(ccaa_cat), as.character(ccaa)),
+  date = ifelse( is.na(date), date_cat, date),
+  date = as.Date(date, origin = "1970-01-01"),
+  cases_accumulated = ifelse( ccaa == "Cataluña", cases_accumulated_cat, cases_accumulated),
+  source_name = ifelse( ccaa == "Cataluña",paste0("Transparencia Catalunya;",as.character(source_name)), as.character(source_name) ), 
+  source = ifelse( ccaa == "Cataluña", 
+                   paste0(source,";https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv" ), 
+                   as.character(source) )
+) %>% select(-cases_accumulated_cat) %>% select(-province_cat) %>% select(-ccaa_cat)  %>% select(-dunique)  %>%  select(-date_cat) 
+
 # Overwrite Catalunya provinces death data ------------------
-powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",") %>% select(Fecha,Territorio,Fallecimientos,Fallecimientos_cum)
+powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",",skip = 1) %>% select(Fecha,Territorio,Fallecimientos,Fallecimientos_cum)
 powerbi$date <- as.Date(powerbi$Fecha, "%d/%m/%y")
+powerbi$ccaa <- "Cataluña"
 
 data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
 powerbi$dunique <- paste0(powerbi$date,powerbi$Territorio)
 
-data_cases_sp_provinces <- merge(data_cases_sp_provinces, powerbi %>% select(-date) %>% select(-Territorio) %>% select(dunique,Fallecimientos) %>% rename(deceased_cat = Fallecimientos ) , 
-                                 by.x="dunique", by.y="dunique", all.x = TRUE) %>% select(-dunique)
+data_cases_sp_provinces <- merge(data_cases_sp_provinces,
+                                 powerbi %>% select(date,dunique,Fallecimientos,Territorio,ccaa) %>% 
+                                   rename(
+                                     date_cat = date,
+                                     deceased_cat = Fallecimientos,
+                                     ccaa_cat = ccaa ) , 
+                                 by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique)
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
-  deceased = ifelse( ccaa == "Cataluña", deceased_cat, deceased),
   # add source of cataluña death data
-  source_name = ifelse( ccaa == "Cataluña","Generalitat de Catalunya", as.character(source_name) ),
+  date = ifelse( is.na(date), date_cat, date),
+  date = as.Date(date, origin = "1970-01-01"),
+  province = ifelse( is.na(province),   as.character(Territorio), province ),
+  ccaa = ifelse( is.na(ccaa),   as.character(ccaa_cat), ccaa ),
+  deceased = ifelse( ccaa == "Cataluña", deceased_cat, deceased),
+  source_name = ifelse( ccaa == "Cataluña",paste0(as.character(source_name),";Generalitat de Catalunya"), as.character(source_name) ),
   source = ifelse( ccaa == "Cataluña", 
                    paste0(source,";https://app.powerbi.com/view?r=eyJrIjoiZTkyNTcwNjgtNTQ4Yi00ZTg0LTk1OTctNzM3ZGEzNWE4OTIxIiwidCI6IjNiOTQyN2RjLWQzMGUtNDNiYy04YzA2LWZmNzI1MzY3NmZlYyIsImMiOjh9" ), 
-                   as.character(source) ),
-) %>% select(-deceased_cat)
+                   as.character(source) )
+) %>% select(-deceased_cat) %>% select(-date_cat) %>% select(-Territorio) %>% select(-ccaa_cat)
+
+
 # Add missing Barcelona data -------- 
 # # Do not use as data have been hasd coded in the original data
 # #  select all the cataluña provinces (Barcelona is not available) to calculate how many deaths

@@ -4,7 +4,8 @@
 library(tidyverse)
 library(reshape2)
 
-# Donwloaded from https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data
+# Donwloaded from 
+# https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data
 catalunya_original <-  read.delim("data/original/spain/catalunya/Registre_de_test_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
 # Datos del panel de control (https://app.powerbi.com/view?r=eyJrIjoiZTkyNTcwNjgtNTQ4Yi00ZTg0LTk1OTctNzM3ZGEzNWE4OTIxIiwidCI6IjNiOTQyN2RjLWQzMGUtNDNiYy04YzA2LWZmNzI1MzY3NmZlYyIsImMiOjh9)
 # de Salut de Catalunya descargados a mano en la hoja de cálculo y descargados en CSV
@@ -58,6 +59,7 @@ cattotal$province <- as.factor(cattotal$provincia_code)
 levels(cattotal$province) <- c("Girona","Lleida","Tarragona","Barcelona")
 
 write.csv(cattotal, file = "data/output/spain/catalunya-cases-evolution-by-province.csv", row.names = FALSE)
+saveRDS(cattotal, file = "data/output/catalunya-cases-evolution-by-province.rds")
 
 
 # Plots -----
