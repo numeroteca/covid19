@@ -100,6 +100,8 @@ Data structure:
 * `country` COuntry the region belongs to
 * `population` population of the region
 * `cases_registered` Number of registered cases
+* `PCR` Number of PCR+ positive tests
+* `TestAc` Number of positive anticuerpos (antibody) test
 * `cases_per_100000` Number of registered cases per 100.000 people
 * `intensive_care` Number of intensive care patients (UCI in Spanish). [Read Datadista README for exceptions](https://github.com/datadista/datasets/blob/master/COVID%2019/readme.md)
 * `intensive_care_per_1000000` Number of intensive care patients per 100.000 people (UCI in Spanish)
