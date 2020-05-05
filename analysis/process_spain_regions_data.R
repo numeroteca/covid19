@@ -151,7 +151,8 @@ data_all_export <- data_all_export %>% filter(!is.na(region))
 ciii_original <- read.delim("https://covid19.isciii.es/resources/serie_historica_acumulados.csv",sep = ",")  
 write.csv(ciii_original, file = "data/original/spain/iscii_data.csv", row.names = FALSE)
 
-ciii <- ciii_original %>% head(nrow(ciii_original) - 6) %>% #Cambia el número en función de las notas que incluya el csv original
+# TODO: warning check original footer in ISCII CSV.
+ciii <- ciii_original %>% head(nrow(ciii_original) - 8) %>% #Cambia el número en función de las notas que incluya el csv original
   ungroup() %>% mutate(
     date = as.Date(FECHA, "%d/%m/%Y" ),
     CCAA = CCAA %>% str_replace_all("AN", "Andalucía"),
@@ -185,7 +186,7 @@ ciii <- ciii_original %>% head(nrow(ciii_original) - 6) %>% #Cambia el número e
     recovered = Recuperados
   ) %>% mutate (
     cases_registered = ifelse( is.na(cases_registered), PCR + ifelse(is.na(TestAc),0,TestAc ), cases_registered)
-  )
+  ) %>% filter ( !is.na(region)  )
 
 write.csv(ciii, file = "data/output/spain/iscii_processed_data.csv", row.names = FALSE)
 
@@ -232,7 +233,6 @@ ciii <- ciii %>% rename( region_code = id, population = poblacion) %>%
 
 write.csv(data_all_export, file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv", row.names = FALSE)
 write.csv(ciii, file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated_isciii.csv", row.names = FALSE)
-
   
 # Use this to switch to ISCIII data -----
 data_all_export <- ciii
@@ -254,6 +254,8 @@ data_all_export <- data_all_export %>% group_by(region) %>%
                             deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)  
                             
                              )
+
+saveRDS(data_all_export, file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated_isciii.rds")
 
 # create df for small multiples -----
 data_all_export_sm <- data_all_export %>% ungroup

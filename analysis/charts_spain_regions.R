@@ -1,13 +1,17 @@
 # Crea gráficos de datos de Coronavirus COVID-19 en España por comunidad autónoma 
 # para la web lab.montera34.com/covid19
 
-# Usa el dataframe "data_all_export" generado en process_spain_regions.R. Corre ese script antes de poder ejecutar este
+# Usa el dataframe "data_all_export" generado en process_spain_regions.R. Corre ese script antes de poder ejecutar este.
+# Carga el dataframe generado
+data_all_export <- readRDS(file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated_isciii.rds")
 
 # Load libraries -----------
 library(tidyverse)
 library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 # library(RColorBrewer) # extends color paletter
+
+
 
 # Settings -------
 
@@ -19,8 +23,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Para ISCiii
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es)"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es)"
-period <- "Actualizado: 2020.05.04. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.05.04"
+period <- "Actualizado: 2020.05.05. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.05.05"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -41,7 +45,6 @@ colors[12] <- "#84d3e7"
 
 # // 1.1 Small multiple ------------
 
-  
 # Escala lineal
 png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-autonoma-lineal.png", sep = ""),width = 1200,height = 700)
 data_all_export %>%
@@ -570,7 +573,8 @@ data_all_export %>%
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9)
     # legend.position = "bottom"
   ) +
   labs(title = "Número de personas (acumulado) en la UCI por COVID-19 registrados en España por comunidad autónoma (escala lineal)",
@@ -598,7 +602,8 @@ data_all_export %>%
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9)
     # legend.position = "bottom"
   ) +
   labs(title = "Número de personas (acumulado) en la UCI por COVID-19 registrados en España por comunidad autónoma (escala logarítmica)",
@@ -626,7 +631,8 @@ data_all_export %>%
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9)
     # legend.position = "bottom"
   ) +
   labs(title = "Número de personas (acumulado) en la UCI por COVID-19 registrados en España por comunidad autónoma",
@@ -655,7 +661,8 @@ data_all_export %>%
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9)
     # legend.position = "bottom"
   ) +
   labs(title = "Número de personas (acumulado) por 100.000 habitantes en España en la UCI por COVID-19 registrados en España por comunidad autónoma (escala log)",
@@ -821,7 +828,7 @@ xx <- seq_along(unique(data_death2$date))
 # creates empty vectors
 y_percent2 <- vector(length=length(xx))
 # fill firs value
-y_percent2[[1]] <- 1535 # sets starting value
+y_percent2[[1]] <- 1825 # sets starting value
 # create data series with certain % of growth
 for (i in 2:length(xx)) {
   y_percent2[[i]] <- y_percent2[[i-1]] + y_percent2[[i-1]]*0.04 # grows n 
@@ -869,7 +876,8 @@ data_all_export %>%
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9)
     # legend.position = "bottom"
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
@@ -914,7 +922,8 @@ data_all_export %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = "bottom"
+    legend.position = "bottom",
+    axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
@@ -942,7 +951,8 @@ data_all_export %>%
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9)
     # legend.position = "bottom"
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
@@ -974,7 +984,8 @@ data_all_export %>%
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9)
     # legend.position = "bottom"
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España",
@@ -1234,8 +1245,8 @@ dev.off()
 png(filename=paste("img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-lineal_media.png", sep = ""),width = 1200,height = 700)
 data_all_export %>%
   ggplot() +
-  geom_line(data = data_all_export_sm %>%  ungroup() %>% select(date,daily_deaths_avg6,region_cp,-region),
-            aes(date,daily_deaths_avg6,group=region_cp), color="#CACACA" ) +
+  # geom_line(data = data_all_export_sm %>%  ungroup() %>% select(date,daily_deaths_avg6,region_cp,-region),
+  #           aes(date,daily_deaths_avg6,group=region_cp), color="#CACACA" ) +
   geom_point(aes(date,daily_deaths, color=region), size= 1.5, alpha = 0.5) +
   geom_smooth(aes(date,daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
   # geom_point(data=filter( data_all_export, date==max(data_all_export$date)), aes(date, daily_deaths_avg6, color=region), size= 1.5, alpha = 0.3 ) +
@@ -1250,17 +1261,17 @@ data_all_export %>%
                   segment.size = 0.2,
                   segment.color="#777777"
   ) +
-  facet_wrap( ~region) +
+  facet_wrap( ~region, scale = "free") +
   scale_color_manual(values = colors ) +
   coord_cartesian(
-    ylim = c(1,max(data_all_export[!is.na(data_all_export$daily_deaths_avg6),]$daily_deaths_avg6)+100)
+    # ylim = c(1,max(data_all_export[!is.na(data_all_export$daily_deaths_avg6),]$daily_deaths_avg6)+100)
   ) +
   # scale_y_log10(
   #   breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
   #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
   #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
   # ) +
-  scale_x_date(date_breaks = "6 day",
+  scale_x_date(date_breaks = "7 day",
                date_labels = "%d",
                limits=c( date_limit_init_death, max(data_all_export$date + 10)),
                expand = c(0,0)
@@ -1271,7 +1282,8 @@ data_all_export %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = "none"
+    legend.position = "none",
+    axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Media de muertes por día (ventana de 7 días) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
@@ -1321,7 +1333,8 @@ data_all_export %>%
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = "none"
+    legend.position = "none",
+    axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Media de muertes por día (ventana de 7 días) por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period, warning),
@@ -1489,7 +1502,8 @@ png(filename=paste("img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma
 data_all_export %>%  
   ggplot() +
   geom_smooth(aes(date,daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
-  geom_point(aes(date,daily_deaths, color=region), size= 1.5 ) +
+  geom_point(aes(date,daily_deaths, color=region), size= 0.7, alpha=0.6 ) +
+  geom_line(aes(date,daily_deaths, color=region, group=region), size= 0.3, alpha=0.6  ) +
   geom_point(data=filter( data_all_export, date==max(data_all_export$date)), aes(date, daily_deaths_avg6, color=region), size= 1.5, alpha = 0.3 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date) ),
                   aes(date,daily_deaths_avg6, color=region, label=paste(format(daily_deaths_avg6, nsmall=1, big.mark=".", decimal.mark = ","),region)),
@@ -1502,7 +1516,7 @@ data_all_export %>%
                   segment.color="#777777"
   ) +
   # marca un día
-  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-03-28") &  region == "Madrid" ),
+  geom_text_repel(data=filter( data_all_export, date==as.Date("2020-03-26") &  region == "Madrid" ),
                   aes(date,daily_deaths, label=paste("muertes en un día en una provincia")),
                   nudge_x = -1, # adjust the starting y position of the text label
                   size=5,
@@ -1514,10 +1528,10 @@ data_all_export %>%
   ) +
   # marca la línea
   geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-04") &  region == "Madrid" ),
-                  aes(date,275, label=paste("media de 7 días")),
-                  nudge_x = 2, # adjust the starting y position of the text label
+                  aes(date,267, label=paste("media de 7 días")),
+                  nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  hjust=1,
+                  hjust=0,
                   family = "Roboto Condensed",
                   # direction="x",
                   segment.size = 0.5,
@@ -1578,7 +1592,8 @@ data_all_export %>%
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9)
     # legend.position = "bottom"
   ) +
   labs(title = "Número de altas acumuladas por COVID-19 en España",
@@ -1623,7 +1638,8 @@ data_all_export %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = "bottom"
+    legend.position = "bottom",
+    axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Número de altas acumuladas por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
@@ -1651,7 +1667,8 @@ data_all_export %>%
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9)
     # legend.position = "bottom"
   ) +
   labs(title = "Número de altas acumuladas por COVID-19 por 100.000 habitantes en España",
@@ -1683,7 +1700,8 @@ data_all_export %>%
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9)
     # legend.position = "bottom"
   ) +
   labs(title = "Número de altas acumuladas por COVID-19 por 100.000 habitantes en España",
