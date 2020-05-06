@@ -32,8 +32,8 @@ zzz <- canarias@data
 maxdate <-  max(data_cases_sp_provinces$date)
 
 # adds airbnb data to shapes
-provincias@data <- left_join(provincias@data, data_cases_sp_provinces %>% filter(date == maxdate-1 ) %>% select(ine_code,deceassed_per_100000,province,date)  , by= c("ine_code" = "ine_code"))
-canarias@data <- left_join(canarias@data, data_cases_sp_provinces %>% filter(date == maxdate-1 ) %>% select(ine_code,deceassed_per_100000,province,date)  , by= c("ine_code" = "ine_code"))
+provincias@data <- left_join(provincias@data, data_cases_sp_provinces %>% filter(date == maxdate-2 ) %>% select(ine_code,deceassed_per_100000,province,date)  , by= c("ine_code" = "ine_code"))
+canarias@data <- left_join(canarias@data, data_cases_sp_provinces %>% filter(date == maxdate-2 ) %>% select(ine_code,deceassed_per_100000,province,date)  , by= c("ine_code" = "ine_code"))
 
 
 # tmap numer of listings MAP ----------------
@@ -56,17 +56,17 @@ canarias@data <- canarias@data %>% mutate( label = ifelse(is.na(province),"",lab
                                                label = ifelse(is.na(deceassed_per_100000),"",label),
 )
 
-
-png(filename="img/spain/maps/mapa-coropletas-muertos-per-100000.png",width = 1100,height = 400)
+png(filename="img/spain/maps/mapa-coropletas-muertos-per-100000_peninsula.png",width = 1100,height = 400)
 tm_shape(provincias) +
   tm_polygons(col="dp1",
               palette = colores,
               breaks = breaks.n,
-              style = "cont",
+              # style = "cont",
               title = "Total deaths per million population (escovid19data)",
-              border.alpha = 1, lwd = 0.2, legend.show = T, legend.outside = T,
+              border.alpha = 1, lwd = 0.4, legend.show = T, legend.outside = T,
               textNA="no data",
-              colorNA = "#FFEEEE"
+              colorNA = "#FFEEEE",
+              legend.hist = TRUE
   ) +
   tm_text("label",
           size= 0.9, alpha = 0.8) +
@@ -129,11 +129,12 @@ pen_map <- tm_shape(provincias) +
   tm_polygons(col="dp1",
               palette = colores,
               breaks = breaks.n,
-              style = "cont",
+              # style = "cont",
               title = "Total deaths per million population (escovid19data)",
-              border.alpha = 1, lwd = 0.2, legend.show = T, legend.outside = T,
+              border.alpha = 1, lwd = 0.4, legend.show = T, legend.outside = T,
               textNA="no data",
-              colorNA = "#FFEEEE"
+              colorNA = "#FFEEEE",
+              legend.hist = TRUE
   ) +
   tm_text("label",
           size= 0.9, alpha = 0.8) +
@@ -155,7 +156,7 @@ canarias_map <- tm_shape(canarias) +
   tm_polygons(col="dp1",
               palette = colores,
               breaks = breaks.n,
-              style = "cont",
+              # style = "cont",
               title = "",
               border.alpha = 1, lwd = 0.2, legend.show = T, legend.outside = T,
               textNA="",
@@ -173,7 +174,7 @@ canarias_map <- tm_shape(canarias) +
 
 
 # junto los dos    
-png(filename="img/spain/maps/mapa-coropletas-muertos-per-100000_total.png",width = 1100,height = 400)
+png(filename="img/spain/maps/mapa-coropletas-muertos-per-100000.png",width = 1100,height = 400)
 pen_map
 print(canarias_map, vp = grid::viewport(0.40, 0.12, width = 0.25, height = 0.18))
 dev.off()
@@ -181,7 +182,7 @@ dev.off()
 # Generate one map per day -----
 # for (i in 8:length( unique(data_cases_sp_provinces$date) )) {
 # for (i in 74:74) {
-for (i in 73:length( unique(data_cases_sp_provinces$date) )) {
+for (i in 8:length( unique(data_cases_sp_provinces$date) )) {
   print(unique(data_cases_sp_provinces$date)[i])
   print(i)
   provincias <- readOGR("data/original/spain/shapes/recintos_provinciales_inspire_peninbal_etrs89.json")
@@ -215,11 +216,12 @@ for (i in 73:length( unique(data_cases_sp_provinces$date) )) {
     tm_polygons(col="dp1",
                 palette = colores,
                 breaks = breaks.n,
-                style = "cont",
+                # style = "cont",
                 title = "Total deaths per million population (escovid19data)",
-                border.alpha = 1, lwd = 0.2, legend.show = T, legend.outside = T,
+                border.alpha = 1, lwd = 0.4, legend.show = T, legend.outside = T,
                 textNA="no data",
-                colorNA = "#FFEEEE"
+                colorNA = "#FFEEEE",
+                legend.hist = TRUE
     ) +
     tm_text("label",
             size= 0.9, alpha = 0.8) +
@@ -245,11 +247,11 @@ for (i in 73:length( unique(data_cases_sp_provinces$date) )) {
     tm_polygons(col="dp1",
                 palette = colores,
                 breaks = breaks.n,
-                style = "cont",
-                title = "",
-                border.alpha = 1, lwd = 0.2, legend.show = T, legend.outside = T,
-                textNA="",
-                colorNA = "#FFEEEE"
+                # style = "cont",
+                border.alpha = 1, lwd = 0.4, legend.show = T, legend.outside = T,
+                textNA="no data",
+                colorNA = "#FFEEEE",
+                legend.hist = TRUE
     ) +
     tm_text("label",
             size= 0.9, alpha = 0.8) +
