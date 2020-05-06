@@ -5,6 +5,10 @@
 # Carga el dataframe generado
 data_all_export <- readRDS(file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated_isciii.rds")
 
+# create df for small multiples -----
+data_all_export_sm <- data_all_export %>% ungroup
+data_all_export_sm$region_cp <-data_all_export_sm$region
+
 # Load libraries -----------
 library(tidyverse)
 library(reshape2)
@@ -23,8 +27,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Para ISCiii
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es)"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es)"
-period <- "Actualizado: 2020.05.05. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.05.05"
+period <- "Actualizado: 2020.05.06. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.05.06"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -32,7 +36,7 @@ warning <- ""
 # extends color paletter
 library(RColorBrewer)
 # creates extended color palette https://www.r-bloggers.com/how-to-expand-color-palette-with-ggplot-and-rcolorbrewer/
-colourCount <- length(unique(data_cases$CCAA))
+colourCount <- length(unique(data_all_export$region))
 getPalette <- colorRampPalette(brewer.pal(9, "Set1"))
 colors <- getPalette(colourCount )
 # Change yellow to blue
