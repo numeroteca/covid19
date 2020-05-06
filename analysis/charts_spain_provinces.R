@@ -13,8 +13,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
 caption_provincia <- "Nota: Gráfico: @numeroteca (montera34.com) | Datos: recopilados por esCOVID19data (lab.montera34.com/covid19, github.com/montera34/escovid19data)"
-period <- "Actualizado: 2020.05.04. Nota: para CCAA uniprovinciales casos es la suma de PCR+ y TestAc+ a partir de 2020.04.15"
-filter_date <- as.Date("2020-05-04")
+period <- "Actualizado: 2020.05.05. Nota: para CCAA uniprovinciales casos es la suma de PCR+ y TestAc+ a partir de 2020.04.15"
+filter_date <- as.Date("2020-05-05")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -1067,6 +1067,57 @@ data_cases_sp_provinces %>%
        x = "fecha",
        caption = caption_provincia
        )
+dev.off()
+
+# SM CCAA grouped ------
+png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-lineal-per-cienmil_ccaa.png", sep = ""),width = 1200,height = 800)
+data_cases_sp_provinces %>%
+  ggplot() +
+  geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(date,daily_deaths_avg6,province_cp,-province,poblacion),
+            aes(date,daily_deaths_avg6/poblacion*100000,group=province_cp), color="#CACACA" ) +
+  # geom_line(aes(date, daily_deaths_avg6,group=province) ) +
+  geom_smooth(aes(date, daily_deaths_avg6/poblacion*100000,group=province, color = ccaa ), size= 1.2, se = FALSE, span = 0.7 ) +
+  geom_line(aes(date, daily_deaths_avg6/poblacion*100000,group=province), size= 0.4, color="#777777", alpha = 0.6 ) +
+  # geom_point(aes(date, daily_deaths_avg6), size= 0.5 ) +
+  geom_text_repel(
+    data = data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
+    aes(date, daily_deaths_avg6/poblacion*100000, label=paste(format( round(daily_deaths_avg6/poblacion*100000, digits = 1), nsmall=1, big.mark="."), substr(province,1,2) ) ),
+    nudge_x = 2, # adjust the starting x position of the text label
+    size=4,
+    hjust=0,
+    family = "Roboto Condensed",
+    direction="y",
+    segment.size = 0.1,
+    color = "#666666",
+    segment.color="#777777"
+  ) +
+  facet_wrap(~ccaa) + #, scales = "free_y"
+  coord_cartesian(
+    xlim= c( as.Date("2020-03-15"),max(data_cases_sp_provinces$date) )
+  ) +
+  scale_y_continuous( 
+    # minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(date_breaks = "6 day", 
+               date_labels = "%d",
+               expand = c(0,15) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "none"
+  ) +
+  labs(
+    title = "Media de muertes por día (ventana 7 días) por COVID-19 por 100.000 habitantes en España",
+    subtitle = paste0("Por provincia (escala logarítmica). ",period),
+    y = "media de fallecidos por día",
+    x = "fecha",
+    caption = caption_provincia
+  )
 dev.off()
 
 png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media-log_ccaa.png", sep = ""),width = 1200,height = 800)
