@@ -28,7 +28,7 @@ data_cases_sp_provinces$date  <- as.Date(data_cases_sp_provinces$date)
 
 # Agreggate Canary islands -------
 canarias <- data_cases_sp_provinces %>% filter( ccaa == "Canarias")
-names(canarias)
+
 # Group by province
 tenerife <- canarias %>% filter(province == "La Gomera" | province =="La Palma" | province == "Tenerife" | province == "El Hierro") %>% group_by(date) %>% summarise(
   province = "Santa, Cruz de Tenerife",
@@ -67,6 +67,8 @@ data_cases_sp_provinces <-  data_cases_sp_provinces %>% filter( ccaa != "Canaria
 # Add Canarias
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,canarias_bind)
 
+rm(tenerife,palmas,canarias,canarias_bind)
+
 # Remove last -usually incomplete- day
 data_cases_sp_provinces <- filter(data_cases_sp_provinces, !is.na(date))
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != filter_date) %>% arrange(date)
@@ -97,6 +99,8 @@ andalucia <- andalucia_original %>% filter( Territorio != "Andalucía" ) %>%
 
 # Add new Andalucía data
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,andalucia)
+
+rm(andalucia,andalucia_original)
 
 # Remove and add uniprovinciales -----
 
@@ -176,7 +180,8 @@ uniprovinciales <- ciii %>%
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,uniprovinciales)
 
 # Overwrite Catalunya provinces cases  data ------------------
-cattotal <- readRDS(file = "data/output/catalunya-cases-evolution-by-province.rds")
+# This is calculated at analysis/count_catalunya.R
+cattotal <- readRDS(file = "data/output/spain/catalunya/catalunya-cases-evolution-by-province.rds")
 cattotal$ccaa <- "Cataluña"
 
 # creates unique date-province id to merge
@@ -208,6 +213,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 ) %>% select(-cases_accumulated_cat) %>% select(-province_cat) %>% select(-ccaa_cat)  %>% select(-dunique)  %>%  select(-date_cat) 
 
 # Overwrite Catalunya provinces death data ------------------
+# This is calculated at analysis/count_catalunya.R
 powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",",skip = 1) %>% select(Fecha,Territorio,Fallecimientos,Fallecimientos_cum)
 powerbi$date <- as.Date(powerbi$Fecha, "%d/%m/%y")
 powerbi$ccaa <- "Cataluña"

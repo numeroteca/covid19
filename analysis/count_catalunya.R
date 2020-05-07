@@ -6,7 +6,9 @@ library(reshape2)
 
 # Donwloaded from 
 # https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data
-catalunya_original <-  read.delim("data/original/spain/catalunya/Registre_de_test_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
+# catalunya_original_test <-  read.delim("data/original/spain/catalunya/Registre_de_test_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
+# https://analisi.transparenciacatalunya.cat/Salut/Registre-de-casos-de-COVID-19-realitzats-a-Catalun/jj6z-iyrp/data
+catalunya_original <-  read.delim("data/original/spain/catalunya/Registre_de_casos_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
 # Datos del panel de control (https://app.powerbi.com/view?r=eyJrIjoiZTkyNTcwNjgtNTQ4Yi00ZTg0LTk1OTctNzM3ZGEzNWE4OTIxIiwidCI6IjNiOTQyN2RjLWQzMGUtNDNiYy04YzA2LWZmNzI1MzY3NmZlYyIsImMiOjh9)
 # de Salut de Catalunya descargados a mano en la hoja de cálculo y descargados en CSV
 powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",",skip = 1)
@@ -53,23 +55,21 @@ cat43 <- cat43 %>% group_by( provincia_code) %>% arrange(date) %>%
 
 # Binds all the provinces
 cattotal <- rbind(cat8,cat17,cat25,cat43)
+rm(cat8,cat17,cat25,cat43)
 # Creates provinica factor
 cattotal$province <- as.factor(cattotal$provincia_code)
 # Gives names 
 levels(cattotal$province) <- c("Girona","Lleida","Tarragona","Barcelona")
 
-write.csv(cattotal, file = "data/output/spain/catalunya-cases-evolution-by-province.csv", row.names = FALSE)
-saveRDS(cattotal, file = "data/output/catalunya-cases-evolution-by-province.rds")
-
+write.csv(cattotal, file = "data/output/spain/catalunya/catalunya-cases-evolution-by-province.csv", row.names = FALSE)
+saveRDS(cattotal, file = "data/output/spain/catalunya/catalunya-cases-evolution-by-province.rds")
 
 # Plots -----
-
 ggplot(cattotal) +
   geom_line(aes(date,cases_accumulated, group = provincia_code), color = "red") +
   # uses data from evolution_spain_provinces.R script. Rund that first!
   geom_line(data = filter (data_cases_sp_provinces, ccaa =="Cataluña" ) , aes(date,cases_accumulated, group = province),size = 0.5) +
   scale_y_log10()
-
 
 ggplot(cattotal) +
   geom_line(data = filter (data_cases_sp_provinces, ccaa =="Cataluña" ) , aes(date,cases_accumulated, group = province, color ="#000000"),size = 1) +
@@ -138,3 +138,4 @@ ggplot() +
        caption = caption_provincia
     )
 
+rm(catalunya_new,catalunya,catalunya_original,powerbi)
