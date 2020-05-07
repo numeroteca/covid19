@@ -459,9 +459,9 @@ ggplot() +
                   text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")), 
               size= 1, alpha = 0.6  ) +
   # labels
-  geom_text_repel(data=filter( test, date== as.Date("2020-05-02") & country == "Spain" |
-                                 date==as.Date("2020-05-03") & country == "Italia" | 
-                                 date==as.Date("2020-05-03") & country == "France" |
+  geom_text_repel(data=filter( test, date== as.Date("2020-05-06") & country == "Spain" |
+                                 date==as.Date("2020-05-06") & country == "Italia" | 
+                                 date==as.Date("2020-05-05") & country == "France" |
                                  date==as.Date("2020-04-14") & country == "China"
                             ),
                   aes(days_since, deceassed, label=paste(format( round(deceassed, digits = 0), big.mark="."), region)),
@@ -505,7 +505,7 @@ if ( (i == 2) | (i == 3)  ) {
 
 if ( (i == 1) | (i == 2)  ) { # EN
   ptotal <- ptotal + labs(title = paste0("Coronavirus (COVID-19) deaths in regions of China, Spain, Italy and France"),
-     subtitle = paste0("Cumulative number of deaths, by number of days since ",umbral ,"th death. Updated: 2020.05.03"),
+     subtitle = paste0("Cumulative number of deaths, by number of days since ",umbral ,"th death. Updated: 2020.05.06"),
      y = "Number of deaths (log. scale)",
      x = paste0("Days since ", umbral , "th or more cumulative deaths"),
      caption ="By: @numeroteca (Montera34). https://lab.montera34.com/covid19 | Data: various official sources. Check website.") +
@@ -520,7 +520,7 @@ if ( (i == 1) | (i == 2)  ) { # EN
               size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555")
 } else { # ES
   ptotal <- ptotal + labs(title = paste0("Número de fallecimientos de COVID-19 registrados"),
-       subtitle = paste0("Por región en China, España, Italia y Francia (03.05.2022). Días desde ",umbral ," o más muertes (escala log)."),
+       subtitle = paste0("Por región en China, España, Italia y Francia (06.05.2022). Días desde ",umbral ," o más muertes (escala log)."),
        y = "fallecimientos registrados (escala log.)",
        x = paste0("días desde ", umbral , " o más fallecimientos"),
        caption ="Por: @numeroteca (Montera34). lab.montera34.com/covid19 | Data: various official sources. Check website.") +
@@ -540,10 +540,10 @@ dev.off()
 }
 
 fig <- ggplotly(ptotal, tooltip = "text") %>% 
-  layout(title = list(text = paste0('Coronavirus (COVID-19) deaths in regions of Spain, France and Italy',
+  layout(title = list(text = paste0('Coronavirus (COVID-19) deaths in regions of Spain, France, China and Italy',
       '<br>',
       '<sup>',
-      'Cumulative number of deaths, by number of days since ',umbral ,'th death. Updated: 2020.05.03',
+      'Cumulative number of deaths, by number of days since ',umbral ,'th death. Updated: 2020.05.06',
       '</sup>')))
   
 # save to interactive/spain-italy-france_cases_regions-evolution.html
@@ -689,7 +689,7 @@ for (i in 1:4) {
   }
   
   if ( (i == 1) | (i == 2)  ) { # EN
-    daily_plot <- daily_plot + labs(title = paste0("Daily deaths by coronavirus (COVID-19) in regions of China, Spain, Italy and France"),
+    daily_plot <- daily_plot + labs(title = paste0("Daily deaths by coronavirus (COVID-19) in regions of China (2020.04.14), Spain, Italy and France"),
                             subtitle = paste0("Daily deaths, by number of days since ",umbral ,"th death. Updated: 2020.05.03"),
                             y = "Daily deaths (rolling average 6 days)",
                             x = paste0("Days since ", umbral , "th or more cumulative deaths"),
@@ -697,7 +697,7 @@ for (i in 1:4) {
 
   } else { # ES
     daily_plot <- daily_plot + labs(title = paste0("Media de muertes por día en los 6 días anteriores por COVID-19 (2020.05.03)"),
-                            subtitle = paste0("Por región en China, España, Italia y Francia. Días desde ",umbral ," o más muertes (escala log)."),
+                            subtitle = paste0("Por región en China (2020.04.14), España, Italia y Francia. Días desde ",umbral ," o más muertes (escala log)."),
                             y = "fallecimientos por día registrados (escala log.)",
                             x = paste0("días desde ", umbral , " o más fallecimientos"),
                             caption ="Por: @numeroteca (Montera34). lab.montera34.com/covid19 | Data: various official sources. Check website.")
