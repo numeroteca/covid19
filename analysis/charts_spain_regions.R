@@ -27,8 +27,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Para ISCiii
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es)"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es)"
-period <- "Actualizado: 2020.05.06. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.05.06"
+period <- "Actualizado: 2020.05.07. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.05.07"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -213,7 +213,7 @@ data_all_export %>%
   geom_line(aes(date, cases_registered, group=region, color=region), size= 1 ) +
   geom_point(aes(date, cases_registered,  color=region), size= 2 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)), 
-                  aes(date, cases_registered,  color=region, label=paste(format( cases_registered,  nsmall=1, big.mark="."),region)),
+                  aes(date, cases_registered,  color=region, label=paste(format( cases_registered,  nsmall=0, big.mark="."),region)),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -253,7 +253,7 @@ data_all_export %>%
   geom_line(data = crec, aes(x = x.date, y = y_percent), linetype = 2, size = 1, color ="#444444") +
   scale_color_manual(values = colors ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)), 
-                  aes(date, cases_registered,  color=region, label=paste(format( cases_registered,  nsmall=1, big.mark="."),region)),
+                  aes(date, cases_registered,  color=region, label=paste(format( cases_registered,  nsmall=0, big.mark="."),region)),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -295,7 +295,7 @@ data_all_export %>%
   geom_text(data = crec[1,],aes(as.Date("2020-03-23"),12000,label=paste0("línea: un ", slope, "% más de casos cada día")), 
             size = 5, family = "Roboto Condensed", hjust=1) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)), 
-                  aes(date, cases_registered,  color=region, label=paste(format( cases_registered,  nsmall=1, big.mark="."),region)),
+                  aes(date, cases_registered,  color=region, label=paste(format( cases_registered,  nsmall=0, big.mark="."),region)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -332,7 +332,7 @@ data_all_export %>%
   geom_line(aes(date, cases_registered, group=region, color=region), size= 1 ) +
   geom_point(aes(date, cases_registered, color=region), size= 1.5 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)), 
-                  aes(date, cases_registered,  color=region, label=paste(format( cases_registered,  nsmall=1, big.mark="."),region)),
+                  aes(date, cases_registered,  color=region, label=paste(format( cases_registered,  nsmall=0, big.mark="."),region)),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -370,7 +370,7 @@ data_all_export %>%
   geom_line(aes(date, cases_registered, group=region, color=region), size= 1 ) +
   geom_point(aes(date, cases_registered, color=region), size= 1.5 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)), 
-                  aes(date, cases_registered,  color=region, label=paste(format( cases_registered,  nsmall=1, big.mark="."),region)),
+                  aes(date, cases_registered,  color=region, label=paste(format( cases_registered,  nsmall=0, big.mark="."),region)),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -1505,7 +1505,7 @@ dev.off()
 png(filename=paste("img/spain/regions/covid19_muertes-por-dia-comunidad-autonoma-superpuesto-lineal_media.png", sep = ""),width = 1200,height = 700)
 data_all_export %>%  
   ggplot() +
-  geom_smooth(aes(date,daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
+  geom_line(aes(date,daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
   geom_point(aes(date,daily_deaths, color=region), size= 0.7, alpha=0.6 ) +
   geom_line(aes(date,daily_deaths, color=region, group=region), size= 0.3, alpha=0.6  ) +
   geom_point(data=filter( data_all_export, date==max(data_all_export$date)), aes(date, daily_deaths_avg6, color=region), size= 1.5, alpha = 0.3 ) +
@@ -1532,7 +1532,7 @@ data_all_export %>%
   ) +
   # marca la línea
   geom_text_repel(data=filter( data_all_export, date==as.Date("2020-04-04") &  region == "Madrid" ),
-                  aes(date,267, label=paste("media de 7 días")),
+                  aes(date,260, label=paste("media de 7 días")),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,

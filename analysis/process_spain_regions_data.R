@@ -272,4 +272,4 @@ export_uniprovinciales_ciii <- ciii %>% select(date,region,hospitalized,intensiv
 
 write.csv(export_uniprovinciales_ciii, file = "data/output/spain/covid19-data-uniprovinciales_isciii.csv", row.names = FALSE)
 
-rm(export_uniprovinciales_ciii)
+rm(export_uniprovinciales_ciii,ccaa_poblacion)
