@@ -180,8 +180,58 @@ uniprovinciales <- ciii %>%
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,uniprovinciales)
 
 # Overwrite Catalunya provinces cases  data ------------------
-# This is calculated at analysis/count_catalunya.R
-cattotal <- readRDS(file = "data/output/spain/catalunya/catalunya-cases-evolution-by-province.rds")
+# Download data from: https://analisi.transparenciacatalunya.cat/Salut/Registre-de-casos-de-COVID-19-realitzats-a-Catalun/jj6z-iyrp/data
+catalunya <-  read.delim("data/original/spain/catalunya/Registre_de_casos_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
+
+# creates date variable
+catalunya$date <- as.Date(catalunya$TipusCasData, "%d/%m/%Y")
+# extracts first charatcter of zipcode to select province code
+catalunya$provincia_code <- ifelse(catalunya$MunicipiCodi < 10000, paste0(substr(as.character(catalunya$MunicipiCodi),1,1)), substr(as.character(catalunya$MunicipiCodi),1,2))     
+
+# iterates through data to count positives
+catalunya_new <- catalunya %>% group_by(date,provincia_code) %>% arrange(date) %>% filter( TipusCasDescripcio == "Positiu" ) %>%
+  # catalunya_new <- catalunya %>% group_by(date,provincia_code) %>% arrange(date) %>% filter( ResultatCovidDescripcio == "Positiu" |  ResultatCovidDescripcio == "Probable" ) %>%
+  summarise ( 
+    by_day = sum(NumCasos)
+  )
+
+# TODO: DRY code! 
+# Makes df for every province
+cat8 <- catalunya_new %>% filter(provincia_code == "8")
+cat8 <- cat8 %>% group_by( provincia_code) %>% arrange(date) %>%
+  mutate ( 
+    cases_accumulated = cumsum(by_day)
+  )
+
+cat17 <- catalunya_new %>% filter(provincia_code == "17")
+cat17 <- cat17 %>% group_by( provincia_code) %>% arrange(date) %>%
+  mutate ( 
+    cases_accumulated = cumsum(by_day)
+  )
+
+cat25 <- catalunya_new %>% filter(provincia_code == "25")
+cat25 <- cat25 %>% group_by( provincia_code) %>% arrange(date) %>%
+  mutate ( 
+    cases_accumulated = cumsum(by_day)
+  )
+
+cat43 <- catalunya_new %>% filter(provincia_code == "43")
+cat43 <- cat43 %>% group_by( provincia_code) %>% arrange(date) %>%
+  mutate ( 
+    cases_accumulated = cumsum(by_day)
+  )
+
+# Binds all the provinces
+cattotal <- rbind(cat8,cat17,cat25,cat43)
+rm(cat8,cat17,cat25,cat43)
+# Creates provinica factor
+cattotal$province <- as.factor(cattotal$provincia_code)
+# Gives names 
+levels(cattotal$province) <- c("Girona","Lleida","Tarragona","Barcelona")
+
+write.csv(cattotal, file = "data/output/spain/catalunya/catalunya-cases-evolution-by-province.csv", row.names = FALSE)
+saveRDS(cattotal, file = "data/output/spain/catalunya/catalunya-cases-evolution-by-province.rds")
+
 cattotal$ccaa <- "Cataluña"
 
 # creates unique date-province id to merge
@@ -285,13 +335,21 @@ data_cases_sp_provinces$hospitalized_per_100000 <- round( data_cases_sp_province
 # Calculates daily deaths
 data_cases_sp_provinces <- data_cases_sp_provinces %>% 
   group_by(province) %>% arrange(date) %>% 
-  mutate( daily_deaths = deceased - lag(deceased),
+  mutate( 
+          daily_cases = cases_accumulated - lag(cases_accumulated),
+          daily_cases_avg7 =  round( ( daily_cases + lag(daily_cases,1)+lag(daily_cases,2)+
+                                          lag(daily_cases,3)+lag(daily_cases,4)+lag(daily_cases,5)+lag(daily_cases,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
+          
+          daily_deaths = deceased - lag(deceased),
           daily_deaths_inc = round((deceased - lag(deceased)) /lag(deceased) * 100, digits = 1),
           daily_deaths_avg3 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2) ) / 3, digits = 1 ), # average of daily deaths of 3 last days
-          daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+
+          daily_deaths_avg7 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+
                                           lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5)+lag(daily_deaths,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
           deaths_cum_last_week = ( deceased + lag(deceased,1) + lag(deceased,2) + lag(deceased,3) + lag(deceased,4) + lag(deceased,5) + lag(deceased,6) ) / 7,  
-          deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)  
+          deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)
+          # hospitalized_avg7 =  round( ( hospitalized + lag(hospitalized,1)+lag(hospitalized,2)+
+          #                                 lag(hospitalized,3)+lag(hospitalized,4)+lag(hospitalized,5)+lag(hospitalized,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
+          
   )
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_code,everything())  
@@ -307,3 +365,5 @@ saveRDS(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-sp
 write.csv(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
 saveRDS(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.rds")
 
+# cleans environment
+rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_poblacion)

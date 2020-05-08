@@ -1,16 +1,21 @@
 # Script para calcular casos positivos en Cataluña y comparar con otras bases de datos
 # También 
 
+# Load libraries
 library(tidyverse)
 library(reshape2)
 
-# Donwloaded from 
+# Settings
+caption_provincia <- "Nota: Gráfico: @numeroteca (montera34.com) | Datos: recopilados por esCOVID19data (lab.montera34.com/covid19, github.com/montera34/escovid19data)"
+
+# Donwloaded data from 
 # https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data
 # catalunya_original_test <-  read.delim("data/original/spain/catalunya/Registre_de_test_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
 # https://analisi.transparenciacatalunya.cat/Salut/Registre-de-casos-de-COVID-19-realitzats-a-Catalun/jj6z-iyrp/data
 catalunya_original <-  read.delim("data/original/spain/catalunya/Registre_de_casos_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
 # Datos del panel de control (https://app.powerbi.com/view?r=eyJrIjoiZTkyNTcwNjgtNTQ4Yi00ZTg0LTk1OTctNzM3ZGEzNWE4OTIxIiwidCI6IjNiOTQyN2RjLWQzMGUtNDNiYy04YzA2LWZmNzI1MzY3NmZlYyIsImMiOjh9)
-# de Salut de Catalunya descargados a mano en la hoja de cálculo y descargados en CSV
+# de Salut de Catalunya descargados a mano en la hoja de cálculo (https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/edit#gid=841105696) 
+# y descargados en CSV
 powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",",skip = 1)
 
 catalunya <- catalunya_original
