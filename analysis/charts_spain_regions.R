@@ -15,8 +15,6 @@ library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 # library(RColorBrewer) # extends color paletter
 
-
-
 # Settings -------
 
 # Para Datadista
