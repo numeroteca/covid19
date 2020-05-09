@@ -73,7 +73,7 @@ rm(tenerife,palmas,canarias,canarias_bind)
 data_cases_sp_provinces <- filter(data_cases_sp_provinces, !is.na(date))
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != filter_date) %>% arrange(date)
 
-# Remove existing Andalucia data and add new one from new source ---------------------
+# Andalucía: Remove existing Andalucia data and add new one from new source ---------------------
 
 # Remove existing Andalucia data
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( ccaa != "Andalucía")
@@ -102,7 +102,7 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,andalucia)
 
 rm(andalucia,andalucia_original)
 
-# Remove and add uniprovinciales -----
+# Uniprovinciales: Remove and add uniprovinciales -----
 
 # Remove existing Uniprovinciales data
 data_cases_sp_provinces <- data_cases_sp_provinces %>% 
@@ -179,7 +179,7 @@ uniprovinciales <- ciii %>%
 # Add uniprovinciales data
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,uniprovinciales)
 
-# Overwrite Catalunya provinces cases  data ------------------
+# Catalunya: Overwrite Catalunya provinces cases  data ------------------
 # Download data from: https://analisi.transparenciacatalunya.cat/Salut/Registre-de-casos-de-COVID-19-realitzats-a-Catalun/jj6z-iyrp/data
 catalunya <-  read.delim("data/original/spain/catalunya/Registre_de_casos_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
 
@@ -264,7 +264,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 
 # Overwrite Catalunya provinces death data ------------------
 # This is calculated at analysis/count_catalunya.R
-powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",",skip = 1) %>% select(Fecha,Territorio,Fallecimientos,Fallecimientos_cum)
+powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",",skip = 1) %>% select(Fecha,Territorio,Fallecimientos)
 powerbi$date <- as.Date(powerbi$Fecha, "%d/%m/%y")
 powerbi$ccaa <- "Cataluña"
 
