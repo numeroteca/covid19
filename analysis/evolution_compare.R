@@ -9,6 +9,8 @@ library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 library(plotly)
 
+update_date <- "2020.05.08"
+
 # # load data
 # world_original <- read.delim("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv",sep = ",")
 # 
@@ -353,7 +355,7 @@ wuhan <- wuhan %>% group_by(region) %>% arrange(date) %>% mutate(
 compare_countries <- rbind(
   as.data.frame( data_all_export %>% select( date, region, country, deceassed, daily_deaths, daily_deaths_inc, daily_deaths_avg6 ) ), 
   as.data.frame( data_i_cases %>% select( date, region, country, deceassed, daily_deaths, daily_deaths_inc, daily_deaths_avg6 ) ),
-  as.data.frame( wuhan ) %>% filter( date < as.Date("2020-04-15"))
+  as.data.frame( wuhan ) # %>% filter( date < as.Date("2020-04-15"))
 )
 
 # adds FRance
@@ -452,20 +454,17 @@ ggplot() +
   geom_line(data =growth_2x, aes(days_since, value5), size= 0.5, color = "#555555", linetype = 2 ) +
   geom_line(aes(days_since, deceassed, group= region, color= country), size= 0.7, alpha = 0.6 ) +
   # points for interactive
-  geom_point( aes(days_since, deceassed, color= country,
-            text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")),
-             size= 0.6, alpha = 0.6  ) +
-  geom_point(data = filter(test, date == max(test$date) ),  aes(days_since, deceassed, color= country,
+  # geom_point( aes(days_since, deceassed, color= country,
+  #           text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")),
+  #            size= 0.6, alpha = 0.6  ) +
+  geom_point(data = test  %>% group_by(region) %>% filter(!is.na(date) ) %>% top_n(1, date ),
+             aes(days_since, deceassed, color= country,
                   text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")), 
               size= 1, alpha = 0.6  ) +
   # labels
-  geom_text_repel(data=filter( test, date== as.Date("2020-05-06") & country == "Spain" |
-                                 date==as.Date("2020-05-06") & country == "Italia" | 
-                                 date==as.Date("2020-05-05") & country == "France" |
-                                 date==as.Date("2020-04-14") & country == "China"
-                            ),
+  geom_text_repel(data= test  %>% group_by(region) %>% filter(!is.na(date) ) %>% top_n(1, date ),
                   aes(days_since, deceassed, label=paste(format( round(deceassed, digits = 0), big.mark="."), region)),
-                  color= "#000000",
+                  color= "#555555",
                   nudge_x = 1, # adjust the starting y position of the text label
                   size=4,
                   hjust=1,
@@ -495,7 +494,7 @@ ggplot() +
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     plot.caption = element_text( color="#777777",size = 14, hjust = 1),
-    legend.position = c(0.9,0.3)
+    legend.position = c(0.95,0.3)
   ) 
 
 
@@ -504,8 +503,8 @@ if ( (i == 2) | (i == 3)  ) {
 }
 
 if ( (i == 1) | (i == 2)  ) { # EN
-  ptotal <- ptotal + labs(title = paste0("Coronavirus (COVID-19) deaths in regions of China, Spain, Italy and France"),
-     subtitle = paste0("Cumulative number of deaths, by number of days since ",umbral ,"th death. Updated: 2020.05.06"),
+  ptotal <- ptotal + labs(title = paste0("Coronavirus (COVID-19) deaths in regions of China (2020.04.14), Spain, Italy and France"),
+     subtitle = paste0("Cumulative number of deaths, by number of days since ",umbral ,"th death. Updated: ",update_date),
      y = "Number of deaths (log. scale)",
      x = paste0("Days since ", umbral , "th or more cumulative deaths"),
      caption ="By: @numeroteca (Montera34). https://lab.montera34.com/covid19 | Data: various official sources. Check website.") +
@@ -513,25 +512,25 @@ if ( (i == 1) | (i == 2)  ) { # EN
     geom_text(data = growth_2x[1,], aes(20,12000, label=paste0("slope: deaths double every 2 days")),
               size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") +
     geom_text(data = growth_2x[1,], aes(35,12000, label=paste0("... every 3 days")),
-              size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") +
-    geom_text(data = growth_2x[1,], aes(40,12000, label=paste0("... every 4 days")),
-              size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555") +
-    geom_text(data = growth_2x[1,], aes(50,4000, label=paste0("... every 5 days")),
-              size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555")
+              size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") 
+    # geom_text(data = growth_2x[1,], aes(40,12000, label=paste0("... every 4 days")),
+    #           size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555") +
+    # geom_text(data = growth_2x[1,], aes(50,4000, label=paste0("... every 5 days")),
+    #           size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555")
 } else { # ES
   ptotal <- ptotal + labs(title = paste0("Número de fallecimientos de COVID-19 registrados"),
-       subtitle = paste0("Por región en China, España, Italia y Francia (06.05.2022). Días desde ",umbral ," o más muertes (escala log)."),
+       subtitle = paste0("Por región en China (2020.04.14), España, Italia y Francia (",update_date,"). Días desde ",umbral ," o más muertes (escala log)."),
        y = "fallecimientos registrados (escala log.)",
        x = paste0("días desde ", umbral , " o más fallecimientos"),
        caption ="Por: @numeroteca (Montera34). lab.montera34.com/covid19 | Data: various official sources. Check website.") +
     geom_text(data = growth_2x[1,], aes(20,12000, label=paste0("pendiente: muertes doblan cada 2 días")),
               size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") +
     geom_text(data = growth_2x[1,], aes(35,12000, label=paste0("... doblan cada 3 días")),
-              size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") +
-    geom_text(data = growth_2x[1,], aes(40,12000, label=paste0("... doblan cada 4 días")),
-              size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555") +
-    geom_text(data = growth_2x[1,], aes(50,4000, label=paste0("...doblan cada 5 días")),
-              size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555")
+              size = 4, family = "Roboto Condensed", hjust = 1, color = "#555555") 
+    # geom_text(data = growth_2x[1,], aes(40,12000, label=paste0("... doblan cada 4 días")),
+    #           size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555") +
+    # geom_text(data = growth_2x[1,], aes(50,4000, label=paste0("...doblan cada 5 días")),
+    #           size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555")
 }
 
 print(ptotal)
@@ -543,7 +542,7 @@ fig <- ggplotly(ptotal, tooltip = "text") %>%
   layout(title = list(text = paste0('Coronavirus (COVID-19) deaths in regions of Spain, France, China and Italy',
       '<br>',
       '<sup>',
-      'Cumulative number of deaths, by number of days since ',umbral ,'th death. Updated: 2020.05.06',
+      'Cumulative number of deaths, by number of days since ',umbral ,'th death. Updated: ',update_date,
       '</sup>')))
   
 # save to interactive/spain-italy-france_cases_regions-evolution.html
@@ -582,13 +581,11 @@ test2$days_since <- as.numeric(test2$date - min(compare_countries_offset_ncases_
 png(filename=paste0("img/compare/covid19_fallecimientos-por-region-superpuesto-offset-per-cienmil-log_since-", umbral ,"deceased.png"),width = 1000,height = 700)
 test2 %>% filter( country != "France") %>%
   ggplot() +
-  geom_line(aes(days_since, deceassed_per_100000*10, group= region, color= country), size= 1 ) +
-  geom_point(data = test2 %>% filter( date==max(as.Date("2020-05-02")) & country == "Spain"  |
-                                        date==max(as.Date("2020-05-03")) & country == "Italia" ), 
+  geom_line(aes(days_since, deceassed_per_100000*10, group= region, color= country), size= 0.8 ) +
+  geom_point(data = test2 %>% group_by(region) %>% filter(!is.na(date) ) %>% top_n(1, date ),
              aes(days_since, deceassed_per_100000*10, color= country), size= 1.5 ) +
   # Spain
-  geom_text_repel(data=filter( test2,   date==max(as.Date("2020-05-02")) & country == "Spain"  |
-                                       date==max(as.Date("2020-05-03")) & country == "Italia"  ),
+  geom_text_repel(data= test2 %>% group_by(region) %>% filter(!is.na(date) ) %>% top_n(1, date ),
                   aes(days_since, deceassed_per_100000*10, label=paste(format(deceassed_per_100000*10, nsmall=1, big.mark="."), region)),
                   color= "#000000",
                   nudge_x = 3, # adjust the starting y position of the text label
@@ -616,7 +613,7 @@ test2 %>% filter( country != "France") %>%
     legend.position = c(0.9,0.3)
   ) +
   labs(title = paste0("Número de fallecimientos de COVID-19 registrados por 1.000.000 habitantes por región en España e Italia"),
-       subtitle = paste0("Muertes acumuladas desde ", umbral , " o más fallecimientos por millón de habitantes (03.05.2020). Escala logarítmica"),
+       subtitle = paste0("Muertes acumuladas desde ", umbral , " o más fallecimientos por millón de habitantes (", update_date,"). Escala logarítmica"),
        y = "fallecimientos registrados por 1.000.000 habitantes (escala log)",
        x = paste0("días desde ", umbral , " o más fallecimientos por 1.000.000 habitantes"),
        caption ="Por: @numeroteca (Montera34). lab.montera34.com/covid19 | Data: various official sources. Check website.")
@@ -641,14 +638,11 @@ for (i in 1:4) {
     # geom_point(aes(days_since, daily_deaths_avg6, color= country,
     #            text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")),
     #            size= 1, alpha = 0.6  ) +
-    geom_point(data = filter(test, date == max(test$date) ),  aes(days_since, daily_deaths_avg6, color= country, 
-                                                                  text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")), 
+    geom_point(data =  test  %>% group_by(region) %>% filter(!is.na(date) ) %>% top_n(1, date ),
+               aes(days_since, daily_deaths_avg6, color= country, 
+                text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")), 
                size= 1, alpha = 0.6  ) +
-    geom_text_repel(data=filter( test, date== as.Date("2020-05-02") & country == "Spain" |
-                                 date==as.Date("2020-05-03") & country == "Italia" | 
-                                 date==as.Date("2020-05-03") & country == "France" |
-                                   date==as.Date("2020-04-14") & country == "China"  
-                                   ),
+    geom_text_repel(data= test  %>% group_by(region) %>% filter(!is.na(date) ) %>% top_n(1, date ),
                   # aes(days_since, daily_deaths_avg6, label=paste(format( round(daily_deaths_avg6, digits = 1), big.mark="."), region)),
                   aes(days_since, daily_deaths_avg6, label=paste(region)),
                   color= "#000000",
@@ -689,15 +683,15 @@ for (i in 1:4) {
   }
   
   if ( (i == 1) | (i == 2)  ) { # EN
-    daily_plot <- daily_plot + labs(title = paste0("Daily deaths by coronavirus (COVID-19) in regions of China (2020.04.14), Spain, Italy and France"),
-                            subtitle = paste0("Daily deaths, by number of days since ",umbral ,"th death. Updated: 2020.05.03"),
+    daily_plot <- daily_plot + labs(title = paste0("Daily deaths by coronavirus (COVID-19) in regions of China, Spain, Italy and France"),
+                            subtitle = paste0("Daily deaths, by number of days since ",umbral ,"th death. Updated: ", update_date),
                             y = "Daily deaths (rolling average 6 days)",
                             x = paste0("Days since ", umbral , "th or more cumulative deaths"),
                             caption ="By: @numeroteca (Montera34). https://lab.montera34.com/covid19 | Data: various official sources. Check website.")
 
   } else { # ES
-    daily_plot <- daily_plot + labs(title = paste0("Media de muertes por día en los 6 días anteriores por COVID-19 (2020.05.03)"),
-                            subtitle = paste0("Por región en China (2020.04.14), España, Italia y Francia. Días desde ",umbral ," o más muertes (escala log)."),
+    daily_plot <- daily_plot + labs(title = paste0("Media de muertes por día en los 6 días anteriores por COVID-19 (",update_date,")"),
+                            subtitle = paste0("Por región en China, España, Italia y Francia. Días desde ",umbral ," o más muertes (escala log)."),
                             y = "fallecimientos por día registrados (escala log.)",
                             x = paste0("días desde ", umbral , " o más fallecimientos"),
                             caption ="Por: @numeroteca (Montera34). lab.montera34.com/covid19 | Data: various official sources. Check website.")
@@ -712,7 +706,7 @@ fig <- ggplotly(daily_plot, tooltip = "text") %>%
   layout(title = list(text = paste0('Daily deaths by COVID-19 in regions of Spain, Italy and France',
           '<br>',
           '<sup>',
-          'Daily deaths (rolling average 6 days)',umbral ,'th death. Updated: 2020.05.03',
+          'Daily deaths (rolling average 6 days)',umbral ,'th death. Updated: 'update_date,
           '</sup>')))
 
 # save to interactive/spain-italy-france_cases_regions-evolution.html
