@@ -148,7 +148,8 @@ ccaa_poblacion <-  read.delim("data/original/spain/ccaa-poblacion.csv",sep = ";"
 
 # B. ISCiii load Instituto de Salud Carlos III data instead ------------
 # import Instituto de Salud CIII 
-ciii_original <- read.delim("https://covid19.isciii.es/resources/serie_historica_acumulados.csv",sep = ",")  
+# ciii_original <- read.delim("https://covid19.isciii.es/resources/serie_historica_acumulados.csv",sep = ",")  
+ciii_original <- read.delim("https://cnecovid.isciii.es/covid19/resources/agregados.csv",sep = ",")  
 write.csv(ciii_original, file = "data/original/spain/iscii_data.csv", row.names = FALSE)
 
 # TODO: warning check original footer in ISCII CSV.

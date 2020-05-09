@@ -25,8 +25,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Para ISCiii
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es)"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es)"
-period <- "Actualizado: 2020.05.07. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.05.07"
+period <- "Actualizado: 2020.05.09. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.05.09"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -1021,9 +1021,9 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
-               limits=c( min(data_all_export$date) + 6, max(data_all_export$date + 8)),
-               expand = c(0,0),
-               limits = c(date_limit_init_death,max(data_all_export$date) )
+               limits=c( min(data_all_export$date) + 6, max(data_all_export$date + 12)),
+               expand = c(0,0)
+               # limits = c(date_limit_init_death,max(data_all_export$date) )
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1061,7 +1061,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
-               limits=c( date_limit_init_death, max(data_all_export$date + 1.5))
+               limits=c( date_limit_init_death, max(data_all_export$date + 12))
                
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -1104,7 +1104,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
-               limits=c( date_limit_init_death, max(data_all_export$date + 9))
+               limits=c( date_limit_init_death, max(data_all_export$date + 14))
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1133,7 +1133,7 @@ data_all_export %>%
                   aes(date,deceassed, color=region, label=paste(format(deceassed, nsmall=1, big.mark="."),region)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
-                  # hjust=0,
+                  hjust=0,
                   family = "Roboto Condensed",
                   direction="y",
                   segment.size = 0.1,
@@ -1143,7 +1143,7 @@ data_all_export %>%
   scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
   scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
-               limits=c( date_limit_init_death, max(data_all_export$date + 1.5))
+               limits=c( date_limit_init_death, max(data_all_export$date + 12))
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1181,7 +1181,7 @@ data_all_export %>% # filter( ! (date %in% dateunique$date & region == "Cataluñ
   scale_color_manual(values = colors ) +
   scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
-               limits=c( date_limit_init_death, max(data_all_export$date + 6))
+               limits=c( date_limit_init_death, max(data_all_export$date + 12))
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1206,7 +1206,7 @@ data_all_export %>%
   geom_text_repel(data=filter( data_all_export, (date==max(data_all_export$date) )
                         ),
                         aes(date,deceassed_per_100000, color=region, label=paste(format(deceassed_per_100000, nsmall=1, big.mark=".", decimal.mark = ","),region)),
-                        nudge_x = 5, # adjust the starting y position of the text label
+                        nudge_x = 2, # adjust the starting y position of the text label
                         size=5,
                         hjust=0,
                         family = "Roboto Condensed",
@@ -1282,7 +1282,7 @@ data_all_export %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none",
     axis.text.x = element_text(size = 9)
