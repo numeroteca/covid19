@@ -32,8 +32,8 @@ zzz <- canarias@data
 maxdate <-  max(data_cases_sp_provinces$date)
 
 # adds airbnb data to shapes
-provincias@data <- left_join(provincias@data, data_cases_sp_provinces %>% filter(date == maxdate-2 ) %>% select(ine_code,deceassed_per_100000,province,date)  , by= c("ine_code" = "ine_code"))
-canarias@data <- left_join(canarias@data, data_cases_sp_provinces %>% filter(date == maxdate-2 ) %>% select(ine_code,deceassed_per_100000,province,date)  , by= c("ine_code" = "ine_code"))
+provincias@data <- left_join(provincias@data, data_cases_sp_provinces %>% filter(date == maxdate-2 ) %>% select(ine_code,deceassed_per_100000,province,date,poblacion)  , by= c("ine_code" = "ine_code"))
+canarias@data <- left_join(canarias@data, data_cases_sp_provinces %>% filter(date == maxdate-2 ) %>% select(ine_code,deceassed_per_100000,province,date,poblacion)  , by= c("ine_code" = "ine_code"))
 
 
 # tmap numer of listings MAP ----------------
@@ -334,4 +334,71 @@ for (i in 8:length( unique(data_cases_sp_provinces$date) )) {
   dev.off()
   
 }
+
+
+# ------------------
+# Export geojon ---
+data_cases_sp_provinces <- readRDS(file = "data/output/spain/covid19-provincias-spain_consolidated.rds")
+
+# Load shapes
+provincias <- readOGR("data/original/spain/shapes/recintos_provinciales_inspire_peninbal_etrs89.json")
+canarias <- readOGR("data/original/spain/shapes/recintos_provinciales_inspire_canarias_etrs89_simply.json")
+
+# Create INE code
+provincias@data$ine_code <- substr(provincias@data$NATCODE,5,6) 
+provincias@data$ine_code <- as.integer(provincias@data$ine_code)
+
+canarias@data$ine_code <- substr(canarias@data$NATCODE,5,6)
+canarias@data$ine_code <- as.integer(canarias@data$ine_code)
+
+
+maxdate <-  max(data_cases_sp_provinces$date)
+
+# adds airbnb data to shapes
+provincias@data <- left_join(provincias@data, data_cases_sp_provinces %>% filter(date == maxdate-2 ) %>% select(-comments,-source) , by= c("ine_code" = "ine_code"))
+canarias@data <- left_join(canarias@data, data_cases_sp_provinces %>% filter(date == maxdate-2 ) %>% select(-comments,-source), by= c("ine_code" = "ine_code"))
+
+
+proj4string(canarias) <- proj4string(provincias)
+est <- rbind.SpatialPolygonsDataFrame( provincias, canarias )
+# xx <- est@data
+
+# 1. export geojson
+writeOGR(est, "interactive/cartograma/provincias_geojson.json", layer="objects", driver="GeoJSON")
+# 2. convert to topjson in mapshaper.io (and simplify)
+# 3. create cartogram with topojson
+
+
+# animation ------------
+library(gganimate)
+library(gifski)
+
+  
+zszs <- data_cases_sp_provinces %>% # filter(date == maxdate-2 ) %>%
+ggplot( aes(poblacion,deceassed_per_100000) ) +
+  # geom_point() +
+  # geom_text_repel( aes(label= substr(province,1,3))  ) +
+  geom_text( aes(label= substr(province,1,3))  ) +
+  scale_x_continuous(
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) 
+    )+
+  transition_time(date) +
+  ease_aes('linear') +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    # panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    # axis.ticks.x = element_line(color = "#000000"),
+    # axis.text.x = element_text(size = 9)
+    # legend.position = "bottom"
+  ) +
+  labs(title = "Muertes COVID-19 / 100.000 hab VS Población",
+       subtitle = paste0("por provincias en España. {frame_time}"),
+       y = "Fallecimientos por 100.000 habitantes",
+       x = "población",
+       caption = "@numeroteca | Datos: esCOVID19data")
+
+print(zszs)
+anim_save(filename = "animation-03.gif", animation = zszs, path = "tmp",width = 900,height = 500)
 

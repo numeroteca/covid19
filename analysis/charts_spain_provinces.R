@@ -1192,7 +1192,7 @@ interactive_dp  <- data_cases_sp_provinces %>% ungroup(province) %>%
   ) +
   scale_color_manual(values = colors_prov) +
   coord_cartesian(
-    ylim = c(1,400)
+    ylim = c(1,1200)
   ) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
                  minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
@@ -1233,7 +1233,6 @@ interactive_dp_p <- ggplotly(interactive_dp, tooltip = "text") %>%
   )
 
 htmlwidgets::saveWidget(as_widget(interactive_dp_p), paste0(getwd(),"/interactive/daily-cases-provinces-index.html") )
-
 
 # / 3. Deceassed (Fallecimientos) ------------
 
