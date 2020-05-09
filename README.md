@@ -138,8 +138,6 @@ Italian data: https://github.com/pcm-dpc/COVID-19
 
 Warning: this section needs update.
 
-Working on it. Meanwhile: data/original/france/covid19-france.csv
-
 Official data from national government: https://www.data.gouv.fr/fr/datasets/cas-confirmes-dinfection-au-covid-19-par-region/
 
 The main source for french data is this repo: https://github.com/opencovid19-fr/data
@@ -166,6 +164,7 @@ This is the structure:
 | source_nom    | name of the source                                         |
 | source_url    | URL of the source                                          |
 | source_type   | type of source                                             |
+
 \* don't know the different with registered cases. this column is empty except for Polynésie et Nouvelle Calédonie 
 
 #### Regiones (Régions)

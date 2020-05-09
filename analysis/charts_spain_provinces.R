@@ -3363,10 +3363,10 @@ geom_text_repel(data= last_day_available,
                 segment.size = 0.1,
                 segment.color="#777777"
 ) +
-  coord_cartesian(
-    ylim = c(0,1000),
-    xlim = c(0,10000)
-  ) +
+  # coord_cartesian(
+  #   ylim = c(0,100),
+  #   xlim = c(0,1000)
+  # ) +
   scale_color_manual(values = colors_prov ) +
   scale_y_continuous( 
     # breaks = c(200,400,600,800,1000,1200,1400,1600,1800,2000)

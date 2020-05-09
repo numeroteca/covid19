@@ -9,7 +9,7 @@
   # Settings -------  
   # Cambia el pie del gráfico pero conserva la fuente de los datos
   caption_f <- "Gráfico: lab.montera34.com/covid19. Datos: OpenCOVID19-fr"
-  periodo_f <- "2020.03.04 - 05.07"
+  periodo_f <- "2020.03.04 - 05.08"
   
   # COVID-19 in France-----------
   

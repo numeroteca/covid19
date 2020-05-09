@@ -8,7 +8,7 @@ library(ggrepel) # for geom_text_repel to prevent   overlapping
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de losS datos
 caption_i <- "Gráfico: @numeroteca (lab.montera34.com/covid19). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 05.07"
+periodo_i <- "2020.02.24 - 05.08"
 
 # COVID-19 in Italy -----------
 # Load data
@@ -52,7 +52,7 @@ data_i_cases$recovered_per_100000 <- round( data_i_cases$recovered / data_i_case
 data_i_cases <- data_i_cases %>% group_by(region) %>% arrange(date) %>% mutate(
   daily_deaths = deceassed - lag(deceassed),
   daily_deaths_inc = round((deceassed - lag(deceassed)) /lag(deceassed) * 100, digits = 1),
-  daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) ) / 6, digits = 1 ), # average of dayly deaths of 6 last days
+  daily_deaths_avg6 =  round( ( daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)) / 7, digits = 1 ), # average of dayly deaths of 6 last days
   daily_deaths_avg2 =  round( ( daily_deaths + lag(daily_deaths,1) ) / 2, digits = 1 ),
   daily_deaths_avg3 =  round( ( daily_deaths + lag(daily_deaths,1)+ lag(daily_deaths,2) ) / 3, digits = 1 ),
   daily_deaths_avg4 =  round( ( daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) ) / 4, digits = 1 )
@@ -627,7 +627,7 @@ data_i_cases %>%
   ) +
   # marca la línea
   geom_text_repel(data=filter( data_i_cases, date==as.Date("2020-04-06"), region == "Lombardia" ),
-                  aes(date+0.5,326, label=paste("media de 6 días")),
+                  aes(date+0.5,329, label=paste("media de 7 días")),
                   nudge_y = 5, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -658,7 +658,7 @@ data_i_cases %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Media de Número de muertes por COVID-19 registradas por día en Italia",
+  labs(title = "Media de muertes (ventana de 7 días) por COVID-19 registradas por día en Italia",
        subtitle = paste0("Por región (escala logarítmica). ",periodo_i),
        y = "fallecidos.",
        x = "fecha",
