@@ -111,7 +111,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
             province == "Rioja, La") )
 
 # import Instituto de Salud CIII 
-ciii_original <- read.delim("https://covid19.isciii.es/resources/serie_historica_acumulados.csv",sep = ",")  
+ciii_original <- read.delim("https://cnecovid.isciii.es/covid19/resources/agregados.csv",sep = ",")  
 write.csv(ciii_original, file = "data/original/spain/iscii_data.csv", row.names = FALSE)
 
 ciii <- ciii_original %>% head(nrow(ciii_original) - 8) %>% #TODO: Cambia el número en función de las notas que incluya el csv original
