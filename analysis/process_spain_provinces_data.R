@@ -13,8 +13,12 @@ provincias_poblacion <-  read.delim("data/original/spain/provincias-poblacion.cs
 
 # / COVID-19 in Spain -----------
 # / By province -----------
-data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")
+# donwload provincias data from googgle spreadsheet 
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=provincias", 
+              "data/original/spain/covid19_spain_provincias.csv")
 write.csv(read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ","), file = "../escovid19data/data/original/covid19_spain_provincias.csv", row.names = FALSE)
+data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")
+# save file in another repository (comment this line!)
 
 # Download Andalucía data from https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228
 # that is uploaded manually to our own spreadsheet in google spreadsheet 
@@ -71,7 +75,6 @@ rm(tenerife,palmas,canarias,canarias_bind)
 
 # Remove last -usually incomplete- day
 data_cases_sp_provinces <- filter(data_cases_sp_provinces, !is.na(date))
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != filter_date) %>% arrange(date)
 
 # Andalucía: Remove existing Andalucia data and add new one from new source ---------------------
 
@@ -181,6 +184,8 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,uniprovinciales)
 
 # Catalunya: Overwrite Catalunya provinces cases  data ------------------
 # Download data from: https://analisi.transparenciacatalunya.cat/Salut/Registre-de-casos-de-COVID-19-realitzats-a-Catalun/jj6z-iyrp/data
+download.file("https://analisi.transparenciacatalunya.cat/api/views/jj6z-iyrp/rows.csv?accessType=DOWNLOAD&sorting=true", 
+              "data/original/spain/catalunya/Registre_de_casos_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv")
 catalunya <-  read.delim("data/original/spain/catalunya/Registre_de_casos_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
 
 # creates date variable
@@ -262,7 +267,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
                    as.character(source) )
 ) %>% select(-cases_accumulated_cat) %>% select(-province_cat) %>% select(-ccaa_cat)  %>% select(-dunique)  %>%  select(-date_cat) 
 
-# Overwrite Catalunya provinces death data ------------------
+# Catalunya: Overwrite Catalunya provinces death data ------------------
 # This is calculated at analysis/count_catalunya.R
 powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",",skip = 1) %>% select(Fecha,Territorio,Fallecimientos)
 powerbi$date <- as.Date(powerbi$Fecha, "%d/%m/%y")
