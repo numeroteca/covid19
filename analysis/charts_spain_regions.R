@@ -998,7 +998,6 @@ data_all_export %>%
 dev.off()
 
 # // 3.2 Fallecimientos superpuestos ----------
-# // CCAA -------------------
 png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1200,height = 700)
 data_all_export %>%  
   ggplot() +
