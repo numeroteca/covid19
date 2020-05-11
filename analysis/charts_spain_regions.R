@@ -1002,7 +1002,7 @@ png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-com
 data_all_export %>%  
   ggplot() +
   geom_line(aes(date,deceassed,group=region, color=region), size= 1 ) +
-  geom_point(aes(date,deceassed, color=region), size= 1.5 ) +
+  geom_point(aes(date,deceassed, color=region), size= 0.6 ) +
   geom_text_repel(data=filter( data_all_export, (date==max(data_all_export$date)  )  
                                ),
                   aes(date,deceassed, color=region, label=paste(format(deceassed, nsmall=1, big.mark="."),region)),
@@ -1046,7 +1046,7 @@ data_all_export %>%
   geom_text(data = crec2[1,],aes(as.Date("2020-03-24"),1200,label="curva: un 4% más de fallecimientos cada día"), 
             size = 8, base_family = "Roboto Condensed") +
   geom_line(aes(date,deceassed,group=region, color=region), size= 1 ) +
-  geom_point(aes(date,deceassed, color=region), size= 1.5 ) +
+  geom_point(aes(date,deceassed, color=region), size= 0.6 ) +
   scale_color_manual(values = colors ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
                   aes(date,deceassed, color=region, label=paste(format(deceassed, nsmall=1, big.mark="."),region)),
@@ -1165,7 +1165,7 @@ png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-com
 data_all_export %>% # filter( ! (date %in% dateunique$date & region == "Cataluña"  ) ) %>%
   ggplot() +
   geom_line(aes(date,deceassed_per_100000,group=region, color=region), size= 1 ) +
-  geom_point(aes(date,deceassed_per_100000, color=region), size= 1.5 ) +
+  geom_point(aes(date,deceassed_per_100000, color=region), size= 0.6 ) +
   geom_text_repel(data=filter( data_all_export, (date==max(data_all_export$date)  ) 
                   ),
                   aes(date,deceassed_per_100000, color=region, label=paste(format(deceassed_per_100000, nsmall=1, big.mark=".", decimal.mark = ","),region)),
@@ -1201,7 +1201,7 @@ png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-com
 data_all_export %>%  
   ggplot() +
   geom_line(aes(date,deceassed_per_100000,group=region, color=region), size= 1 ) +
-  geom_point(aes(date,deceassed_per_100000, color=region), size= 1.5 ) +
+  geom_point(aes(date,deceassed_per_100000, color=region), size= 0.6 ) +
   geom_text_repel(data=filter( data_all_export, (date==max(data_all_export$date) )
                         ),
                         aes(date,deceassed_per_100000, color=region, label=paste(format(deceassed_per_100000, nsmall=1, big.mark=".", decimal.mark = ","),region)),
@@ -2561,17 +2561,6 @@ png(filename=paste("img/spain/regions/covid19_trayectoria-comunidad-autonoma-sup
 data_all_export %>%
   ggplot() +
   geom_line(aes(deceassed,deaths_last_week,group=region, color=region), size= 1 ) +
-  # geom_point(aes(deceassed,deaths_last_week,color=region), size= 1.5 ) +
-  # geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date),  region != "Total"),
-  #                 aes(deceassed,deaths_last_week, color=region, label=paste( region)),
-  #                 nudge_x = 0.2, # adjust the starting y position of the text label
-  #                 size=5,
-  #                 # hjust=0,
-  #                 family = "Roboto Condensed",
-  #                 # direction="y",
-  #                 segment.size = 0.1,
-  #                 segment.color="#777777"
-  # ) +
   scale_color_manual(values = colors ) +
   facet_wrap( ~region, scales = "free") +
   # scale_y_log10(
@@ -2587,8 +2576,9 @@ data_all_export %>%
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
     panel.grid.minor.x = element_blank(),
-    # panel.grid.major.x = element_blank(),
+    panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
+    panel.grid.major.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +

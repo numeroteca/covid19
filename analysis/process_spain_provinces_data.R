@@ -269,7 +269,10 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 
 # Catalunya: Overwrite Catalunya provinces death data ------------------
 # This is calculated at analysis/count_catalunya.R
-powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",",skip = 1) %>% select(Fecha,Territorio,Fallecimientos)
+# donwload provincias data from googgle spreadsheet 
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=cat_", 
+              "data/original/spain/catalunya/powerbi.csv")
+powerbi <-  read.delim("data/original/spain/catalunya/powerbi.csv",sep = ",") %>% select(Fecha,Territorio,Fallecimientos)
 powerbi$date <- as.Date(powerbi$Fecha, "%d/%m/%y")
 powerbi$ccaa <- "Cataluña"
 

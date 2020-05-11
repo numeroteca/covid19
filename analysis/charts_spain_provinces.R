@@ -13,8 +13,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: esCOVID19data (github.com/montera34/escovid19data, lab.montera34.com/covid19)"
-period <- "Actualizado: 2020-05-10. Para CCAA uniprovinciales casos es la suma de PCR+ y TestAc+ a partir de 2020.04.15"
-filter_date <- as.Date("2020-05-10")
+period <- "Actualizado: 2020-05-11. Para CCAA uniprovinciales casos es la suma de PCR+ y TestAc+ a partir de 2020.04.15"
+filter_date <- as.Date("2020-05-11")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -2229,7 +2229,7 @@ data_cases_sp_provinces %>%
   ) +
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
                  minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
-                 expand = c(0,0.2) ) +
+                 expand = c(0,0) ) +
   # scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
   #                minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
   #                expand = c(0,0.2) ) +
@@ -3152,6 +3152,42 @@ data_cases_sp_provinces %>%
   ) +
   facet_wrap( ~ccaa, scales = "free" ) +
   # scale_color_manual(values = colors_prov ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 19) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text = element_text(size =9 ),
+    legend.position = "none"
+  ) +
+  labs(title = "Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España",
+       subtitle = paste0("Por provincia. ", period),
+       y = "fallecidos 7 días anteriores",
+       x = "total de fallecidos",
+       caption = paste0( caption_provincia , " | Ver web https://aatishb.com/covidtrends/" )
+  )
+dev.off()
+
+# lineal --------
+png(filename=paste("img/spain/provincias/covid19_trayectoria-provincia-facet-lineal_rejilla.png", sep = ""),width = 1200,height = 1000)
+data_cases_sp_provinces %>%
+  ggplot() +
+  geom_line(aes(deaths_cum_last_week,deaths_last_week,group=province, color=ccaa), size= 0.4 ) +
+  # geom_text_repel(
+  #   data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
+  #   aes(deaths_cum_last_week,deaths_last_week, label= substr(province,1,3) ),
+  #   nudge_x = 0.8, # adjust the starting y position of the text label
+  #   size=4,
+  #   # hjust=0,
+  #   family = "Roboto Condensed",
+  #   # direction="y",
+  #   segment.size = 0.1,
+  #   segment.color="#777777"
+  # ) +
+  facet_wrap( ~province, scales = "free" ) +
+  scale_color_manual(values = colors_prov ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 19) +
   theme(
     panel.grid.minor.x = element_blank(),
