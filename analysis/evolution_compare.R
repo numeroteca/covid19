@@ -2,6 +2,8 @@
 # Compare countries
 
 # You need to run the other country scripts at /analysis/ to be able to load the data first.
+data_all_export <- readRDS(file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated_isciii.rds")
+
 
 # Load libraries -----------
 library(tidyverse)
@@ -9,7 +11,7 @@ library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 library(plotly)
 
-update_date <- "2020.05.08"
+update_date <- "2020.05.11"
 
 # # load data
 # world_original <- read.delim("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv",sep = ",")
@@ -33,7 +35,7 @@ update_date <- "2020.05.08"
 
 # settings
 
-period_comp <- "Updated: 2020-04-19"
+period_comp <- "Updated: 2020-05-11"
 
 # Bind Spanish and Italian data
 names(data_all_export)
@@ -44,15 +46,15 @@ compare_countries <- rbind(
 )
 
 # Create France dataframe
-data_f_cases_to_bind <- data_all_export[-c(1:(nrow(data_all_export)-nrow(data_f_cases))),]
-data_f_cases_to_bind[1:nrow(data_f_cases),1:13] <- NA
-data_f_cases_to_bind$date <- data_f_cases$date
-data_f_cases_to_bind$region <- data_f_cases$region
+data_f_cases_to_bind <- data_all_export[-c(1:(nrow(data_all_export)-nrow(data_f2_cases))),]
+data_f_cases_to_bind[1:nrow(data_f2_cases),1:13] <- NA
+data_f_cases_to_bind$date <- data_f2_cases$date
+data_f_cases_to_bind$region <- data_f2_cases$region
 data_f_cases_to_bind$country <- "France"
-data_f_cases_to_bind$cases_registered <- data_f_cases$cases_registered
-data_f_cases_to_bind$cases_per_100000 <- data_f_cases$cases_per_100000
-data_f_cases_to_bind <- data_f_cases %>% filter ( !is.na(date))
-data_f_cases <- data_f_cases %>% filter ( !is.na(date))
+data_f_cases_to_bind$cases_registered <- data_f2_cases$cases_registered
+data_f_cases_to_bind$cases_per_100000 <- data_f2_cases$cases_per_100000
+data_f_cases_to_bind <- data_f2_cases %>% filter ( !is.na(date))
+data_f_cases <- data_f2_cases %>% filter ( !is.na(date))
 
 # Add France
 compare_countries <- rbind(compare_countries, data_f_cases_to_bind)
@@ -494,7 +496,7 @@ ggplot() +
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     plot.caption = element_text( color="#777777",size = 14, hjust = 1),
-    legend.position = c(0.95,0.3)
+    legend.position = c(0.95,0.6)
   ) 
 
 
@@ -519,7 +521,7 @@ if ( (i == 1) | (i == 2)  ) { # EN
     #           size = 4, family = "Roboto Condensed", hjust = 0, color = "#555555")
 } else { # ES
   ptotal <- ptotal + labs(title = paste0("Número de fallecimientos de COVID-19 registrados"),
-       subtitle = paste0("Por región en China (2020.04.14), España, Italia y Francia (",update_date,"). Días desde ",umbral ," o más muertes (escala log)."),
+       subtitle = paste0("Por región en China, España, Italia y Francia (",update_date,"). Días desde ",umbral ," o más muertes (escala log)."),
        y = "fallecimientos registrados (escala log.)",
        x = paste0("días desde ", umbral , " o más fallecimientos"),
        caption ="Por: @numeroteca (Montera34). lab.montera34.com/covid19 | Data: various official sources. Check website.") +
