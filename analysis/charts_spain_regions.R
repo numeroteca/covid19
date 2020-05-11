@@ -23,10 +23,10 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 
 # Para ISCiii
-caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es)"
-caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es)"
-period <- "Actualizado: 2020.05.09. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.05.09"
+caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es) y Ministerio Sanidad (recopilados por Datadista)"
+caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es) & Ministerio Sanidad (recopilados por Datadista)"
+period <- "Actualizado: 2020.05.10. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.05.10"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -851,7 +851,7 @@ date==as.Date("2020-04-16") & country == "France"
 
 # // 3.1 Fallecimientos Small multiple ---------- 
 
-date_limit_init_death <- as.Date("2020-03-08")
+date_limit_init_death <- as.Date("2020-03-02")
 
 # Because of Warning, remove days and regions:
 
@@ -1083,7 +1083,7 @@ png(filename=paste("img/spain/regions/covid19_fallecimientos-registrados-por-com
 data_all_export %>% 
   ggplot() +
   geom_line(aes(date,deceassed,group=region, color=region), size= 1 ) +
-  geom_point(aes(date,deceassed, color=region), size= 1.5 ) +
+  geom_point(aes(date,deceassed, color=region), size= 0.6 ) +
   geom_text_repel(data=filter( data_all_export, (date==max(data_all_export$date)  )  
                                   ),
                                     aes(date,deceassed, color=region, label=paste0(format(deceassed, nsmall=1, big.mark="."),
@@ -1104,7 +1104,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
-               limits=c( date_limit_init_death, max(data_all_export$date + 14))
+               limits=c( date_limit_init_death, max(data_all_export$date + 16))
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1115,7 +1115,7 @@ data_all_export %>%
     legend.position = "none"
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España ",
-       subtitle = paste0("Por comunidad autónoma (escala logarítmica). Entre paréntesis muertos del último día y % respecto día anterior. ",period),
+       subtitle = paste0("Por comunidad autónoma (escala log). Entre paréntesis muertos del último día y % respecto día anterior. ",period),
        y = "fallecidos (escala logarítmica)",
        x = "fecha",
        caption = caption)
@@ -1215,6 +1215,9 @@ data_all_export %>%
                         segment.color="#777777"
   ) +
   scale_color_manual(values = colors ) +
+  coord_cartesian(
+    ylim = c(0.1, max(data_all_export[!is.na(data_all_export$deceassed_per_100000),]$deceassed_per_100000))
+  ) +
   scale_y_log10(  
     labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ),
@@ -2555,36 +2558,76 @@ data_all_export %>%
        caption = paste0("", caption , "| Ver web https://aatishb.com/covidtrends/" ) )
 dev.off()
 
+png(filename=paste("img/spain/regions/covid19_trayectoria-comunidad-autonoma-superpuesto-lineal_rejilla.png", sep = ""),width = 1200,height = 700)
+data_all_export %>%
+  ggplot() +
+  geom_line(aes(deceassed,deaths_last_week,group=region, color=region), size= 1 ) +
+  # geom_point(aes(deceassed,deaths_last_week,color=region), size= 1.5 ) +
+  # geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date),  region != "Total"),
+  #                 aes(deceassed,deaths_last_week, color=region, label=paste( region)),
+  #                 nudge_x = 0.2, # adjust the starting y position of the text label
+  #                 size=5,
+  #                 # hjust=0,
+  #                 family = "Roboto Condensed",
+  #                 # direction="y",
+  #                 segment.size = 0.1,
+  #                 segment.color="#777777"
+  # ) +
+  scale_color_manual(values = colors ) +
+  facet_wrap( ~region, scales = "free") +
+  # scale_y_log10(
+  #   breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
+  #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  # ) +
+  # scale_x_log10(
+  #   breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
+  #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #   minor_breaks =  c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) )
+  # ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España",
+       subtitle = paste0("Por comunidad autónoma. ",period, warning),
+       y = "fallecidos en últimos 7 días (lineal)",
+       x = "total de fallecidos (lineal)",
+       caption = paste0("", caption , "| Ver web https://aatishb.com/covidtrends/" ) )
+dev.off()
 
-
-for ( i in 1:20  ) {
-  la_ccaa <- unique(data_all_export$region)[i]
-  png(filename=paste("img/spain/regions/small_multiple/covid19_trayectoria-comunidad-autonoma-superpuesto-lineal",substr(la_ccaa,1,5) ,".png", sep = ""),width = 1200,height = 700)
-    the_chart <- data_all_export %>% filter ( !is.na(region) ) %>% filter ( region == la_ccaa ) %>%
-    ggplot() +
-    geom_line(aes(deceassed,deaths_last_week,group=region, color=region), size= 3 ) +
-    geom_point(aes(deceassed,deaths_last_week,color=region), size= 1.5 ) +
-    scale_color_manual(values = colors ) +
-    theme_minimal(base_family = "Roboto Condensed",base_size = 37) +
-      scale_y_log10() +
-      scale_x_log10() +
-    theme(
-      panel.grid.minor.x = element_blank(),
-      # panel.grid.major.x = element_blank(),
-      panel.grid.minor.y = element_blank(),
-      axis.ticks.x = element_line(color = "#000000"),
-      legend.position = "none"
-    ) +
-    labs(title = paste0(la_ccaa), # ". Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España"),
-         # subtitle = paste0("Por comunidad autónoma. ",period, warning),
-         y = "fallecidos en últimos 7 días",
-         x = "total de fallecidos"
-         # caption = paste0("", caption , "" ) 
-         )
-  print(the_chart)
-  dev.off()
-  
-}
+# for ( i in 1:20  ) {
+#   la_ccaa <- unique(data_all_export$region)[i]
+#   png(filename=paste("img/spain/regions/small_multiple/covid19_trayectoria-comunidad-autonoma-superpuesto-lineal",substr(la_ccaa,1,5) ,".png", sep = ""),width = 1200,height = 700)
+#     the_chart <- data_all_export %>% filter ( !is.na(region) ) %>% filter ( region == la_ccaa ) %>%
+#     ggplot() +
+#     geom_line(aes(deceassed,deaths_last_week,group=region, color=region), size= 3 ) +
+#     geom_point(aes(deceassed,deaths_last_week,color=region), size= 1.5 ) +
+#     scale_color_manual(values = colors ) +
+#     theme_minimal(base_family = "Roboto Condensed",base_size = 37) +
+#       scale_y_log10() +
+#       scale_x_log10() +
+#     theme(
+#       panel.grid.minor.x = element_blank(),
+#       # panel.grid.major.x = element_blank(),
+#       panel.grid.minor.y = element_blank(),
+#       axis.ticks.x = element_line(color = "#000000"),
+#       legend.position = "none"
+#     ) +
+#     labs(title = paste0(la_ccaa), # ". Fallecidos 7 días anteriores / total fallecidos por COVID-19 en España"),
+#          # subtitle = paste0("Por comunidad autónoma. ",period, warning),
+#          y = "fallecidos en últimos 7 días",
+#          x = "total de fallecidos"
+#          # caption = paste0("", caption , "" ) 
+#          )
+#   print(the_chart)
+#   dev.off()
+#   
+# }
 
 # make tiled image with imagemagick from command line
 # montage c* -geometry 400x tiles_02.png
@@ -3250,7 +3293,7 @@ test2  %>%
   scale_color_manual(values = colors ) +
   coord_cartesian( 
     ylim=c(umbral-1, max(test2[!is.na(test2$deceassed),]$deceassed)*1.3 ),
-    xlim=c(0,  65 ) #max(test[!is.na(test$deceassed),]$days_since) + 3
+    xlim=c(0,  90) #max(test[!is.na(test$deceassed),]$days_since) + 3
   ) +
   scale_y_log10(
     breaks = c(5,10,20,50,100,200,500,1000,2000,5000),
@@ -3258,7 +3301,7 @@ test2  %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(  seq(1 , 10, 2), seq(10 , 100, 20), seq(100 , 1000, 200), seq(1000, 10000, 2000) ) ) +
   scale_x_continuous(
-    breaks = c(0,5,10,15,20,25,30,35,40,45,50)
+    breaks = c(0,10,20,30,40,50,60,70,80,90)
     # limits=c( 0, max(test$days_since + 5))
   ) +
   theme_minimal(base_family = "Roboto Condensed", base_size = 20) +
@@ -3310,10 +3353,10 @@ test2  %>%
   scale_color_manual(values = colors ) +
   coord_cartesian( 
     ylim=c(0.1, max(test2[!is.na(test2$deceassed_per_100000),]$deceassed_per_100000)*1.3 ),
-    xlim=c(0,  65 ) #max(test[!is.na(test$deceassed),]$days_since) + 3
+    xlim=c(0,  90 ) #max(test[!is.na(test$deceassed),]$days_since) + 3
   ) +
   scale_x_continuous(
-    breaks = c(0,5,10,15,20,25,30,35,40,45,50)
+    breaks = c(0,10,20,30,40,50,60,70,80,90)
     # limits=c( 0, max(test$days_since + 5))
   ) +
   theme_minimal(base_family = "Roboto Condensed", base_size = 20) +
@@ -3343,26 +3386,27 @@ png(filename=paste0("img/spain/regions/covid19_muertes-dia-por-ccaa-superpuesto-
 test2 %>% 
   ggplot() +
   geom_line(aes(days_since, daily_deaths_avg6, group= region, color= region), size= 2, alpha = 0.6, se = FALSE ) +
-  geom_point(data = filter(test2,  date == max(test2$date)  ),
+  geom_point(data = filter(test2,  date == max(test2$date) ),
              aes(days_since, daily_deaths_avg6, color= region, 
                  text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")), 
              size= 3 ) +
-  geom_text_repel(data = filter(test2,  date == max(test2$date)  ),
-  aes(days_since, daily_deaths_avg6, label=paste(region), color= region),
+  geom_text_repel(data = filter(test2,  date == max(test2$date) & daily_deaths_avg6 > 5  ),
+  # geom_text(data = filter(test2,  date == max(test2$date) & daily_deaths_avg6 > 10  ),
+  aes(days_since+10, daily_deaths_avg6, label=paste(region), color= region),
   # color= "#000000",
-  nudge_x = 7, # adjust the starting y position of the text label
+  nudge_x = 5, # adjust the starting y position of the text label
   size=7,
   hjust=1,
   # bg.color = "red", bg.r = 0.15,
   family = "Roboto Condensed",
   direction="y",
   segment.size = 0.3,
-  segment.color="#333333"
+  segment.color="#FFFFFF"
   ) +
   scale_color_manual(values = colors ) +
   coord_cartesian( 
-    ylim=c(1, max(test2[!is.na(test2$daily_deaths_avg6),]$daily_deaths_avg6)*1.15 ),
-    xlim=c(0,  60) #max(test[!is.na(test$deceassed),]$days_since) + 3
+    ylim=c(1, max(test2[!is.na(test2$daily_deaths_avg6),]$daily_deaths_avg6) ),
+    xlim=c(0,  80) #max(test[!is.na(test$deceassed),]$days_since) + 3
   ) +
   scale_y_continuous(
     # breaks = c(1,2,5,10,20,50,100,200,500,1000,2000,5000),
@@ -3371,7 +3415,7 @@ test2 %>%
     # minor_breaks = c(  seq(1 , 10, 2), seq(10 , 100, 20), seq(100 , 1000, 200), seq(1000, 10000, 2000) ) 
     ) +
   scale_x_continuous(
-    breaks = c(0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100),
+    breaks = c(0,10,20,30,40,50,60,70,80,90),
     expand = c(0,0)
     # limits=c( 0, max(test$days_since + 5))
   ) +
@@ -3379,7 +3423,7 @@ test2 %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     plot.caption = element_text( color="#777777",size = 14, hjust = 1),
     legend.position = "none"
@@ -3402,7 +3446,7 @@ test2  %>%
   geom_text_repel(data = filter(test2,  date == max(test2$date)   ),
                           aes(days_since, daily_deaths_avg6, label=paste(region), color= region),
                           # color= "#000000",
-                          nudge_x = 7, # adjust the starting y position of the text label
+                          nudge_x =14, # adjust the starting y position of the text label
                           size=7,
                           hjust=1,
                           # bg.color = "red", bg.r = 0.15,
@@ -3414,7 +3458,7 @@ test2  %>%
   scale_color_manual(values = colors ) +
   coord_cartesian( 
     ylim=c(1, max(test2[!is.na(test2$daily_deaths_avg6),]$daily_deaths_avg6)*1.15 ),
-    xlim=c(0,  60) #max(test[!is.na(test$deceassed),]$days_since) + 3
+    xlim=c(0,  90) #max(test[!is.na(test$deceassed),]$days_since) + 3
   ) +
   scale_y_log10(
     breaks = c(1,2,5,10,20,50,100,200,500,1000,2000,5000),
@@ -3422,7 +3466,7 @@ test2  %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(  seq(1 , 10, 2), seq(10 , 100, 20), seq(100 , 1000, 200), seq(1000, 10000, 2000) ) ) +
   scale_x_continuous(
-    breaks = c(0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100),
+    breaks = c(0,10,20,30,40,50,60,70,80,90),
     expand = c(0,0)
     # limits=c( 0, max(test$days_since + 5))
   ) +

@@ -87,12 +87,12 @@ dev.off()
 
 png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_muertes_bbdd_log.png", sep = ""), width = 2300, height = 1900)
 ggplot(NULL) +
-  geom_line( data = resumen_pr_ca, aes( date, deceassed, group=region), color = "#e7298a", size = 1.5 ) +
-  geom_line( data = data_all_export, aes( date, deceassed, group=region), color = "#66a61e", size = 1 ) +
-  geom_line( data = ciii, aes( date, deceassed, group=region), color = "#000000", size = 0.7 ) +
+  # geom_line( data = resumen_pr_ca, aes( date, deceassed, group=region), color = "#e7298a", size = 1.5 ) +
+  geom_line( data = data_all_export, aes( date, deceassed, group=region), color = "#000000", size = 1 ) +
+  geom_line( data = datadista, aes( date, deceassed, group=region), color = "#66a61e", size = 0.7 ) +
   scale_y_log10(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "2 day", 
+  scale_x_date(date_breaks = "10 day", 
                date_labels = "%d",
                expand = c(0,0) 
   ) +
@@ -115,9 +115,9 @@ dev.off()
 
 png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_casos_bbdd_log.png", sep = ""), width = 2300, height = 1900)
 ggplot(NULL) +
-  geom_line( data = resumen_pr_ca, aes( date, cases_accumulated, group=region), color = "#e7298a", size = 1.5 ) +
-  geom_line( data = data_all_export, aes( date, cases_registered, group=region), color = "#66a61e", size = 1 ) +
-  geom_line( data = ciii, aes( date, cases_registered, group=region), color = "#000000", size = 0.7 ) +
+  # geom_line( data = resumen_pr_ca, aes( date, cases_accumulated, group=region), color = "#e7298a", size = 1.5 ) +
+  geom_line( data = datadista, aes( date, cases_registered, group=region), color = "#66a61e", size = 1 ) +
+  geom_line( data = data_all_export, aes( date, cases_registered, group=region), color = "#000000", size = 0.7 ) +
   scale_y_log10(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   facet_wrap( ~region) +
   scale_x_date(date_breaks = "2 day", 
