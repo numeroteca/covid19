@@ -35,7 +35,7 @@ canarias <- data_cases_sp_provinces %>% filter( ccaa == "Canarias")
 
 # Group by province
 tenerife <- canarias %>% filter(province == "La Gomera" | province =="La Palma" | province == "Tenerife" | province == "El Hierro") %>% group_by(date) %>% summarise(
-  province = "Santa, Cruz de Tenerife",
+  province = "Santa Cruz de Tenerife",
   ccaa = "Canarias",
   new_cases = sum(new_cases),
   PCR = sum(PCR),
@@ -391,6 +391,7 @@ data_cases_sp_provinces$hospitalized_per_100000 <- round( data_cases_sp_province
 data_cases_sp_provinces <- data_cases_sp_provinces %>% 
   group_by(province) %>% arrange(date) %>% 
   mutate( 
+          cases_14days = cases_accumulated - lag(cases_accumulated,13),
           daily_cases = cases_accumulated - lag(cases_accumulated),
           daily_cases_avg7 =  round( ( daily_cases + lag(daily_cases,1)+lag(daily_cases,2)+
                                           lag(daily_cases,3)+lag(daily_cases,4)+lag(daily_cases,5)+lag(daily_cases,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
@@ -413,6 +414,8 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% select(-source, -source_n
 # Re calculates factors to remove things like Andaluc'ia for provinces
 data_cases_sp_provinces$province <- factor(data_cases_sp_provinces$province)
 data_cases_sp_provinces$ccaa <- factor(data_cases_sp_provinces$ccaa)
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% arrange(ccaa,province,date)
 
 write.csv(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
 saveRDS(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-spain_consolidated.rds")
