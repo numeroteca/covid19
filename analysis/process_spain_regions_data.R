@@ -252,18 +252,23 @@ datadista <- datadista %>% mutate (
     dunique = paste0(region,date)
   )
 
+#  merge existing ISCII data with previous data from Datadista
 data_all_export <- merge( data_all_export, 
                      datadista %>% select(dunique, deceassed, date) %>% filter ( date < as.Date("2020-03-08") ) %>% rename(deceassed_datadista = deceassed) %>% select(-date),
                      by.x = "dunique", by.y = "dunique", all.x = TRUE   )
 
-data_all_export %>% select (deceassed,deceassed_datadista,date,region ) %>% filter ( (date < as.Date("2020-03-10")) & (region == "Madrid") )
+# check
+# data_all_export %>% select (deceassed,deceassed_datadista,date,region ) %>% filter ( (date < as.Date("2020-03-10")) & (region == "Madrid") )
 
+# Fill data if is empty
 data_all_export <- data_all_export %>% mutate(
-  deceassed = ifelse( !is.na(deceassed_datadista), deceassed_datadista, deceassed)
-) 
-# %>% select(-dunique,-deceassed_datadista)
+  deceassed = ifelse( !is.na(deceassed_datadista), deceassed_datadista, deceassed),
+  source_name =  ifelse( !is.na(deceassed_datadista), paste0(source_name,";Ministerio de Sanidad (Datadista)"), source_name),
+  source =  ifelse( !is.na(deceassed_datadista), paste0(source,";https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_fallecidos.csv"), source),
+) %>% select(-dunique,-deceassed_datadista)
 
-data_all_export %>% select (deceassed,deceassed_datadista,date,region ) %>% filter ( (date < as.Date("2020-03-10")) & (region == "Madrid") )
+# check
+# data_all_export %>% select (deceassed,deceassed_datadista,date,region ) %>% filter ( (date < as.Date("2020-03-10")) & (region == "Madrid") )
 
 
 # Create new variables per day----
@@ -279,7 +284,7 @@ data_all_export <- data_all_export %>% group_by(region) %>%
                             daily_recovered_inc = round((recovered - lag(recovered)) /lag(recovered) * 100, digits = 1),
                             daily_recovered_avg6 =  round( ( daily_recovered + lag(daily_recovered,1)+lag(daily_recovered,2)+
                                                                lag(daily_recovered,3)+lag(daily_recovered,4)+lag(daily_recovered,5)+lag(daily_recovered,6) ) / 7, digits = 1 ), # average of dayly recovered of 6 last days
-                            deaths_cum_last_week = ( deceassed + lag(deceassed,1) + lag(deceassed,2) + lag(deceassed,3) + lag(deceassed,4) + lag(deceassed,5) + lag(deceassed,6) ) / 7,  
+                            # deaths_cum_last_week = ( deceassed + lag(deceassed,1) + lag(deceassed,2) + lag(deceassed,3) + lag(deceassed,4) + lag(deceassed,5) + lag(deceassed,6) ) / 7,  
                             deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6),
                             deceassed_per_100000 = round( deceassed / population * 100000, digits = 2) #recalculates relative deaths
                              )

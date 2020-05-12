@@ -8,7 +8,7 @@
 library(tidyverse)
 library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
-  
+
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
@@ -40,7 +40,7 @@ data_cases_sp_provinces_sm <- data_cases_sp_provinces %>% filter( date < filter_
 data_cases_sp_provinces_sm$province_cp <- data_cases_sp_provinces[data_cases_sp_provinces$date < filter_date,]$province 
 
 # Remove last day
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date != filter_date)
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date < filter_date)
 
 # // 1.1 Small multiple ------------
 # /// Provincias small multiple --------------
@@ -3135,13 +3135,13 @@ data_cases_sp_provinces %>%
   ggplot() +
   # geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(deaths_cum_last_week,deaths_last_week,province_cp,-province),
   #           aes(deaths_cum_last_week,deaths_last_week,group=province_cp), se = FALSE, span = 0.6, color="#CACACA", size=0.5 ) +
-  geom_line(aes(deaths_cum_last_week,deaths_last_week,group=province, color=province), size= 0.4 ) +
+  geom_line(aes(deceased,deaths_last_week,group=province, color=province), size= 0.4 ) +
   # geom_smooth(aes(deaths_cum_last_week,deaths_last_week,group=province), size= 0.5, se = FALSE, color = "black") +
   # geom_point(aes(deaths_cum_last_week,deaths_last_week ), size= 0.2 ) +
   geom_text_repel(
     data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
     # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
-                  aes(deaths_cum_last_week,deaths_last_week, label= substr(province,1,3) ),
+                  aes(deceased,deaths_last_week, label= substr(province,1,3) ),
                   nudge_x = 0.8, # adjust the starting y position of the text label
                   size=4,
                   # hjust=0,
@@ -3171,21 +3171,10 @@ data_cases_sp_provinces %>%
 dev.off()
 
 # lineal --------
-png(filename=paste("img/spain/provincias/covid19_trayectoria-provincia-facet-lineal_rejilla.png", sep = ""),width = 1200,height = 1000)
+png(filename=paste("img/spain/provincias/covid19_trayectoria-provincia-facet-lineal_rejilla.png", sep = ""),width = 1200,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(aes(deaths_cum_last_week,deaths_last_week,group=province, color=ccaa), size= 0.4 ) +
-  # geom_text_repel(
-  #   data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
-  #   aes(deaths_cum_last_week,deaths_last_week, label= substr(province,1,3) ),
-  #   nudge_x = 0.8, # adjust the starting y position of the text label
-  #   size=4,
-  #   # hjust=0,
-  #   family = "Roboto Condensed",
-  #   # direction="y",
-  #   segment.size = 0.1,
-  #   segment.color="#777777"
-  # ) +
+  geom_line(aes(deceased,deaths_last_week,group=province, color=ccaa), size= 0.4 ) +
   facet_wrap( ~province, scales = "free" ) +
   scale_color_manual(values = colors_prov ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 19) +
@@ -3210,15 +3199,15 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_trayectoria-provincia-facet-log.png", sep = ""),width = 1300,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(deaths_cum_last_week,deaths_last_week,province_cp,-province),
-              aes(deaths_cum_last_week,deaths_last_week,group=province_cp), se = FALSE, span = 0.6, color="#CACACA", size=0.5 ) +
-  geom_line(aes(deaths_cum_last_week,deaths_last_week,group=province), size= 0.4 ) +
+  geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(deceased,deaths_last_week,province_cp,-province),
+              aes(deceased,deaths_last_week,group=province_cp), se = FALSE, span = 0.6, color="#CACACA", size=0.5 ) +
+  geom_line(aes(deceased,deaths_last_week,group=province), size= 0.4 ) +
   # geom_smooth(aes(deaths_cum_last_week,deaths_last_week,group=province), size= 0.5, se = FALSE, color = "black") +
   # geom_point(aes(deaths_cum_last_week,deaths_last_week ), size= 0.2 ) +
   geom_text_repel(
                   # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
                   data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
-                  aes(deaths_cum_last_week,deaths_last_week, color=ccaa, label= province ),
+                  aes(deceased,deaths_last_week, color=ccaa, label= province ),
                   nudge_x = 0.8, # adjust the starting y position of the text label
                   size=4,
                   # hjust=0,
@@ -3262,13 +3251,13 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_trayectoria-provincia-superpuesto-lineal.png", sep = ""),width = 1300,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(aes(deaths_cum_last_week,deaths_last_week,group=province,color=ccaa), size= 0.4 ) +
+  geom_line(aes(deceased,deaths_last_week,group=province,color=ccaa), size= 0.4 ) +
   # geom_smooth(aes(deaths_cum_last_week,deaths_last_week,group=province,color=ccaa), size= 0.5, se = FALSE ) +
   # geom_point(aes(deaths_cum_last_week,deaths_last_week ), size= 0.2 ) +
   geom_text_repel(
     data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
     # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
-                  aes(deaths_cum_last_week,deaths_last_week, color=ccaa, label= province ),
+                  aes(deceased,deaths_last_week, color=ccaa, label= province ),
                   nudge_x = 0.8, # adjust the starting y position of the text label
                   size=4,
                   # hjust=0,
@@ -3310,12 +3299,12 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_trayectoria-provincia-superpuesto-lineal2.png", sep = ""),width = 1300,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(aes(deaths_cum_last_week,deaths_last_week,group=province,color=ccaa), size= 0.4 ) +
+  geom_line(aes(deceased,deaths_last_week,group=province,color=ccaa), size= 0.4 ) +
   # geom_smooth(aes(deaths_cum_last_week,deaths_last_week,group=province,color=ccaa), size= 0.5, se = FALSE ) +
   # geom_point(aes(deaths_cum_last_week,deaths_last_week ), size= 0.2 ) +
   geom_text_repel(
     data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
-    aes(deaths_cum_last_week,deaths_last_week, color=ccaa, label= province ),
+    aes(deceased,deaths_last_week, color=ccaa, label= province ),
     nudge_x = 0.8, # adjust the starting y position of the text label
     size=4,
     family = "Roboto Condensed",
@@ -3347,12 +3336,12 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_trayectoria-provincia-superpuesto-lineal3.png", sep = ""),width = 1300,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(aes(deaths_cum_last_week,deaths_last_week,group=province,color=ccaa), size= 0.4 ) +
+  geom_line(aes(deceased,deaths_last_week,group=province,color=ccaa), size= 0.4 ) +
   # geom_smooth(aes(deaths_cum_last_week,deaths_last_week,group=province,color=ccaa), size= 0.5, se = FALSE ) +
   # geom_point(aes(deaths_cum_last_week,deaths_last_week ), size= 0.2 ) +
   geom_text_repel(
     data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
-    aes(deaths_cum_last_week,deaths_last_week, color=ccaa, label= province ),
+    aes(deceased,deaths_last_week, color=ccaa, label= province ),
     nudge_x = 0.8, # adjust the starting y position of the text label
     size=4,
     family = "Roboto Condensed",
@@ -3385,13 +3374,13 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_trayectoria-provincia-superpuesto-log.png", sep = ""),width = 1300,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
-  geom_line(aes(deaths_cum_last_week,deaths_last_week,group=province,color=ccaa), size= 0.4 ) +
+  geom_line(aes(deceased,deaths_last_week,group=province,color=ccaa), size= 0.4 ) +
   # geom_smooth(aes(deaths_cum_last_week,deaths_last_week,group=province,color=ccaa), size= 0.5, se = FALSE ) +
   # geom_point(aes(deaths_cum_last_week,deaths_last_week ), size= 0.2 ) +
   geom_text_repel(
                   # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
                   data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
-                  aes(deaths_cum_last_week,deaths_last_week, color=ccaa, label= province ),
+                  aes(deceased,deaths_last_week, color=ccaa, label= province ),
                   nudge_x = 0.8, # adjust the starting y position of the text label
                   size=4,
                   # hjust=0,
@@ -3428,7 +3417,6 @@ data_cases_sp_provinces %>%
   )
 
 dev.off()
-
 
 # 10. Scatter polts ------------
 
