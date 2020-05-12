@@ -275,13 +275,17 @@ geov <- read.delim("data/original/spain/geovoluntarios-datacovid.csv",sep = ",")
 geov$date <- as.Date(geov$Fecha,"%Y/%m/%d")
 geov$CasosConfirmados <- as.numeric(geov$CasosConfirmados)
 
-png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_casos_geovoluntarios-escovid19data.png", sep = ""), width = 2300, height = 1900)
+png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_casos_geovoluntarios-escovid19data.png", sep = ""), width = 2400, height = 1900)
 ggplot(NULL) +
-  geom_line( data = data_cases_sp_provinces %>% filter(!is.na(cases_accumulated)), aes( date, cases_accumulated, group=province), color = "#66a61e", size = 2.1 ) +
-  geom_line( data = geov  %>% filter(!is.na(CasosConfirmados)), aes( date, CasosConfirmados, group=province), color = "#000000", size = 0.7 ) +
+  geom_line( data = data_cases_sp_provinces %>% filter(!is.na(cases_accumulated)), aes( date, cases_accumulated, group=province, color = "#66a61e"), size = 2.0 ) +
+  geom_line( data = geov  %>% filter(!is.na(CasosConfirmados)), aes( date, CasosConfirmados, group=province, color = "#000000"), size = 0.7 ) +
   # scale_y_log10(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)) +
   scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   facet_wrap( ~province, scales = "free") + #, scales = "free"
+  scale_color_identity(
+    guide = "legend",
+    labels = c("Geovoluntarios - datoscovid.es","Escovid19data"),
+  ) +
   # scale_x_date(date_breaks = "10 day", 
   #              date_labels = "%d"
   #              # expand = c(0,0) 
@@ -292,8 +296,8 @@ ggplot(NULL) +
     # panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    axis.text = element_text(size =12 )
-    # legend.position = "none"
+    axis.text = element_text(size =12 ),
+    legend.position = "top"
   ) +
   labs(title = "Comparativa de bases de datos. Casos acumulados COVID-19 por provincias. España",
        subtitle = paste0("Geovoluntarios - datoscovid.es (negro). Escovid19data (verde)"),
@@ -303,16 +307,16 @@ ggplot(NULL) +
   )
 dev.off()
 
-png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_fallecidos_geovoluntarios-escovid19data.png", sep = ""), width = 2300, height = 1900)
+png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_fallecidos_geovoluntarios-escovid19data.png", sep = ""), width = 2400, height = 1900)
 ggplot(NULL) +
-  geom_line( data = data_cases_sp_provinces %>% filter(!is.na(deceased)), aes( date, deceased, group=province, color = "#66a61e"), size = 2.1 ) +
+  geom_line( data = data_cases_sp_provinces %>% filter(!is.na(deceased)), aes( date, deceased, group=province, color = "#66a61e"), size = 2.0 ) +
   geom_line( data = geov  %>% filter(!is.na(Fallecidos)), aes( date, Fallecidos, group=province, color = "#000000"), size = 0.7 ) +
   # scale_y_log10(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)) +
   scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   facet_wrap( ~province, scales = "free") + #, scales = "free"
   scale_color_identity(
     guide = "legend",
-    labels = c("Escovid19data", "Geovoluntarios - datoscovid.es"),
+    labels = c("Geovoluntarios - datoscovid.es","Escovid19data"),
   ) +
   # scale_x_date(date_breaks = "10 day", 
   #              date_labels = "%d"
@@ -336,3 +340,4 @@ ggplot(NULL) +
        )
   )
 dev.off()
+
