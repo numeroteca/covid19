@@ -260,3 +260,79 @@ zmerged2 %>% filter( date < as.Date("2020-04-15")) %>%
        caption = paste0( "@numeroteca. lab.montera34.com/covid19" )
   )
 dev.off()
+
+
+# Compara con geovoluntarios https://www.datoscovid.es -------
+data_cases_sp_provinces <- readRDS(file = "data/output/spain/covid19-provincias-spain_consolidated.rds")
+
+download.file("https://opendata.arcgis.com/datasets/9ec5c536afd643459e5bf40c71124a03_0.csv", 
+              "data/original/spain/geovoluntarios-datacovid.csv")
+geov <- read.delim("data/original/spain/geovoluntarios-datacovid.csv",sep = ",") %>% rename ( province = Texto ) %>% mutate(
+  province = province %>% str_replace_all("Alacant/Alicante", "Alicante/Alacant"),
+  province = province %>% str_replace_all("Castelló/Castellón", "Castellón/Castelló"),
+  province = province %>% str_replace_all("València/Valencia", "Valencia/València")
+)
+geov$date <- as.Date(geov$Fecha,"%Y/%m/%d")
+geov$CasosConfirmados <- as.numeric(geov$CasosConfirmados)
+
+png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_casos_geovoluntarios-escovid19data.png", sep = ""), width = 2300, height = 1900)
+ggplot(NULL) +
+  geom_line( data = data_cases_sp_provinces %>% filter(!is.na(cases_accumulated)), aes( date, cases_accumulated, group=province), color = "#66a61e", size = 2.1 ) +
+  geom_line( data = geov  %>% filter(!is.na(CasosConfirmados)), aes( date, CasosConfirmados, group=province), color = "#000000", size = 0.7 ) +
+  # scale_y_log10(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)) +
+  scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  facet_wrap( ~province, scales = "free") + #, scales = "free"
+  # scale_x_date(date_breaks = "10 day", 
+  #              date_labels = "%d"
+  #              # expand = c(0,0) 
+  # ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 27) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text = element_text(size =12 )
+    # legend.position = "none"
+  ) +
+  labs(title = "Comparativa de bases de datos. Casos acumulados COVID-19 por provincias. España",
+       subtitle = paste0("Geovoluntarios - datoscovid.es (negro). Escovid19data (verde)"),
+       y = "casos acumulados",
+       x = "fecha",
+       caption = paste0( "@numeroteca. lab.montera34.com/covid19" )
+  )
+dev.off()
+
+png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_fallecidos_geovoluntarios-escovid19data.png", sep = ""), width = 2300, height = 1900)
+ggplot(NULL) +
+  geom_line( data = data_cases_sp_provinces %>% filter(!is.na(deceased)), aes( date, deceased, group=province, color = "#66a61e"), size = 2.1 ) +
+  geom_line( data = geov  %>% filter(!is.na(Fallecidos)), aes( date, Fallecidos, group=province, color = "#000000"), size = 0.7 ) +
+  # scale_y_log10(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)) +
+  scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  facet_wrap( ~province, scales = "free") + #, scales = "free"
+  scale_color_identity(
+    guide = "legend",
+    labels = c("Escovid19data", "Geovoluntarios - datoscovid.es"),
+  ) +
+  # scale_x_date(date_breaks = "10 day", 
+  #              date_labels = "%d"
+  #              # expand = c(0,0) 
+  # ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 27) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text = element_text(size =12 ),
+    legend.position = "top"
+  ) +
+  labs(title = "Comparativa de bases de datos. Fallecimientos acumulados COVID-19 por provincias. España",
+       subtitle = paste0("Geovoluntarios - datoscovid.es (negro). Escovid19data (verde)"),
+       y = "fallecidos acumulados",
+       x = "fecha",
+       caption = paste0( "@numeroteca. lab.montera34.com/covid19",
+       color = ""
+       )
+  )
+dev.off()
