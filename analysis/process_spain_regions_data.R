@@ -263,8 +263,8 @@ data_all_export <- merge( data_all_export,
 # Fill data if is empty
 data_all_export <- data_all_export %>% mutate(
   deceassed = ifelse( !is.na(deceassed_datadista), deceassed_datadista, deceassed),
-  source_name =  ifelse( !is.na(deceassed_datadista), paste0(source_name,";Ministerio de Sanidad (Datadista)"), source_name),
-  source =  ifelse( !is.na(deceassed_datadista), paste0(source,";https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_fallecidos.csv"), source),
+  source_name =  ifelse( !is.na(deceassed_datadista), paste0("Instituto de Salud Carlos III;Ministerio de Sanidad (Datadista)"), "Instituto de Salud Carlos III" ),
+  source =  ifelse( !is.na(deceassed_datadista), paste0("https://cnecovid.isciii.es/covid19/resources/agregados.csv;https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_fallecidos.csv"), "https://cnecovid.isciii.es/covid19/resources/agregados.csv"),
 ) %>% select(-dunique,-deceassed_datadista)
 
 # check

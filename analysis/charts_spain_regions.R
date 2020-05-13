@@ -2,7 +2,7 @@
 # para la web lab.montera34.com/covid19
 
 # Usa el dataframe "data_all_export" generado en process_spain_regions.R. Corre ese script antes de poder ejecutar este.
-# Carga el dataframe generado
+# Carga el dataframe generado 
 data_all_export <- readRDS(file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated_isciii.rds")
 
 # create df for small multiples -----
@@ -25,8 +25,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Para ISCiii
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es) y Ministerio Sanidad (recopilados por Datadista)"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es) & Ministerio Sanidad (recopilados por Datadista)"
-period <- "Actualizado: 2020.05.12. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.05.12"
+period <- "Actualizado: 2020.05.13. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.05.13"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -38,8 +38,10 @@ colourCount <- length(unique(data_all_export$region))
 getPalette <- colorRampPalette(brewer.pal(9, "Set1"))
 colors <- getPalette(colourCount )
 # Change yellow to blue
-colors_prov[1] <- "#d60000"
-colors[12] <- "#84d3e7"
+colors[1] <- "#d60000" #Andalucía
+colors[11] <- "#f5a115" # Extremadura
+colors[12] <- "#7ac3d6" # Galicia
+colors[13] <- "#bba527" # Madrid
 
 
 # Plots --------------------
@@ -2281,12 +2283,15 @@ dev.off()
 png(filename=paste("img/spain/regions/covid19_altas-por-dia-comunidad-autonoma-lineal_media.png", sep = ""),width = 1200,height = 700)
 data_all_export %>% 
   ggplot() +
-  geom_smooth(data = data_all_export_sm %>% ungroup() %>% 
-                
-                select(date,daily_recovered_avg6,region_cp,-region),
-            aes(date,daily_recovered_avg6,group=region_cp), color="#CACACA", se = FALSE, span = 0.35, size= 0.5 ) +
+  # geom_smooth(data = data_all_export_sm %>% ungroup() %>% 
+  #               select(date,daily_recovered_avg6,region_cp,-region),
+  #           aes(date,daily_recovered_avg6,group=region_cp), color="#CACACA", se = FALSE, span = 0.35, size= 0.5 ) +
+  # geom_line(data = data_all_export_sm %>% ungroup() %>% 
+  #               select(date,daily_recovered_avg6,region_cp,-region),
+  #             aes(date,daily_recovered_avg6,group=region_cp), color="#CACACA", size= 0.5 ) +
   geom_point(aes(date,daily_recovered, color=region), size= 1.5, alpha = 0.5) +
-  geom_smooth(aes(date,daily_recovered_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
+  # geom_smooth(aes(date,daily_recovered_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
+  geom_line(aes(date,daily_recovered_avg6,group=region, color=region), size= 1  ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)),
                   aes(date,daily_recovered_avg6, 
                       label=paste(format(daily_recovered_avg6, nsmall=1, big.mark=".", decimal.mark = ","))),
@@ -2298,11 +2303,11 @@ data_all_export %>%
                   segment.size = 0.2,
                   segment.color="#777777"
   ) +
-  facet_wrap( ~region) +
+  facet_wrap( ~region, scales = "free_y") +
   scale_color_manual(values = colors ) +
-  coord_cartesian(
-    ylim = c(1,max(data_all_export[!is.na(data_all_export$daily_recovered_avg6) & ( data_all_export$region != "Total"),]$daily_recovered_avg6)+100)
-  ) +
+  # coord_cartesian(
+    # ylim = c(1,max(data_all_export[!is.na(data_all_export$daily_recovered_avg6) & ( data_all_export$region != "Total"),]$daily_recovered_avg6)+100)
+  # ) +
   # scale_y_log10(
   #   breaks = c(0,1,2,5,10,20,50,100,200,500,1000,2000,5000 ),
   #   labels = function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
@@ -2317,7 +2322,7 @@ data_all_export %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
@@ -2385,8 +2390,9 @@ png(filename=paste("img/spain/regions/covid19_altas-por-dia-comunidad-autonoma-s
 data_all_export %>% 
   ggplot() +
   # geom_smooth( data=hubei, aes(date+40,daily_deaths_avg6,group=region, color=region), size= 3, color="#aaaaaa", se = FALSE, span = 0.35 ) +
-  geom_smooth(aes(date,daily_recovered_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
-  geom_point(aes(date,daily_recovered, color=region), size= 1.5 ) +
+  geom_line(aes(date,daily_recovered_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
+  geom_line(aes(date,daily_recovered,group=region, color=region), size= 0.1 ) +
+  geom_point(aes(date,daily_recovered, color=region), size= 0.6, alpha = 0.5  ) +
   geom_point(data=filter( data_all_export, date==max(data_all_export$date)), aes(date, daily_recovered_avg6, color=region), size= 1, alpha = 0.3 ) +
   geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) )
   ),
@@ -2454,9 +2460,11 @@ dev.off()
 png(filename=paste("img/spain/regions/covid19_altas-por-dia-comunidad-autonoma-superpuesto-lineal_media.png", sep = ""),width = 1200,height = 700)
 data_all_export %>% 
   ggplot() +
-  geom_smooth(aes(date,daily_recovered_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
-  geom_point(aes(date,daily_recovered, color=region), size= 1.5 ) +
-  geom_point(data=filter( data_all_export, date==max(data_all_export$date)), aes(date, daily_recovered_avg6, color=region), size= 1.5, alpha = 0.3 ) +
+  # geom_smooth( data=hubei, aes(date+40,daily_deaths_avg6,group=region, color=region), size= 3, color="#aaaaaa", se = FALSE, span = 0.35 ) +
+  geom_line(aes(date,daily_recovered_avg6,group=region, color=region), size= 1, se = FALSE, span = 0.35 ) +
+  geom_line(aes(date,daily_recovered,group=region, color=region), size= 0.1 ) +
+  geom_point(aes(date,daily_recovered, color=region), size= 0.6, alpha = 0.5  ) +
+  geom_point(data=filter( data_all_export, date==max(data_all_export$date)), aes(date, daily_recovered_avg6, color=region), size= 1, alpha = 0.3 ) +
   geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) )
   ),
                   aes(date,daily_recovered_avg6, color=region, label=paste(format(daily_recovered_avg6, nsmall=1, big.mark=".", decimal.mark = ","),region)),
@@ -2674,8 +2682,8 @@ data_all_export %>%
   ggplot() +
   # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
   #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
-  geom_line(aes(date,cases_registered,group=region, color="#2222BB"), size = 1 ) +
-  geom_line(aes(date,recovered,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,cases_registered,group=region, color="#5b5bbb"), size = 1 ) +
+  geom_line(aes(date,recovered,group=region, color="#7ba934"), size = 1 ) +
   geom_line(aes(date,deceassed,group=region,color="black"), size = 1 ) +
   scale_color_identity(
     guide = "legend",
@@ -2712,8 +2720,8 @@ data_all_export %>%
   ggplot() +
   # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
   #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
-  geom_line(aes(date,cases_registered,group=region, color="#2222BB"), size = 1 ) +
-  geom_line(aes(date,recovered,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,cases_registered,group=region, color="#5b5bbb"), size = 1 ) +
+  geom_line(aes(date,recovered,group=region, color="#7ba934"), size = 1 ) +
   geom_line(aes(date,deceassed,group=region,color="black"), size = 1 ) +
   scale_color_identity(
     guide = "legend",
@@ -2747,9 +2755,9 @@ dev.off()
 png(filename=paste("img/spain/regions/covid19_mix-comunidad-autonoma-lineal-stacked.png", sep = ""),width = 1200,height = 700)
 data_all_export %>%
   ggplot() +
-  geom_ribbon(aes(date,ymin=deceassed,ymax=deceassed+recovered,group=region, fill="#339922"), size = 1 ) +
+  geom_ribbon(aes(date,ymin=deceassed,ymax=deceassed+recovered,group=region, fill="#7ba934"), size = 1 ) +
   geom_ribbon(aes(date,ymin=0,ymax=deceassed,group=region,fill="black"), size = 1 ) +
-  geom_line(aes(date,cases_registered,group=region, color="#2222BB"), size = 1 ) +
+  geom_line(aes(date,cases_registered,group=region, color="#5b5bbb"), size = 1 ) +
   scale_color_identity(
     guide = "legend",
     labels = c("Casos","Recuperados", "Muertos"),
@@ -2787,9 +2795,9 @@ dev.off()
 png(filename=paste("img/spain/regions/covid19_mix-comunidad-autonoma-lineal-stacked_free.png", sep = ""),width = 1200,height = 700)
 data_all_export %>%
   ggplot() +
-  geom_ribbon(aes(date,ymin=deceassed,ymax=deceassed+recovered,group=region, fill="#339922"), size = 1 ) +
+  geom_ribbon(aes(date,ymin=deceassed,ymax=deceassed+recovered,group=region, fill="#7ba934"), size = 1 ) +
   geom_ribbon(aes(date,ymin=0,ymax=deceassed,group=region,fill="black"), size = 1 ) +
-  geom_line(aes(date,cases_registered,group=region, color="#2222BB"), size = 1 ) +
+  geom_line(aes(date,cases_registered,group=region, color="#5b5bbb"), size = 1 ) +
   scale_color_identity(
     guide = "legend",
     labels = c("Casos","Recuperados", "Muertos"),
@@ -2801,14 +2809,14 @@ data_all_export %>%
   facet_wrap( ~region, scales = "free") +
   geom_text(data=filter( data_all_export, date==max(data_all_export$date) ),
                   aes(date + 1,cases_registered, label=paste(format( round(cases_registered, digits = 0), nsmall=0, big.mark="."))),
-                  color="#2222BB",
+                  color="#5b5bbb",
                   size=4,
                   hjust=0,
                   family = "Roboto Condensed"
   ) +
   geom_text(data=filter( data_all_export, date==max(data_all_export$date) ),
                   aes(date + 1,recovered/2 + deceassed, label=paste(format(round(recovered, digits = 0), nsmall=0, big.mark="."))),
-                  color="#339922",
+                  color="#7ba934",
                   size=4,
                   hjust=0,
                   family = "Roboto Condensed"
@@ -2852,8 +2860,8 @@ data_all_export %>%
   ggplot() +
   # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
   #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
-  geom_line(aes(date,cases_registered,group=region, color="#2222BB"), size = 1 ) +
-  geom_line(aes(date,recovered,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,cases_registered,group=region, color="#5b5bbb"), size = 1 ) +
+  geom_line(aes(date,recovered,group=region, color="#7ba934"), size = 1 ) +
   geom_line(aes(date,deceassed,group=region,color="black"), size = 1 ) +
   scale_color_identity(
     guide = "legend",
@@ -2890,8 +2898,8 @@ data_all_export %>%
   ggplot() +
   # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
   #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
-  geom_line(aes(date,cases_per_100000,group=region, color="#2222BB"), size = 1 ) +
-  geom_line(aes(date,recovered_per_100000,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,cases_per_100000,group=region, color="#5b5bbb"), size = 1 ) +
+  geom_line(aes(date,recovered_per_100000,group=region, color="#7ba934"), size = 1 ) +
   geom_line(aes(date,deceassed_per_100000,group=region,color="black"), size = 1 ) +
   scale_color_identity(
     guide = "legend",
@@ -2927,8 +2935,8 @@ data_all_export %>%
   ggplot() +
   # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
   #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
-  geom_line(aes(date,cases_per_100000,group=region, color="#2222BB"), size = 1 ) +
-  geom_line(aes(date,recovered_per_100000,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,cases_per_100000,group=region, color="#5b5bbb"), size = 1 ) +
+  geom_line(aes(date,recovered_per_100000,group=region, color="#7ba934"), size = 1 ) +
   geom_line(aes(date,deceassed_per_100000,group=region,color="black"), size = 1 ) +
   scale_color_identity(
     guide = "legend",
@@ -2967,8 +2975,8 @@ data_all_export %>%
   ggplot() +
   # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
   #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
-  geom_line(aes(date,daily_cases,group=region, color="#2222BB"), size = 1 ) +
-  geom_line(aes(date,daily_recovered,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,daily_cases,group=region, color="#5b5bbb"), size = 1 ) +
+  geom_line(aes(date,daily_recovered,group=region, color="#7ba934"), size = 1 ) +
   geom_line(aes(date,daily_deaths,group=region,color="black"), size = 1 ) +
   scale_color_identity(
     guide = "legend",
@@ -3005,8 +3013,8 @@ data_all_export %>%
   ggplot() +
   # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
   #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
-  geom_line(aes(date,daily_cases,group=region, color="#2222BB"), size = 1 ) +
-  geom_line(aes(date,daily_recovered,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,daily_cases,group=region, color="#5b5bbb"), size = 1 ) +
+  geom_line(aes(date,daily_recovered,group=region, color="#7ba934"), size = 1 ) +
   geom_line(aes(date,daily_deaths,group=region,color="black"), size = 1 ) +
   scale_color_identity(
     guide = "legend",
@@ -3046,12 +3054,12 @@ data_all_export %>%
   ggplot() +
   # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
   #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
-  geom_line(aes(date,daily_cases_avg,group=region, color="#2222BB"), size = 1 ) +
-  geom_line(aes(date,daily_recovered_avg6,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,daily_cases_avg,group=region, color="#5b5bbb"), size = 1 ) +
+  geom_line(aes(date,daily_recovered_avg6,group=region, color="#7ba934"), size = 1 ) +
   geom_line(aes(date,daily_deaths_avg6,group=region,color="black"), size = 1 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date) ),
                   aes(date + 13,daily_cases_avg, label=paste(format(daily_cases_avg, nsmall=1, big.mark="."))),
-                  color="#2222BB",
+                  color="#5b5bbb",
                   nudge_x = 0, # adjust the starting y position of the text label
                   size=4,
                   # hjust=0,
@@ -3062,7 +3070,7 @@ data_all_export %>%
   ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date) ),
                   aes(date + 11,daily_recovered_avg6, label=paste(format(daily_recovered_avg6, nsmall=1, big.mark="."))),
-                  color="#339922",
+                  color="#7ba934",
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=4,
                   # hjust=0,
@@ -3117,12 +3125,12 @@ data_all_export %>%
   ggplot() +
   # geom_line(data = select(data_all_export_sm,date,cases_registered,region_cp,-region),
   #           aes(date,cases_registered,group=region_cp), color="#CACACA" ) +
-  geom_line(aes(date,daily_cases_avg,group=region, color="#2222BB"), size = 1 ) +
-  geom_line(aes(date,daily_recovered_avg6,group=region, color="#339922"), size = 1 ) +
+  geom_line(aes(date,daily_cases_avg,group=region, color="#5b5bbb"), size = 1 ) +
+  geom_line(aes(date,daily_recovered_avg6,group=region, color="#7ba934"), size = 1 ) +
   geom_line(aes(date,daily_deaths_avg6,group=region,color="black"), size = 1 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date) ),
                   aes(date + 13,daily_cases_avg, label=paste(format(daily_cases_avg, nsmall=1, big.mark="."))),
-                  color="#2222BB",
+                  color="#5b5bbb",
                   nudge_x = 0, # adjust the starting y position of the text label
                   size=4,
                   # hjust=0,
@@ -3133,7 +3141,7 @@ data_all_export %>%
   ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date) ),
                   aes(date + 11,daily_recovered_avg6, label=paste(format(daily_recovered_avg6, nsmall=1, big.mark="."))),
-                  color="#339922",
+                  color="#7ba934",
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=4,
                   # hjust=0,
