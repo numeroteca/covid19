@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 library(tidyverse)
+today <- "2020-05-14"
 ```
 
 Un análisis automatizado de la base de datos por provincias de #COVID19 en España. Puedes acceder a todoslos datos en el repositorio https://github.com/montera34/escovid19data
@@ -43,7 +44,7 @@ theme(
   # legend.position = "bottom"
 ) +
 labs(title = "Fuentes usadas por tipo en Escovid19data",
-     subtitle = paste("Mixtas o únicas",sep=""),
+     subtitle = paste("Usa fuente de datos Mixtas o únicas. ",today,sep=""),
      y = "número de filas",
      x = "tipo",
      caption = paste0("Numero de filas:",lineas)
@@ -80,7 +81,7 @@ theme(
   # legend.position = "bottom"
 ) +
 labs(title = "Fuentes usadas en Escovid19data",
-     subtitle = paste("Veces que aparece cada fuente (% respecto total)",sep=""),
+     subtitle = paste("Veces que aparece cada fuente (% respecto total). ",today,sep=""),
      y = "Número de filas con esta fuente",
      x = "fuente",
      caption = paste0("Numero de filas:",lineas)
@@ -121,7 +122,7 @@ theme(
   # legend.position = "bottom"
 ) +
 labs(title = "Fuentes usadas en Escovid19data",
-     subtitle = paste("Veces que aparece cada fuente (% respecto total)",sep=""),
+     subtitle = paste("Veces que aparece cada fuente (% respecto total. ", today, sep=""),
      y = "Número de filas con esta fuente",
      x = "fuente",
      caption = paste0("Numero de filas:",lineas)
@@ -159,7 +160,7 @@ ggplot( aes(x = reorder(Var1, Freq), y = Freq)) +
     # legend.position = "bottom"
   ) +
   labs(title = "Fuentes usadas en Escovid19data. Datos de casos",
-       subtitle = paste("Veces que aparece cada fuente (% respecto total)",sep=""),
+       subtitle = paste("Veces que aparece cada fuente (% respecto total). ",today,sep=""),
      y = "Número de filas con esta fuente",
      x = "fuente",
        caption = paste0("Numero de filas:",lineas)
@@ -203,8 +204,4 @@ ggplot( aes(x = reorder(Var1, Freq), y = Freq)) +
        caption = paste0("Numero de filas:",lineas)
        ) +
   coord_flip()
-```
-
-
-```{r pressure, echo=FALSE}
 ```
