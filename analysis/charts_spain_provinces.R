@@ -13,8 +13,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: esCOVID19data (github.com/montera34/escovid19data, lab.montera34.com/covid19)"
-period <- "Actualizado: 2020-05-13. Para CCAA uniprovinciales casos es la suma de PCR+ y TestAc+ a partir de 2020.04.15"
-filter_date <- as.Date("2020-05-13")
+period <- "Actualizado: 2020-05-14. Para CCAA uniprovinciales casos es la suma de PCR+ y TestAc+ a partir de 2020.04.15"
+filter_date <- as.Date("2020-05-14")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -802,7 +802,7 @@ data_cases_sp_provinces %>%
   #                expand = c(0,0.2) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date)+15, max(data_cases_sp_provinces$date +12)),
+               limits=c( min(data_cases_sp_provinces$date)+5, max(data_cases_sp_provinces$date +12)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -847,7 +847,7 @@ data_cases_sp_provinces %>%
   #                expand = c(0,0.2) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date)+15, max(data_cases_sp_provinces$date +12)),
+               limits=c( min(data_cases_sp_provinces$date)+5, max(data_cases_sp_provinces$date +12)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -884,7 +884,7 @@ data_cases_sp_provinces %>%
                   segment.color="#777777"
   ) +
   # marca un día
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==as.Date("2020-03-27") &  province == "Madrid" ),
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==as.Date("2020-03-30") &  province == "Madrid" ),
                   aes(date,daily_cases, label=paste("casos en un día en una provincia")),
                   nudge_x = -1, # adjust the starting y position of the text label
                   size=5,
@@ -916,7 +916,7 @@ data_cases_sp_provinces %>%
   #                expand = c(0,0.2) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date)+15, max(data_cases_sp_provinces$date +14)),
+               limits=c( min(data_cases_sp_provinces$date)+5, max(data_cases_sp_provinces$date +14)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -984,7 +984,7 @@ data_cases_sp_provinces %>%
                  expand = c(0,0.2) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +16)),
+               limits=c( min(data_cases_sp_provinces$date)+5, max(data_cases_sp_provinces$date +16)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -1003,7 +1003,7 @@ data_cases_sp_provinces %>%
 dev.off()
 
 
-# Superpuesto Log por CCAA -------------
+  Superpuesto Log por CCAA -------------
 for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   # for ( i in 3:3  ) {
   
@@ -3562,11 +3562,11 @@ data_cases_sp_provinces$weekday <- weekdays(data_cases_sp_provinces$date)
 data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
                                               "sábado","domingo" ) )
 
-png(filename=paste("tmp/weekdays/dias-semana-euskadi-01.png", sep = ""),width = 1030,height = 400)
-data_cases_sp_provinces %>% filter ( ccaa == "País Vasco") %>%
+png(filename=paste("tmp/weekdays/dias-semana-euskadi-01.png", sep = ""),width = 1150,height = 400)
+data_cases_sp_provinces %>% filter ( ccaa == "País Vasco") %>% # filter ( province == "Bizkaia") %>%
   ggplot() +
   geom_col( aes(date,daily_deaths, fill=weekday), width = 1 ) +
-  geom_line( aes(date,daily_deaths_avg7, group=province) ) +
+  geom_line( aes(date,daily_deaths_avg7, group=province), size = 2 ) +
   # geom_col( data = data_cases_sp_provinces %>% filter(weekday == "jueves"), aes(date,daily_deaths, group=province, fill="#DD0000")) +
   facet_wrap(~province) +
   scale_fill_manual(values = c("#AAAAAA","#AAAAAA","#FF88AA","#AAAAAA","#AAAAAA","#CCAAAA","#CCAAAA") ) +
@@ -3574,11 +3574,12 @@ data_cases_sp_provinces %>% filter ( ccaa == "País Vasco") %>%
     # breaks = c(200,400,600,800,1000,1200,1400,1600,1800,2000)
     # minor_breaks = c(70,80,90,100)
   ) + 
-  scale_x_date(date_breaks = "7 day", 
-               date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date)+20, max(data_cases_sp_provinces$date)),
-               expand = c(0,0)
-  ) + 
+  scale_x_date(
+    date_breaks = "7 day",
+     date_labels = "%d",
+     limits=c( min(data_cases_sp_provinces$date)+20, max(data_cases_sp_provinces$date)+2),
+     expand = c(0,1)
+  ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
   theme(
     panel.grid.minor.x = element_blank(),
@@ -3594,7 +3595,7 @@ data_cases_sp_provinces %>% filter ( ccaa == "País Vasco") %>%
        caption = caption_provincia,
        fill = "día de la semana"
   )
-dev.off()
+  dev.off()
 # 
 # png(filename=paste("tmp/weekdays/dias-semana-euskadi-02.png", sep = ""),width = 900,height = 900)
 # data_cases_sp_provinces %>% filter ( ccaa == "País Vasco") %>%
@@ -3639,7 +3640,7 @@ png(filename=paste("tmp/weekdays/dias-semana-prov-",i,".png", sep = ""),width = 
 weekdaychart <- data_cases_sp_provinces %>% filter ( province == la_prov ) %>%
   ggplot() +
   geom_col( aes(date,daily_deaths, fill=weekday), width = 1 ) +
-  geom_line( aes(date,daily_deaths_avg7, group=province) ) +
+  geom_line( aes(date,daily_deaths_avg7, group=province), size = 2 ) +
   # geom_col( data = data_cases_sp_provinces %>% filter(weekday == "jueves"), aes(date,daily_deaths, group=province, fill="#DD0000")) +
   facet_wrap(~province) +
   scale_fill_manual(values = c("#AAAAAA","#AAAAAA","#FF88AA","#AAAAAA","#AAAAAA","#CCAAAA","#CCAAAA") ) +
@@ -3649,7 +3650,7 @@ weekdaychart <- data_cases_sp_provinces %>% filter ( province == la_prov ) %>%
   ) + 
   scale_x_date(date_breaks = "7 day", 
                date_labels = "%d",
-               limits=c( min(data_cases_sp_provinces$date)+20, max(data_cases_sp_provinces$date)),
+               limits=c( min(data_cases_sp_provinces$date)+20, max(data_cases_sp_provinces$date)+2),
                expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
@@ -3766,3 +3767,25 @@ data_cases_sp_provinces %>% filter( ccaa == "País Vasco") %>%
        caption = caption_provincia)
 dev.off()
 
+# Sources ----
+xxx <- as.data.frame(table(data_cases_sp_provinces$source_name))
+
+
+df <- read.table(textConnection("1|a,b,c\n2|a,c\n3|b,d\n4|e,f"), header = F, sep = "|", stringsAsFactors = F)
+df
+s <- strsplit(df$V2, split = ",")
+data.frame(V1 = rep(df$V1, sapply(s, length)), V2 = unlist(s))
+
+
+zz <- strsplit( data_cases_sp_provinces$source_name, split =';')
+zz
+xx <- data.frame(V1 = rep(data_cases_sp_provinces$source_name, sapply(zz, length)), V2 = unlist(zz))
+
+zz<- as.data.frame(zz)
+yy <- zz[643]
+
+s <- strsplit(df$V2, split = ",")
+
+x1 <- separate_rows(data_cases_sp_provinces, source_name)
+
+data_cases_sp_provinces %>% m
