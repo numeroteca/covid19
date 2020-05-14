@@ -1,0 +1,168 @@
+---
+title: "Informe sobre Escovid19data"
+author: "numeroteca"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+```
+
+##  Fuentes de información
+
+```{r todos, fig.width=8, fig.height=12, echo=FALSE}
+data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
+
+lineas <- nrow(data_cases_sp_provinces)
+
+fuentes <- as.data.frame(table(data_cases_sp_provinces$source_name))
+
+fuentes <- fuentes %>% arrange(-Freq)
+
+fuentes %>% arrange(-Freq) %>% head(50) %>%
+ggplot( aes(x = reorder(Var1, Freq), y = Freq)) +
+geom_col(fill = "grey") +
+geom_text(aes(label = paste0(Freq, " (", format(round( Freq/lineas*100, digits = 1),decimal.mark = ","), "%) ", substr(Var1,1,70 )), y= 2 ),
+          hjust = 0,
+          size=5,color="#000000",family = "Roboto Condensed") +
+scale_y_continuous(labels=function(x) format(x, big.mark = ".", scientific = FALSE)) +
+theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
+theme(
+  # panel.grid.minor.x = element_blank(),
+  # panel.grid.major.x = element_blank(),
+  panel.grid.major.y = element_blank(),
+  panel.grid.minor.y = element_blank(),
+  axis.text.y = element_blank(),
+  axis.ticks.x = element_blank(),
+  axis.ticks.y = element_blank()
+  # legend.position = "bottom"
+) +
+labs(title = "Fuentes usadas en Escovid19data",
+     subtitle = paste("Veces que aparece cada fuente (% respecto total)",sep=""),
+     # y = "Número de tuits con esa URL",
+     # x = "",
+     caption = paste0("Numero de filas:",lineas)
+     ) +
+coord_flip()
+
+```
+
+
+
+```{r rejillaccaa, fig.width=10, fig.height=13, echo=FALSE}
+data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
+
+fuentes <- data_cases_sp_provinces %>% group_by (ccaa,source_name) %>% summarise(
+  Freq  = n()
+) %>% rename ( Var1 = source_name )
+# fuentes <- as.data.frame(table(data_cases_sp_provinces$source_name))
+
+fuentes$Var1 <- as.factor(fuentes$Var1) 
+
+fuentes %>% arrange(-Freq) %>% 
+ggplot( aes(x = reorder(Var1, Freq), y = Freq)) +
+geom_col(fill = "grey", width = 2) +
+geom_text(aes(label = paste0(Freq, " ", substr(Var1,1,70 )), y= 2 ),
+          hjust = 0,
+          size=3,color="#000000",family = "Roboto Condensed") +
+# scale_y_continuous(labels=function(x) format(x, big.mark = ".", scientific = FALSE)) +
+facet_wrap( ~ccaa, scales = "free_x") +
+theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
+theme(
+  panel.grid.minor.x = element_blank(),
+  panel.grid.major.x = element_blank(),
+  panel.grid.major.y = element_blank(),
+  panel.grid.minor.y = element_blank(),
+  axis.text.y = element_blank(),
+  axis.ticks.x = element_blank(),
+  axis.ticks.y = element_blank()
+  # legend.position = "bottom"
+) +
+labs(title = "Fuentes usadas en Escovid19data",
+     subtitle = paste("Veces que aparece cada fuente (% respecto total)",sep=""),
+     # y = "Número de tuits con esa URL",
+     # x = "",
+     caption = paste0("Numero de filas:",lineas)
+     ) +
+coord_flip()
+```
+```{r casos, fig.width=8, fig.height=12, echo=FALSE}
+data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !is.na(cases_accumulated) )
+
+lineas <- nrow(data_cases_sp_provinces)
+
+fuentes <- as.data.frame(table(data_cases_sp_provinces$source_name))
+
+fuentes <- fuentes %>% arrange(-Freq)
+
+fuentes %>% arrange(-Freq) %>% head(50) %>%
+ggplot( aes(x = reorder(Var1, Freq), y = Freq)) +
+  geom_col(fill = "grey") +
+  geom_text(aes(label = paste0(Freq, " (", format(round( Freq/lineas*100, digits = 1),decimal.mark = ","), "%) ", substr(Var1,1,70 )), y= 2 ),
+            hjust = 0,
+            size=5,color="#000000",family = "Roboto Condensed") +
+  scale_y_continuous(labels=function(x) format(x, big.mark = ".", scientific = FALSE)) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
+  theme(
+    # panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.ticks.y = element_blank()
+    # legend.position = "bottom"
+  ) +
+  labs(title = "Fuentes usadas en Escovid19data. Datos de casos",
+       subtitle = paste("Veces que aparece cada fuente (% respecto total)",sep=""),
+       # y = "Número de tuits con esa URL",
+       # x = "",
+       caption = paste0("Numero de filas:",lineas)
+       ) +
+  coord_flip()
+```
+
+```{r muertes, fig.width=8, fig.height=12, echo=FALSE}
+data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !is.na(deceased) )
+
+lineas <- nrow(data_cases_sp_provinces)
+
+fuentes <- as.data.frame(table(data_cases_sp_provinces$source_name))
+
+fuentes <- fuentes %>% arrange(-Freq)
+
+fuentes %>% arrange(-Freq) %>% head(50) %>%
+ggplot( aes(x = reorder(Var1, Freq), y = Freq)) +
+  geom_col(fill = "grey") +
+  geom_text(aes(label = paste0(Freq, " (", format(round( Freq/lineas*100, digits = 1),decimal.mark = ","), "%) ", substr(Var1,1,70 )), y= 2 ),
+            hjust = 0,
+            size=5,color="#000000",family = "Roboto Condensed") +
+  scale_y_continuous(labels=function(x) format(x, big.mark = ".", scientific = FALSE)) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
+  theme(
+    # panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.text.y = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.ticks.y = element_blank()
+    # legend.position = "bottom"
+  ) +
+  labs(title = "Fuentes usadas en Escovid19data. Datos de fallecidos",
+       subtitle = paste("Veces que aparece cada fuente (% respecto total)",sep=""),
+       # y = "Número de tuits con esa URL",
+       # x = "",
+       caption = paste0("Numero de filas:",lineas)
+       ) +
+  coord_flip()
+```
+
+
+```{r pressure, echo=FALSE}
+```
