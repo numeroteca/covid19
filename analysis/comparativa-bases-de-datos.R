@@ -9,28 +9,28 @@ library(tidyverse)
 ciii_original <- read.delim("https://covid19.isciii.es/resources/serie_historica_acumulados.csv",sep = ",")  
 write.csv(ciii_original, file = "data/original/spain/iscii_data.csv", row.names = FALSE)
 
-ciii <- ciii_original %>% head(nrow(ciii_original) - 6) %>% #Cambia el número en función de las notas que incluya el csv original
+ciii <- ciii_original %>% head(nrow(ciii_original) - 8) %>% #Cambia el número en función de las notas que incluya el csv original
   ungroup() %>% mutate(
     date = as.Date(FECHA, "%d/%m/%Y" ),
     CCAA = CCAA %>% str_replace_all("AN", "Andalucía"),
     CCAA = CCAA %>% str_replace_all("AR", "Aragón"),
-    CCAA = CCAA %>% str_replace_all("AS", "Asturias"),
+    CCAA = CCAA %>% str_replace_all("AS", "Asturias, Principado de"),
     CCAA = CCAA %>% str_replace_all("CB", "Cantabria"),
     CCAA = CCAA %>% str_replace_all("CE", "Ceuta"),
     CCAA = CCAA %>% str_replace_all("CL", "Castilla y León"),
-    CCAA = CCAA %>% str_replace_all("CM", "Castilla-La Mancha"),
+    CCAA = CCAA %>% str_replace_all("CM", "Castilla - La Mancha"),
     CCAA = CCAA %>% str_replace_all("CN", "Canarias"),
     CCAA = CCAA %>% str_replace_all("CT", "Cataluña"),
     CCAA = CCAA %>% str_replace_all("EX", "Extremadura"),
     CCAA = CCAA %>% str_replace_all("GA", "Galicia"),
-    CCAA = CCAA %>% str_replace_all("IB", "Baleares"),
-    CCAA = CCAA %>% str_replace_all("MC", "Murcia"),
-    CCAA = CCAA %>% str_replace_all("MD", "Madrid"),
+    CCAA = CCAA %>% str_replace_all("IB", "Balears, Illes"),
+    CCAA = CCAA %>% str_replace_all("MC", "Murcia, Región de"),
+    CCAA = CCAA %>% str_replace_all("MD", "Madrid, Comunidad de"),
     CCAA = CCAA %>% str_replace_all("ML", "Melilla"),
-    CCAA = CCAA %>% str_replace_all("NC", "Navarra"),
+    CCAA = CCAA %>% str_replace_all("NC", "Navarra, Comunidad Foral de"),
     CCAA = CCAA %>% str_replace_all("PV", "País Vasco"),
-    CCAA = CCAA %>% str_replace_all("RI", "La Rioja"),
-    CCAA = CCAA %>% str_replace_all("VC", "C. Valenciana"),
+    CCAA = CCAA %>% str_replace_all("RI", "Rioja, La"),
+    CCAA = CCAA %>% str_replace_all("VC", "Comunitat Valenciana"),
   ) %>% rename(
     region = CCAA,
     fecha = FECHA,
@@ -45,40 +45,50 @@ ciii <- ciii_original %>% head(nrow(ciii_original) - 6) %>% #Cambia el número e
     cases_registered = ifelse( is.na(cases_registered), PCR + TestAc, cases_registered)
   )
 
-write.csv(ciii, file = "data/output/spain/iscii_processed_data.csv", row.names = FALSE)
+# write.csv(ciii, file = "data/output/spain/iscii_processed_data.csv", row.names = FALSE)
 
 
-# summarise providencialdata19 data by ccaa ------
-resumen_pr_ca <- data_cases_sp_provinces %>% group_by(date,ccaa) %>% summarise( deceassed = sum(deceased), cases_accumulated = sum(cases_accumulated) )
+# summarise Escovid19data data by ccaa ------
+data_cases_sp_provinces <- readRDS(file = "data/output/spain/covid19-provincias-spain_consolidated.rds")
+resumen_pr_ca <- data_cases_sp_provinces %>% group_by(date,ccaa) %>% summarise( deceassed = sum(deceased), cases_accumulated = sum(cases_accumulated) ) %>% rename(
+ region = ccaa  
+)
 # rename comunidades autónomas
 levels(resumen_pr_ca$ccaa) <- c("Andalucía","Aragón", "Asturias", "Baleares", "Canarias", "Cantabria",  "Castilla-La Mancha","Castilla y León", "Cataluña", "Ceuta",
                                 "C. Valenciana", "Extremadura","Galicia","Madrid", "Melilla", "Murcia", "Navarra",  "País Vasco","La Rioja")      
 
-resumen_pr_ca$region <- resumen_pr_ca$ccaa
-
+# resumen_pr_ca$region <- resumen_pr_ca$ccaa
+# %>% filter( region== "Cataluña")
 # Plots --------------
-png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_casos_bbdd_lineal.png", sep = ""),width = 2300,height = 1900)
+png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_casos_bbdd_lineal.png", sep = ""),width = 1400,height = 900)
 ggplot(NULL) +
-  geom_line( data = resumen_pr_ca, aes( date, deceassed, group=region), color = "#e7298a", size = 1.5 ) +
-  geom_line( data = data_all_export, aes( date, deceassed, group=region), color = "#66a61e", size = 1 ) +
-  geom_line( data = ciii, aes( date, deceassed, group=region), color = "#000000", size = 0.7 ) +
+  geom_line( data = resumen_pr_ca , aes( date, deceassed, group=region, color = "#e7298a"), size = 1.5 ) +
+  # geom_line( data = data_all_export, aes( date, deceassed, group=region), color = "#66a61e", size = 1 ) +
+  geom_line( data = ciii , aes( date, deceassed, group=region, color = "#000000"), size = 0.7 ) +
+  geom_text(data = resumen_pr_ca %>% group_by(region) %>% top_n(1, date), aes( date+8, deceassed, label=deceassed), color = "#e7298a" ) +
+  geom_text(data = ciii %>% group_by(region) %>% top_n(1, date), aes( date+8, deceassed, label=deceassed), color = "#000000" ) +
   scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  facet_wrap( ~region) +
-  scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d",
-               expand = c(0,0) 
+  scale_color_identity(
+    guide = "legend",
+    labels = c("ISCIII","Escovid19data"),
   ) +
-  theme_minimal(base_family = "Roboto Condensed",base_size = 19) +
+  facet_wrap( ~region, scales = "free") +
+  scale_x_date(
+              # date_breaks = "10 day", 
+               date_labels = "%d",
+               expand = c(0,15) 
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 23) +
   theme(
     # panel.grid.minor.x = element_blank(),
     # panel.grid.major.x = element_blank(),
-    panel.grid.minor.y = element_blank(),
+    # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    axis.text = element_text(size =9 )
-    # legend.position = "none"
+    axis.text = element_text(size =9 ),
+    legend.position = "top"
   ) +
   labs(title = "Comparativa de bases de datos. Fallecimientos acumulados COVID-19 por comunidades autónomas. España",
-       subtitle = paste0("Datadista (verde). Instituto de Salud Carlos III (negro). Providencialdata19 (rosa)."),
+       subtitle = paste0("Instituto de Salud Carlos III (negro). Escovid19data (rosa)."),
        y = "fallecimientos acumulados",
        x = "fecha (Datadista y PD19 se resta un día)",
        caption = paste0( "@numeroteca. lab.montera34.com/covid19" )
