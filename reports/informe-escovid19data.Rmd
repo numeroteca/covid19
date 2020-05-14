@@ -9,9 +9,50 @@ output: html_document
 library(tidyverse)
 ```
 
-##  Fuentes de información
+Un análisis automatizado de la base de datos por provincias de #COVID19 en España. Puedes acceder a todoslos datos en el repositorio https://github.com/montera34/escovid19data
 
-```{r todos, fig.width=8, fig.height=12, echo=FALSE}
+## Según fuentes de información
+
+```{r todos1, fig.width=7, fig.height=4, echo=FALSE, warning=FALSE}
+data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
+# data_cases_sp_provinces %>% filter(str_detect(source_name, ';')) %>% select(ccaa,source_name)
+
+data_cases_sp_provinces  <- data_cases_sp_provinces %>% mutate (
+  source_type = ifelse( str_detect(source_name, ';'),"mixta","única")
+)
+  # filter(str_detect(source_name, ';')) %>% select(ccaa,source_name)
+
+lineas <- nrow(data_cases_sp_provinces)
+
+data_cases_sp_provinces %>% group_by(source_type) %>% summarise( Freq = n()) %>%
+ggplot( aes(x = reorder(source_type, Freq), y = Freq)) +
+geom_col(fill = "grey") +
+geom_text( aes(label = paste0(source_type, " (", format(round( Freq/lineas*100, digits = 1),decimal.mark = ","), "%)"), y = 50 ),
+          hjust = 0,
+          size=5,color="#000000",family = "Roboto Condensed") +
+scale_y_continuous(labels=function(x) format(x, big.mark = ".", scientific = FALSE)) +
+theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
+theme(
+  # panel.grid.minor.x = element_blank(),
+  # panel.grid.major.x = element_blank(),
+  panel.grid.major.y = element_blank(),
+  panel.grid.minor.y = element_blank(),
+  axis.text.y = element_blank(),
+  axis.ticks.x = element_blank(),
+  axis.ticks.y = element_blank()
+  # legend.position = "bottom"
+) +
+labs(title = "Fuentes usadas por tipo en Escovid19data",
+     subtitle = paste("Mixtas o únicas",sep=""),
+     y = "número de filas",
+     x = "tipo",
+     caption = paste0("Numero de filas:",lineas)
+     ) +
+coord_flip()
+
+```
+
+```{r todos2, fig.width=8, fig.height=12, echo=FALSE, warning=FALSE}
 data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
 
 lineas <- nrow(data_cases_sp_provinces)
@@ -40,8 +81,8 @@ theme(
 ) +
 labs(title = "Fuentes usadas en Escovid19data",
      subtitle = paste("Veces que aparece cada fuente (% respecto total)",sep=""),
-     # y = "Número de tuits con esa URL",
-     # x = "",
+     y = "Número de filas con esta fuente",
+     x = "fuente",
      caption = paste0("Numero de filas:",lineas)
      ) +
 coord_flip()
@@ -50,7 +91,7 @@ coord_flip()
 
 
 
-```{r rejillaccaa, fig.width=10, fig.height=13, echo=FALSE}
+```{r rejillaccaa, fig.width=10, fig.height=13, echo=FALSE, warning=FALSE}
 data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
 
 fuentes <- data_cases_sp_provinces %>% group_by (ccaa,source_name) %>% summarise(
@@ -62,7 +103,7 @@ fuentes$Var1 <- as.factor(fuentes$Var1)
 
 fuentes %>% arrange(-Freq) %>% 
 ggplot( aes(x = reorder(Var1, Freq), y = Freq)) +
-geom_col(fill = "grey", width = 2) +
+geom_col(fill = "#DEDEDE", width = 2) +
 geom_text(aes(label = paste0(Freq, " ", substr(Var1,1,70 )), y= 2 ),
           hjust = 0,
           size=3,color="#000000",family = "Roboto Condensed") +
@@ -81,13 +122,14 @@ theme(
 ) +
 labs(title = "Fuentes usadas en Escovid19data",
      subtitle = paste("Veces que aparece cada fuente (% respecto total)",sep=""),
-     # y = "Número de tuits con esa URL",
-     # x = "",
+     y = "Número de filas con esta fuente",
+     x = "fuente",
      caption = paste0("Numero de filas:",lineas)
      ) +
 coord_flip()
 ```
-```{r casos, fig.width=8, fig.height=12, echo=FALSE}
+
+```{r casos, fig.width=8, fig.height=12, echo=FALSE, warning=FALSE}
 data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !is.na(cases_accumulated) )
@@ -118,14 +160,14 @@ ggplot( aes(x = reorder(Var1, Freq), y = Freq)) +
   ) +
   labs(title = "Fuentes usadas en Escovid19data. Datos de casos",
        subtitle = paste("Veces que aparece cada fuente (% respecto total)",sep=""),
-       # y = "Número de tuits con esa URL",
-       # x = "",
+     y = "Número de filas con esta fuente",
+     x = "fuente",
        caption = paste0("Numero de filas:",lineas)
        ) +
   coord_flip()
 ```
 
-```{r muertes, fig.width=8, fig.height=12, echo=FALSE}
+```{r muertes, fig.width=8, fig.height=12, echo=FALSE, warning=FALSE}
 data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !is.na(deceased) )
