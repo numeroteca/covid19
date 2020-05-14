@@ -13,8 +13,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: esCOVID19data (github.com/montera34/escovid19data, lab.montera34.com/covid19)"
-period <- "Actualizado: 2020-05-12. Para CCAA uniprovinciales casos es la suma de PCR+ y TestAc+ a partir de 2020.04.15"
-filter_date <- as.Date("2020-05-12")
+period <- "Actualizado: 2020-05-13. Para CCAA uniprovinciales casos es la suma de PCR+ y TestAc+ a partir de 2020.04.15"
+filter_date <- as.Date("2020-05-13")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -109,7 +109,7 @@ data_cases_sp_provinces %>%
 dev.off()
 
 png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia-region-grouped-lineal.png", sep = ""),width = 1200,height = 800)
-data_cases_sp_provinces %>%
+data_cases_sp_provinces %>% 
   ggplot() +
   geom_line(aes(date,cases_accumulated,group=province, color = province), size = 0.7 ) +
   geom_text_repel(data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(cases_accumulated) ) %>% top_n(1, date),
@@ -3420,9 +3420,9 @@ dev.off()
 
 # 10. Scatter polts ------------
 
-last_day_available <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date,province) %>% 
-  filter( row_number()==n() ) %>%
-  select(province,date,cases_accumulated,deceased,ccaa) 
+# last_day_available <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date,province) %>% 
+#   filter( row_number()==n() ) %>%
+#   select(province,date,cases_accumulated,deceased,ccaa) 
 
 letalidad_a <- data.frame(c(0,60000),c(0,8000),c("p","p"))
 names(letalidad_a) <- c("x","y","group")
@@ -3492,9 +3492,9 @@ geom_text_repel(data= data_cases_sp_provinces %>% top_n(1, date),
   )
 dev.off()
 
-last_day_available <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date,province) %>% 
-  filter( row_number()==n() ) %>%
-  select(province,date,cases_per_cienmil,deceassed_per_100000,ccaa)
+# last_day_available <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date,province) %>% 
+#   filter( row_number()==n() ) %>%
+#   select(province,date,cases_per_cienmil,deceassed_per_100000,ccaa)
 
 png(filename=paste("img/spain/provincias/covid19_muertes-vs-casos-provincia-relativo.png", sep = ""),width = 1200,height = 900)
 data_cases_sp_provinces %>% # filter(province == "Rioja, La") %>%
