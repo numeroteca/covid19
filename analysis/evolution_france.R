@@ -9,7 +9,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------  
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_f <- "Gráfico: lab.montera34.com/covid19. Datos: OpenCOVID19-fr"
-periodo_f <- "2020.03.04 - 05.14"
+periodo_f <- "2020.03.04 - 05.15"
 
 # COVID-19 in France-----------
 
@@ -620,6 +620,53 @@ data_f2_cases_death %>%
        x = "fecha",
        caption = caption_f)
 dev.off()
+
+png(filename=paste("img/france/covid19_muertes-por-dia-region-superpuesto-lineal_media.png", sep = ""),width = 1100,height = 800)
+data_f2_cases_death %>% 
+  ggplot() +
+  # geom_smooth(aes(date, daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE ) +
+  geom_line(aes(date, daily_deaths_avg6,group=region, color=region), size= 1, se = FALSE  ) +
+  geom_line(aes(date, daily_deaths, color=region, group=region), size= 0.3, alpha=0.5) +
+  geom_point(aes(date, daily_deaths, color=region), size= 0.6, alpha=0.5 ) +
+  geom_text_repel(data=filter( data_f2_cases_death, date==max(data_f2_cases_death$date),  region != "Total"), 
+                  aes(date, daily_deaths_avg6, color=region, label=paste(format( daily_deaths_avg6, nsmall=1, big.mark="."), substr(region,1,20) )),
+                  nudge_x = 1, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  coord_cartesian(
+    ylim=c(0, max(data_f2_cases[!is.na(data_f2_cases$daily_deaths),]$daily_deaths)*1.05 )
+  ) +
+  # scale_y_log10( 
+  #   breaks = c(0,1,5,10,20,50,100,200,500,1000,2000,5000 ),
+  #   labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #   minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+  #   expand = c(0,0.1)
+  # ) +
+  scale_x_date(date_breaks = "2 day", 
+               date_labels = "%d",
+               limits=c( min(data_f2_cases$date + 40), max(data_f2_cases$date +13)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Media de muertes por día en los 7 días anteriores (último inclusive) por COVID-19 Francia",
+       subtitle = paste0("Por región. Error en Pays de La Loire por dato del 2020.04.09 ",periodo_f),
+       y = "fallecidos por día",
+       x = "fecha",
+       caption = caption_f)
+dev.off()
+
 
 png(filename=paste("img/france/covid19_muertes-por-dia-region-superpuesto-log_media.png", sep = ""),width = 1100,height = 800)
 data_f2_cases_death %>% 
