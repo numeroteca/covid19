@@ -354,29 +354,32 @@ dev.off()
 # Comparativa datos Euskadi ----------
 
 # Por provincias
+
+# Load data
 data_cases_sp_provinces <- readRDS(file = "data/output/spain/covid19-provincias-spain_consolidated.rds") %>% ungroup() %>% mutate(
   province = province %>% str_replace_all("Araba/Álava", "Araba"),
 )
 
-
+# Load Opendataeuskadi data
 euskadi_od <- read.delim("data/original/spain/euskadi/06.csv",sep = ";",skip = 1)
 
 euskadi_od <- euskadi_od %>% rename (date = X) %>%
   mutate( date = as.Date(as.character(date), "%d/%m/%y")
   ) %>% select( -Guztira...Total) %>% filter (!is.na(date))
 
+# get total data first line
 euskadi_first <- read.delim("data/original/spain/euskadi/06.csv",sep = ";",skip = 1) %>% rename (date = X) %>%
   mutate( date = as.Date(as.character(date), "%d/%m/%y")
   ) %>% select( -Guztira...Total) %>% filter (is.na(date))
 
-
+# Data in long format
 euskadi_long <- melt(euskadi_od, id.vars = c("date")) %>% 
   rename ( province = variable, daily_deceassed = value) %>%
   mutate(
      deceassed = NA
   )
 
-# Añade valor inicial
+# Añade valor inicial 
 euskadi_long[ euskadi_long$province=="Araba" & euskadi_long$date == min(euskadi_long$date),]$deceassed <- euskadi_first$Araba - sum( euskadi_long[euskadi_long$province=="Araba",]$deceassed) + euskadi_long[ euskadi_long$province=="Araba" & euskadi_long$date == min(euskadi_long$date),]$daily_deceassed
 euskadi_long[ euskadi_long$province=="Bizkaia" & euskadi_long$date == min(euskadi_long$date),]$deceassed <- euskadi_first$Bizkaia - sum( euskadi_long[euskadi_long$province=="Bizkaia",]$deceassed) + euskadi_long[ euskadi_long$province=="Bizkaia" & euskadi_long$date == min(euskadi_long$date),]$daily_deceassed
 euskadi_long[ euskadi_long$province=="Gipuzkoa" & euskadi_long$date == min(euskadi_long$date),]$deceassed <- euskadi_first$Gipuzkoa - sum( euskadi_long[euskadi_long$province=="Gipuzkoa",]$deceassed) + euskadi_long[ euskadi_long$province=="Gipuzkoa" & euskadi_long$date == min(euskadi_long$date),]$daily_deceassed
@@ -397,8 +400,9 @@ ggplot(NULL) +
     guide = "legend",
     labels = c("Opendata Euskadi (2020.05.15)","Irekia-Osakidetza (hasta 2020.05.14)"),
   ) +
-  scale_x_date(date_breaks = "10 day",
-               date_labels = "%d",
+  scale_x_date(
+      # date_breaks = "10 day",
+               date_labels = "%d-%m",
                limits = c(as.Date("2020-03-12"),max(euskadi_long$date)),
                expand = c(0,0)
   ) +
@@ -408,7 +412,7 @@ ggplot(NULL) +
     # panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    # axis.text = element_text(size =12 ),
+    axis.text = element_text(size =10 ),
     legend.position = "top"
   ) +
   labs(title = "Comparativa de bases de datos. Fallecimientos acumulados COVID-19 en Euskadi",
@@ -429,33 +433,29 @@ dev.off()
 data_all_export <- readRDS(file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated_isciii.rds")
 
 # esCOVID19data
+# aggregate by ccaa
 resumen_pr_ca <- data_cases_sp_provinces %>% group_by(date,ccaa) %>% summarise( deceassed = sum(deceased), cases_accumulated = sum(cases_accumulated) ) 
-# %>% rename(
-#   region = ccaa
-# )
 
-# Opendata Euskadi
+# Opendata Euskadi. aggregate by ccaa
 euskadi_ca <- euskadi_long %>% group_by(date) %>% summarise( deceassed = sum(deceassed) ) 
 
-
-png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_fallecidos_irekia-opendata-ccaa.png", sep = ""), width = 900, height = 400)
+# Plot 
+png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_fallecidos_irekia-opendata-ccaa.png", sep = ""), width = 700, height = 400)
 ggplot(NULL) +
   geom_line( data = resumen_pr_ca %>% filter(ccaa == "País Vasco" ), aes( date, deceassed, group=ccaa, color = "#66a61e"), size = 2.0 ) +
-  geom_line( data = data_all_export %>% filter(region == "País Vasco" ), aes( date, deceassed, group=region, color = "#000000"), size = 0.7 ) +
-  geom_line( data = euskadi_ca , aes( date, deceassed, color = "#FF0000"), size = 0.7 ) +
-  # scale_y_log10(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)) +
+  geom_line( data = data_all_export %>% filter(region == "País Vasco" ), aes( date, deceassed, group=region, color = "#FF0000" ), size = 0.7 ) +
+  geom_line( data = euskadi_ca , aes( date, deceassed, color = "#000000"), size = 0.7 ) +
   scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  # facet_wrap( ~province) + #, scales = "free"
   scale_color_identity(
     guide = "legend",
-    labels = c("Irekia-Osakidetza (hasta 2020.05.14)","ISCIII","Opendata Euskadi (2020.05.15)",),
+    labels = c("Opendata Euskadi (2020.05.15)","ISCIII","Irekia-Osakidetza (hasta 2020.05.14)"),
   ) +
-  scale_x_date(date_breaks = "10 day",
-               date_labels = "%d",
-               limits = c(as.Date("2020-03-12"),max(euskadi_long$date)),
-               expand = c(0,0)
+  scale_x_date(
+    date_labels = "%d-%m",
+    limits = c(as.Date("2020-03-12"),max(euskadi_long$date)),
+    expand = c(0,0)
   ) +
-  theme_minimal(base_family = "Roboto Condensed",base_size =20) +
+  theme_minimal(base_family = "Roboto Condensed",base_size =16) +
   theme(
     panel.grid.minor.x = element_blank(),
     # panel.grid.major.x = element_blank(),
