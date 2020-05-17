@@ -25,8 +25,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Para ISCiii
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es) y Ministerio Sanidad (recopilados por Datadista)"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es) & Ministerio Sanidad (recopilados por Datadista)"
-period <- "Actualizado: 2020.05.13. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.05.13"
+period <- "Actualizado: 2020.05.17. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.05.17"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -3457,7 +3457,7 @@ dev.off()
 png(filename=paste("img/spain/regions/covid19_muertes-vs-casos-ccaa-relativo.png", sep = ""),width = 1200,height = 700)
 data_all_export %>% filter ( date == max(date) ) %>%
 ggplot() +
-  # geom_line( aes(cases_per_cienmil,deceassed_per_100000, group=region, color=region), size= 1 ) +
+  geom_line(data=data_all_export, aes(cases_per_100000,deceassed_per_100000, group=region, color=region), size= 0.3 ) +
   geom_point(aes(cases_per_100000,deceassed_per_100000, color=region), size= 4 ) +
   # lines(x = c(0,0), y = c(20,1000)) +
   # geom_abline(slope = 0.25) +
