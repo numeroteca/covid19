@@ -1089,8 +1089,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   
   if ( prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Cantabria"  |  prov=="Ceuta" |  prov=="Castilla - La Mancha" |   prov=="Melilla"  | prov=="Comunitat Valenciana"  | 
        prov=="Extremadura" | prov=="Madrid, Comunidad de" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="Rioja, La" | prov=="País Vasco") {
-    # TODO: display PCR accumulated
-    the_province  <- the_province + geom_line( aes(date, daily_cases_PCR_avg7,group=province, color=province), size= 1, se = FALSE, span = 0.6, linetype = "dashed")
+    the_province  <- the_province + geom_line( aes(date, daily_cases_PCR_avg7,group=province, color=province), size= 1, linetype = "dashed")
   }
   
   print(the_province)
@@ -1157,10 +1156,9 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
          x = "fecha",
          caption = caption_provincia)
   
-  if ( prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Cantabria"  |  prov=="Ceuta" |  prov=="Melilla"  | 
-       prov=="Extremadura" | prov=="Madrid, Comunidad de" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="Rioja, La") {
-    # TODO: display PCR accumulated
-    the_province  <- the_province + geom_line( aes(date, daily_cases_PCR_avg7,group=province, color=province), size= 1, se = FALSE, span = 0.6, linetype = "dashed")
+  if ( prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Cantabria"  |  prov=="Ceuta" |  prov=="Castilla - La Mancha" |   prov=="Melilla"  | prov=="Comunitat Valenciana"  | 
+       prov=="Extremadura" | prov=="Madrid, Comunidad de" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="Rioja, La" | prov=="País Vasco") {
+    the_province  <- the_province + geom_line( aes(date, daily_cases_PCR_avg7,group=province, color=province), size= 1, linetype = "dashed")
   }
   
   print(the_province)
