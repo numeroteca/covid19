@@ -25,8 +25,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Para ISCiii
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es) y Ministerio Sanidad (recopilados por Datadista)"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es) & Ministerio Sanidad (recopilados por Datadista)"
-period <- "Actualizado: 2020.05.17. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.05.17"
+period <- "Actualizado: 2020.05.18. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.05.18"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -211,7 +211,7 @@ png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-au
 data_all_export %>%
   ggplot() +
   geom_line(aes(date, cases_registered, group=region, color=region), size= 1 ) +
-  geom_point(aes(date, cases_registered,  color=region), size= 2 ) +
+  geom_point(aes(date, cases_registered,  color=region), size= 0.6 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)), 
                   aes(date, cases_registered,  color=region, label=paste(format( cases_registered,  nsmall=0, big.mark="."),region)),
                   nudge_x = 2, # adjust the starting y position of the text label
@@ -226,7 +226,7 @@ data_all_export %>%
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 10)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 15)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -247,7 +247,7 @@ png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-au
 data_all_export %>%
   ggplot() +
   geom_line(aes(date, cases_registered, group=region, color=region), size= 1 ) +
-  geom_point(aes(date, cases_registered,  color=region), size= 2 ) +
+  geom_point(aes(date, cases_registered,  color=region), size= 0.6 ) +
   geom_text(data = crec[1,],aes(as.Date("2020-03-24"),14000, label=paste0("curva: un ", slope, "% más de casos cada día")), 
             size = 7, family = "Roboto Condensed", hjust=1) +
   geom_line(data = crec, aes(x = x.date, y = y_percent), linetype = 2, size = 1, color ="#444444") +
@@ -269,7 +269,7 @@ data_all_export %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 10)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 15)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -291,7 +291,7 @@ data_all_export %>%
   ggplot() +
   geom_line(data = crec, aes(y = y_percent, x = x.date), linetype = 2, size = 2, color ="#444444") +
   geom_line(aes(date, cases_registered, group=region, color=region), size= 1 ) +
-  geom_point(aes(date, cases_registered, color=region), size= 1.5 ) +
+  geom_point(aes(date, cases_registered,  color=region), size= 0.6 ) +
   geom_text(data = crec[1,],aes(as.Date("2020-03-23"),12000,label=paste0("línea: un ", slope, "% más de casos cada día")), 
             size = 5, family = "Roboto Condensed", hjust=1) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)), 
@@ -309,7 +309,7 @@ data_all_export %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
   scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 10)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 15)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -330,7 +330,7 @@ png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-au
 data_all_export %>%
   ggplot() +
   geom_line(aes(date, cases_registered, group=region, color=region), size= 1 ) +
-  geom_point(aes(date, cases_registered, color=region), size= 1.5 ) +
+  geom_point(aes(date, cases_registered,  color=region), size= 0.6 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)), 
                   aes(date, cases_registered,  color=region, label=paste(format( cases_registered,  nsmall=0, big.mark="."),region)),
                   nudge_x = 2, # adjust the starting y position of the text label
@@ -346,7 +346,7 @@ data_all_export %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
   scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 12)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 17)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -368,7 +368,7 @@ png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-au
 data_all_export %>%
   ggplot() +
   geom_line(aes(date, cases_registered, group=region, color=region), size= 1 ) +
-  geom_point(aes(date, cases_registered, color=region), size= 1.5 ) +
+  geom_point(aes(date, cases_registered,  color=region), size= 0.6 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)), 
                   aes(date, cases_registered,  color=region, label=paste(format( cases_registered,  nsmall=0, big.mark="."),region)),
                   nudge_x = 2, # adjust the starting y position of the text label
@@ -384,7 +384,7 @@ data_all_export %>%
                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000), seq(10000, 100000, 10000) ) ) +
   scale_x_date(date_breaks = "3 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 12)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 17)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -447,7 +447,7 @@ png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-au
 data_all_export %>%
   ggplot() +
   geom_line(aes(date,cases_per_100000,group=region, color=region), size= 1 ) +
-  geom_point(aes(date,cases_per_100000, color=region), size= 1.5 ) +
+  geom_point(aes(date,cases_per_100000, color=region), size= 0.7 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)), 
                   aes(date,cases_per_100000, color=region, label=paste(format(cases_per_100000, nsmall=1, big.mark=".", decimal.mark = ","),region)),
                   nudge_x = 3, # adjust the starting y position of the text label
@@ -461,7 +461,7 @@ data_all_export %>%
   scale_color_manual(values = colors ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 11)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 17)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -482,7 +482,7 @@ png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-au
 data_all_export %>%
   ggplot() +
   geom_line(aes(date,cases_per_100000,group=region, color=region), size= 1 ) +
-  geom_point(aes(date,cases_per_100000, color=region), size= 1.5 ) +
+  geom_point(aes(date,cases_per_100000, color=region), size= 0.7 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)), 
                   aes(date,cases_per_100000, color=region, label=paste(format(cases_per_100000, nsmall=1, big.mark=".", decimal.mark = ","),region)),
                   nudge_x = 3, # adjust the starting y position of the text label
@@ -500,7 +500,7 @@ data_all_export %>%
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 11)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 17)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -522,7 +522,7 @@ png(filename=paste("img/spain/regions/covid19_casos-registrados-por-comunidad-au
 data_all_export %>%
   ggplot() +
   geom_line(aes(date,cases_per_100000,group=region, color=region), size= 1 ) +
-  geom_point(aes(date,cases_per_100000, color=region), size= 1.5 ) +
+  geom_point(aes(date,cases_per_100000, color=region), size= 0.7 ) +
   geom_text_repel(data=filter( data_all_export, date==max(data_all_export$date)), 
                   aes(date,cases_per_100000, color=region, label=paste(format(cases_per_100000, nsmall=1, big.mark="."),region)),
                   nudge_x = 3, # adjust the starting y position of the text label
@@ -540,7 +540,7 @@ data_all_export %>%
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "2 day", 
                date_labels = "%d",
-               limits=c( min(data_all_export$date), max(data_all_export$date + 11)) 
+               limits=c( min(data_all_export$date), max(data_all_export$date + 17)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1022,7 +1022,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
-               limits=c( min(data_all_export$date) + 6, max(data_all_export$date + 12)),
+               limits=c( min(data_all_export$date) + 6, max(data_all_export$date + 17)),
                expand = c(0,0)
                # limits = c(date_limit_init_death,max(data_all_export$date) )
   ) +
@@ -1062,7 +1062,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
-               limits=c( date_limit_init_death, max(data_all_export$date + 12))
+               limits=c( date_limit_init_death, max(data_all_export$date + 17))
                
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -1105,7 +1105,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
-               limits=c( date_limit_init_death, max(data_all_export$date + 16))
+               limits=c( date_limit_init_death, max(data_all_export$date + 17))
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1144,7 +1144,7 @@ data_all_export %>%
   scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
   scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
-               limits=c( date_limit_init_death, max(data_all_export$date + 12))
+               limits=c( date_limit_init_death, max(data_all_export$date + 17))
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1182,7 +1182,7 @@ data_all_export %>% # filter( ! (date %in% dateunique$date & region == "Cataluñ
   scale_color_manual(values = colors ) +
   scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
-               limits=c( date_limit_init_death, max(data_all_export$date + 12))
+               limits=c( date_limit_init_death, max(data_all_export$date + 17))
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1226,7 +1226,7 @@ data_all_export %>%
   ) +
   scale_x_date(date_breaks = "2 day",
                date_labels = "%d",
-               limits=c( date_limit_init_death, max(data_all_export$date + 12)),
+               limits=c( date_limit_init_death, max(data_all_export$date + 17)),
                expand = c(0,0)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -2950,7 +2950,7 @@ data_all_export %>%
     guide = "legend",
     labels = c("Casos", "Recuperados", "Muertos"),
   ) +
-  facet_wrap( ~region) +
+  facet_wrap( ~region, scales = "free") +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "5 day", 
                date_labels = "%d",
@@ -3062,7 +3062,7 @@ data_all_export %>%
     guide = "legend",
     labels = c("Casos", "Recuperados", "Muertos"),
   ) +
-  facet_wrap( ~region) +
+  facet_wrap( ~region, scales = "free") +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "5 day", 
                date_labels = "%d",

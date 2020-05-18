@@ -403,6 +403,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
           daily_cases_avg7 =  round( ( daily_cases + lag(daily_cases,1)+lag(daily_cases,2)+
                                           lag(daily_cases,3)+lag(daily_cases,4)+lag(daily_cases,5)+lag(daily_cases,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
           daily_cases_PCR = cases_accumulated_PCR - lag(cases_accumulated_PCR),
+          daily_cases_PCR = ifelse(is.na(daily_cases_PCR),PCR,daily_cases_PCR), # inserta datos originales de PCR diarios si la diferencia del acumulado no se puede calcular
           daily_cases_PCR_avg7 =  round( ( daily_cases_PCR + lag(daily_cases_PCR,1)+lag(daily_cases_PCR,2)+
                                              lag(daily_cases_PCR,3)+lag(daily_cases_PCR,4) +lag(daily_cases_PCR,5) +lag(daily_cases_PCR,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
           daily_deaths = deceased - lag(deceased),

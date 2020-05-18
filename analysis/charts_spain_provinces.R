@@ -13,8 +13,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: esCOVID19data (github.com/montera34/escovid19data, lab.montera34.com/covid19)"
-period <- "Actualizado: 2020-05-17. Para CCAA uniprovinciales casos es la suma de PCR+ y TestAc+ a partir de 2020.04.15"
-filter_date <- as.Date("2020-05-17")
+period <- "Actualizado: 2020-05-18. Para CCAA uniprovinciales casos es la suma de PCR+ y TestAc+ a partir de 2020.04.15"
+filter_date <- as.Date("2020-05-18")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -717,7 +717,7 @@ data_cases_sp_provinces %>%
   ) +
   scale_x_date(date_breaks = "10 day", 
                date_labels = "%d",
-               expand = c(0,12) 
+               expand = c(0,18) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -1010,27 +1010,27 @@ dev.off()
 # Superpuesto Log por CCAA -------------
 
 
-data_cases_sp_provinces %>% filter (ccaa == "Extremadura" ) %>%
-  ggplot() +
-  geom_line(aes(date, daily_cases_avg7,group=province, color=province), size= 1.5, se = FALSE, span = 0.6 ) +
-  geom_line(aes(date, daily_cases_PCR_avg3,group=province, color=province), size= 1, se = FALSE, span = 0.6, linetype = "dashed") + #, 
-  guides( 
-         linetype=guide_legend(keywidth = 3, keyheight = 1)
-         ) +
-  scale_linetype_manual(values=c("twodash", "dotted")) +
-  geom_point(aes(date, daily_cases, color=province), size= 1.2, alpha = 0.5 ) +
-  geom_text_repel(
-    data = data_cases_sp_provinces %>% filter( ccaa == "Extremadura" ) %>% group_by(province) %>% filter(!is.na(daily_cases) ) %>% top_n(1, date),
-    aes(date, daily_cases_avg7, color=province, 
-        label=paste(format(daily_cases_avg7, nsmall=1, big.mark=".", decimal.mark = ","),province)),
-    nudge_x = 1, # adjust the starting y position of the text label
-    size=5,
-    hjust=0,
-    family = "Roboto Condensed",
-    direction="y",
-    segment.size = 0.1,
-    segment.color="#777777"
-  )
+# data_cases_sp_provinces %>% filter (ccaa == "Extremadura" ) %>%
+#   ggplot() +
+#   geom_line(aes(date, daily_cases_avg7,group=province, color=province), size= 1.5, se = FALSE, span = 0.6 ) +
+#   geom_line(aes(date, daily_cases_PCR_avg3,group=province, color=province), size= 1, se = FALSE, span = 0.6, linetype = "dashed") + #, 
+#   guides( 
+#          linetype=guide_legend(keywidth = 3, keyheight = 1)
+#          ) +
+#   scale_linetype_manual(values=c("twodash", "dotted")) +
+#   geom_point(aes(date, daily_cases, color=province), size= 1.2, alpha = 0.5 ) +
+#   geom_text_repel(
+#     data = data_cases_sp_provinces %>% filter( ccaa == "Extremadura" ) %>% group_by(province) %>% filter(!is.na(daily_cases) ) %>% top_n(1, date),
+#     aes(date, daily_cases_avg7, color=province, 
+#         label=paste(format(daily_cases_avg7, nsmall=1, big.mark=".", decimal.mark = ","),province)),
+#     nudge_x = 1, # adjust the starting y position of the text label
+#     size=5,
+#     hjust=0,
+#     family = "Roboto Condensed",
+#     direction="y",
+#     segment.size = 0.1,
+#     segment.color="#777777"
+#   )
 
 
 for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
@@ -1087,8 +1087,8 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
          x = "fecha",
          caption = caption_provincia)
   
-  if ( prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Cantabria"  |  prov=="Ceuta" |  prov=="Melilla"  | 
-       prov=="Extremadura" | prov=="Madrid, Comunidad de" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="Rioja, La") {
+  if ( prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Cantabria"  |  prov=="Ceuta" |  prov=="Castilla - La Mancha" |   prov=="Melilla"  | prov=="Comunitat Valenciana"  | 
+       prov=="Extremadura" | prov=="Madrid, Comunidad de" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="Rioja, La" | prov=="País Vasco") {
     # TODO: display PCR accumulated
     the_province  <- the_province + geom_line( aes(date, daily_cases_PCR_avg7,group=province, color=province), size= 1, se = FALSE, span = 0.6, linetype = "dashed")
   }
