@@ -206,41 +206,69 @@ catalunya$date <- as.Date(catalunya$TipusCasData, "%d/%m/%Y")
 catalunya$provincia_code <- ifelse(catalunya$MunicipiCodi < 10000, paste0(substr(as.character(catalunya$MunicipiCodi),1,1)), substr(as.character(catalunya$MunicipiCodi),1,2))     
 
 # iterates through data to count positives
-catalunya_new <- catalunya %>% group_by(date,provincia_code) %>% arrange(date) %>% filter( TipusCasDescripcio == "Positiu" ) %>%
+catalunya_new <- catalunya %>% group_by(date,provincia_code,TipusCasDescripcio) %>% arrange(date) %>% 
+  # filter( TipusCasDescripcio == "Positiu PCR" | TipusCasDescripcio == "Positiu per Test Ràpid" ) %>%
   # catalunya_new <- catalunya %>% group_by(date,provincia_code) %>% arrange(date) %>% filter( ResultatCovidDescripcio == "Positiu" |  ResultatCovidDescripcio == "Probable" ) %>%
   summarise ( 
     by_day = sum(NumCasos)
   )
 
-# TODO: DRY code! 
-# Makes df for every province
-cat8 <- catalunya_new %>% filter(provincia_code == "8")
-cat8 <- cat8 %>% group_by( provincia_code) %>% arrange(date) %>%
+# converts to wide format the different variables of positive or suspect cases with spread
+cattotal <- catalunya_new %>% spread(TipusCasDescripcio,by_day) %>% 
+  rename(PCR_day = "Positiu PCR", TestAc_day = "Positiu per Test Ràpid", sospechosos_day = "Sospitós") %>% 
+  # groups by province to calculate
+  group_by(provincia_code) %>% arrange(date) %>%
+  # calculates de accumulated values
   mutate ( 
-    cases_accumulated = cumsum(by_day)
+    PCR_cum = cumsum(replace_na(PCR_day, 0)), #replace NA values with 0 to make cumsum work
+    TestAc_cum = cumsum(replace_na(TestAc_day, 0)),
+    sospechosos_cum = cumsum(replace_na(sospechosos_day, 0))
   )
 
-cat17 <- catalunya_new %>% filter(provincia_code == "17")
-cat17 <- cat17 %>% group_by( provincia_code) %>% arrange(date) %>%
-  mutate ( 
-    cases_accumulated = cumsum(by_day)
-  )
+# # Makes df for every province
+# names(cat8)
+# # converts to wide format the different variables of positive or suspect cases
+# cat8 <- catalunya_new %>% filter(provincia_code == "8") %>% spread(TipusCasDescripcio,by_day) %>% 
+#   rename(PCR_day = "Positiu PCR", TestAc_day = "Positiu per Test Ràpid", sospechosos_day = "Sospitós")
+# cat8 <- cat8 %>% group_by( provincia_code) %>% arrange(date) %>%
+#   mutate ( 
+#     PCR_cum = cumsum(replace_na(PCR_day, 0)), #replace NA values with 0 to make cumsum work
+#     TestAc_cum = cumsum(replace_na(TestAc_day, 0)),
+#     sospechosos_cum = cumsum(replace_na(sospechosos_day, 0))
+#   )
+# 
+# cat17 <- catalunya_new %>% filter(provincia_code == "17") %>% spread(TipusCasDescripcio,by_day) %>% 
+#   rename(PCR_day = "Positiu PCR", TestAc_day = "Positiu per Test Ràpid", sospechosos_day = "Sospitós")
+# cat17 <- cat17 %>% group_by( provincia_code) %>% arrange(date) %>%
+#   mutate ( 
+#     PCR_cum = cumsum(replace_na(PCR_day, 0)), #replace NA values with 0 to make cumsum work
+#     TestAc_cum = cumsum(replace_na(TestAc_day, 0)),
+#     sospechosos_cum = cumsum(replace_na(sospechosos_day, 0))
+#   )
+# 
+# 
+# cat25 <- catalunya_new %>% filter(provincia_code == "25") %>% spread(TipusCasDescripcio,by_day) %>% 
+#   rename(PCR_day = "Positiu PCR", TestAc_day = "Positiu per Test Ràpid", sospechosos_day = "Sospitós")
+# cat25 <- cat25 %>% group_by( provincia_code) %>% arrange(date) %>%
+#   mutate ( 
+#     PCR_cum = cumsum(replace_na(PCR_day, 0)), #replace NA values with 0 to make cumsum work
+#     TestAc_cum = cumsum(replace_na(TestAc_day, 0)),
+#     sospechosos_cum = cumsum(replace_na(sospechosos_day, 0))
+#   )
+# 
+# cat43 <- catalunya_new %>% filter(provincia_code == "43") %>% spread(TipusCasDescripcio,by_day) %>% 
+#   rename(PCR_day = "Positiu PCR", TestAc_day = "Positiu per Test Ràpid", sospechosos_day = "Sospitós")
+# cat43 <- cat43 %>% group_by( provincia_code) %>% arrange(date) %>%
+#   mutate ( 
+#     PCR_cum = cumsum(replace_na(PCR_day, 0)), #replace NA values with 0 to make cumsum work
+#     TestAc_cum = cumsum(replace_na(TestAc_day, 0)),
+#     sospechosos_cum = cumsum(replace_na(sospechosos_day, 0))
+#   )
+# 
+# # Binds all the provinces
+# cattotal <- rbind(cat8,cat17,cat25,cat43)
+# rm(cat8,cat17,cat25,cat43)
 
-cat25 <- catalunya_new %>% filter(provincia_code == "25")
-cat25 <- cat25 %>% group_by( provincia_code) %>% arrange(date) %>%
-  mutate ( 
-    cases_accumulated = cumsum(by_day)
-  )
-
-cat43 <- catalunya_new %>% filter(provincia_code == "43")
-cat43 <- cat43 %>% group_by( provincia_code) %>% arrange(date) %>%
-  mutate ( 
-    cases_accumulated = cumsum(by_day)
-  )
-
-# Binds all the provinces
-cattotal <- rbind(cat8,cat17,cat25,cat43)
-rm(cat8,cat17,cat25,cat43)
 # Creates provinica factor
 cattotal$province <- as.factor(cattotal$provincia_code)
 # Gives names 
@@ -255,11 +283,18 @@ cattotal$ccaa <- "Cataluña"
 cattotal$dunique <- paste0(cattotal$date,cattotal$province)
 data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
 
+# TODO: no usamos los sospechosos o TestAc acumulados, pero se podría
 data_cases_sp_provinces <- merge(data_cases_sp_provinces, 
                                  cattotal %>%
-                                   select(date,dunique,cases_accumulated,province,ccaa) %>% 
+                                   filter (!is.na(province)) %>%
+                                   select(date,dunique,PCR_day,PCR_cum,TestAc_day,TestAc_cum,province,ccaa) %>% 
+                                   mutate(
+                                     cases_accumulated_cat = PCR_cum + TestAc_cum,
+                                   ) %>%
                                    rename(
-                                     cases_accumulated_cat = cases_accumulated, 
+                                     PCR_cat = PCR_day,
+                                     PCR_cum_cat = PCR_cum,
+                                     TestAc_cat = TestAc_day,
                                      date_cat = date,
                                      province_cat = province,
                                      ccaa_cat = ccaa ) , 
@@ -273,11 +308,15 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   date = ifelse( is.na(date), date_cat, date),
   date = as.Date(date, origin = "1970-01-01"),
   cases_accumulated = ifelse( ccaa == "Cataluña", cases_accumulated_cat, cases_accumulated),
+  cases_accumulated_PCR = ifelse( ccaa == "Cataluña", PCR_cum_cat, cases_accumulated_PCR),
+  PCR = ifelse( ccaa == "Cataluña", PCR_cat, PCR),
+  TestAc = ifelse( ccaa == "Cataluña", TestAc_cat, TestAc),
   source_name = ifelse( ccaa == "Cataluña",paste0("Transparencia Catalunya;",as.character(source_name)), as.character(source_name) ), 
   source = ifelse( ccaa == "Cataluña", 
                    paste0(source,";https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv" ), 
                    as.character(source) )
-) %>% select(-cases_accumulated_cat) %>% select(-province_cat) %>% select(-ccaa_cat)  %>% select(-dunique)  %>%  select(-date_cat) 
+) %>% select(-cases_accumulated_cat) %>% select(-province_cat) %>% select(-ccaa_cat)  %>% select(-dunique)  %>%  
+  select(-date_cat, -PCR_cum_cat, -PCR_cat, -TestAc_cat)
 
 # Catalunya: Overwrite Catalunya provinces death data ------------------
 # This is calculated at analysis/count_catalunya.R
