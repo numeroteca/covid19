@@ -291,7 +291,6 @@ data_cases_sp_provinces <- merge(data_cases_sp_provinces,
                                    mutate(
                                      cases_accumulated_cat = PCR_cum + TestAc_cum,
                                    ) %>%
-                                   rename(
                                      PCR_cat = PCR_day,
                                      PCR_cum_cat = PCR_cum,
                                      TestAc_cat = TestAc_day,
