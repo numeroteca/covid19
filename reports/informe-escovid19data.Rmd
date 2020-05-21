@@ -1,21 +1,88 @@
 ---
 title: "Informe sobre Escovid19data"
-author: "numeroteca"
+author: "@numeroteca"
 date: "`r Sys.Date()`"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 library(tidyverse)
-today <- "2020-05-14"
+library(knitr)
+library(kableExtra)
+library(formattable)
+library(DT)
+today <- as.Date("2020-05-21")
 ```
 
-Un análisis automatizado de la base de datos por provincias de #COVID19 en España. Puedes acceder a todoslos datos en el repositorio https://github.com/montera34/escovid19data
+Un análisis automatizado de la base de datos por provincias de #COVID19 en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data
+
+## Última fecha publicada 
+
+```{r fecha0, fig.width=7, fig.height=4, echo=FALSE, warning=FALSE}
+data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
+
+fechas_caso <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(cases_accumulated) ) %>% top_n(1, date) %>% select(date, province,ccaa)
+fechas_fallecidos <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(deceased) ) %>% top_n(1, date) %>% select(date, province,ccaa)
+fechas_PCR_diario <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(PCR) ) %>% top_n(1, date) %>% select(date, province,ccaa)
+# 
+# kable(fechas_caso %>% select(date, province,ccaa) %>% arrange(date), caption="Última fecha disponible de casos acumuados")
+# kable(fechas_fallecidos  %>% select(date, province,ccaa) %>% arrange(date), caption="Última fecha disponible de fallecidos acumulados")
+# kable(fechas_PCR_diario  %>% select(date, province,ccaa) %>% arrange(date), caption="Última fecha disponible de PCR positivo diario")
+
+``` 
+
+### Días desde que se tiene el último dato disponible desagregado por provincia:
+
+```{r fecha1, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+table_total <- merge(
+  fechas_caso %>% rename (casos_acum = date ) , 
+  fechas_fallecidos %>% rename ( muertes_acum = date ) %>% select(-ccaa), 
+  by.x="province", by.y="province", all = TRUE  )
+
+table_total <- merge(
+  table_total, 
+  fechas_PCR_diario %>% rename ( PCR_diario = date ) %>% select(-ccaa), 
+  by.x="province", by.y="province", all = TRUE  )
+
+
+# fort(table_total %>% select(province, ccaa, casos_acum, muertes_acum ) %>% 
+#         mutate(
+#           casos = today - casos_acum,
+#           muertes = today - muertes_acum
+#         ) %>%
+#         mutate(
+#           casos = as.integer(casos),
+#           casos = color_bar("lightgreen")(casos)
+#         ) %>%
+#         select( province, ccaa, casos, casos_acum,  muertes, muertes_acum ) %>%
+#         arrange(casos_acum), caption="Última fecha disponible según variable") %>%
+#   kable_styling(bootstrap_options = c("hover", "condensed", "responsive"), fixed_thead = T)
+
+
+table_nice <- table_total %>% 
+        mutate(
+          casos = as.integer( today - casos_acum ),
+          muertes = as.integer( today - muertes_acum ),
+          PCR =  as.integer( today - PCR_diario )
+        ) %>%
+        select( province, ccaa, casos, casos_acum,  muertes, muertes_acum, PCR , PCR_diario) %>%
+        arrange(casos_acum)
+
+# formatter(style = x ~ style(..., display = ifelse(is.na(x), "none", "inline-block"))
+
+as.datatable(
+formattable(table_nice, list(
+  area(col = c(casos, muertes,PCR)) ~ normalize_bar("pink", 0.2,na.rm = TRUE)
+)), colnames = c('Provincia', 'CCAA', 'Casos acumulado (días desde)', 'Casos (fecha)', 'Muertes acumulado (días desde)', 'Muertes (fecha)','PCR diario (días desde)', 'PCR (fecha)'  ),
+options = list(pageLength = 52)
+)
+``` 
 
 ## Según fuentes de información
 
 ```{r todos1, fig.width=7, fig.height=4, echo=FALSE, warning=FALSE}
-data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
+
 # data_cases_sp_provinces %>% filter(str_detect(source_name, ';')) %>% select(ccaa,source_name)
 
 data_cases_sp_provinces  <- data_cases_sp_provinces %>% mutate (
