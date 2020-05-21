@@ -23,6 +23,7 @@ data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provinci
 
 fechas_caso <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(cases_accumulated) ) %>% top_n(1, date) %>% select(date, province,ccaa)
 fechas_fallecidos <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(deceased) ) %>% top_n(1, date) %>% select(date, province,ccaa)
+fechas_PCR_acum <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(cases_accumulated_PCR) ) %>% top_n(1, date) %>% select(date, province,ccaa)
 fechas_PCR_diario <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(PCR) ) %>% top_n(1, date) %>% select(date, province,ccaa)
 # 
 # kable(fechas_caso %>% select(date, province,ccaa) %>% arrange(date), caption="Última fecha disponible de casos acumuados")
@@ -32,6 +33,8 @@ fechas_PCR_diario <- data_cases_sp_provinces %>% group_by(province) %>% filter(!
 ``` 
 
 ### Días desde que se tiene el último dato disponible desagregado por provincia:
+
+NA indica valor no conocido.
 
 ```{r fecha1, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
 
@@ -43,6 +46,11 @@ table_total <- merge(
 table_total <- merge(
   table_total, 
   fechas_PCR_diario %>% rename ( PCR_diario = date ) %>% select(-ccaa), 
+  by.x="province", by.y="province", all = TRUE  )
+
+table_total <- merge(
+  table_total, 
+  fechas_PCR_acum %>% rename ( PCR_acum = date ) %>% select(-ccaa), 
   by.x="province", by.y="province", all = TRUE  )
 
 
@@ -64,17 +72,18 @@ table_nice <- table_total %>%
         mutate(
           casos = as.integer( today - casos_acum ),
           muertes = as.integer( today - muertes_acum ),
-          PCR =  as.integer( today - PCR_diario )
+          PCR =  as.integer( today - PCR_diario ),
+          PCR_acum =  as.integer( today - PCR_acum )
         ) %>%
-        select( province, ccaa, casos, casos_acum,  muertes, muertes_acum, PCR , PCR_diario) %>%
+        select( province, ccaa, casos, casos_acum,  muertes, muertes_acum, PCR , PCR_acum) %>%
         arrange(casos_acum)
 
 # formatter(style = x ~ style(..., display = ifelse(is.na(x), "none", "inline-block"))
 
 as.datatable(
 formattable(table_nice, list(
-  area(col = c(casos, muertes,PCR)) ~ normalize_bar("pink", 0.2,na.rm = TRUE)
-)), colnames = c('Provincia', 'CCAA', 'Casos acumulado (días desde)', 'Casos (fecha)', 'Muertes acumulado (días desde)', 'Muertes (fecha)','PCR diario (días desde)', 'PCR (fecha)'  ),
+  area(col = c(casos, muertes,PCR, PCR_acum)) ~ normalize_bar("pink", 0.2,na.rm = TRUE)
+)), colnames = c('Provincia', 'CCAA', 'Casos acumulado (días desde)', 'Casos (fecha)', 'Muertes acumulado (días desde)', 'Muertes (fecha)','PCR diario (días desde)', 'PCR acumulado (días desde)'  ),
 options = list(pageLength = 52)
 )
 ``` 
