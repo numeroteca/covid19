@@ -8,7 +8,7 @@ library(ggrepel) # for geom_text_repel to prevent   overlapping
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de losS datos
 caption_i <- "Gráfico: @numeroteca (lab.montera34.com/covid19). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 05.19"
+periodo_i <- "2020.02.24 - 05.21"
 
 # COVID-19 in Italy -----------
 # Load data
@@ -550,7 +550,7 @@ data_i_cases %>%
 dev.off()
 
 # Daily cases -------------
-png(filename=paste("img/italia/covid19_muertes-por-dia-region-superpuesto-lineal_media.png", sep = ""),width = 1200,height = 800)
+png(filename=paste("img/italia/covid19_casos-por-dia-region-superpuesto-lineal_media.png", sep = ""),width = 1200,height = 800)
 data_i_cases %>%
   ggplot() +
   geom_line(aes(date, daily_cases_avg7,group=region, color=region), size= 1, se = FALSE  ) +
@@ -566,28 +566,6 @@ data_i_cases %>%
                   segment.size = 0.1,
                   segment.color="#777777"
   ) +
-  # # marca un día
-  # geom_text_repel(data=filter( data_i_cases, date==as.Date("2020-03-15"), region == "Lombardia" ),
-  #                 aes(date,daily_deaths, label=paste("casos en un día en una región")),
-  #                 nudge_y = 5, # adjust the starting y position of the text label
-  #                 size=5,
-  #                 hjust=0,
-  #                 family = "Roboto Condensed",
-  #                 # direction="x",
-  #                 segment.size = 0.5,
-  #                 segment.color="#777777"
-  # ) +
-  # # marca la línea
-  # geom_text_repel(data=filter( data_i_cases, date==as.Date("2020-04-06"), region == "Lombardia" ),
-  #                 aes(date+0.5,329, label=paste("media de 7 días")),
-  #                 nudge_y = 5, # adjust the starting y position of the text label
-  #                 size=5,
-  #                 hjust=0,
-  #                 family = "Roboto Condensed",
-  #                 # direction="x",
-  #                 segment.size = 0.5,
-  #                 segment.color="#777777"
-  # ) +
   coord_cartesian(
     ylim=c(0, max(data_i_cases[!is.na(data_i_cases$daily_cases),]$daily_cases)*1.01 )
   ) +
