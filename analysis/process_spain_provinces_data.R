@@ -115,7 +115,7 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,andalucia)
 
 rm(andalucia,andalucia_original)
 
-# Uniprovinciales: Remove and add uniprovinciales -----
+# Uniprovinciales: Remove and add uniprovinciales from ISCIII -----
 
 # Remove existing Uniprovinciales data
 data_cases_sp_provinces <- data_cases_sp_provinces %>% 
@@ -148,7 +148,8 @@ ciii <- ciii_original %>% head(nrow(ciii_original) - 9) %>% #TODO: Cambia el nú
   CCAA = CCAA %>% str_replace_all("NC", "Navarra"),
   CCAA = CCAA %>% str_replace_all("PV", "País Vasco"),
   CCAA = CCAA %>% str_replace_all("RI", "Rioja, La"),
-  CCAA = CCAA %>% str_replace_all("VC", "C. Valenciana")
+  CCAA = CCAA %>% str_replace_all("VC", "C. Valenciana"),
+  recovered = NA
     ) %>% rename(
     region = CCAA,
     fecha = FECHA,
@@ -157,8 +158,8 @@ ciii <- ciii_original %>% head(nrow(ciii_original) - 9) %>% #TODO: Cambia el nú
     TestAc =TestAc.,
     hospitalized = Hospitalizados,
     intensive_care = UCI,
-    deceassed = Fallecidos,
-    recovered = Recuperados
+    deceassed = Fallecidos
+    # recovered = Recuperados
   ) %>% filter ( !is.na(region)  )
 
 # Filters and get only uniprovinciales
@@ -290,7 +291,7 @@ data_cases_sp_provinces <- merge(data_cases_sp_provinces,
                                    select(date,dunique,PCR_day,PCR_cum,TestAc_day,TestAc_cum,province,ccaa) %>% 
                                    mutate(
                                      cases_accumulated_cat = PCR_cum + TestAc_cum,
-                                   ) %>%
+                                   ) %>% rename(
                                      PCR_cat = PCR_day,
                                      PCR_cum_cat = PCR_cum,
                                      TestAc_cat = TestAc_day,

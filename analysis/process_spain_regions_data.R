@@ -178,6 +178,7 @@ ciii <- ciii_original %>% head(nrow(ciii_original) - 8) %>% #Cambia el número e
     CCAA = CCAA %>% str_replace_all("PV", "País Vasco"),
     CCAA = CCAA %>% str_replace_all("RI", "La Rioja"),
     CCAA = CCAA %>% str_replace_all("VC", "C. Valenciana"),
+    Recuperados = NA
   ) %>% rename(
     region = CCAA,
     fecha = FECHA,
@@ -233,7 +234,7 @@ ciii <- ciii %>% rename( region_code = id, population = poblacion) %>%
                                               intensive_care, intensive_care_per_100000, deceassed, deceassed_per_100000,
                                               recovered, recovered_per_100000,hospitalized, hospitalized_per_100000) 
 
-# Export data ---
+# Export data ------
 
 # write.csv(data_all_export, file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated.csv", row.names = FALSE)
 write.csv(ciii, file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated_isciii.csv", row.names = FALSE)
@@ -257,21 +258,49 @@ data_all_export <- merge( data_all_export,
                      datadista %>% select(dunique, deceassed, date) %>% filter ( date < as.Date("2020-03-08") ) %>% rename(deceassed_datadista = deceassed) %>% select(-date),
                      by.x = "dunique", by.y = "dunique", all.x = TRUE   )
 
-# check
-# data_all_export %>% select (deceassed,deceassed_datadista,date,region ) %>% filter ( (date < as.Date("2020-03-10")) & (region == "Madrid") )
-
 # Fill data if is empty
 data_all_export <- data_all_export %>% mutate(
   deceassed = ifelse( !is.na(deceassed_datadista), deceassed_datadista, deceassed),
-  source_name =  ifelse( !is.na(deceassed_datadista), paste0("Instituto de Salud Carlos III;Ministerio de Sanidad (Datadista)"), "Instituto de Salud Carlos III" ),
+  source_name =  ifelse( !is.na(deceassed), paste0("Instituto de Salud Carlos III;Ministerio de Sanidad (Datadista)"), "Instituto de Salud Carlos III" ),
   source =  ifelse( !is.na(deceassed_datadista), paste0("https://cnecovid.isciii.es/covid19/resources/agregados.csv;https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_fallecidos.csv"), "https://cnecovid.isciii.es/covid19/resources/agregados.csv"),
 ) %>% select(-dunique,-deceassed_datadista)
+
+
+# Add missing recovered from Datadista database -----------
+data_all_export <- data_all_export %>% mutate (
+  dunique = paste0(region,date)
+)
+
+datadista <- datadista %>% mutate (
+  date = date-1, # minus one day to correct the date
+  region = region %>% str_replace_all("Castilla La Mancha", "Castilla-La Mancha"),
+  dunique = paste0(region,date)
+)
+
+#  merge existing ISCII data with previous data from Datadista
+data_all_export <- merge( data_all_export, 
+                          datadista  %>% select(dunique, recovered, date) %>% 
+                            rename(recovered_datadista = recovered) %>% select(-date),
+                          by.x = "dunique", by.y = "dunique", all.x = TRUE   )
+
+# Fill data if is empty
+data_all_export <- data_all_export %>% mutate(
+  recovered = ifelse( is.na(recovered), recovered_datadista, recovered),
+  source_name =  ifelse( !is.na(recovered_datadista), paste0("Instituto de Salud Carlos III;Instituto de Salud Carlos III;Ministerio de Sanidad (Datadista)"), "Instituto de Salud Carlos III" ),
+  source =  ifelse( !is.na(recovered_datadista), paste0("https://cnecovid.isciii.es/covid19/resources/agregados.csv;https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_fallecidos.csv"), "https://cnecovid.isciii.es/covid19/resources/agregados.csv"),
+) %>% select(-dunique,-recovered_datadista) %>% mutate(
+  cases_per_100000 = round( cases_registered / population * 100000, digits = 2),
+  deceassed_per_100000 = round( deceassed / population * 100000, digits = 2),
+  recovered_per_100000 = round( recovered / population * 100000, digits = 2),
+  intensive_care_per_100000 = round( intensive_care / population * 100000, digits = 2),
+  hospitalized_per_100000 = round( hospitalized / population * 100000, digits = 2),
+)
 
 # check
 # data_all_export %>% select (deceassed,deceassed_datadista,date,region ) %>% filter ( (date < as.Date("2020-03-10")) & (region == "Madrid") )
 
 
-# Create new variables per day----
+# Create new variables per day----------------
 data_all_export <- data_all_export %>% group_by(region) %>%
     arrange(date) %>% mutate(
                             daily_cases = cases_registered - lag(cases_registered),
@@ -287,7 +316,7 @@ data_all_export <- data_all_export %>% group_by(region) %>%
                             # deaths_cum_last_week = ( deceassed + lag(deceassed,1) + lag(deceassed,2) + lag(deceassed,3) + lag(deceassed,4) + lag(deceassed,5) + lag(deceassed,6) ) / 7,  
                             deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6),
                             deceassed_per_100000 = round( deceassed / population * 100000, digits = 2) #recalculates relative deaths
-                             )
+                             ) %>% filter( !is.na(date))
 
 saveRDS(data_all_export, file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated_isciii.rds")
 
