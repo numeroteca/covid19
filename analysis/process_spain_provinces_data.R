@@ -6,6 +6,7 @@
 # Load libraries -----------
 library(tidyverse)
 library(reshape2)
+library(readxl)
 
 # Load Data ---------
 # / Population -------------
@@ -81,6 +82,97 @@ rm(tenerife,palmas,canarias,canarias_bind)
 
 # Remove last -usually incomplete- day
 data_cases_sp_provinces <- filter(data_cases_sp_provinces, !is.na(date))
+
+# Castilla y León: Remove existing Andalucia data and add new one from new source ---------------------
+download.file("https://analisis.datosabiertos.jcyl.es/explore/dataset/situacion-epidemiologica-coronavirus-en-castilla-y-leon/download/?format=csv&timezone=Europe/Madrid&lang=en&use_labels_for_header=true&csv_separator=%3B", 
+              "data/original/spain/cyl/covid19_cyl_a.csv")
+download.file("https://analisis.datosabiertos.jcyl.es/explore/dataset/situacion-de-hospitalizados-por-coronavirus-en-castilla-y-leon/download/?format=csv&timezone=Europe/Madrid&lang=en&use_labels_for_header=true&csv_separator=%3B", 
+              "data/original/spain/cyl/covid19_cyl_b.csv")
+
+cyla_original <- read.delim("data/original/spain/cyl/covid19_cyl_a.csv", sep=";")
+cylb_original <- read.delim("data/original/spain/cyl/covid19_cyl_b.csv", sep=";")
+
+# Remove existing CyL data
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( ccaa != "Castilla y León" )
+
+cyla <- cyla_original %>%
+  mutate(
+    date = as.Date(fecha,"%Y-%m-%d"),
+    ccaa = "Castilla y León"
+  ) %>% rename(
+    province = provincia,
+    cases_accumulated = casos_confirmados ,
+    deceased = fallecimientos ,
+    recovered = altas,
+    new_cases = nuevos_positivos,
+  )  %>% mutate (
+    activos = NA,
+    intensive_care = NA,
+    hospitalized = NA,
+    source_name = "Junta de Castilla y León",
+    source = "https://analisis.datosabiertos.jcyl.es/explore/dataset/situacion-epidemiologica-coronavirus-en-castilla-y-leon/download/?format=csv&timezone=Europe/Madrid&lang=en&use_labels_for_header=true&csv_separator=%3B",
+    PCR = NA,
+    TestAc = NA,
+    cases_accumulated_PCR = NA,
+    PCR_14days = NA,
+    comments=""
+  ) %>% select( date, province, ccaa, new_cases, PCR, TestAc, activos, hospitalized, intensive_care, deceased, cases_accumulated, 
+                cases_accumulated_PCR, recovered, source_name, source, comments)  %>% 
+  mutate(
+    dunique = paste0(date,province)
+  )
+
+cylb <- cylb_original %>% 
+  mutate(
+    date = as.Date(fecha,"%Y-%m-%d")
+  ) %>% group_by(date,provincia) %>% 
+  summarise(
+    nuevos_hospitalizados_planta = sum(nuevos_hospitalizados_planta),
+    hospitalizados_planta = sum(hospitalizados_planta),
+    nuevos_hospitalizados_uci = sum(nuevos_hospitalizados_uci),
+    hospitalizados_uci = sum(hospitalizados_uci),
+    nuevas_altas = sum(nuevas_altas),
+    altas = sum(altas),
+    nuevos_fallecimientos = sum(nuevos_fallecimientos),
+    fallecimientos = sum(fallecimientos)
+  ) %>% rename(
+    province = provincia,
+    deceased_hospital = fallecimientos ,
+    recovered = altas,
+    hospitalized = hospitalizados_planta,
+    intensive_care = hospitalizados_uci
+  )  %>% mutate (
+    ccaa = "Castilla y León",
+    activos = NA,
+    cases_accumulated = NA,
+    new_cases = NA,
+    source_name = "Junta de Castilla y León",
+    source = "https://analisis.datosabiertos.jcyl.es/explore/dataset/situacion-de-hospitalizados-por-coronavirus-en-castilla-y-leon/download/?format=csv&timezone=Europe/Madrid&lang=en&use_labels_for_header=true&csv_separator=%3B",
+    PCR = NA,
+    TestAc = NA,
+    cases_accumulated_PCR = NA,
+    PCR_14days = NA,
+    comments=""
+  ) %>% select( date, province, ccaa, new_cases, PCR, TestAc, activos, hospitalized, intensive_care, deceased_hospital, 
+                cases_accumulated, cases_accumulated_PCR, recovered, source_name, source, comments) %>% 
+  mutate(
+    dunique = paste0(date,province)
+  )
+
+# Parece que los daos de fallecidos y altas son iguales en ambas bases de datos
+
+# Merge cyla y cylb
+cyl <-  merge(cyla %>% select(-hospitalized,-intensive_care), 
+              cylb %>% ungroup() %>%  select(dunique,hospitalized,intensive_care,source) %>% rename(source_b = source) , 
+              by.x="dunique", by.y="dunique", all = TRUE) %>% select( -dunique)
+
+# Add new CyL data
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces, 
+             cyl %>% mutate( source = paste(source,source_b) ) %>% 
+               select(-source_b)
+        )
+
+rm(cyl,cyla,cylb,cyla_original,cylb_original)
 
 # Andalucía: Remove existing Andalucia data and add new one from new source ---------------------
 
@@ -384,6 +476,65 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 #                             data_cases_sp_provinces$province == "Barcelona", ]$deceased <- catalunya_datadista[catalunya_datadista$date > as.Date("2020-03-05") &
 #                                                                                                                  catalunya_datadista$date < as.Date("2020-04-13") ,]$deaths_bcn
 
+# Euskadi hospitalizados.  Overwrite hospitalized  data --------------
+download.file("https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covid_19_2020/opendata/datos-asistenciales.xlsx", 
+              "data/original/spain/euskadi/datos-asistenciales.xlsx")
+
+euskadi_original <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "01")
+
+euskadi_a <- euskadi_original %>% rename( date = ...1 ) %>% 
+  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Ingresados en Planta`)  %>% melt(
+    id.vars = c("date")
+    ) %>% mutate(
+    province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
+    province = ifelse(variable=="02 Cruces", "Bizkaia"  ,province),
+    province = ifelse(variable=="03 Donosti", "Gipuzkoa" ,province),
+    province = ifelse(variable=="04 Basurto", "Bizkaia"  ,province),
+    province = ifelse(variable=="05 Galdakao", "Bizkaia" ,province),
+    province = ifelse(variable=="06 Zumarraga", "Gipuzkoa" ,province),
+    province = ifelse(variable=="07 Bidasoa", "Gipuzkoa" ,province),
+    province = ifelse(variable=="08 Mendaro", "Gipuzkoa" ,province),
+    province = ifelse(variable=="09 Alto Deba", "Gipuzkoa" ,province),
+    province = ifelse(variable=="10 San Eloy", "Bizkaia" ,province),
+    province = ifelse(variable=="11 Urduliz", "Bizkaia" ,province),
+    province = ifelse(variable=="12 Eibar", "Gipuzkoa" ,province),
+    province = ifelse(variable=="13 Leza", "Araba/Álava" ,province),
+    province = ifelse(variable=="14 Sta Marina", "Bizkaia" ,province),
+    province = ifelse(variable=="15 Gorliz", "Bizkaia" ,province),
+    province = ifelse(variable=="BERMEO H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZALDIBAR H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZAMUDIO H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ÁLAVA PSIQUIÁTRICO H.", "Araba/Álava" , province)
+  ) %>% group_by(province,date) %>% 
+  mutate( 
+    value = ifelse(is.na(value),0,value)) %>%
+  summarise(
+    hospitalized = sum(value)
+  )
+
+
+
+data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
+euskadi_a$dunique <- paste0(euskadi_a$date,euskadi_a$province)
+
+# TODO: mirar los hospitalizados por día: no coinciden los datos con lo que se publicó en las notas de prensa de Irekia
+data_cases_sp_provinces <- merge(data_cases_sp_provinces,
+                                 euskadi_a %>% select(dunique,hospitalized) %>% 
+                                   ungroup() %>%
+                                   rename(
+                                     hospitalized_eus = hospitalized
+                                     ) , 
+                                 by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique)
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+  hospitalized = ifelse( ccaa == "País Vasco", hospitalized_eus, hospitalized),
+  source_name = ifelse( ccaa == "País Vasco", paste0(as.character(source_name),";Open Data Euskadi"), as.character(source_name) ),
+  source = ifelse( ccaa == "País Vasco", 
+                   paste0(source,";https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covid_19_2020/opendata/datos-asistenciales.xlsx" ), 
+                   as.character(source) )
+) %>% select(-hospitalized_eus)
+
+
 # Add missing data deaths previous 2020.03.08 --------------
 
 # remove date previos to March 8. ISCIII does not have detahs before that day
@@ -476,4 +627,3 @@ saveRDS(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-sp
 
 # cleans environment
 rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_poblacion,datadista,ciii)
-
