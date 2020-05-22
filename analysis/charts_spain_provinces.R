@@ -13,8 +13,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: esCOVID19data (github.com/montera34/escovid19data, lab.montera34.com/covid19)"
-period <- "Actualizado: 2020-05-19. Para CCAA uniprovinciales casos es la suma de PCR+ y TestAc+ a partir de 2020.04.15"
-filter_date <- as.Date("2020-05-19")
+period <- "Actualizado: 2020-05-22. Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
+filter_date <- as.Date("2020-05-22")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -112,7 +112,7 @@ png(filename=paste("img/spain/provincias/covid19_casos-registrados-por-provincia
 data_cases_sp_provinces %>% 
   ggplot() +
   geom_line(aes(date,cases_accumulated,group=province, color = province), size = 0.7 ) +
-  geom_text_repel(data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(cases_accumulated) ) %>% top_n(1, date),
+    geom_text_repel(data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(cases_accumulated) ) %>% top_n(1, date),
                   aes(date+1, cases_accumulated, label=paste(format(cases_accumulated, nsmall=0, big.mark="."), substr(province,1,2) ) ),
                   nudge_x = 1, # adjust the starting x position of the text label
                   size=4,
@@ -1088,7 +1088,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
       legend.position =  "none"
     ) +
     labs(title = paste0("Media de casos por día (media 7 días) por COVID-19 en ",prov ),
-         subtitle = paste0("Línea de puntos: casos PCR notidicados, media de 7 días. Por provincia. ",period),
+         subtitle = paste0("Línea de puntos: casos PCR notificados, media de 7 días. Por provincia. ",period),
          y = "casos por día (media 7 días)",
          x = "fecha",
          caption = caption_provincia)
@@ -1383,7 +1383,7 @@ png(filename=paste("img/spain/provincias/covid19_fallecimientos-registrados-por-
 data_cases_sp_provinces %>%
   ggplot() +
   geom_line(data = select(data_cases_sp_provinces_sm,date,deceased,province_cp,-province),
-            aes(date,deceased,group=province_cp), color="#CACACA" ) +
+            aes(date,deceased,group=province_cp), color="#DCDCDC" ) +
   # add missing ccaa
   # geom_line(data = ccaa_missing, aes(date, deceassed,group=province), size= 0.7, linetype = 2 ) +
   # geom_text_repel(data=filter( ccaa_missing, 
@@ -1398,7 +1398,7 @@ data_cases_sp_provinces %>%
   #                                     segment.color="#777777"
   # ) +
   # all the provinces 
-  geom_line(aes(date, deceased,group=province), size= 0.7 ) +
+  geom_line(aes(date, deceased,group=province, color=province), size= 0.7 ) +
   geom_text_repel(data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(deceased) ) %>% top_n(1, date),
                                 aes(date+1, deceased, label=paste(format(deceased, nsmall=1, big.mark="."), substr(province,1,3) ) ),
                                 nudge_x = 1, # adjust the starting x position of the text label
@@ -1428,7 +1428,7 @@ data_cases_sp_provinces %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = c(0.1,0.6),
+    legend.position = "none",
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España",
@@ -2169,7 +2169,9 @@ data_cases_sp_provinces %>%
   ggplot() +
   geom_line(aes(date, daily_deaths,group=province, color=ccaa), size= 0.8 ) +
   geom_point(aes(date, daily_deaths, color=ccaa), size= 1 ) +
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths > 5), 
+  geom_text_repel(
+    data = data_cases_sp_provinces %>% group_by(province) %>% top_n(1, date) %>% filter(!is.na(daily_deaths) & daily_deaths > 5  ) ,
+    # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths > 5), 
                   aes(date, daily_deaths, color=ccaa, label=paste(format(daily_deaths, nsmall=1, big.mark=".", decimal.mark = ","),province)),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
@@ -2213,7 +2215,9 @@ data_cases_sp_provinces %>%
   ggplot() +
   geom_line(aes(date, daily_deaths,group=province, color=ccaa), size= 0.7 ) +
   # geom_point(aes(date, daily_deaths, color=ccaa), size= 1.5 ) +
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths > 5), 
+  geom_text_repel(
+    data = data_cases_sp_provinces %>% group_by(province) %>% top_n(1, date) %>% filter(!is.na(daily_deaths) & daily_deaths > 5  ) ,
+    # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths > 5), 
                   aes(date, daily_deaths, color=ccaa, label=paste(format(daily_deaths, nsmall=1, big.mark=".", decimal.mark = ","),province)),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
@@ -2261,7 +2265,9 @@ data_cases_sp_provinces %>%
   geom_line(aes(date, daily_deaths,group=province, color=ccaa), size= 0.2 ) +
   geom_point(aes(date, daily_deaths, color=ccaa), size= 0.5, alpha = 0.5 ) +
   # geom_point(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), aes(date, daily_deaths_avg7, color=province), size= 1.5, alpha = 0.3 ) +
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths_avg7 > 5), 
+  geom_text_repel(
+    data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(daily_deaths_avg7) & daily_deaths_avg7 > 5 & date > (max(data_cases_sp_provinces$date)-5 )) %>% top_n(1, date),
+    # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths_avg7 > 5), 
                   aes(date, daily_deaths_avg7, color=ccaa, label=paste(format(daily_deaths_avg7, nsmall=1, big.mark=".", decimal.mark = ","),province)),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
@@ -2327,10 +2333,12 @@ png(filename=paste("img/spain/provincias/covid19_muertes-por-dia-provincia-media
 data_cases_sp_provinces %>% 
   ggplot() +
   # geom_smooth(aes(date, daily_deaths_avg7,group=province, color=ccaa), size= 1, se = FALSE, span = 0.6 ) +
-  geom_line(aes(date, daily_deaths_avg7,group=province, color=ccaa), size= 1 ) +
+  geom_line(aes(date, daily_deaths_avg7,group=province, color=ccaa), size= 0.75 ) +
   geom_point(aes(date, daily_deaths, color=ccaa), size= 1.5, alpha = 0.5) +
   # geom_point(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), aes(date, daily_deaths_avg7, color=province), size= 1.5, alpha = 0.3 ) +
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths > 0), 
+  geom_text_repel(
+    data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(daily_deaths_avg7) & date > (max(data_cases_sp_provinces$date)-5 ) & daily_deaths_avg7 > 2 ) %>% top_n(1, date) ,
+    # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_deaths > 0), 
                   aes(date, daily_deaths_avg7, color=ccaa, label=paste(format(daily_deaths_avg7, nsmall=1, big.mark=".", decimal.mark = ","),province)),
                   nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
@@ -2352,8 +2360,8 @@ data_cases_sp_provinces %>%
                   segment.color="#777777"
   ) +
   # marca la línea
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==as.Date("2020-04-11") &  province == "Madrid" ),
-                  aes(date+0.5,190, label=paste("media de 7 días")),
+  geom_text_repel(data=filter( data_cases_sp_provinces, date==as.Date("2020-04-25") &  province == "Madrid" ),
+                  aes(date+0.5,100, label=paste("media de 7 días")),
                   nudge_y = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,

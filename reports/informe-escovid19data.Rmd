@@ -11,7 +11,7 @@ library(knitr)
 library(kableExtra)
 library(formattable)
 library(DT)
-today <- as.Date("2020-05-21")
+today <- as.Date("2020-05-22")
 ```
 
 Un análisis automatizado de la base de datos por provincias de #COVID19 en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data
@@ -83,7 +83,7 @@ table_nice <- table_total %>%
 as.datatable(
 formattable(table_nice, list(
   area(col = c(casos, muertes,PCR, PCR_acum)) ~ normalize_bar("pink", 0.2,na.rm = TRUE)
-)), colnames = c('Provincia', 'CCAA', 'Casos acumulado (días desde)', 'Casos (fecha)', 'Muertes acumulado (días desde)', 'Muertes (fecha)','PCR diario (días desde)', 'PCR acumulado (días desde)'  ),
+)), colnames = c('Provincia', 'CCAA', 'Casos acumulado (días desde)', 'Casos (última fecha)', 'Muertes acumulado (días desde)', 'Muertes (última fecha)','PCR diario (días desde)', 'PCR acumulado (días desde)'  ),
 options = list(pageLength = 52)
 )
 ``` 

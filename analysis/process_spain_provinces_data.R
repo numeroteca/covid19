@@ -7,6 +7,7 @@
 library(tidyverse)
 library(reshape2)
 library(readxl)
+library(openxlsx)
 
 # Load Data ---------
 # / Population -------------
@@ -617,6 +618,7 @@ data_cases_sp_provinces$ccaa <- factor(data_cases_sp_provinces$ccaa)
 # saves data in the other repository
 write.csv(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
 saveRDS(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.rds")
+write.xlsx(data_cases_sp_provinces, "../escovid19data/data/output/covid19-provincias-spain_consolidated.xlsx", colNames = TRUE)
 
 # save date, but first rearrange
 data_cases_sp_provinces <- data_cases_sp_provinces %>% arrange(ccaa,province,date)
