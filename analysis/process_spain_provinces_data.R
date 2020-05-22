@@ -512,19 +512,17 @@ euskadi_a <- euskadi_original %>% rename( date = ...1 ) %>%
     hospitalized = sum(value)
   )
 
-
-
 data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
 euskadi_a$dunique <- paste0(euskadi_a$date,euskadi_a$province)
 
 # TODO: mirar los hospitalizados por día: no coinciden los datos con lo que se publicó en las notas de prensa de Irekia
 data_cases_sp_provinces <- merge(data_cases_sp_provinces,
-                                 euskadi_a %>% select(dunique,hospitalized) %>% 
-                                   ungroup() %>%
+                                 euskadi_a %>% ungroup() %>% select(dunique,hospitalized) %>% 
                                    rename(
                                      hospitalized_eus = hospitalized
                                      ) , 
                                  by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique)
+saveRDS(data_cases_sp_provinces, file = "data/output/spain/euskadi/compare_hospitalized_irekia-vs-opendata.rds")
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   hospitalized = ifelse( ccaa == "País Vasco", hospitalized_eus, hospitalized),
@@ -534,6 +532,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
                    as.character(source) )
 ) %>% select(-hospitalized_eus)
 
+rm(euskadi_a,euskadi_original)
 
 # Add missing data deaths previous 2020.03.08 --------------
 

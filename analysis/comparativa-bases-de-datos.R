@@ -446,7 +446,7 @@ ggplot(NULL) +
   geom_line( data = data_all_export %>% filter(region == "País Vasco" ), aes( date, deceassed, group=region, color = "#FF0000" ), size = 0.7 ) +
   geom_line( data = euskadi_ca , aes( date, deceassed, color = "#000000"), size = 0.7 ) +
   scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  scale_color_identity(
+    scale_color_identity(
     guide = "legend",
     labels = c("Opendata Euskadi (2020.05.15)","ISCIII","Irekia-Osakidetza (hasta 2020.05.14)"),
   ) +
@@ -467,6 +467,48 @@ ggplot(NULL) +
   labs(title = "Comparativa de bases de datos. Fallecimientos acumulados COVID-19 en Euskadi",
        # subtitle = paste0("Geovoluntarios - datoscovid.es (negro). Escovid19data (verde)"),
        y = "fallecidos acumulados",
+       x = "fecha",
+       caption = paste0( "@numeroteca. lab.montera34.com/covid19",
+                         color = "",
+                         colour = ""
+       )
+  ) +
+  guides(color=guide_legend(title="Base de datos"))
+dev.off()
+
+
+
+# Comparativa Euskadi hospitalizados -----------
+data_cases_sp_provinces <- readRDS(file = "data/output/spain/euskadi/compare_hospitalized_irekia-vs-opendata.rds")
+
+png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_hospitalizados_irekia-opendata-ccaa.png", sep = ""), width = 700, height = 400)
+data_cases_sp_provinces %>% filter(ccaa == "País Vasco") %>%
+ggplot() +
+  geom_line( aes( date, hospitalized, group=province, color = "#66a61e"), size = 2.0 ) +
+  geom_line( aes( date, hospitalized_eus, group=province, color = "#FF0000" ), size = 0.7 ) +
+  scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  scale_color_identity(
+    guide = "legend",
+    labels = c("Irekia-Osakidetza (hasta 2020.05.14)","Opendata Euskadi (2020.05.15)"),
+  ) +
+  facet_wrap( ~province) + #, scales = "free"
+  scale_x_date(
+    date_labels = "%d-%m",
+    # limits = c(as.Date("2020-03-12"),max(data_cases_sp_provinces$date)),
+    expand = c(0,0)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size =16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    # axis.text = element_text(size =12 ),
+    legend.position = "top"
+  ) +
+  labs(title = "Comparativa de bases de datos. Hospitalizados COVID-19 en Euskadi",
+       # subtitle = paste0("Geovoluntarios - datoscovid.es (negro). Escovid19data (verde)"),
+       y = "hospitalizados",
        x = "fecha",
        caption = paste0( "@numeroteca. lab.montera34.com/covid19",
                          color = "",
