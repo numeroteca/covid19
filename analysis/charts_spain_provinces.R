@@ -13,8 +13,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: esCOVID19data (github.com/montera34/escovid19data, lab.montera34.com/covid19)"
-period <- "Actualizado: 2020-05-22. Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-filter_date <- as.Date("2020-05-22")
+period <- "Actualizado: 2020-05-23. Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
+filter_date <- as.Date("2020-05-23")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -2656,7 +2656,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
     geom_line(aes(date, hospitalized ,group=province, color=province), size= 1.2, se = FALSE, span = 0.6 ) +
     geom_point(aes(date, hospitalized, color=province), size= 1, alpha = 0.5 ) +
     geom_text_repel(
-      data = data_cases_sp_provinces %>% filter( ccaa == prov ) %>% group_by(province) %>% filter(!is.na(deceased) ) %>% top_n(1, date),
+      data = data_cases_sp_provinces %>% filter( ccaa == prov ) %>% group_by(province) %>% filter(!is.na(hospitalized) ) %>% top_n(1, date),
       aes(date, hospitalized, color=province, 
           label=paste(format(hospitalized, nsmall=1, big.mark=".", decimal.mark = ","),province)),
       nudge_x = 1, # adjust the starting y position of the text label
@@ -3681,17 +3681,62 @@ dev.off()
 
 }
 
-# Incidencia acumulada 14 días -----
+# Incidencia acumulada 14 días ----- xxx
 # Superpuesto Lineal 
+png(filename=paste("img/spain/provincias/covid19_incidencia-14dias-provincia-superpuesto-lineal.png", sep = ""),width = 1200,height = 800)
+data_cases_sp_provinces %>%
+  ggplot() +
+  geom_line(aes(date, cases_14days,group=province, color=ccaa), size= 0.8 ) +
+  geom_point(aes(date, cases_14days, color=ccaa), size= 1 ) +
+  geom_text_repel( data = data_cases_sp_provinces %>% group_by(province) %>% filter( !is.na(cases_14days) ) %>% top_n(1, date) %>% 
+                     filter ( cases_14days > 200 & date > filter_date-6),
+                  aes(date, cases_14days, color=ccaa, label=paste(format(cases_14days, nsmall=1, big.mark=".", decimal.mark = ","),province)),
+                  nudge_x = 2, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  scale_color_manual(values = colors_prov) +
+  coord_cartesian(
+  ) +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(date_breaks = "2 day", 
+               date_labels = "%d",
+               limits=c( min(data_cases_sp_provinces$date)+15, max(data_cases_sp_provinces$date +12)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Incidencia acumulada 14 días por COVID-19 en España",
+       subtitle = paste0("Por provincia ",period),
+       y = "Incidencia acumulada 14 días",
+       x = "fecha",
+       caption = caption_provincia)
+dev.off()
+  
 png(filename=paste("img/spain/provincias/covid19_incidencia-14dias-provincia-superpuesto-lineal-per-cienmil.png", sep = ""),width = 1200,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
   # geom_line(aes(date, daily_cases,group=province, color=ccaa), size= 0.8 ) +
-  geom_line(aes(date, cases_14days/poblacion,group=province, color=ccaa), size= 0.8 ) +
+  geom_line(aes(date, cases_14days/poblacion*100000,group=province, color=ccaa), size= 0.8 ) +
   # geom_point(aes(date, daily_cases, color=ccaa), size= 1 ) +
-  geom_point(aes(date, cases_14days/poblacion, color=ccaa), size= 1 ) +
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_cases > 5), 
-                  aes(date, cases_14days/poblacion, color=ccaa, label=paste(format(daily_cases, nsmall=1, big.mark=".", decimal.mark = ","),province)),
+  geom_point(aes(date, cases_14days/poblacion*100000, color=ccaa), size= 1 ) +
+  geom_text_repel(
+    data = data_cases_sp_provinces %>% group_by(province) %>% filter( !is.na(cases_14days) ) %>% top_n(1, date) %>% 
+      filter ( cases_14days/poblacion*100000 > 40 & date > filter_date-3),
+    # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & cases_14days/poblacion*100000 > 40),
+                  aes(date, cases_14days/poblacion*100000, color=ccaa, 
+                      label=paste(format( round(cases_14days/poblacion*100000, digits = 1), nsmall=1, big.mark=".", decimal.mark = ","),province)),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
@@ -3736,8 +3781,9 @@ data_cases_sp_provinces %>% filter( ccaa == "País Vasco") %>%
   geom_line(aes(date, cases_14days/poblacion*100000,group=province, color=province), size= 0.8 ) +
   # geom_point(aes(date, daily_cases, color=ccaa), size= 1 ) +
   geom_point(aes(date, cases_14days/poblacion*100000, color=province), size= 1 ) +
-  geom_text_repel(data= data_cases_sp_provinces %>% group_by(province) %>% filter( ccaa == "País Vasco" ) %>% top_n(1, date), 
-                  aes(date, cases_14days/poblacion*100000, color=ccaa, label=paste(format(daily_cases, nsmall=1, big.mark=".", decimal.mark = ","),province)),
+  geom_text_repel(data= data_cases_sp_provinces %>% group_by(province) %>% filter( ccaa == "País Vasco" & !is.na(cases_14days) ) 
+                  %>% top_n(1, date), 
+                  aes(date, cases_14days/poblacion*100000, color=province, label=paste(format( round(cases_14days/poblacion*100000, digits = 1), nsmall=1, big.mark=".", decimal.mark = ","),province)),
                   nudge_x = 2, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
