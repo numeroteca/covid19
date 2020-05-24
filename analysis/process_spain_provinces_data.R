@@ -208,6 +208,24 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,andalucia)
 
 rm(andalucia,andalucia_original)
 
+# Galicia: Remove existing Galicia data and add new one from new source ---------------------
+# Remove existing Andalucia data
+# data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( ccaa != "Galicia")
+# 
+# download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=galicia", 
+#               "data/original/spain/galicia/galicia-provincias-data.csv")
+# galicia_original <- read.delim("data/original/spain/galicia/galicia-provincias-data.csv", sep=",")
+# 
+# galicia <- galicia_original %>% 
+#   mutate(
+#     date = as.Date(date),
+#   )
+
+# Add new Andalucía data
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces,galicia)
+
+rm(galicia,galicia_original)
+
 # Uniprovinciales: Remove and add uniprovinciales from ISCIII -----
 
 # Remove existing Uniprovinciales data
@@ -589,6 +607,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
   group_by(province) %>% arrange(date) %>% 
   mutate( 
           cases_14days = cases_accumulated - lag(cases_accumulated,13),
+          cases_7days = cases_accumulated - lag(cases_accumulated,6),
           daily_cases = cases_accumulated - lag(cases_accumulated),
           daily_cases_avg7 =  round( ( daily_cases + lag(daily_cases,1)+lag(daily_cases,2)+
                                           lag(daily_cases,3)+lag(daily_cases,4)+lag(daily_cases,5)+lag(daily_cases,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
