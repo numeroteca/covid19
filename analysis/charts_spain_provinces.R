@@ -12,8 +12,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: esCOVID19data (github.com/montera34/escovid19data, lab.montera34.com/covid19)"
-period <- "Actualizado: 2020-05-24. Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-filter_date <- as.Date("2020-05-24")
+period <- "Actualizado: 2020-05-25. Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
+filter_date <- as.Date("2020-05-25")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -1180,7 +1180,21 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
        prov=="Extremadura" | prov=="Madrid, Comunidad de" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="Rioja, La" | prov=="País Vasco") {
     the_province  <- the_province + geom_line( aes(date, daily_cases_PCR_avg7,group=province, color=province), size= 1, linetype = "dashed")
   }
-  
+  if ( prov=="Asturias, Principado de"   | prov=="Cantabria"   |  prov=="Castilla - La Mancha" | prov=="Comunitat Valenciana"  | prov=="Extremadura" | 
+       prov=="Madrid, Comunidad de" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="País Vasco") {
+    the_province  <- the_province + geom_text_repel(
+      data = data_cases_sp_provinces %>% filter( ccaa == prov ) %>% group_by(province) %>% filter(!is.na(daily_cases_PCR_avg7) ) %>% top_n(1, date),
+      aes(date, daily_cases_PCR_avg7, color=province,
+          label=paste(format(daily_cases_PCR_avg7, nsmall=1, big.mark=".", decimal.mark = ","), "(PCR)", substr( province,1,3))),
+      nudge_x = 4, # adjust the starting y position of the text label
+      size=4,
+      hjust=0,
+      family = "Roboto Condensed",
+      direction="y",
+      segment.size = 0.1,
+      segment.color="#777777"
+    )
+  }
   print(the_province)
   print(paste("plot",prov))
   dev.off()
@@ -3918,3 +3932,4 @@ data_cases_sp_provinces %>%
        x = "fecha",
        caption = caption_provincia)
 dev.off()
+

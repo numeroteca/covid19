@@ -25,8 +25,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Para ISCiii
 caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es) y Ministerio Sanidad (recopilados por Datadista)"
 caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es) & Ministerio Sanidad (recopilados por Datadista)"
-period <- "Actualizado: 2020.05.19. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.05.19"
+period <- "Actualizado: 2020.05.21. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.05.21"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 
@@ -1602,7 +1602,7 @@ data_all_export %>%
     axis.text.x = element_text(size = 9)
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de altas acumuladas por COVID-19 en España",
+  labs(title = "Número de recuperados acumulados por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period,warning),
        y = "altas",
        x = "fecha",
@@ -1647,7 +1647,7 @@ data_all_export %>%
     legend.position = "bottom",
     axis.text.x = element_text(size = 9)
   ) +
-  labs(title = "Número de altas acumuladas por COVID-19 en España",
+  labs(title = "Número de recuperados acumulados por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas",
        x = "fecha",
@@ -1677,7 +1677,7 @@ data_all_export %>%
     axis.text.x = element_text(size = 9)
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de altas acumuladas por COVID-19 por 100.000 habitantes en España",
+  labs(title = "Número de recuperados acumulados por COVID-19 por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period,warning),
        y = "altas por 100.000 habitantes ",
        x = "fecha",
@@ -1710,7 +1710,7 @@ data_all_export %>%
     axis.text.x = element_text(size = 9)
     # legend.position = "bottom"
   ) +
-  labs(title = "Número de altas acumuladas por COVID-19 por 100.000 habitantes en España",
+  labs(title = "Número de recuperados acumulados por COVID-19 por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas",
        x = "fecha",
@@ -1819,13 +1819,12 @@ dev.off()
 
 
 # // 5.2 Altas superpuestos ----------
-# // region -------------------
 png(filename=paste("img/spain/regions/covid19_altas-por-comunidad-autonoma-superpuesto-lineal.png", sep = ""),width = 1200,height = 700)
 data_all_export %>%  
   ggplot() +
   geom_line(aes(date,recovered,group=region, color=region), size= 1 ) +
   geom_point(aes(date,recovered, color=region), size= 1.5 ) +
-  geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date) )
+  geom_text_repel(data=filter( data_all_export, ( date==max(data_all_export$date)- )
                                 
                                 
                                ),
@@ -1855,7 +1854,7 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de altas acumuladas por COVID-19 en España",
+  labs(title = "Número de recuperados acumulados por COVID-19 en España",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period,warning),
        y = "altas",
        x = "fecha",
@@ -1893,7 +1892,7 @@ dev.off()
 #     axis.ticks.x = element_line(color = "#000000"),
 #     legend.position = "none"
 #   ) +
-#   labs(title = "Número de altas acumuladas por COVID-19 en España",
+#   labs(title = "Número de recuperados acumulados por COVID-19 en España",
 #        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
 #        y = "altas",
 #        x = "fecha",
@@ -1936,7 +1935,7 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de altas acumuladas por COVID-19 en España ",
+  labs(title = "Número de recuperados acumulados por COVID-19 en España ",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas (escala logarítmica)",
        x = "fecha",
@@ -1975,7 +1974,7 @@ dev.off()
 #     axis.ticks.x = element_line(color = "#000000"),
 #     legend.position = "none"
 #   ) +
-#   labs(title = "Número de altas acumuladas por COVID-19 en España",
+#   labs(title = "Número de recuperados acumulados por COVID-19 en España",
 #        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period),
 #        y = "altas",
 #        x = "fecha",
@@ -2227,7 +2226,7 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de altas acumuladas por COVID-19 por 100.000 habitantes en España",
+  labs(title = "Número de recuperados acumulados por COVID-19 por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala lineal). ",period,warning),
        y = "altas por 100.000 habitantes",
        x = "fecha",
@@ -2269,7 +2268,7 @@ data_all_export %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = "none"
   ) +
-  labs(title = "Número de altas acumuladas por COVID-19 por 100.000 habitantes en España",
+  labs(title = "Número de recuperados acumulados por COVID-19 por 100.000 habitantes en España",
        subtitle = paste0("Por comunidad autónoma (escala logarítmica). ",period,warning),
        y = "altas por 100.000 habitantes",
        x = "fecha",
