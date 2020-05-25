@@ -11,7 +11,8 @@ library(knitr)
 library(kableExtra)
 library(formattable)
 library(DT)
-today <- as.Date("2020-05-23")
+library(viridis)
+today <- as.Date("2020-05-25")
 ```
 
 Un análisis automatizado de la base de datos por provincias de #COVID19 en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data
@@ -24,7 +25,7 @@ data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provinci
 fechas_caso <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(cases_accumulated) ) %>% top_n(1, date) %>% select(date, province,ccaa)
 fechas_fallecidos <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(deceased) ) %>% top_n(1, date) %>% select(date, province,ccaa)
 fechas_PCR_acum <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(cases_accumulated_PCR) ) %>% top_n(1, date) %>% select(date, province,ccaa)
-fechas_PCR_diario <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(PCR) ) %>% top_n(1, date) %>% select(date, province,ccaa)
+fechas_PCR_diario <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(daily_cases_PCR) ) %>% top_n(1, date) %>% select(date, province,ccaa)
 # 
 # kable(fechas_caso %>% select(date, province,ccaa) %>% arrange(date), caption="Última fecha disponible de casos acumuados")
 # kable(fechas_fallecidos  %>% select(date, province,ccaa) %>% arrange(date), caption="Última fecha disponible de fallecidos acumulados")
@@ -87,6 +88,129 @@ formattable(table_nice, list(
 options = list(pageLength = 52)
 )
 ``` 
+
+## ¿Cómo de completos están los datos?
+
+### Casos acumulados
+
+```{r completness, fig.width=9, fig.height=8, echo=FALSE, warning=FALSE}
+# Using> https://github.com/edugonzaloalmorox/30diasgraficos
+
+data_cases_sp_provinces %>% mutate( reordering = paste0(ccaa," (",province, ")") ) %>% # group_by(ccaa) %>% summarise( ) %>%# filter( date> "2018-04-01" & date < "2018-04-05" )
+filter( !is.na(province)) %>%
+  ggplot() + 
+  geom_tile( aes(x = date, y = fct_rev(reordering), fill= cases_accumulated, na.rm = FALSE)) + 
+  scale_fill_viridis(option = "plasma",na.value = 'white',
+                     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
+  theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
+  scale_x_date(
+    date_breaks = "10 day", date_labels = "%d/%m",
+    expand= c(0,0)) +
+  labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
+       subtitle = paste(""),
+       x = NULL,
+       y = "",
+       fill = "Casos acumulados",
+       caption = "" ) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    legend.position = "top"
+  )
+``` 
+
+### Casos PCR por día 
+
+```{r completness2, fig.width=9, fig.height=8, echo=FALSE, warning=FALSE}
+# Using> https://github.com/edugonzaloalmorox/30diasgraficos
+
+data_cases_sp_provinces %>% mutate( reordering = paste0(ccaa," (",province, ")") ) %>% # group_by(ccaa) %>% summarise( ) %>%# filter( date> "2018-04-01" & date < "2018-04-05" )
+filter( !is.na(province)) %>%
+  ggplot() + 
+  geom_tile( aes(x = date, y = fct_rev(reordering), fill= daily_cases_PCR, na.rm = FALSE)) + 
+  scale_fill_viridis(option = "plasma",na.value = 'white',
+                     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
+  theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
+  scale_x_date(
+    date_breaks = "10 day", date_labels = "%d/%m",
+    expand= c(0,0)) +
+  labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
+       subtitle = paste(""),
+       x = NULL,
+       y = "",
+       fill = "Casos por día PCR",
+       caption = "" ) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    legend.position = "top"
+  )
+``` 
+
+### Fallecidos por día 
+
+```{r completness3, fig.width=9, fig.height=8, echo=FALSE, warning=FALSE}
+# Using> https://github.com/edugonzaloalmorox/30diasgraficos
+
+data_cases_sp_provinces %>% mutate( reordering = paste0(ccaa," (",province, ")") ) %>% # group_by(ccaa) %>% summarise( ) %>%# filter( date> "2018-04-01" & date < "2018-04-05" )
+filter( !is.na(province)) %>%
+  ggplot() + 
+  geom_tile( aes(x = date, y = fct_rev(reordering), fill= daily_deaths, na.rm = FALSE)) + 
+  scale_fill_viridis(option = "plasma",na.value = 'white',
+                     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
+  theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
+  scale_x_date(
+    date_breaks = "10 day", date_labels = "%d/%m",
+    expand= c(0,0)) +
+  labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
+       subtitle = paste(""),
+       x = NULL,
+       y = "",
+       fill = "Fallecidos por día",
+       caption = "" ) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    legend.position = "top"
+  )
+``` 
+
+### Fallecidos por día (media con ventana de 7 días)
+
+```{r completness4, fig.width=9, fig.height=8, echo=FALSE, warning=FALSE}
+# Using> https://github.com/edugonzaloalmorox/30diasgraficos
+
+data_cases_sp_provinces %>% mutate( reordering = paste0(ccaa," (",province, ")") ) %>% # group_by(ccaa) %>% summarise( ) %>%# filter( date> "2018-04-01" & date < "2018-04-05" )
+filter( !is.na(province)) %>%
+  ggplot() + 
+  geom_tile( aes(x = date, y = fct_rev(reordering), fill= daily_deaths_avg7, na.rm = FALSE)) + 
+  scale_fill_viridis(option = "plasma",na.value = 'white',
+                     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
+  theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
+  scale_x_date(
+    date_breaks = "10 day", date_labels = "%d/%m",
+    expand= c(0,0)) +
+  labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
+       subtitle = paste(""),
+       x = NULL,
+       y = "",
+       fill = "Fallecidos por día (media con ventana de 7 días)",
+       caption = "" ) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    legend.position = "top"
+  )
+``` 
+
 
 ## Según fuentes de información
 
