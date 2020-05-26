@@ -645,7 +645,7 @@ for (i in 1:4) {
                 text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")), 
                size= 1, alpha = 0.6  ) +
     geom_text_repel(
-      data= test  %>% group_by(region) %>% filter(!is.na(date) & daily_deaths_avg6 > 5 ) %>% top_n(1, date ),
+      data= test  %>% group_by(region) %>% filter(!is.na(date) ) %>% top_n(1, date ) %>% filter( daily_deaths_avg6 > 5),
       aes(days_since, daily_deaths_avg6, label=paste(region)),
       color= "#000000",
       nudge_x = 1, # adjust the starting y position of the text label
@@ -665,7 +665,7 @@ for (i in 1:4) {
       labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
       minor_breaks = c(  seq(1 , 10, 2), seq(10 , 100, 20), seq(100 , 1000, 200), seq(1000, 10000, 2000) ) ) +
     scale_x_continuous(
-      breaks = c(0,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100),
+      breaks = c(0,10,20,30,40,50,60,70,80,90,100,110,120),
       expand = c(0,0)
       # limits=c( 0, max(test$days_since + 5))
     ) +
@@ -683,14 +683,14 @@ for (i in 1:4) {
   }
   
   if ( (i == 1) | (i == 2)  ) { # EN
-    daily_plot <- daily_plot + labs(title = paste0("Daily deaths by coronavirus (COVID-19) in regions of China, Spain, Italy and France"),
+    daily_plot <- daily_plot + labs(title = paste0("Average daily deaths (7 days window) by coronavirus (COVID-19) in regions of China, Spain, Italy and France"),
                             subtitle = paste0("Daily deaths, by number of days since ",umbral ,"th death. Updated: ", update_date),
                             y = "Daily deaths (rolling average 6 days)",
                             x = paste0("Days since ", umbral , "th or more cumulative deaths"),
                             caption ="By: @numeroteca (Montera34). https://lab.montera34.com/covid19 | Data: various official sources. Check website.")
 
   } else { # ES
-    daily_plot <- daily_plot + labs(title = paste0("Media de muertes por día en los 6 días anteriores por COVID-19 (",update_date,")"),
+    daily_plot <- daily_plot + labs(title = paste0("Media de muertes por día (ventana 7 días) por COVID-19 (",update_date,")"),
                             subtitle = paste0("Por región en China, España, Italia y Francia. Días desde ",umbral ," o más muertes (escala log)."),
                             y = "fallecimientos por día registrados (escala log.)",
                             x = paste0("días desde ", umbral , " o más fallecimientos"),
@@ -790,14 +790,14 @@ for (i in 1:4) {
   }
   
   if ( (i == 1) | (i == 2)  ) { # EN
-    daily_plot <- daily_plot + labs(title = paste0("Daily deaths by coronavirus (COVID-19) in regions of China, Spain, Italy and France"),
+    daily_plot <- daily_plot + labs(title = paste0("Average daily deaths (7 day window) by coronavirus (COVID-19) in regions of China, Spain, Italy and France"),
                                     subtitle = paste0("Daily deaths, by number of days since ",umbral ,"th death. Updated: ", update_date),
                                     y = "Daily deaths (rolling average 6 days)",
                                     x = paste0("Days since ", umbral , "th or more cumulative deaths"),
                                     caption ="By: @numeroteca (Montera34). https://lab.montera34.com/covid19 | Data: various official sources. Check website.")
     
   } else { # ES
-    daily_plot <- daily_plot + labs(title = paste0("Media de muertes por día en los 6 días anteriores por COVID-19 (",update_date,")"),
+    daily_plot <- daily_plot + labs(title = paste0("Media de muertes por día (ventana 7 días) por COVID-19 (",update_date,")"),
                                     subtitle = paste0("Por región en China, España, Italia y Francia. Días desde ",umbral ," o más muertes (escala log)."),
                                     y = "fallecimientos por día registrados (escala)",
                                     x = paste0("días desde ", umbral , " o más fallecimientos"),
