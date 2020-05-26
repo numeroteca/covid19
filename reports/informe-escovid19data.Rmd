@@ -12,10 +12,15 @@ library(kableExtra)
 library(formattable)
 library(DT)
 library(viridis)
-today <- as.Date("2020-05-25")
+today <- as.Date("2020-05-26")
 ```
 
 Un análisis automatizado de la base de datos por provincias de #COVID19 en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data
+
+
+* [Días desde que se tiene el último dato](#última-fecha-publicada)
+* [¿Cómo de completos están los datos?](#cómo-de-completos-están-los-datos)
+* [Clasificación de fuentes de información](#según-fuentes-de-información)
 
 ## Última fecha publicada 
 
@@ -26,6 +31,7 @@ fechas_caso <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(
 fechas_fallecidos <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(deceased) ) %>% top_n(1, date) %>% select(date, province,ccaa)
 fechas_PCR_acum <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(cases_accumulated_PCR) ) %>% top_n(1, date) %>% select(date, province,ccaa)
 fechas_PCR_diario <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(daily_cases_PCR) ) %>% top_n(1, date) %>% select(date, province,ccaa)
+fechas_hosp <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(hospitalized) ) %>% top_n(1, date) %>% select(date, province,ccaa)
 # 
 # kable(fechas_caso %>% select(date, province,ccaa) %>% arrange(date), caption="Última fecha disponible de casos acumuados")
 # kable(fechas_fallecidos  %>% select(date, province,ccaa) %>% arrange(date), caption="Última fecha disponible de fallecidos acumulados")
@@ -54,6 +60,10 @@ table_total <- merge(
   fechas_PCR_acum %>% rename ( PCR_acum = date ) %>% select(-ccaa), 
   by.x="province", by.y="province", all = TRUE  )
 
+table_total <- merge(
+  table_total, 
+  fechas_hosp %>% rename ( hospitalized = date ) %>% select(-ccaa), 
+  by.x="province", by.y="province", all = TRUE  )
 
 # fort(table_total %>% select(province, ccaa, casos_acum, muertes_acum ) %>% 
 #         mutate(
@@ -74,17 +84,18 @@ table_nice <- table_total %>%
           casos = as.integer( today - casos_acum ),
           muertes = as.integer( today - muertes_acum ),
           PCR =  as.integer( today - PCR_diario ),
-          PCR_acum =  as.integer( today - PCR_acum )
+          PCR_acum =  as.integer( today - PCR_acum ),
+          hospitalized =  as.integer( today - hospitalized )
         ) %>%
-        select( province, ccaa, casos, casos_acum,  muertes, muertes_acum, PCR , PCR_acum) %>%
+        select( province, ccaa, casos, casos_acum,  muertes, muertes_acum, PCR , PCR_acum,hospitalized ) %>%
         arrange(casos_acum)
 
 # formatter(style = x ~ style(..., display = ifelse(is.na(x), "none", "inline-block"))
 
 as.datatable(
 formattable(table_nice, list(
-  area(col = c(casos, muertes,PCR, PCR_acum)) ~ normalize_bar("pink", 0.2,na.rm = TRUE)
-)), colnames = c('Provincia', 'CCAA', 'Casos acumulado (días desde)', 'Casos (última fecha)', 'Muertes acumulado (días desde)', 'Muertes (última fecha)','PCR diario (días desde)', 'PCR acumulado (días desde)'  ),
+  area(col = c(casos, muertes,PCR, PCR_acum,hospitalized )) ~ normalize_bar("pink", 0.2,na.rm = TRUE)
+)), colnames = c('Provincia', 'CCAA', 'Casos acumulado (días desde)', 'Casos (última fecha)', 'Muertes acumulado (días desde)', 'Muertes (última fecha)','PCR diario (días desde)', 'PCR acumulado (días desde)', 'Hospitalizados (días desde)'   ),
 options = list(pageLength = 52)
 )
 ``` 
@@ -93,13 +104,13 @@ options = list(pageLength = 52)
 
 ### Casos acumulados
 
-```{r completness, fig.width=9, fig.height=8, echo=FALSE, warning=FALSE}
+```{r completness0, fig.width=9, fig.height=8, echo=FALSE, warning=FALSE}
 # Using> https://github.com/edugonzaloalmorox/30diasgraficos
 
 data_cases_sp_provinces %>% mutate( reordering = paste0(ccaa," (",province, ")") ) %>% # group_by(ccaa) %>% summarise( ) %>%# filter( date> "2018-04-01" & date < "2018-04-05" )
 filter( !is.na(province)) %>%
   ggplot() + 
-  geom_tile( aes(x = date, y = fct_rev(reordering), fill= cases_accumulated, na.rm = FALSE)) + 
+  geom_tile( aes(x = date, y = fct_rev(reordering), fill= cases_accumulated, na.rm = FALSE), color="#666666",size=0.06) + 
   scale_fill_viridis(option = "plasma",na.value = 'white',
                      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
   theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
@@ -123,13 +134,13 @@ filter( !is.na(province)) %>%
 
 ### Casos PCR por día 
 
-```{r completness2, fig.width=9, fig.height=8, echo=FALSE, warning=FALSE}
+```{r completness1, fig.width=9, fig.height=8, echo=FALSE, warning=FALSE}
 # Using> https://github.com/edugonzaloalmorox/30diasgraficos
 
 data_cases_sp_provinces %>% mutate( reordering = paste0(ccaa," (",province, ")") ) %>% # group_by(ccaa) %>% summarise( ) %>%# filter( date> "2018-04-01" & date < "2018-04-05" )
 filter( !is.na(province)) %>%
   ggplot() + 
-  geom_tile( aes(x = date, y = fct_rev(reordering), fill= daily_cases_PCR, na.rm = FALSE)) + 
+  geom_tile( aes(x = date, y = fct_rev(reordering), fill= daily_cases_PCR, na.rm = FALSE), color="#666666",size=0.06) +  
   scale_fill_viridis(option = "plasma",na.value = 'white',
                      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
   theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
@@ -151,6 +162,36 @@ filter( !is.na(province)) %>%
   )
 ``` 
 
+### Casos PCR acumulados
+
+```{r completness2, fig.width=9, fig.height=8, echo=FALSE, warning=FALSE}
+# Using> https://github.com/edugonzaloalmorox/30diasgraficos
+
+data_cases_sp_provinces %>% mutate( reordering = paste0(ccaa," (",province, ")") ) %>% # group_by(ccaa) %>% summarise( ) %>%# filter( date> "2018-04-01" & date < "2018-04-05" )
+filter( !is.na(province)) %>%
+  ggplot() + 
+  geom_tile( aes(x = date, y = fct_rev(reordering), fill= cases_accumulated_PCR, na.rm = FALSE), color="#666666",size=0.06) + 
+  scale_fill_viridis(option = "plasma",na.value = 'white',
+                     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
+  theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
+  scale_x_date(
+    date_breaks = "10 day", date_labels = "%d/%m",
+    expand= c(0,0)) +
+  labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
+       subtitle = paste(""),
+       x = NULL,
+       y = "",
+       fill = "Casos acumulados PCR",
+       caption = "" ) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    legend.position = "top"
+  )
+``` 
+
 ### Fallecidos por día 
 
 ```{r completness3, fig.width=9, fig.height=8, echo=FALSE, warning=FALSE}
@@ -159,7 +200,7 @@ filter( !is.na(province)) %>%
 data_cases_sp_provinces %>% mutate( reordering = paste0(ccaa," (",province, ")") ) %>% # group_by(ccaa) %>% summarise( ) %>%# filter( date> "2018-04-01" & date < "2018-04-05" )
 filter( !is.na(province)) %>%
   ggplot() + 
-  geom_tile( aes(x = date, y = fct_rev(reordering), fill= daily_deaths, na.rm = FALSE)) + 
+  geom_tile( aes(x = date, y = fct_rev(reordering), fill= daily_deaths, na.rm = FALSE), color="#666666",size=0.06) + 
   scale_fill_viridis(option = "plasma",na.value = 'white',
                      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
   theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
@@ -181,7 +222,7 @@ filter( !is.na(province)) %>%
   )
 ``` 
 
-### Fallecidos por día (media con ventana de 7 días)
+### Hospitalizados
 
 ```{r completness4, fig.width=9, fig.height=8, echo=FALSE, warning=FALSE}
 # Using> https://github.com/edugonzaloalmorox/30diasgraficos
@@ -189,7 +230,37 @@ filter( !is.na(province)) %>%
 data_cases_sp_provinces %>% mutate( reordering = paste0(ccaa," (",province, ")") ) %>% # group_by(ccaa) %>% summarise( ) %>%# filter( date> "2018-04-01" & date < "2018-04-05" )
 filter( !is.na(province)) %>%
   ggplot() + 
-  geom_tile( aes(x = date, y = fct_rev(reordering), fill= daily_deaths_avg7, na.rm = FALSE)) + 
+  geom_tile( aes(x = date, y = fct_rev(reordering), fill= hospitalized, na.rm = FALSE), color="#666666",size=0.06) +  
+  scale_fill_viridis(option = "plasma",na.value = 'white',
+                     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
+  theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
+  scale_x_date(
+    date_breaks = "10 day", date_labels = "%d/%m",
+    expand= c(0,0)) +
+  labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
+       subtitle = paste(""),
+       x = NULL,
+       y = "",
+       fill = "Hospitalizados",
+       caption = "" ) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    legend.position = "top"
+  )
+``` 
+
+### Fallecidos por día (media con ventana de 7 días)
+
+```{r completness5, fig.width=9, fig.height=8, echo=FALSE, warning=FALSE}
+# Using> https://github.com/edugonzaloalmorox/30diasgraficos
+
+data_cases_sp_provinces %>% mutate( reordering = paste0(ccaa," (",province, ")") ) %>% # group_by(ccaa) %>% summarise( ) %>%# filter( date> "2018-04-01" & date < "2018-04-05" )
+filter( !is.na(province)) %>%
+  ggplot() + 
+  geom_tile( aes(x = date, y = fct_rev(reordering), fill= daily_deaths_avg7, na.rm = FALSE), color="#666666",size=0.06) + 
   scale_fill_viridis(option = "plasma",na.value = 'white',
                      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
   theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
@@ -210,6 +281,7 @@ filter( !is.na(province)) %>%
     legend.position = "top"
   )
 ``` 
+
 
 
 ## Según fuentes de información
@@ -404,4 +476,13 @@ ggplot( aes(x = reorder(Var1, Freq), y = Freq)) +
        caption = paste0("Numero de filas:",lineas)
        ) +
   coord_flip()
+```
+
+## Todos los datos
+
+```{r todsolosdatos, fig.width=8, fig.height=12, echo=FALSE, warning=FALSE}
+as.datatable(
+formattable( data_cases_sp_provinces %>% arrange( desc(date) ) %>% select(-province,-ine_code)),
+options = list(pageLength = 52)
+)
 ```

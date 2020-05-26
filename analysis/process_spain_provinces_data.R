@@ -10,7 +10,7 @@ library(readxl)
 library(openxlsx)
 
 # Load Data ---------
-# / Population -------------
+# / Population INE-------------
 provincias_poblacion <-  read.delim("data/original/spain/provincias-poblacion.csv",sep = ",")
 
 # / COVID-19 in Spain -----------
@@ -18,9 +18,11 @@ provincias_poblacion <-  read.delim("data/original/spain/provincias-poblacion.cs
 # donwload provincias data from googgle spreadsheet 
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=provincias", 
               "data/original/spain/covid19_spain_provincias.csv")
+# save in another repository # save file in another repository (comment this line!)
 write.csv(read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ","), file = "../escovid19data/data/original/covid19_spain_provincias.csv", row.names = FALSE)
+# load data
 data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")
-# save file in another repository (comment this line!)
+
 
 # Download Andalucía data from https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228
 # that is uploaded manually to our own spreadsheet in google spreadsheet 
@@ -210,21 +212,37 @@ rm(andalucia,andalucia_original)
 
 # Galicia: Remove existing Galicia data and add new one from new source ---------------------
 # Remove existing Andalucia data
-# data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( ccaa != "Galicia")
-# 
-# download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=galicia", 
-#               "data/original/spain/galicia/galicia-provincias-data.csv")
-# galicia_original <- read.delim("data/original/spain/galicia/galicia-provincias-data.csv", sep=",")
-# 
-# galicia <- galicia_original %>% 
-#   mutate(
-#     date = as.Date(date),
-#   )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( ccaa != "Galicia")
 
-# Add new Andalucía data
-data_cases_sp_provinces <- rbind(data_cases_sp_provinces,galicia)
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=galicia",
+              "data/original/spain/galicia/galicia-provincias-data.csv")
+galicia_original <- read.delim("data/original/spain/galicia/galicia-provincias-data.csv", sep=",")
 
+galicia <- galicia_original %>%
+  mutate(
+    date = as.Date(date),
+  )
+
+# Add old Galicia data cumulative cases but not Ourense
+# # TODO: add sources of added data
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces,galicia %>% select(-X,-casos_acumul_old,-recovered_old,-deceased_old))
 rm(galicia,galicia_original)
+
+galicia_cumulative <- read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",") %>% filter( province == "Coruña, A"  | province =="Lugo" |province =="Pontevedra") %>%
+  mutate(
+    dunique = paste0(date,province)
+  ) %>%
+  select( dunique, cases_accumulated ) %>% 
+  rename( cases_accumulated_gal = cases_accumulated )
+
+data_cases_sp_provinces <- merge(data_cases_sp_provinces %>% mutate( dunique = paste0(date,province) ), 
+                                 galicia_cumulative, 
+                                 by.x="dunique", by.y="dunique", all = TRUE) %>% 
+                            mutate(
+                              cases_accumulated = ifelse( (province == "Coruña, A"  | province =="Lugo" |province =="Pontevedra"),cases_accumulated_gal ,cases_accumulated )
+                            ) %>% select(-dunique,-cases_accumulated_gal)
+
+
 
 # Uniprovinciales: Remove and add uniprovinciales from ISCIII -----
 
@@ -235,8 +253,9 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
             province == "Rioja, La") )
 
 # import Instituto de Salud CIII 
-ciii_original <- read.delim("https://cnecovid.isciii.es/covid19/resources/agregados.csv",sep = ",")  
-write.csv(ciii_original, file = "data/original/spain/iscii_data.csv", row.names = FALSE)
+download.file("https://cnecovid.isciii.es/covid19/resources/agregados.csv", 
+              "data/original/spain/iscii_data.csv")
+ciii_original <- read.delim("data/original/spain/iscii_data.csv",sep = ",")  
 
 ciii <- ciii_original %>% head(nrow(ciii_original) - 9) %>% #TODO: Cambia el número en función de las notas que incluya el csv original
   ungroup() %>% mutate(
@@ -634,6 +653,8 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% select(-source, -source_n
 data_cases_sp_provinces$province <- factor(data_cases_sp_provinces$province)
 data_cases_sp_provinces$ccaa <- factor(data_cases_sp_provinces$ccaa)
 
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter(!is.na(date))
+
 # saves data in the other repository
 write.csv(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
 saveRDS(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.rds")
@@ -646,4 +667,5 @@ write.csv(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-
 saveRDS(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-spain_consolidated.rds")
 
 # cleans environment
-rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_poblacion,datadista,ciii)
+rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_poblacion,datadista,ciii, galicia_cumulative)
+
