@@ -12,7 +12,7 @@ download.file("https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covi
 
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
-caption_provincia <- "Gráfico: @numeroteca (montera34.com) | Datos: esCOVID19data (github.com/montera34/escovid19data, lab.montera34.com/covid19)"
+caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: Open Data Euskadi"
 period_eus <- "Actualizado: 2020-05-25"
 
 # Set colors ---------
