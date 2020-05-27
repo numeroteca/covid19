@@ -9,7 +9,7 @@ library(tidyverse)
 ciii_original <- read.delim("https://covid19.isciii.es/resources/serie_historica_acumulados.csv",sep = ",")  
 write.csv(ciii_original, file = "data/original/spain/iscii_data.csv", row.names = FALSE)
 
-ciii <- ciii_original %>% head(nrow(ciii_original) - 8) %>% #Cambia el número en función de las notas que incluya el csv original
+ciii <- ciii_original %>% head(nrow(ciii_original) - 9) %>% #Cambia el número en función de las notas que incluya el csv original
   ungroup() %>% mutate(
     date = as.Date(FECHA, "%d/%m/%Y" ),
     CCAA = CCAA %>% str_replace_all("AN", "Andalucía"),
@@ -39,10 +39,11 @@ ciii <- ciii_original %>% head(nrow(ciii_original) - 8) %>% #Cambia el número e
     TestAc =TestAc.,
     hospitalized = Hospitalizados,
     intensive_care = UCI,
-    deceassed = Fallecidos,
-    recovered = Recuperados
+    deceassed = Fallecidos
+    # recovered = Recuperados
   ) %>% mutate (
-    cases_registered = ifelse( is.na(cases_registered), PCR + TestAc, cases_registered)
+    cases_accumulated = ifelse( is.na(cases_registered), replace_na(PCR, 0) + replace_na(TestAc, 0), cases_registered),
+    recovered = NA
   )
 
 # write.csv(ciii, file = "data/output/spain/iscii_processed_data.csv", row.names = FALSE)
@@ -50,50 +51,101 @@ ciii <- ciii_original %>% head(nrow(ciii_original) - 8) %>% #Cambia el número e
 
 # summarise Escovid19data data by ccaa ------
 data_cases_sp_provinces <- readRDS(file = "data/output/spain/covid19-provincias-spain_consolidated.rds")
-resumen_pr_ca <- data_cases_sp_provinces %>% group_by(date,ccaa) %>% summarise( deceassed = sum(deceased), cases_accumulated = sum(cases_accumulated) ) %>% rename(
+resumen_pr_ca <- data_cases_sp_provinces %>% group_by(date,ccaa) %>% 
+  summarise( 
+    deceassed = sum(deceased), 
+    cases_accumulated = sum(cases_accumulated),
+    cases_accumulated_PCR = sum(cases_accumulated_PCR),
+    ) %>% rename(
  region = ccaa  
 )
+
+levels(as.factor(ciii$region))
+levels(resumen_pr_ca$region)
 # rename comunidades autónomas
-levels(resumen_pr_ca$ccaa) <- c("Andalucía","Aragón", "Asturias", "Baleares", "Canarias", "Cantabria",  "Castilla-La Mancha","Castilla y León", "Cataluña", "Ceuta",
-                                "C. Valenciana", "Extremadura","Galicia","Madrid", "Melilla", "Murcia", "Navarra",  "País Vasco","La Rioja")      
+# levels(resumen_pr_ca$region) <- c("Andalucía","Aragón", "Asturias", "Baleares", "Canarias", "Cantabria",  "Castilla-La Mancha","Castilla y León", "Cataluña", "Ceuta",
+#                                 "C. Valenciana", "Extremadura","Galicia","Madrid", "Melilla", "Murcia", "Navarra",  "País Vasco","La Rioja")      
 
 # resumen_pr_ca$region <- resumen_pr_ca$ccaa
 # %>% filter( region== "Cataluña")
 # Plots --------------
-png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_casos_bbdd_lineal.png", sep = ""),width = 1400,height = 900)
+png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_muertes_bbdd_lineal.png", sep = ""),width = 1400,height = 900)
 ggplot(NULL) +
   geom_line( data = resumen_pr_ca , aes( date, deceassed, group=region, color = "#e7298a"), size = 1.5 ) +
   # geom_line( data = data_all_export, aes( date, deceassed, group=region), color = "#66a61e", size = 1 ) +
   geom_line( data = ciii , aes( date, deceassed, group=region, color = "#000000"), size = 0.7 ) +
-  geom_text(data = resumen_pr_ca %>% group_by(region) %>% top_n(1, date), aes( date+8, deceassed, label=deceassed), color = "#e7298a" ) +
-  geom_text(data = ciii %>% group_by(region) %>% top_n(1, date), aes( date+8, deceassed, label=deceassed), color = "#000000" ) +
+  geom_text(data = resumen_pr_ca %>% group_by(region) %>% filter(!is.na(deceassed)) %>% top_n(1, date), aes( date+15, deceassed, label=deceassed), color = "#e7298a" ) +
+  geom_text(data = ciii %>% group_by(region) %>% filter(!is.na(deceassed))  %>% top_n(1, date), aes( date+40, deceassed, label=deceassed), color = "#000000" ) +
   scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_color_identity(
     guide = "legend",
     labels = c("ISCIII","Escovid19data"),
   ) +
-  facet_wrap( ~region, scales = "free") +
+  facet_wrap( ~region, scales = "free_y") +
   scale_x_date(
-              # date_breaks = "10 day", 
-               date_labels = "%d",
-               expand = c(0,15) 
+              date_breaks = "1 month",
+               date_labels = "%d/%m",
+               expand = c(0,20) 
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 23) +
   theme(
-    # panel.grid.minor.x = element_blank(),
+    panel.grid.minor.x = element_blank(),
     # panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    axis.text = element_text(size =9 ),
+    axis.text = element_text(size =11 ),
     legend.position = "top"
   ) +
   labs(title = "Comparativa de bases de datos. Fallecimientos acumulados COVID-19 por comunidades autónomas. España",
-       subtitle = paste0("Instituto de Salud Carlos III (negro). Escovid19data (rosa)."),
+       subtitle = paste0("Instituto de Salud Carlos III (negro). Escovid19data (rosa), agregado por CCAA. 2020-05-27"),
        y = "fallecimientos acumulados",
-       x = "fecha (Datadista y PD19 se resta un día)",
-       caption = paste0( "@numeroteca. lab.montera34.com/covid19" )
+       x = "fecha",
+       color = "",
+       caption = paste0( "@numeroteca. lab.montera34.com/covid19  |  Datos: ISCIII y esCOVID19data" )
   )
 dev.off()
+
+png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_casos_bbdd_lineal.png", sep = ""),width = 1400,height = 900)
+ggplot(NULL) +
+  geom_line( data = resumen_pr_ca , aes( date, cases_accumulated, group=region, color = "#e7298a"), size = 1.5 ) +
+  geom_line( data = resumen_pr_ca , aes( date, cases_accumulated_PCR, group=region, color = "#e7298a"), size = 1.5, linetype="11" ) +
+  # geom_line( data = data_all_export, aes( date, deceassed, group=region), color = "#66a61e", size = 1 ) +
+  geom_line( data = ciii , aes( date, cases_accumulated, group=region, color = "#000000"), size = 0.7 ) +
+  geom_line( data = ciii , aes( date, PCR, group=region, color = "#000000"), size = 0.7, linetype="11" ) +
+  geom_text(data = resumen_pr_ca %>% group_by(region) %>% filter(!is.na(cases_accumulated)) %>% top_n(1, date), aes( date+15, cases_accumulated, label=cases_accumulated), color = "#e7298a" ) +
+  geom_text(data = ciii %>% group_by(region) %>% filter(!is.na(cases_accumulated))  %>% top_n(1, date), aes( date+40, cases_accumulated, label=cases_accumulated), color = "#000000" ) +
+  scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  scale_color_identity(
+    guide = "legend",
+    labels = c("ISCIII","Escovid19data"),
+  ) +
+  facet_wrap( ~region, scales = "free_y") +
+  scale_x_date(
+    date_breaks = "1 month",
+    date_labels = "%d/%m",
+    expand = c(0,20) 
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 23) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text = element_text(size =11 ),
+    legend.position = "top"
+  ) +
+  labs(title = "Comparativa de bases de datos. Casos acumulados COVID-19 por comunidades autónomas. España",
+       subtitle = paste0("PCR+: Línea de puntos. Instituto de Salud Carlos III (negro). Escovid19data (rosa), agregado por CCAA. 2020-05-27"),
+       y = "casos y  casos PCR+ acumulados",
+       x = "fecha",
+       color = "",
+       caption = paste0( "@numeroteca. lab.montera34.com/covid19  |  Datos: ISCIII y esCOVID19data" )
+  )
+dev.off()
+
+  # 
+4+4
+
 
 png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_muertes_bbdd_log.png", sep = ""), width = 2300, height = 1900)
 ggplot(NULL) +
@@ -481,15 +533,15 @@ dev.off()
 # Comparativa Euskadi hospitalizados -----------
 data_cases_sp_provinces <- readRDS(file = "data/output/spain/euskadi/compare_hospitalized_irekia-vs-opendata.rds")
 
-png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_hospitalizados_irekia-opendata-ccaa.png", sep = ""), width = 700, height = 400)
+png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_hospitalizados_irekia-opendata-ccaa.png", sep = ""), width = 800, height = 400)
 data_cases_sp_provinces %>% filter(ccaa == "País Vasco") %>%
 ggplot() +
-  geom_line( aes( date, hospitalized, group=province, color = "#66a61e"), size = 2.0 ) +
-  geom_line( aes( date, hospitalized_eus, group=province, color = "#FF0000" ), size = 0.7 ) +
+  geom_line( aes( date, hospitalized, group=province, color = "#66a6CC"), size = 0.8 ) +
+  geom_line( aes( date, hospitalized_eus, group=province, color = "#FF0000" ), size = 0.8 ) +
   scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_color_identity(
     guide = "legend",
-    labels = c("Irekia-Osakidetza (hasta 2020.05.14)","Opendata Euskadi (2020.05.15)"),
+    labels = c("Irekia-Osakidetza (hasta 2020.05.14)","Opendata Euskadi (descargado 2020.05.22)"),
   ) +
   facet_wrap( ~province) + #, scales = "free"
   scale_x_date(
@@ -509,6 +561,51 @@ ggplot() +
   labs(title = "Comparativa de bases de datos. Hospitalizados COVID-19 en Euskadi",
        # subtitle = paste0("Geovoluntarios - datoscovid.es (negro). Escovid19data (verde)"),
        y = "hospitalizados",
+       x = "fecha",
+       caption = paste0( "@numeroteca. lab.montera34.com/covid19",
+                         color = "",
+                         colour = ""
+       )
+  ) +
+  guides(color=guide_legend(title="Base de datos"))
+dev.off()
+
+
+# ISCIII data
+data_all_export <- readRDS(file = "data/output/covid19-cases-uci-deaths-by-ccaa-spain-by-day-accumulated_isciii.rds")
+
+resumen_pr_ca <- data_cases_sp_provinces %>% group_by(date,ccaa) %>% 
+  summarise( hospitalized = sum(hospitalized), 
+             hospitalized_eus = sum(hospitalized_eus)
+             )
+
+png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_hospitalizados_irekia-opendata-isciii-ccaa.png", sep = ""), width = 700, height = 400)
+ggplot(NULL) +
+  geom_line( data = resumen_pr_ca %>% filter(ccaa == "País Vasco" ), aes( date, hospitalized, group=ccaa, color = "#66a61e"), size = 2.0 ) +
+  geom_line( data = resumen_pr_ca %>% filter(ccaa == "País Vasco" ), aes( date, hospitalized_eus, group=ccaa, color = "#66a6FF"), size = 2.0 ) +
+  geom_line( data = data_all_export %>% filter(region == "País Vasco" ), aes( date, hospitalized, group=region, color = "#FF0000" ), size = 0.7 ) +
+  scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  scale_color_identity(
+    guide = "legend",
+    labels = c("Opendata Euskadi (2020.05.15)","ISCIII","Irekia-Osakidetza (hasta 2020.05.14)","dd"),
+  ) +
+  scale_x_date(
+    date_labels = "%d-%m",
+    limits = c(as.Date("2020-03-12"),max(data_all_export$date)),
+    expand = c(0,0)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size =16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    # axis.text = element_text(size =12 ),
+    legend.position = "top"
+  ) +
+  labs(title = "Comparativa de bases de datos. Hospitalizados COVID-19 en Euskadi",
+       # subtitle = paste0("Geovoluntarios - datoscovid.es (negro). Escovid19data (verde)"),
+       y = "fallecidos acumulados",
        x = "fecha",
        caption = paste0( "@numeroteca. lab.montera34.com/covid19",
                          color = "",
