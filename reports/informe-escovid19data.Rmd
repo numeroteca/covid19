@@ -2,7 +2,10 @@
 title: "Informe sobre Escovid19data"
 author: "@numeroteca"
 date: "`r Sys.Date()`"
-output: html_document
+output: 
+  html_document:
+    includes:
+       in_header: web_stats.html
 ---
 
 ```{r setup, include=FALSE}
@@ -12,7 +15,7 @@ library(kableExtra)
 library(formattable)
 library(DT)
 library(viridis)
-today <- as.Date("2020-05-26")
+today <- as.Date("2020-05-27")
 ```
 
 Un análisis automatizado de la base de datos por provincias de #COVID19 en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data
@@ -95,7 +98,7 @@ table_nice <- table_total %>%
 as.datatable(
 formattable(table_nice, list(
   area(col = c(casos, muertes,PCR, PCR_acum,hospitalized )) ~ normalize_bar("pink", 0.2,na.rm = TRUE)
-)), colnames = c('Provincia', 'CCAA', 'Casos acumulado (días desde)', 'Casos (última fecha)', 'Muertes acumulado (días desde)', 'Muertes (última fecha)','PCR diario (días desde)', 'PCR acumulado (días desde)', 'Hospitalizados (días desde)'   ),
+)), colnames = c('Provincia', 'CCAA', 'Casos acumulado (días desde último publicado)', 'Casos (última fecha)', 'Muertes acumulado (días desde último publicado)', 'Muertes (última fecha)','PCR diario (días desde último publicado)', 'PCR acumulado (días desde último publicado)', 'Hospitalizados (días desde)'   ),
 options = list(pageLength = 52)
 )
 ``` 
