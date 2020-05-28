@@ -34,7 +34,7 @@ andalucia_original <- read.delim("https://docs.google.com/spreadsheets/d/1qxbKnU
 # Create date variable
 data_cases_sp_provinces$date  <- as.Date(data_cases_sp_provinces$date)
 
-# Agreggate Canary islands -------
+# Canarias: Agreggate Canary islands -------
 canarias <- data_cases_sp_provinces %>% filter( ccaa == "Canarias")
 
 # Group by province
@@ -49,7 +49,7 @@ tenerife <- canarias %>% filter(province == "La Gomera" | province =="La Palma" 
   intensive_care = sum(intensive_care),
   deceased = sum(deceased),
   cases_accumulated = sum(cases_accumulated),
-  cases_accumulated_PCR = sum(cases_accumulated_PCR),
+  cases_accumulated_PCR = sum(cases_accumulated), # porque todos los casos son PCR+
   recovered = sum(recovered),
   source_name = "Gobierno de Canarias",
   source = paste(source, collapse = ";"),
@@ -66,7 +66,7 @@ palmas <- canarias %>% filter(province == "Fuerteventura" | province =="Lanzarot
   intensive_care = sum(intensive_care),
   deceased = sum(deceased),
   cases_accumulated = sum(cases_accumulated),
-  cases_accumulated_PCR = sum(cases_accumulated_PCR),
+  cases_accumulated_PCR = sum(cases_accumulated), # porque todos los casos son PCR+
   recovered = sum(recovered),
   source_name = "Gobierno de Canarias",
   source = paste(source, collapse = ";"),

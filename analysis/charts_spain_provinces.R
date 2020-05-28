@@ -12,10 +12,10 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
-updated <- "(Actualizado: 2020-05-26)"
+updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- ""
-filter_date <- as.Date("2020-05-26")
+period <- "(Actualizado: 2020-05-27)"
+filter_date <- as.Date("2020-05-27")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -321,7 +321,7 @@ data_cases_sp_provinces %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = c(0.1,0.74)
   ) +
-  labs(title = "Número de casos acumulados de COVID-19 registrados en España ",
+  labs(title = paste0("Número de casos acumulados de COVID-19 registrados en España ",updated),
        subtitle = paste0("Por provincia (escala logarítmica). ",period),
        y = "casos registrados",
        x = "fecha",
@@ -363,7 +363,7 @@ data_cases_sp_provinces %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = c(0.1,0.6)
   ) +
-  labs(title = "Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España ",
+  labs(title = paste0("Número de casos acumulados de COVID-19 registrados por 100.000 habitantes en España ",updated),
        subtitle = paste0("Por provincia (escala lineal). ",period),
        y = "casos registrados por 100.000 habitantes",
        x = "fecha",
@@ -406,7 +406,7 @@ data_cases_sp_provinces %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = c(0.1,0.6)
   ) +
-  labs(title = "Casos acumulados de COVID-19 registrados por 100.000 habitantes en España ",
+  labs(title = paste0("Casos acumulados de COVID-19 registrados por 100.000 habitantes en España ",updated)
        subtitle = paste0("Por provincia (escala logarítmica). ",period),
        y = "casos registrados por 100.000 habitantes",
        x = "fecha",
@@ -599,7 +599,7 @@ data_cases_sp_provinces %>%
   #           aes(date,daily_cases_avg7/poblacion*100000,group=province_cp), color="#CACACA", alpha = 0.3  ) +
   # geom_line(aes(date, daily_cases_avg7,group=province) ) +
   # geom_smooth(aes(date, daily_cases_avg7/poblacion*100000,group=province, color = province ), size= 1.2, se = FALSE, span = 0.7 ) +
-  geom_line(aes(date, daily_cases_avg7/poblacion*100000, group=province, color = province), size= 0.9) +
+  geom_line(aes(date, daily_cases_avg7/poblacion*100000, group=province, color = province), size= 0.7) +
   geom_line(aes(date, daily_cases_PCR_avg7/poblacion*100000, group=province, color = province), size= 0.7, linetype="11") +
   # geom_point(aes(date, daily_cases_avg7), size= 0.5 ) +
   geom_text_repel(
@@ -622,8 +622,8 @@ data_cases_sp_provinces %>%
     # minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
-  scale_x_date(date_breaks = "10 day", 
-               date_labels = "%d",
+  scale_x_date(date_breaks = "1 month", 
+               date_labels = "%d/%m",
                expand = c(0,15) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -649,7 +649,8 @@ data_cases_sp_provinces %>%
   # geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(date,daily_cases_avg7,province_cp,-province),
   #           aes(date,daily_cases_avg7,group=province_cp), color="#CACACA" ) +
   # geom_line(aes(date, daily_cases_avg7,group=province) ) +
-  geom_smooth(aes(date, daily_cases_avg7,group=province, color=province), size= 0.7, se = FALSE, span = 0.6 ) +
+  geom_line(aes(date, daily_cases_avg7,group=province, color=province), size= 0.7, se = FALSE, span = 0.6 ) +
+  geom_line(aes(date, daily_cases_PCR_avg7,group=province, color=province), size= 0.5, linetype = "11" ) +
   # geom_point(aes(date, daily_cases_avg7), size= 0.5 ) +
   geom_text_repel(
     data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(daily_cases) ) %>% top_n(1, date),
@@ -663,15 +664,15 @@ data_cases_sp_provinces %>%
     segment.size = 0.1,
     segment.color="#777777"
   ) +
-  facet_wrap(~ccaa, scales = "free") +
+  facet_wrap(~ccaa, scales = "free_y") +
   coord_cartesian(
     xlim= c( as.Date("2020-03-15"),max(data_cases_sp_provinces$date) )
   ) +
   scale_y_continuous(
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
-  scale_x_date(date_breaks = "10 day", 
-               date_labels = "%d",
+  scale_x_date(date_breaks = "1 month", 
+               date_labels = "%d/%m",
                expand = c(0,18) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -1132,11 +1133,11 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
          x = "fecha",
          caption = caption_provincia)
   
-  if ( prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Cataluña" | prov=="Cantabria"  |  prov=="Ceuta" |  prov=="Castilla - La Mancha" |   prov=="Melilla"  | prov=="Comunitat Valenciana"  | 
+  if ( prov=="Andalucía" | prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Cataluña" | prov=="Cantabria"  |  prov=="Ceuta" |  prov=="Castilla - La Mancha" |   prov=="Melilla"  | prov=="Comunitat Valenciana"  | 
        prov=="Extremadura" | prov=="Madrid, Comunidad de" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="Rioja, La" | prov=="País Vasco") {
     the_province  <- the_province + geom_line( aes(date, daily_cases_PCR_avg7,group=province, color=province), size= 1, linetype = "dashed")
   }
-  if ( prov=="Asturias, Principado de"   | prov=="Cantabria"   |  prov=="Castilla - La Mancha" | prov=="Comunitat Valenciana"  | prov=="Extremadura" | 
+  if ( prov=="Andalucía" | prov=="Asturias, Principado de"   | prov=="Cantabria"   |  prov=="Castilla - La Mancha" | prov=="Comunitat Valenciana"  | prov=="Extremadura" | 
        prov=="Madrid, Comunidad de" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="País Vasco") {
     the_province  <- the_province + geom_text_repel(
       data = data_cases_sp_provinces %>% filter( ccaa == prov ) %>% group_by(province) %>% filter(!is.na(daily_cases_PCR_avg7) ) %>% top_n(1, date),
@@ -1256,7 +1257,7 @@ data_cases_sp_provinces %>%
     axis.text.x = element_text(size = 9),
     axis.text.y = element_text(size = 9)
   ) +
-  labs(title = "Número de fallecimientos acumulados por COVID-19 registrados en España ",
+  labs(title = paste0("Número de fallecimientos acumulados por COVID-19 registrados en España ",updated),
        subtitle = paste0("Por provincia (escala lineal). ",period),
        y = "fallecidos",
        x = "fecha",
