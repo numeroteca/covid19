@@ -15,7 +15,7 @@ library(kableExtra)
 library(formattable)
 library(DT)
 library(viridis)
-today <- as.Date("2020-05-27")
+today <- as.Date("2020-05-28")
 ```
 
 Un análisis automatizado de la base de datos por provincias de #COVID19 en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data
@@ -24,6 +24,7 @@ Un análisis automatizado de la base de datos por provincias de #COVID19 en Espa
 * [Días desde que se tiene el último dato](#última-fecha-publicada)
 * [¿Cómo de completos están los datos?](#cómo-de-completos-están-los-datos)
 * [Clasificación de fuentes de información](#según-fuentes-de-información)
+* [Navega por todos los datos](#todos-los-datos)
 
 ## Última fecha publicada 
 
@@ -190,6 +191,44 @@ filter( !is.na(province)) %>%
     panel.grid.minor.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    legend.position = "top"
+  )
+```
+
+### Casos o casos PCR+ acumulados
+
+```{r completness2b, fig.width=9, fig.height=8, echo=FALSE, warning=FALSE}
+# Using> https://github.com/edugonzaloalmorox/30diasgraficos
+
+data_cases_sp_provinces %>% mutate( 
+  reordering = paste0(ccaa," (",province, ")"),
+  casos_yes = ifelse( !is.na( cases_accumulated), "sí","no"),
+  casos_yes = ifelse( casos_yes == "sí",
+                      "sí",
+                      ifelse( !is.na( cases_accumulated_PCR), 
+                              "sí",
+                              "no") ),
+  ) %>% # group_by(ccaa) %>% summarise( ) %>%# filter( date> "2018-04-01" & date < "2018-04-05" )
+filter( !is.na(province)) %>%
+  ggplot() + 
+  geom_tile( aes(x = date, y = fct_rev(reordering), fill= casos_yes, na.rm = FALSE), color="#666666",size=0.06) + 
+  # scale_fill_viridis(option = "plasma",na.value = 'white',
+  #                    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
+  theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
+  scale_x_date(
+    date_breaks = "10 day", date_labels = "%d/%m",
+    expand= c(0,0)) +
+  labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
+       subtitle = paste(""),
+       x = NULL,
+       y = "",
+       fill = "Casos acumulados o casos PCR+ acumulados",
+       caption = "" ) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    # panel.grid.major.x = element_blank(),
     panel.grid.major.y = element_blank(),
     legend.position = "top"
   )
