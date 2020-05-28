@@ -11,7 +11,7 @@ library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 library(plotly)
 
-update_date <- "2020.05.21"
+update_date <- "2020.05.28"
 
 # # load data
 # world_original <- read.delim("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv",sep = ",")
@@ -33,299 +33,299 @@ update_date <- "2020.05.21"
 # )
 
 
-# settings
-
-period_comp <- "Updated: 2020-05-11"
-
-# Bind Spanish and Italian data
-names(data_all_export)
-names(data_i_cases)
-compare_countries <- rbind(
-  data_all_export %>% select( -hospitalized, -hospitalized_per_100000), 
-  data_i_cases %>% select(-daily_deaths)
-)
-
-# Create France dataframe
-data_f_cases_to_bind <- data_all_export[-c(1:(nrow(data_all_export)-nrow(data_f2_cases))),]
-data_f_cases_to_bind[1:nrow(data_f2_cases),1:13] <- NA
-data_f_cases_to_bind$date <- data_f2_cases$date
-data_f_cases_to_bind$region <- data_f2_cases$region
-data_f_cases_to_bind$country <- "France"
-data_f_cases_to_bind$cases_registered <- data_f2_cases$cases_registered
-data_f_cases_to_bind$cases_per_100000 <- data_f2_cases$cases_per_100000
-data_f_cases_to_bind <- data_f2_cases %>% filter ( !is.na(date))
-data_f_cases <- data_f2_cases %>% filter ( !is.na(date))
-
-# Add France
-compare_countries <- rbind(compare_countries, data_f_cases_to_bind)
-table(compare_countries$country)
-write.csv(compare_countries, file = "data/output/covid19-countries-regions-compile.csv", row.names = FALSE)
-
-# compare_countries$cases_registered[1] + compare_countries$cases_registered[3]
-
-# 1. Print plots ---------------
-# plot cases ----------------
-png(filename=paste("img/compare/covid19_casos-registrados-superpuesto-countries-regions-log.png", sep = ""),width = 1500,height = 700)
-data_cases %>%
-  ggplot() +
-  # Spain
-  geom_line(aes(date,value,group=CCAA), size= 0.8, color="orange" ) +
-  # geom_point(aes(date,value ), size= 0.5, color="orange"  ) +
-  geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  value > 100), 
-                  aes(date,value, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
-                  color="orange",
-                  nudge_x = 6, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  direction="y",
-                  segment.size = 0.1,
-                  segment.color="#777777"
-  ) +
-  # Italy
-  geom_line( data= data_i_cases, aes(date,cases_registered, group=region), size= 0.7, color="blue", alpha = 0.5  ) +
-  # geom_point( data= data_i_cases,aes(date,totale_casi), size = 0.5, color="blue", alpha = 0.3, opacity = 0.3 ) +
-  geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date), cases_registered > 100 ), 
-                  aes(date,cases_registered, 
-                      label=paste(format(cases_registered, nsmall=1, big.mark="."), region)),
-                  color="blue", 
-                  nudge_x = 1, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  direction="y",
-                  segment.size = 0.1,
-                  segment.color="#777777"
-  ) +
-  # France
-  geom_line( data = data_f_cases, aes(date,cases_registered, group=region), size= 0.7, color= "darkgreen", alpha = 0.8  ) +
-  # geom_point(data = data_f_cases, aes(date,cases), size = 0.5, color= "darkgreen", alpha = 0.8 ) +
-  geom_text_repel(data=filter( data_f_cases, date==max(data_f_cases$date) & cases_registered > 100 & !is.na(cases_registered) ), 
-                  aes(date,cases_registered, label=paste(format(cases_registered, nsmall=1, big.mark="."),region)),
-                  color= "darkgreen",
-                  nudge_x = 11.5, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  direction="y",
-                  segment.size = 0.1,
-                  segment.color="#777777"
-  ) +
-  # Scales
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
-                 minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
-  scale_x_date(date_breaks = "1 day", 
-               date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 17))
-  ) + 
-  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
-  theme(
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
-    # legend.position = "none"
-  ) +
-  labs(title = "Confirmed accumulated COVID-19 registed cases in Spain, Italy and France by region",
-       subtitle = paste0("By region (log scale). ",period),
-       y = "registered cases (log scale)",
-       x = "date",
-       caption = caption_en)
-dev.off()
-
-# Cases. Superpuesto per 100.000 inhabitantes.
-png(filename=paste("img/compare/covid19_casos-registrados-superpuesto-countries-regions-per-cienmil-log.png", sep = ""),width = 1500,height = 700)
-data_cases %>%
-  ggplot() +
-  # Spain
-  geom_line(aes(date,per_cienmil,group=CCAA), size= 0.7, color="orange" ) +
-  geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  per_cienmil > 1), 
-                  aes(date,per_cienmil, label=paste(format(per_cienmil, nsmall=1, big.mark=".", decimal.mark = ","),CCAA)),
-                  color="orange",
-                  nudge_x = 5, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  direction="y",
-                  segment.size = 0.1,
-                  segment.color="#777777"
-  ) +
-  # Italy
-  geom_line( data= data_i_cases, aes(date,cases_per_100000, group=region), size= 0.7, color="blue", alpha = 0.5  ) +
-  geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date), cases_per_100000 > 2 ), 
-                  aes(date,cases_per_100000, 
-                      label=paste(format(cases_per_100000, nsmall=1, big.mark=".", decimal.mark = ","), region)),
-                  color="blue", 
-                  nudge_x = 1, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  direction="y",
-                  segment.size = 0.1,
-                  segment.color="#777777"
-  ) +
-  # France
-  geom_line( data = data_f_cases, aes(date,cases_per_100000, group=region), size= 0.7, color= "darkgreen", alpha = 0.8  ) +
-  geom_text_repel(data=filter( data_f_cases, date==max(data_f_cases$date), cases_per_100000 > 2), 
-                  aes(date,cases_per_100000, label=paste(format(cases_per_100000, nsmall=1, big.mark=".", decimal.mark = ","),region)),
-                  color= "darkgreen",
-                  nudge_x = 10, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  direction="y",
-                  segment.size = 0.1,
-                  segment.color="#777777"
-  ) +
-  # Scales
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
-                 minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ),
-                 limits = c(0.5,max(data_i_cases$cases_per_100000)) ) +
-  scale_x_date(date_breaks = "1 day", 
-               date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 15))
-  ) + 
-  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
-  theme(
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
-    # legend.position = "none"
-  ) +
-  labs(title = "Confirmed accumulated COVID-19 registered cases in Italy, Spain and France by 100.000 inhabitants by region",
-       subtitle = paste0("By region (log scale). ",period),
-       y = "registered cases by 100.000 inhabitants (log scale)",
-       x = "date",
-       caption = caption_en)
-dev.off()
-
-
-
-# Deceassed plot PNG ---------------------
-
-# Absolute
-png(filename=paste("img/compare/covid19_fallecimientos-superpuesto-countries-regions-log.png", sep = ""),width = 1500,height = 700)
-data_death %>% filter (CCAA != "Total") %>%
-  ggplot() +
-  # Spain
-  geom_line(aes(date, death ,group=CCAA), size= 0.7, color="orange" ) +
-  geom_text_repel(data=filter(data_death, date==max(data_death$date) & CCAA != "Total"), 
-                  aes(date, death, label=paste(format(death, nsmall=1, big.mark="."),CCAA)),
-                  color="orange",
-                  nudge_x = 5, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  direction="y",
-                  segment.size = 0.1,
-                  segment.color="#777777"
-  ) +
-  # Italy
-  geom_line( data= data_i_cases, aes(date,deceassed, group=region), size= 0.7, color="blue", alpha = 0.5  ) +
-  geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date) ), 
-                  aes(date,deceassed, 
-                      label=paste(format(deceassed, nsmall=1, big.mark="."), region)),
-                  color="blue", 
-                  nudge_x = 1, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  direction="y",
-                  segment.size = 0.1,
-                  segment.color="#777777"
-  ) +
-  # Scales
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
-                 minor_breaks = c(  seq(0.1 , 1, 0.1),seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ),
-                 # limits = c(0.1,20)
-  ) +
-  scale_x_date(date_breaks = "1 day", 
-               date_labels = "%d",
-               limits=c( min(data_cases$date), max(data_cases$date + 8))
-  ) + 
-  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
-  theme(
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
-    # legend.position = "none"
-  ) +
-  labs(title = "Confirmed accumulated deceassed COVID-19 in Spain and Italy by region",
-       subtitle = paste0("By region (log scale). ",period),
-       y = "deceassed (log scale)",
-       x = "date",
-       caption = caption_en)
-dev.off()
-
-# Per 100.000
-png(filename=paste("img/compare/covid19_fallecimientos-superpuesto-countries-regions-per-cienmil-log.png", sep = ""),width = 1500,height = 700)
-data_death %>%
-  ggplot() +
-  # Spain
-  geom_line(aes(date, death_per_cienmil ,group=CCAA), size= 0.7, color="orange" ) +
-  geom_text_repel(data=filter(data_death, date==max(data_death$date)), 
-                  aes(date, death_per_cienmil, label=paste(format(death_per_cienmil, nsmall=1, big.mark="."),CCAA)),
-                  color="orange",
-                  nudge_x = 5, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  direction="y",
-                  segment.size = 0.1,
-                  segment.color="#777777"
-  ) +
-  # Italy
-  geom_line( data= data_i_cases, aes(date,deceassed_per_100000, group=region), size= 0.7, color="blue", alpha = 0.5  ) +
-  geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date) ), 
-                  aes(date,deceassed_per_100000, 
-                      label=paste(format(deceassed_per_100000, nsmall=1, big.mark="."), region)),
-                  color="blue", 
-                  nudge_x = 1, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  direction="y",
-                  segment.size = 0.1,
-                  segment.color="#777777"
-  ) +
-  # France
-  # geom_line( data = data_f_cases, aes(date,cases_per_100000, group=region), size= 0.7, color= "darkgreen", alpha = 0.8  ) +
-  # geom_text_repel(data=filter( data_f_cases, date==max(data_f_cases$date), cases_per_100000 > 2), 
-  #                 aes(date,cases_per_100000, label=paste(format(cases_per_100000, nsmall=1, big.mark="."),region)),
-  #                 color= "darkgreen",
-  #                 nudge_x = 10, # adjust the starting y position of the text label
-  #                 size=5,
-  #                 hjust=0,
-  #                 family = "Roboto Condensed",
-  #                 direction="y",
-  #                 segment.size = 0.1,
-#                 segment.color="#777777"
+# # settings
+# 
+# period_comp <- "Updated: 2020-05-11"
+# 
+# # Bind Spanish and Italian data
+# names(data_all_export)
+# names(data_i_cases)
+# compare_countries <- rbind(
+#   data_all_export %>% select( -hospitalized, -hospitalized_per_100000), 
+#   data_i_cases %>% select(-daily_deaths)
+# )
+# 
+# # Create France dataframe
+# data_f_cases_to_bind <- data_all_export[-c(1:(nrow(data_all_export)-nrow(data_f2_cases))),]
+# data_f_cases_to_bind[1:nrow(data_f2_cases),1:13] <- NA
+# data_f_cases_to_bind$date <- data_f2_cases$date
+# data_f_cases_to_bind$region <- data_f2_cases$region
+# data_f_cases_to_bind$country <- "France"
+# data_f_cases_to_bind$cases_registered <- data_f2_cases$cases_registered
+# data_f_cases_to_bind$cases_per_100000 <- data_f2_cases$cases_per_100000
+# data_f_cases_to_bind <- data_f2_cases %>% filter ( !is.na(date))
+# data_f_cases <- data_f2_cases %>% filter ( !is.na(date))
+# 
+# # Add France
+# compare_countries <- rbind(compare_countries, data_f_cases_to_bind)
+# table(compare_countries$country)
+# write.csv(compare_countries, file = "data/output/covid19-countries-regions-compile.csv", row.names = FALSE)
+# 
+# # compare_countries$cases_registered[1] + compare_countries$cases_registered[3]
+# 
+# # 1. Print plots ---------------
+# # plot cases ----------------
+# png(filename=paste("img/compare/covid19_casos-registrados-superpuesto-countries-regions-log.png", sep = ""),width = 1500,height = 700)
+# data_cases %>%
+#   ggplot() +
+#   # Spain
+#   geom_line(aes(date,value,group=CCAA), size= 0.8, color="orange" ) +
+#   # geom_point(aes(date,value ), size= 0.5, color="orange"  ) +
+#   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  value > 100), 
+#                   aes(date,value, label=paste(format(value, nsmall=1, big.mark="."),CCAA)),
+#                   color="orange",
+#                   nudge_x = 6, # adjust the starting y position of the text label
+#                   size=5,
+#                   hjust=0,
+#                   family = "Roboto Condensed",
+#                   direction="y",
+#                   segment.size = 0.1,
+#                   segment.color="#777777"
+#   ) +
+#   # Italy
+#   geom_line( data= data_i_cases, aes(date,cases_registered, group=region), size= 0.7, color="blue", alpha = 0.5  ) +
+#   # geom_point( data= data_i_cases,aes(date,totale_casi), size = 0.5, color="blue", alpha = 0.3, opacity = 0.3 ) +
+#   geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date), cases_registered > 100 ), 
+#                   aes(date,cases_registered, 
+#                       label=paste(format(cases_registered, nsmall=1, big.mark="."), region)),
+#                   color="blue", 
+#                   nudge_x = 1, # adjust the starting y position of the text label
+#                   size=5,
+#                   hjust=0,
+#                   family = "Roboto Condensed",
+#                   direction="y",
+#                   segment.size = 0.1,
+#                   segment.color="#777777"
+#   ) +
+#   # France
+#   geom_line( data = data_f_cases, aes(date,cases_registered, group=region), size= 0.7, color= "darkgreen", alpha = 0.8  ) +
+#   # geom_point(data = data_f_cases, aes(date,cases), size = 0.5, color= "darkgreen", alpha = 0.8 ) +
+#   geom_text_repel(data=filter( data_f_cases, date==max(data_f_cases$date) & cases_registered > 100 & !is.na(cases_registered) ), 
+#                   aes(date,cases_registered, label=paste(format(cases_registered, nsmall=1, big.mark="."),region)),
+#                   color= "darkgreen",
+#                   nudge_x = 11.5, # adjust the starting y position of the text label
+#                   size=5,
+#                   hjust=0,
+#                   family = "Roboto Condensed",
+#                   direction="y",
+#                   segment.size = 0.1,
+#                   segment.color="#777777"
+#   ) +
+#   # Scales
+#   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+#                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ) ) +
+#   scale_x_date(date_breaks = "1 day", 
+#                date_labels = "%d",
+#                limits=c( min(data_cases$date), max(data_cases$date + 17))
+#   ) + 
+#   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+#   theme(
+#     panel.grid.minor.x = element_blank(),
+#     panel.grid.major.x = element_blank(),
+#     # panel.grid.minor.y = element_blank(),
+#     axis.ticks.x = element_line(color = "#000000")
+#     # legend.position = "none"
+#   ) +
+#   labs(title = "Confirmed accumulated COVID-19 registed cases in Spain, Italy and France by region",
+#        subtitle = paste0("By region (log scale). ",period),
+#        y = "registered cases (log scale)",
+#        x = "date",
+#        caption = caption_en)
+# dev.off()
+# 
+# # Cases. Superpuesto per 100.000 inhabitantes.
+# png(filename=paste("img/compare/covid19_casos-registrados-superpuesto-countries-regions-per-cienmil-log.png", sep = ""),width = 1500,height = 700)
+# data_cases %>%
+#   ggplot() +
+#   # Spain
+#   geom_line(aes(date,per_cienmil,group=CCAA), size= 0.7, color="orange" ) +
+#   geom_text_repel(data=filter( data_cases, date==max(data_cases$date),  per_cienmil > 1), 
+#                   aes(date,per_cienmil, label=paste(format(per_cienmil, nsmall=1, big.mark=".", decimal.mark = ","),CCAA)),
+#                   color="orange",
+#                   nudge_x = 5, # adjust the starting y position of the text label
+#                   size=5,
+#                   hjust=0,
+#                   family = "Roboto Condensed",
+#                   direction="y",
+#                   segment.size = 0.1,
+#                   segment.color="#777777"
+#   ) +
+#   # Italy
+#   geom_line( data= data_i_cases, aes(date,cases_per_100000, group=region), size= 0.7, color="blue", alpha = 0.5  ) +
+#   geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date), cases_per_100000 > 2 ), 
+#                   aes(date,cases_per_100000, 
+#                       label=paste(format(cases_per_100000, nsmall=1, big.mark=".", decimal.mark = ","), region)),
+#                   color="blue", 
+#                   nudge_x = 1, # adjust the starting y position of the text label
+#                   size=5,
+#                   hjust=0,
+#                   family = "Roboto Condensed",
+#                   direction="y",
+#                   segment.size = 0.1,
+#                   segment.color="#777777"
+#   ) +
+#   # France
+#   geom_line( data = data_f_cases, aes(date,cases_per_100000, group=region), size= 0.7, color= "darkgreen", alpha = 0.8  ) +
+#   geom_text_repel(data=filter( data_f_cases, date==max(data_f_cases$date), cases_per_100000 > 2), 
+#                   aes(date,cases_per_100000, label=paste(format(cases_per_100000, nsmall=1, big.mark=".", decimal.mark = ","),region)),
+#                   color= "darkgreen",
+#                   nudge_x = 10, # adjust the starting y position of the text label
+#                   size=5,
+#                   hjust=0,
+#                   family = "Roboto Condensed",
+#                   direction="y",
+#                   segment.size = 0.1,
+#                   segment.color="#777777"
+#   ) +
+#   # Scales
+#   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+#                  minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ),
+#                  limits = c(0.5,max(data_i_cases$cases_per_100000)) ) +
+#   scale_x_date(date_breaks = "1 day", 
+#                date_labels = "%d",
+#                limits=c( min(data_cases$date), max(data_cases$date + 15))
+#   ) + 
+#   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+#   theme(
+#     panel.grid.minor.x = element_blank(),
+#     panel.grid.major.x = element_blank(),
+#     # panel.grid.minor.y = element_blank(),
+#     axis.ticks.x = element_line(color = "#000000")
+#     # legend.position = "none"
+#   ) +
+#   labs(title = "Confirmed accumulated COVID-19 registered cases in Italy, Spain and France by 100.000 inhabitants by region",
+#        subtitle = paste0("By region (log scale). ",period),
+#        y = "registered cases by 100.000 inhabitants (log scale)",
+#        x = "date",
+#        caption = caption_en)
+# dev.off()
+# 
+# 
+# 
+# # Deceassed plot PNG ---------------------
+# 
+# # Absolute
+# png(filename=paste("img/compare/covid19_fallecimientos-superpuesto-countries-regions-log.png", sep = ""),width = 1500,height = 700)
+# data_death %>% filter (CCAA != "Total") %>%
+#   ggplot() +
+#   # Spain
+#   geom_line(aes(date, death ,group=CCAA), size= 0.7, color="orange" ) +
+#   geom_text_repel(data=filter(data_death, date==max(data_death$date) & CCAA != "Total"), 
+#                   aes(date, death, label=paste(format(death, nsmall=1, big.mark="."),CCAA)),
+#                   color="orange",
+#                   nudge_x = 5, # adjust the starting y position of the text label
+#                   size=5,
+#                   hjust=0,
+#                   family = "Roboto Condensed",
+#                   direction="y",
+#                   segment.size = 0.1,
+#                   segment.color="#777777"
+#   ) +
+#   # Italy
+#   geom_line( data= data_i_cases, aes(date,deceassed, group=region), size= 0.7, color="blue", alpha = 0.5  ) +
+#   geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date) ), 
+#                   aes(date,deceassed, 
+#                       label=paste(format(deceassed, nsmall=1, big.mark="."), region)),
+#                   color="blue", 
+#                   nudge_x = 1, # adjust the starting y position of the text label
+#                   size=5,
+#                   hjust=0,
+#                   family = "Roboto Condensed",
+#                   direction="y",
+#                   segment.size = 0.1,
+#                   segment.color="#777777"
+#   ) +
+#   # Scales
+#   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+#                  minor_breaks = c(  seq(0.1 , 1, 0.1),seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ),
+#                  # limits = c(0.1,20)
+#   ) +
+#   scale_x_date(date_breaks = "1 day", 
+#                date_labels = "%d",
+#                limits=c( min(data_cases$date), max(data_cases$date + 8))
+#   ) + 
+#   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+#   theme(
+#     panel.grid.minor.x = element_blank(),
+#     panel.grid.major.x = element_blank(),
+#     # panel.grid.minor.y = element_blank(),
+#     axis.ticks.x = element_line(color = "#000000")
+#     # legend.position = "none"
+#   ) +
+#   labs(title = "Confirmed accumulated deceassed COVID-19 in Spain and Italy by region",
+#        subtitle = paste0("By region (log scale). ",period),
+#        y = "deceassed (log scale)",
+#        x = "date",
+#        caption = caption_en)
+# dev.off()
+# 
+# # Per 100.000
+# png(filename=paste("img/compare/covid19_fallecimientos-superpuesto-countries-regions-per-cienmil-log.png", sep = ""),width = 1500,height = 700)
+# data_death %>%
+#   ggplot() +
+#   # Spain
+#   geom_line(aes(date, death_per_cienmil ,group=CCAA), size= 0.7, color="orange" ) +
+#   geom_text_repel(data=filter(data_death, date==max(data_death$date)), 
+#                   aes(date, death_per_cienmil, label=paste(format(death_per_cienmil, nsmall=1, big.mark="."),CCAA)),
+#                   color="orange",
+#                   nudge_x = 5, # adjust the starting y position of the text label
+#                   size=5,
+#                   hjust=0,
+#                   family = "Roboto Condensed",
+#                   direction="y",
+#                   segment.size = 0.1,
+#                   segment.color="#777777"
+#   ) +
+#   # Italy
+#   geom_line( data= data_i_cases, aes(date,deceassed_per_100000, group=region), size= 0.7, color="blue", alpha = 0.5  ) +
+#   geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date) ), 
+#                   aes(date,deceassed_per_100000, 
+#                       label=paste(format(deceassed_per_100000, nsmall=1, big.mark="."), region)),
+#                   color="blue", 
+#                   nudge_x = 1, # adjust the starting y position of the text label
+#                   size=5,
+#                   hjust=0,
+#                   family = "Roboto Condensed",
+#                   direction="y",
+#                   segment.size = 0.1,
+#                   segment.color="#777777"
+#   ) +
+#   # France
+#   # geom_line( data = data_f_cases, aes(date,cases_per_100000, group=region), size= 0.7, color= "darkgreen", alpha = 0.8  ) +
+#   # geom_text_repel(data=filter( data_f_cases, date==max(data_f_cases$date), cases_per_100000 > 2), 
+#   #                 aes(date,cases_per_100000, label=paste(format(cases_per_100000, nsmall=1, big.mark="."),region)),
+#   #                 color= "darkgreen",
+#   #                 nudge_x = 10, # adjust the starting y position of the text label
+#   #                 size=5,
+#   #                 hjust=0,
+#   #                 family = "Roboto Condensed",
+#   #                 direction="y",
+#   #                 segment.size = 0.1,
+# #                 segment.color="#777777"
+# # ) +
+# # Scales
+# scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
+#                minor_breaks = c(  seq(0.1 , 1, 0.1),seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ),
+#                limits = c(0.1,max(data_i_cases$deceassed_per_100000))
 # ) +
-# Scales
-scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), 
-               minor_breaks = c(  seq(0.1 , 1, 0.1),seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000, 10000, 1000) ),
-               limits = c(0.1,max(data_i_cases$deceassed_per_100000))
-) +
-  scale_x_date(date_breaks = "1 day", 
-               date_labels = "%d",
-               limits=c(  min(data_i_cases$date), max(data_cases$date + 8))
-  ) + 
-  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
-  theme(
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000")
-    # legend.position = "none"
-  ) +
-  labs(title = "Confirmed accumulated deceassed COVID-19 in Spain and Italy by 100.000 inhabitants by region",
-       subtitle = paste0("By region (log scale). ",period),
-       y = "deceassed by 100.000 inhabitants (log scale)",
-       x = "date",
-       caption = caption_en)
-dev.off()
+#   scale_x_date(date_breaks = "1 day", 
+#                date_labels = "%d",
+#                limits=c(  min(data_i_cases$date), max(data_cases$date + 8))
+#   ) + 
+#   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+#   theme(
+#     panel.grid.minor.x = element_blank(),
+#     panel.grid.major.x = element_blank(),
+#     # panel.grid.minor.y = element_blank(),
+#     axis.ticks.x = element_line(color = "#000000")
+#     # legend.position = "none"
+#   ) +
+#   labs(title = "Confirmed accumulated deceassed COVID-19 in Spain and Italy by 100.000 inhabitants by region",
+#        subtitle = paste0("By region (log scale). ",period),
+#        y = "deceassed by 100.000 inhabitants (log scale)",
+#        x = "date",
+#        caption = caption_en)
+# dev.off()
 
 
 # setting 0 day. Cumulative deaths-------------
@@ -456,9 +456,9 @@ ggplot() +
   geom_line(data =growth_2x, aes(days_since, value5), size= 0.5, color = "#555555", linetype = 2 ) +
   geom_line(aes(days_since, deceassed, group= region, color= country), size= 0.7, alpha = 0.6 ) +
   # points for interactive
-  # geom_point( aes(days_since, deceassed, color= country,
-  #           text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")),
-  #            size= 0.6, alpha = 0.6  ) +
+  geom_point( aes(days_since, deceassed, color= country,
+            text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")),
+             size= 0.6, alpha = 0.6  ) +
   geom_point(data = test  %>% group_by(region) %>% filter(!is.na(date) ) %>% top_n(1, date ),
              aes(days_since, deceassed, color= country,
                   text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")), 
@@ -637,9 +637,9 @@ for (i in 1:4) {
     ggplot() +
     geom_line(aes(days_since, daily_deaths_avg6, group= region, color= country), size= 0.9, alpha = 0.6, se = FALSE ) +
     # for interactive
-    # geom_point(aes(days_since, daily_deaths_avg6, color= country,
-    #            text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")),
-    #            size= 1, alpha = 0.6  ) +
+    geom_point(aes(days_since, daily_deaths_avg6, color= country,
+               text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")),
+               size= 1, alpha = 0.6  ) +
     geom_point(data =  test  %>% group_by(region) %>% filter(!is.na(date) ) %>% top_n(1, date ),
                aes(days_since, daily_deaths_avg6, color= country, 
                 text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")), 

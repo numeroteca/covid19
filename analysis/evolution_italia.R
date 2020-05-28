@@ -8,7 +8,7 @@ library(ggrepel) # for geom_text_repel to prevent   overlapping
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de losS datos
 caption_i <- "Gráfico: @numeroteca (lab.montera34.com/covid19). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 05.26"
+periodo_i <- "2020.02.24 - 05.28"
 
 # COVID-19 in Italy -----------
 # Load data
@@ -599,7 +599,7 @@ dev.off()
 png(filename=paste("img/italia/covid19_muertes-por-dia-region-superpuesto-log.png", sep = ""),width = 1100,height = 800)
 data_i_cases %>% 
   ggplot() +
-  geom_line(aes(date, daily_deaths,group=region, color=region), size= 1 ) +
+  geom_line(aes(date, daily_deaths,group=region, color=region), size= 0.6 ) +
   geom_point(aes(date, daily_deaths, color=region), size= 1 ) +
   geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date),  region != "Total"), 
                   aes(date, daily_deaths, color=region, label=paste(format( daily_deaths, nsmall=1, big.mark="."),region)),

@@ -9,7 +9,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------  
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_f <- "Gráfico: lab.montera34.com/covid19. Datos: OpenCOVID19-fr"
-periodo_f <- "2020.03.04 - 05.26"
+periodo_f <- "2020.03.04 - 05.28"
 
 # COVID-19 in France-----------
 
@@ -75,7 +75,8 @@ data_f2_cases <- data_f2_cases %>% group_by(maille_nom,date) %>%
 
 names(data_f2_cases)
 
-names(data_f2_cases)  <- c("date","granularite","region_code","region","cases_registered","cas_ehpad","cas_confirmes_ehpad","cas_possibles_ehpad","deces","deces_ehpad","reanimation","hospitalises",
+names(data_f2_cases)  <- c("date","granularite","region_code","region","cases_registered","cas_ehpad","cas_confirmes_ehpad","cas_possibles_ehpad","deces","deces_ehpad","reanimation",
+                           "hospitalises","nouvelles_hospitalisations","nouvelles_reanimations",
                            "gueris","depistes","source_nom","source_url","source_archive","source_type","deceassed", "cases"  )
 
 
@@ -583,8 +584,8 @@ dev.off()
 png(filename=paste("img/france/covid19_muertes-por-dia-region-superpuesto-log.png", sep = ""),width = 1100,height = 800)
 data_f2_cases_death %>% 
   ggplot() +
-  geom_line(aes(date, daily_deaths,group=region, color=region), size= 1 ) +
-  geom_point(aes(date, daily_deaths, color=region), size= 1.5 ) +
+  geom_line(aes(date, daily_deaths,group=region, color=region), size= 0.6 ) +
+  geom_point(aes(date, daily_deaths, color=region), size= 0.6 ) +
   geom_text_repel(data=filter( data_f2_cases_death, date==max(data_f2_cases_death$date),  region != "Total"), 
                   aes(date, daily_deaths, color=region, label=paste(format( daily_deaths, nsmall=1, big.mark="."), substr(region,1,20) )),
                   nudge_x = 1, # adjust the starting y position of the text label
