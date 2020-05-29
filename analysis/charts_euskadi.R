@@ -183,6 +183,9 @@ euskadi_total <- euskadi_total %>% mutate(
                                     lag(daily_deceassed,6 ) ) / 7, digits=1)
 )
 
+write.csv(euskadi_total, file = "data/output/spain/euskadi/euskadi-hospital-dat.csv", row.names = FALSE)
+
+
 max_date  <- max(euskadi_total$date)
 period_eus <- paste("Actualizado:", max_date)
 
