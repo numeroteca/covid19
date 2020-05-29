@@ -356,50 +356,6 @@ cattotal <- catalunya_new %>% spread(TipusCasDescripcio,by_day) %>%
     sospechosos_cum = cumsum(replace_na(sospechosos_day, 0))
   )
 
-# # Makes df for every province
-# names(cat8)
-# # converts to wide format the different variables of positive or suspect cases
-# cat8 <- catalunya_new %>% filter(provincia_code == "8") %>% spread(TipusCasDescripcio,by_day) %>% 
-#   rename(PCR_day = "Positiu PCR", TestAc_day = "Positiu per Test Ràpid", sospechosos_day = "Sospitós")
-# cat8 <- cat8 %>% group_by( provincia_code) %>% arrange(date) %>%
-#   mutate ( 
-#     PCR_cum = cumsum(replace_na(PCR_day, 0)), #replace NA values with 0 to make cumsum work
-#     TestAc_cum = cumsum(replace_na(TestAc_day, 0)),
-#     sospechosos_cum = cumsum(replace_na(sospechosos_day, 0))
-#   )
-# 
-# cat17 <- catalunya_new %>% filter(provincia_code == "17") %>% spread(TipusCasDescripcio,by_day) %>% 
-#   rename(PCR_day = "Positiu PCR", TestAc_day = "Positiu per Test Ràpid", sospechosos_day = "Sospitós")
-# cat17 <- cat17 %>% group_by( provincia_code) %>% arrange(date) %>%
-#   mutate ( 
-#     PCR_cum = cumsum(replace_na(PCR_day, 0)), #replace NA values with 0 to make cumsum work
-#     TestAc_cum = cumsum(replace_na(TestAc_day, 0)),
-#     sospechosos_cum = cumsum(replace_na(sospechosos_day, 0))
-#   )
-# 
-# 
-# cat25 <- catalunya_new %>% filter(provincia_code == "25") %>% spread(TipusCasDescripcio,by_day) %>% 
-#   rename(PCR_day = "Positiu PCR", TestAc_day = "Positiu per Test Ràpid", sospechosos_day = "Sospitós")
-# cat25 <- cat25 %>% group_by( provincia_code) %>% arrange(date) %>%
-#   mutate ( 
-#     PCR_cum = cumsum(replace_na(PCR_day, 0)), #replace NA values with 0 to make cumsum work
-#     TestAc_cum = cumsum(replace_na(TestAc_day, 0)),
-#     sospechosos_cum = cumsum(replace_na(sospechosos_day, 0))
-#   )
-# 
-# cat43 <- catalunya_new %>% filter(provincia_code == "43") %>% spread(TipusCasDescripcio,by_day) %>% 
-#   rename(PCR_day = "Positiu PCR", TestAc_day = "Positiu per Test Ràpid", sospechosos_day = "Sospitós")
-# cat43 <- cat43 %>% group_by( provincia_code) %>% arrange(date) %>%
-#   mutate ( 
-#     PCR_cum = cumsum(replace_na(PCR_day, 0)), #replace NA values with 0 to make cumsum work
-#     TestAc_cum = cumsum(replace_na(TestAc_day, 0)),
-#     sospechosos_cum = cumsum(replace_na(sospechosos_day, 0))
-#   )
-# 
-# # Binds all the provinces
-# cattotal <- rbind(cat8,cat17,cat25,cat43)
-# rm(cat8,cat17,cat25,cat43)
-
 # Creates provinica factor
 cattotal$province <- as.factor(cattotal$provincia_code)
 # Gives names 
@@ -446,7 +402,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
                    paste0(source,";https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv" ), 
                    as.character(source) )
 ) %>% select(-cases_accumulated_cat) %>% select(-province_cat) %>% select(-ccaa_cat)  %>% select(-dunique)  %>%  
-  select(-date_cat, -PCR_cum_cat, -PCR_cat, -TestAc_cat)
+  select(-date_cat, -PCR_cum_cat, -PCR_cat, -TestAc_cat, -TestAc_cum)
 
 # Catalunya: Overwrite Catalunya provinces death data ------------------
 # This is calculated at analysis/count_catalunya.R
@@ -463,7 +419,7 @@ data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_case
 powerbi$dunique <- paste0(powerbi$date,powerbi$Territorio)
 
 data_cases_sp_provinces <- merge(data_cases_sp_provinces,
-                                 powerbi %>% select(date,dunique,Fallecimientos_positivos,Fallecimientos_todos,Territorio,ccaa) %>% 
+                                 powerbi %>% select(date,dunique,Fallecimientos_positivos,Territorio,ccaa) %>% 
                                    rename(
                                      date_cat = date,
                                      deceased_cat = Fallecimientos_positivos,
@@ -572,6 +528,96 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 
 rm(euskadi_a,euskadi_original)
 
+# Aragón hospitalizados.  Overwrite hospitalized  data -------------- -----
+download.file("https://www.aragon.es/documents/20127/38742837/casos_coronavirus_hospitales.xlsx", 
+              "data/original/spain/aragon/casos_coronavirus_hospitales.xlsx")
+
+aragon_original <- read_excel("data/original/spain/aragon/casos_coronavirus_hospitales.xlsx", col_names = TRUE, sheet = "Hoja1")
+
+aragon_a <- aragon_original %>%
+  rename(
+    date = fecha,
+    province = provincia
+  ) %>% 
+  group_by(province,date) %>% 
+  summarise(
+    hospitalized = sum(replace_na(camas_ocupadas_total,0)),
+    intensive_care = sum( replace_na(camas_uci_ocupadas,0))
+  )
+
+data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
+aragon_a$dunique <- paste0(aragon_a$date,aragon_a$province)
+
+data_cases_sp_provinces <- merge(data_cases_sp_provinces,
+                                 aragon_a %>% ungroup() %>% select(dunique,hospitalized,intensive_care) %>% 
+                                   rename(
+                                     hospitalized_ara = hospitalized,
+                                     intensive_care_ara = intensive_care
+                                   ) , 
+                                 by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique)
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+  hospitalized = ifelse( ccaa == "Aragón", hospitalized_ara, hospitalized),
+  intensive_care = ifelse( ccaa == "Aragón", intensive_care_ara, intensive_care),
+  source_name = ifelse( ccaa == "Aragón", paste0(as.character(source_name),";aragon.es"), as.character(source_name) ),
+  source = ifelse( ccaa == "Aragón" & !is.na(hospitalized), 
+                   paste0(source,";https://www.aragon.es/documents/20127/38742837/casos_coronavirus_hospitales.xlsx" ), 
+                   as.character(source) )
+) %>% select(-hospitalized_ara)
+
+rm(aragon_a,aragon_original)
+
+
+# Madrid hospitalizados.  Overwrite hospitalized  data -------------- -----
+# download data from https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-series.csv
+download.file("https://github.com/alfonsotwr/snippets/raw/master/covidia-cam/madrid-series.csv", 
+              "data/original/spain/madrid/madrid-series.csv")
+
+madrid_original <- read.delim("data/original/spain/madrid/madrid-series.csv",sep = ",")
+
+madrid_a <- madrid_original %>%
+  mutate(
+    date = as.Date(as.character(Fecha)),
+    province = "Madrid",
+    ccaa = "Madrid, Comunidad de",
+    ine_code = 28
+  ) %>% rename(
+    hospitalized = hospitalizados_dia,
+    intensive_care = uci_dia,
+    deceased = Fallecidos
+  )
+
+data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
+madrid_a$dunique <- paste0(madrid_a$date,madrid_a$province)
+
+# TODO: meter otros datos además de los hospitalarios
+data_cases_sp_provinces <- merge(data_cases_sp_provinces,
+                                 madrid_a %>% ungroup() %>% select(dunique,hospitalized,intensive_care,date,province,ine_code,ccaa) %>% 
+                                   rename(
+                                     hospitalized_mad = hospitalized,
+                                     intensive_care_mad = intensive_care,
+                                     date_mad = date,
+                                     province_mad = province,
+                                     ine_code_mad = ine_code,
+                                     ccaa_mad = ccaa
+                                   ) , 
+                                 by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique)
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+  hospitalized = ifelse( ccaa == "Madrid, Comunidad de", hospitalized_mad, hospitalized),
+  intensive_care = ifelse( ccaa == "Madrid, Comunidad de", intensive_care_mad, intensive_care),
+  date = ifelse( ccaa == "Madrid, Comunidad de", date_mad, date),
+  province = ifelse( ccaa == "Madrid, Comunidad de", province_mad, province),
+  ine_code = ifelse( ccaa == "Madrid, Comunidad de", ine_code_mad, ine_code),
+  ccaa = ifelse( ccaa == "Madrid, Comunidad de", ccaa_mad, ccaa),
+  source_name = ifelse( ccaa == "Madrid, Comunidad de", paste0(as.character(source_name),";Consejería de Salud de la Comunidad de Madrid"), as.character(source_name) ),
+  source = ifelse( ccaa == "Madrid, Comunidad de" & !is.na(hospitalized), 
+                   paste0(source,";https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-series.csv;https://www.comunidad.madrid/servicios/salud/2019-nuevo-coronavirus#situacion-epidemiologica-actual" ), 
+                   as.character(source) )
+) %>% select(-hospitalized_mad)
+
+rm(madrid_a,madrid_original)
+
 # Add missing data deaths previous 2020.03.08 --------------
 
 # remove date previos to March 8. ISCIII does not have detahs before that day
@@ -668,4 +714,3 @@ saveRDS(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-sp
 
 # cleans environment
 rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_poblacion,datadista,ciii, galicia_cumulative)
-

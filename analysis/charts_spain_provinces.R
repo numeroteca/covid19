@@ -52,7 +52,7 @@ data_cases_sp_provinces %>%
   # geom_line(data = data_cases_sp_provinces_sm %>% ungroup() %>% select(date,cases_accumulated,province_cp,-province) ,
   #           aes(date,cases_accumulated,group=province_cp), color="#CACACA" ) +
   geom_line(aes(date,cases_accumulated,group=province, color="#000000"), size = 1 ) +
-  geom_line(aes(date,cases_accumulated_PCR,group=province, color="#4444CC"), size = 1.2,  linetype = "11") +
+  geom_line(aes(date,cases_accumulated_PCR,group=province, color="#FF0000"), size = 1.2,  linetype = "11") +
   geom_point(aes(date,cases_accumulated,group=province), size = 0.5 ) +
   scale_color_identity(
     guide = "legend",
@@ -90,7 +90,7 @@ data_cases_sp_provinces %>%
   geom_line(data = data_cases_sp_provinces_sm %>% ungroup() %>% select(date,cases_accumulated,province_cp,-province) ,
             aes(date,cases_accumulated,group=province_cp), color="#CACACA", size = 0.3  ) +
   geom_line(aes(date,cases_accumulated,group=province, color="#000000"), size = 1 ) +
-  geom_line(aes(date,cases_accumulated_PCR,group=province, color="#4444CC"), size = 1.2,  linetype = "11") +
+  geom_line(aes(date,cases_accumulated_PCR,group=province, color="#FF0000"), size = 1.2,  linetype = "11") +
   geom_point(aes(date,cases_accumulated,group=province), size = 0.5 ) +
   scale_color_identity(
     guide = "legend",
@@ -2629,7 +2629,7 @@ htmlwidgets::saveWidget(as_widget(interactive_dp_p), paste0(getwd(),"/interactiv
 for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
 # for ( i in 1:c(7,8,11,12,18)  ) { print(i)}
   # for ( i in 3:3  ) {
-  if (i %in% c(7,8,11,12,18) ) { 
+  if (i %in% c(2,7,8,11,12,14,18) ) { 
     
   prov <- levels(data_cases_sp_provinces$ccaa)[i]
   unaprov <- data_cases_sp_provinces %>% filter (ccaa == prov ) %>% select (province) %>% first() 
