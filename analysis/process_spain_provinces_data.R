@@ -318,8 +318,7 @@ uniprovinciales <- ciii %>%
             province = province %>% str_replace_all("Baleares", "Balears, Illes"),
             ccaa = ccaa %>% str_replace_all("Madrid", "Madrid, Comunidad de"),
             ccaa = ccaa %>% str_replace_all("Murcia", "Murcia, Región de"),
-            ccaa = ccaa %>% str_replace_all("Navarra", "Navarra, Comunidad Foral de"),
-            PCR = NA
+            ccaa = ccaa %>% str_replace_all("Navarra", "Navarra, Comunidad Foral de")
               )
 
 # Add uniprovinciales data 
@@ -402,7 +401,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
                    paste0(source,";https://analisi.transparenciacatalunya.cat/Salut/Registre-de-test-de-COVID-19-realitzats-a-Cataluny/jj6z-iyrp/data;https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/data/output/spain/catalunya-cases-evolution-by-province.csv" ), 
                    as.character(source) )
 ) %>% select(-cases_accumulated_cat) %>% select(-province_cat) %>% select(-ccaa_cat)  %>% select(-dunique)  %>%  
-  select(-date_cat, -PCR_cum_cat, -PCR_cat, -TestAc_cat, -TestAc_cum)
+  select(-date_cat, -PCR_cum_cat, -PCR_cat, -TestAc_cat, -TestAc_cum, -provincia_code)
 
 # Catalunya: Overwrite Catalunya provinces death data ------------------
 # This is calculated at analysis/count_catalunya.R
@@ -563,17 +562,20 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   source = ifelse( ccaa == "Aragón" & !is.na(hospitalized), 
                    paste0(source,";https://www.aragon.es/documents/20127/38742837/casos_coronavirus_hospitales.xlsx" ), 
                    as.character(source) )
-) %>% select(-hospitalized_ara)
+) %>% select(-hospitalized_ara, -intensive_care_ara)
 
 rm(aragon_a,aragon_original)
 
 
-# Madrid hospitalizados.  Overwrite hospitalized  data -------------- -----
+# Madrid hospitalizados.  Overwrite hospitalized  data -------------------
 # download data from https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-series.csv
 download.file("https://github.com/alfonsotwr/snippets/raw/master/covidia-cam/madrid-series.csv", 
               "data/original/spain/madrid/madrid-series.csv")
+download.file("https://github.com/alfonsotwr/snippets/raw/master/covidia-cam/madrid-historico.csv", 
+              "data/original/spain/madrid/madrid-historico.csv")
 
 madrid_original <- read.delim("data/original/spain/madrid/madrid-series.csv",sep = ",")
+madrid_original2 <- read.delim("data/original/spain/madrid/madrid-historico.csv",sep = ",")
 
 madrid_a <- madrid_original %>%
   mutate(
@@ -587,34 +589,51 @@ madrid_a <- madrid_original %>%
     deceased = Fallecidos
   )
 
+madrid_b <- madrid_original2 %>%
+  mutate(
+    date = as.Date(as.character(Fecha)),
+    province = "Madrid",
+    ccaa = "Madrid, Comunidad de",
+    ine_code = 28
+  ) %>% rename(
+    hospitalized = hospitalizados_dia,
+    intensive_care = uci_dia
+  )
+
 data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
 madrid_a$dunique <- paste0(madrid_a$date,madrid_a$province)
 
 # TODO: meter otros datos además de los hospitalarios
 data_cases_sp_provinces <- merge(data_cases_sp_provinces,
-                                 madrid_a %>% ungroup() %>% select(dunique,hospitalized,intensive_care,date,province,ine_code,ccaa) %>% 
+                                 madrid_a %>% ungroup() %>% select(dunique,deceased,hospitalized,intensive_care,date,province,ine_code,ccaa) %>% 
                                    rename(
                                      hospitalized_mad = hospitalized,
                                      intensive_care_mad = intensive_care,
+                                     deceased_mad = deceased,
                                      date_mad = date,
                                      province_mad = province,
-                                     ine_code_mad = ine_code,
-                                     ccaa_mad = ccaa
+                                     ccaa_mad = ccaa,
+                                     ine_code_mad = ine_code
                                    ) , 
                                  by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique)
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+  # no sé por qué per ohe tenido que montar este lío para que las fechas funcionaran
+  date_new = ifelse( ccaa_mad == "Madrid, Comunidad de" & !is.na(province_mad), date_mad, NA ),
+  date_new = as.Date(date_mad, origin=as.Date("1970-01-01") ),
+  date = ifelse( ccaa_mad == "Madrid, Comunidad de" & !is.na(province_mad), date_new, date ),
+  date = as.Date(date, origin=as.Date("1970-01-01") ),
+  
+  ccaa = ifelse( ccaa_mad == "Madrid, Comunidad de" & !is.na(province_mad), ccaa_mad, ccaa),
+  deceased =    ifelse( ccaa == "Madrid, Comunidad de" & (date > as.Date("2020-05-20") ), deceased_mad, deceased),
   hospitalized = ifelse( ccaa == "Madrid, Comunidad de", hospitalized_mad, hospitalized),
-  intensive_care = ifelse( ccaa == "Madrid, Comunidad de", intensive_care_mad, intensive_care),
-  date = ifelse( ccaa == "Madrid, Comunidad de", date_mad, date),
-  province = ifelse( ccaa == "Madrid, Comunidad de", province_mad, province),
-  ine_code = ifelse( ccaa == "Madrid, Comunidad de", ine_code_mad, ine_code),
-  ccaa = ifelse( ccaa == "Madrid, Comunidad de", ccaa_mad, ccaa),
+  intensive_care = ifelse( ccaa_mad == "Madrid, Comunidad de", intensive_care_mad, intensive_care),
+  province = ifelse( ccaa_mad == "Madrid, Comunidad de" & !is.na(province_mad), province_mad, province),
   source_name = ifelse( ccaa == "Madrid, Comunidad de", paste0(as.character(source_name),";Consejería de Salud de la Comunidad de Madrid"), as.character(source_name) ),
   source = ifelse( ccaa == "Madrid, Comunidad de" & !is.na(hospitalized), 
                    paste0(source,";https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-series.csv;https://www.comunidad.madrid/servicios/salud/2019-nuevo-coronavirus#situacion-epidemiologica-actual" ), 
                    as.character(source) )
-) %>% select(-hospitalized_mad)
+) %>% select(-hospitalized_mad, -intensive_care_mad, -deceased_mad, -date_mad, -province_mad, -ccaa_mad, -date_new, -ine_code_mad)
 
 rm(madrid_a,madrid_original)
 
