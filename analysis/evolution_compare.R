@@ -11,7 +11,7 @@ library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 library(plotly)
 
-update_date <- "2020.05.28"
+update_date <- "2020.05.30"
 
 # # load data
 # world_original <- read.delim("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv",sep = ",")
@@ -455,10 +455,6 @@ ggplot() +
   geom_line(data =growth_2x, aes(days_since, value4), size= 0.5, color = "#555555", linetype = 2 ) +
   geom_line(data =growth_2x, aes(days_since, value5), size= 0.5, color = "#555555", linetype = 2 ) +
   geom_line(aes(days_since, deceassed, group= region, color= country), size= 0.7, alpha = 0.6 ) +
-  # points for interactive
-  geom_point( aes(days_since, deceassed, color= country,
-            text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")),
-             size= 0.6, alpha = 0.6  ) +
   geom_point(data = test  %>% group_by(region) %>% filter(!is.na(date) ) %>% top_n(1, date ),
              aes(days_since, deceassed, color= country,
                   text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")), 
@@ -538,6 +534,11 @@ if ( (i == 1) | (i == 2)  ) { # EN
 print(ptotal)
 print(paste("plot",i))
 dev.off()
+
+# add points for interactive
+ptotal <- ptotal + geom_point( aes(days_since, deceassed, color= country,
+                text = paste0("<b>", region, " (", country, ")</b><br>", format( round(deceassed, digits = 0), big.mark="."), " total deaths" ,"<br>",date, " (", days_since, ")")),
+            size= 0.6, alpha = 0.6  ) 
 }
 
 fig <- ggplotly(ptotal, tooltip = "text") %>% 
@@ -636,10 +637,6 @@ for (i in 1:4) {
   daily_plot <- test %>%  filter( region != "Area not defined" & date != as.Date("2020-02-09")) %>%
     ggplot() +
     geom_line(aes(days_since, daily_deaths_avg6, group= region, color= country), size= 0.9, alpha = 0.6, se = FALSE ) +
-    # for interactive
-    geom_point(aes(days_since, daily_deaths_avg6, color= country,
-               text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")),
-               size= 1, alpha = 0.6  ) +
     geom_point(data =  test  %>% group_by(region) %>% filter(!is.na(date) ) %>% top_n(1, date ),
                aes(days_since, daily_deaths_avg6, color= country, 
                 text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")), 
@@ -700,6 +697,10 @@ for (i in 1:4) {
   print(daily_plot)
   print(paste("plot",i))
   dev.off()
+  # add dots for interactive
+  daily_plot <- daily_plot + geom_point(aes(days_since, daily_deaths_avg6, color= country,
+                 text = paste0("<b>", region, " (", country, ")</b><br>", format( round(daily_deaths_avg6), big.mark="."), " average daily deaths" ,"<br>",date, " (day ", days_since, ")")),
+             size= 1, alpha = 0.6  )
 }
 
 fig <- ggplotly(daily_plot, tooltip = "text") %>% 
