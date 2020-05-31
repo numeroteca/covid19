@@ -211,7 +211,7 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,andalucia)
 rm(andalucia,andalucia_original)
 
 # Galicia: Remove existing Galicia data and add new one from new source ---------------------
-# Remove existing Andalucia data
+# Remove existing Galicia data
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( ccaa != "Galicia")
 
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=galicia",
@@ -220,10 +220,10 @@ galicia_original <- read.delim("data/original/spain/galicia/galicia-provincias-d
 
 galicia <- galicia_original %>%
   mutate(
-    date = as.Date(date),
+    date = as.Date(date)
   )
 
-# Add old Galicia data cumulative cases but not Ourense
+# Add old Galicia data cumulative cases 
 # # TODO: add sources of added data
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,galicia %>% select(-X,-casos_acumul_old,-recovered_old,-deceased_old))
 rm(galicia,galicia_original)
@@ -242,7 +242,75 @@ data_cases_sp_provinces <- merge(data_cases_sp_provinces %>% mutate( dunique = p
                               cases_accumulated = ifelse( (province == "Coruña, A"  | province =="Lugo" |province =="Pontevedra"),cases_accumulated_gal ,cases_accumulated )
                             ) %>% select(-dunique,-cases_accumulated_gal)
 
+# Galicia: Ourense data --------
+download.file("https://github.com/lipido/galicia-covid19/raw/master/ourense.csv",
+              "data/original/spain/galicia/ourense.csv")
+ourense_original <- read.delim("data/original/spain/galicia/ourense.csv", sep=",")
+download.file("https://github.com/lipido/galicia-covid19/raw/master/ourense.ext.csv",
+              "data/original/spain/galicia/ourense.ext.csv")
+ourense_hosp <- read.delim("data/original/spain/galicia/ourense.ext.csv", sep=",")
 
+ourense_a <- ourense_original %>%
+  mutate(
+    date = as.Date(Fecha),
+  ) %>% rename (
+    cases_accumulated_our = Ourense.casos.acum,
+    recovered_our = Ourense.altas.acum,
+    deceased_our = Ourense.fallecidos.acum
+  )
+
+ourense_b <- ourense_hosp %>%
+  mutate(
+    date = as.Date(Fecha),
+  ) %>% group_by(date) %>% summarise (
+    hospitalized_our = Ourense.hospitalizados_HPCHUO + Ourense.hospitalizados_Carmen + Ourense.hospitalizados_COSAGA +
+      Ourense.hospitalizados_HPValdeorras + Ourense.hospitalizados_HPVerin,
+    intensive_care_our = Ourense.uci_HPCHUO + Ourense.uci_COSAGA,
+    cases_accumulated_test_PCR_our = Ourense.PCR.acum
+  )
+
+ourense <- merge( ourense_a,
+                  ourense_b,
+                  by.x = "date", by = "date") %>% mutate(
+                    province = "Ourense"
+                    )
+write.csv(ourense, file = "data/output/spain/galicia/ourense.csv", row.names = FALSE)
+
+data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate( dunique = paste0(date,province) ),
+                                  ourense  %>% mutate( dunique = paste0(date,province) ) %>% rename( date_our = date, province_our = province ) %>% 
+                                    select( - cases_accumulated_test_PCR_our, -Fecha ),
+                                  by.x = "dunique" , by.y =  "dunique", all = TRUE
+                              )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+    # no sé por qué pero he tenido que montar este lío para que las fechas funcionaran
+    date_new = ifelse( province_our == "Ourense", date_our, NA ),
+    date_new = as.Date(date_our, origin=as.Date("1970-01-01") ),
+    date = ifelse( province_our == "Ourense" & !is.na(province_our), date_new, date ),
+    date = as.Date(date, origin=as.Date("1970-01-01") ),
+    
+    province_new = ifelse( province_our == "Ourense" & !is.na(province_our), province_our, as.character(province) ),
+    ccaa_new = ifelse(  province_our == "Ourense" & !is.na(province_our), "Galicia", as.character(ccaa) ),
+
+    province = province_new,
+    ccaa = ccaa_new,
+    # date = ifelse( is.na(date) & province_our == "Ourense", as.Date(date_our), NA),
+    # province  = ifelse( province_our == "Ourense", "Ourense", province),
+    # ccaa  = ifelse(  province_our == "Ourense", "Galicia", ccaa),
+  
+    deceased =    ifelse( province == "Ourense" , deceased_our, deceased),
+    hospitalized = ifelse( province == "Ourense", hospitalized_our, hospitalized),
+    intensive_care = ifelse( province == "Ourense", intensive_care_our, intensive_care),
+    cases_accumulated = ifelse( province == "Ourense", cases_accumulated_our, cases_accumulated),
+    # cases_accumulated_PCR = ifelse( province == "Ourense", cases_accumulated_PCR_our, cases_accumulated_PCR),
+    recovered = ifelse( province == "Ourense", recovered_our, recovered),
+    source_name = ifelse( province == "Ourense", paste0(as.character(source_name),";Área sanitaria Ourense via @lipido"), as.character(source_name) ),
+    source = ifelse(province == "Ourense", 
+                     paste0(source,";https://github.com/lipido/galicia-covid19" ), 
+                     as.character(source) )
+  ) %>% select(-hospitalized_our, -intensive_care_our, -deceased_our, -date_our, -province_our, -date_new, -cases_accumulated_our,
+               -recovered_our, -province_new, -ccaa_new, -dunique)
+
+rm(ourense, ourense_a, ourense_b, ourense_hosp, ourense_original)
 
 # Uniprovinciales: Remove and add uniprovinciales from ISCIII -----
 
@@ -586,12 +654,14 @@ madrid_a <- madrid_original %>%
   ) %>% rename(
     hospitalized = hospitalizados_dia,
     intensive_care = uci_dia,
-    deceased = Fallecidos
+    deceased = Fallecidos,
+    # TODO terminarinsertar los casos
+    cases_accumulated_PCR = CASOS_PCR
   )
 
 madrid_b <- madrid_original2 %>%
   mutate(
-    date = as.Date(as.character(Fecha)),
+    date = as.Date(as.character(FECHA)),
     province = "Madrid",
     ccaa = "Madrid, Comunidad de",
     ine_code = 28
@@ -603,17 +673,17 @@ madrid_b <- madrid_original2 %>%
 data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
 madrid_a$dunique <- paste0(madrid_a$date,madrid_a$province)
 
-# TODO: meter otros datos además de los hospitalarios
+# Datos de los PDF de la C. Madrid en ausenciade datos de ISCIII
 data_cases_sp_provinces <- merge(data_cases_sp_provinces,
-                                 madrid_a %>% ungroup() %>% select(dunique,deceased,hospitalized,intensive_care,date,province,ine_code,ccaa) %>% 
+                                 madrid_a %>% ungroup() %>% 
+                                   select(dunique,deceased,hospitalized,intensive_care,date,province,ccaa) %>% 
                                    rename(
                                      hospitalized_mad = hospitalized,
                                      intensive_care_mad = intensive_care,
                                      deceased_mad = deceased,
                                      date_mad = date,
                                      province_mad = province,
-                                     ccaa_mad = ccaa,
-                                     ine_code_mad = ine_code
+                                     ccaa_mad = ccaa
                                    ) , 
                                  by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique)
 
@@ -623,19 +693,55 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   date_new = as.Date(date_mad, origin=as.Date("1970-01-01") ),
   date = ifelse( ccaa_mad == "Madrid, Comunidad de" & !is.na(province_mad), date_new, date ),
   date = as.Date(date, origin=as.Date("1970-01-01") ),
-  
+  province = ifelse( ccaa_mad == "Madrid, Comunidad de" & !is.na(province_mad), province_mad, province),
   ccaa = ifelse( ccaa_mad == "Madrid, Comunidad de" & !is.na(province_mad), ccaa_mad, ccaa),
+  
   deceased =    ifelse( ccaa == "Madrid, Comunidad de" & (date > as.Date("2020-05-20") ), deceased_mad, deceased),
   hospitalized = ifelse( ccaa == "Madrid, Comunidad de", hospitalized_mad, hospitalized),
   intensive_care = ifelse( ccaa_mad == "Madrid, Comunidad de", intensive_care_mad, intensive_care),
-  province = ifelse( ccaa_mad == "Madrid, Comunidad de" & !is.na(province_mad), province_mad, province),
   source_name = ifelse( ccaa == "Madrid, Comunidad de", paste0(as.character(source_name),";Consejería de Salud de la Comunidad de Madrid"), as.character(source_name) ),
   source = ifelse( ccaa == "Madrid, Comunidad de" & !is.na(hospitalized), 
                    paste0(source,";https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-series.csv;https://www.comunidad.madrid/servicios/salud/2019-nuevo-coronavirus#situacion-epidemiologica-actual" ), 
                    as.character(source) )
-) %>% select(-hospitalized_mad, -intensive_care_mad, -deceased_mad, -date_mad, -province_mad, -ccaa_mad, -date_new, -ine_code_mad)
+) %>% select(-hospitalized_mad, -intensive_care_mad, -deceased_mad, -date_mad, -province_mad, -ccaa_mad, -date_new)
 
-rm(madrid_a,madrid_original)
+data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
+madrid_b$dunique <- paste0(madrid_b$date,madrid_b$province)
+
+# Datos de ISCII seleccionados para meter solamente los prevalentes
+data_cases_sp_provinces <- merge( data_cases_sp_provinces,
+                                  madrid_b %>% ungroup() %>% 
+                                    select(dunique, hospitalized, intensive_care, date, province, ccaa) %>% 
+                                    filter ( date > as.Date("2020-03-12") & date < as.Date("2020-04-22") ) %>%
+                                    rename(
+                                      hospitalized_mad = hospitalized,
+                                      intensive_care_mad = intensive_care,
+                                      date_mad = date,
+                                      province_mad = province,
+                                      ccaa_mad = ccaa
+                                    ) , 
+                                  by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique)
+
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+  # no sé por qué per ohe tenido que montar este lío para que las fechas funcionaran
+  date_new = ifelse( ccaa_mad == "Madrid, Comunidad de" & !is.na(province_mad), date_mad, NA ),
+  date_new = as.Date(date_mad, origin=as.Date("1970-01-01") ),
+  date = ifelse( ccaa_mad == "Madrid, Comunidad de" & !is.na(province_mad), date_new, date ),
+  date = as.Date(date, origin=as.Date("1970-01-01") ),
+  province = ifelse( ccaa_mad == "Madrid, Comunidad de" & !is.na(province_mad), province_mad, province),
+  
+  ccaa = ifelse( ccaa_mad == "Madrid, Comunidad de" & !is.na(province_mad), ccaa_mad, ccaa),
+  hospitalized = ifelse( is.na(hospitalized_mad), hospitalized, hospitalized_mad),
+  intensive_care = ifelse( is.na(intensive_care_mad), intensive_care, intensive_care_mad),
+  
+  source_name = ifelse( ccaa == "Madrid, Comunidad de", paste0(as.character(source_name),";Instituto de Salud Carlos III via @alfonsotwr"), as.character(source_name) ),
+  source = ifelse( ccaa == "Madrid, Comunidad de" & !is.na(hospitalized), 
+                   paste0(source,";https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-historico.csv" ), 
+                   as.character(source) )
+) %>% select(-hospitalized_mad, -intensive_care_mad, -date_mad, -province_mad, -ccaa_mad, -date_new)
+
+rm(madrid_a, madrid_b,madrid_original)
 
 # Add missing data deaths previous 2020.03.08 --------------
 
