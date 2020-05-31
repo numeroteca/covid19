@@ -6,7 +6,7 @@ library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 library(readxl)
 
-# Load data
+# Load data 
 download.file("https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covid_19_2020/opendata/datos-asistenciales.xlsx", 
               "data/original/spain/euskadi/datos-asistenciales.xlsx")
 
@@ -59,6 +59,43 @@ euskadi_hosp <- euskadi_hosp %>% rename( date = ...1 ) %>%
     hospitalizados = replace_na(hospitalizados, 0)
   )
 
+
+# hospitalizados nuevos cada dia
+euskadi_hosp_new <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "02")
+
+euskadi_hosp_new <- euskadi_hosp_new %>% rename( date = ...1 ) %>% 
+  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Nuevos Ingresos Hospitalarios`)  %>% melt(
+    id.vars = c("date")
+  ) %>% mutate(
+    province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
+    province = ifelse(variable=="02 Cruces", "Bizkaia"  ,province),
+    province = ifelse(variable=="03 Donosti", "Gipuzkoa" ,province),
+    province = ifelse(variable=="04 Basurto", "Bizkaia"  ,province),
+    province = ifelse(variable=="05 Galdakao", "Bizkaia" ,province),
+    province = ifelse(variable=="06 Zumarraga", "Gipuzkoa" ,province),
+    province = ifelse(variable=="07 Bidasoa", "Gipuzkoa" ,province),
+    province = ifelse(variable=="08 Mendaro", "Gipuzkoa" ,province),
+    province = ifelse(variable=="09 Alto Deba", "Gipuzkoa" ,province),
+    province = ifelse(variable=="10 San Eloy", "Bizkaia" ,province),
+    province = ifelse(variable=="11 Urduliz", "Bizkaia" ,province),
+    province = ifelse(variable=="12 Eibar", "Gipuzkoa" ,province),
+    province = ifelse(variable=="13 Leza", "Araba/Álava" ,province),
+    province = ifelse(variable=="14 Sta Marina", "Bizkaia" ,province),
+    province = ifelse(variable=="15 Gorliz", "Bizkaia" ,province),
+    province = ifelse(variable=="BERMEO H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZALDIBAR H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZAMUDIO H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ÁLAVA PSIQUIÁTRICO H.", "Araba/Álava" , province)
+  ) %>% group_by(province,date) %>% rename(
+    hospital = variable,
+    hospitalizados_nuevos = value,
+    provincia = province
+  ) %>% group_by(hospital) %>% arrange(date)  %>% mutate (
+    dunique = paste0(date,hospital),
+    hospitalizados_nuevos = replace_na(hospitalizados_nuevos, 0),
+    hospitalizados_cum = cumsum(hospitalizados_nuevos)
+  )
+
 # altas ----------
 euskadi_altas <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "03")
 euskadi_altas <- euskadi_altas %>% rename( date = ...1 ) %>% 
@@ -92,6 +129,41 @@ euskadi_altas <- euskadi_altas %>% rename( date = ...1 ) %>%
     dunique = paste0(date,hospital)
   ) %>% group_by(hospital) %>% arrange(date) %>% mutate (
     altas_cum = cumsum(replace_na(altas, 0))
+  )
+
+# altas UCI ----------
+euskadi_altas_uci <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "06")
+euskadi_altas_uci <- euskadi_altas_uci %>% rename( date = ...1 ) %>% 
+  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Altas UCI`)  %>% melt(
+    id.vars = c("date")
+  ) %>% mutate(
+    province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
+    province = ifelse(variable=="02 Cruces", "Bizkaia"  ,province),
+    province = ifelse(variable=="03 Donosti", "Gipuzkoa" ,province),
+    province = ifelse(variable=="04 Basurto", "Bizkaia"  ,province),
+    province = ifelse(variable=="05 Galdakao", "Bizkaia" ,province),
+    province = ifelse(variable=="06 Zumarraga", "Gipuzkoa" ,province),
+    province = ifelse(variable=="07 Bidasoa", "Gipuzkoa" ,province),
+    province = ifelse(variable=="08 Mendaro", "Gipuzkoa" ,province),
+    province = ifelse(variable=="09 Alto Deba", "Gipuzkoa" ,province),
+    province = ifelse(variable=="10 San Eloy", "Bizkaia" ,province),
+    province = ifelse(variable=="11 Urduliz", "Bizkaia" ,province),
+    province = ifelse(variable=="12 Eibar", "Gipuzkoa" ,province),
+    province = ifelse(variable=="13 Leza", "Araba/Álava" ,province),
+    province = ifelse(variable=="14 Sta Marina", "Bizkaia" ,province),
+    province = ifelse(variable=="15 Gorliz", "Bizkaia" ,province),
+    province = ifelse(variable=="BERMEO H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZALDIBAR H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZAMUDIO H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ÁLAVA PSIQUIÁTRICO H.", "Araba/Álava" , province)
+  ) %>% group_by(province,date) %>% rename(
+    hospital = variable,
+    altas_uci = value,
+    provincia = province
+  ) %>% mutate (
+    dunique = paste0(date,hospital)
+  ) %>% group_by(hospital) %>% arrange(date) %>% mutate (
+    altas_uci_cum = cumsum(replace_na(altas_uci, 0))
   )
 
 
@@ -129,6 +201,43 @@ euskadi_uci <- euskadi_uci %>% rename( date = ...1 ) %>%
     uci = replace_na(uci, 0)
   )
 
+
+# uci nuevos cada dia
+euskadi_uci_new <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "05")
+
+euskadi_uci_new <- euskadi_uci_new %>% rename( date = ...1 ) %>% 
+  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Nuevos Ingresos UCI`)  %>% melt(
+    id.vars = c("date")
+  ) %>% mutate(
+    province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
+    province = ifelse(variable=="02 Cruces", "Bizkaia"  ,province),
+    province = ifelse(variable=="03 Donosti", "Gipuzkoa" ,province),
+    province = ifelse(variable=="04 Basurto", "Bizkaia"  ,province),
+    province = ifelse(variable=="05 Galdakao", "Bizkaia" ,province),
+    province = ifelse(variable=="06 Zumarraga", "Gipuzkoa" ,province),
+    province = ifelse(variable=="07 Bidasoa", "Gipuzkoa" ,province),
+    province = ifelse(variable=="08 Mendaro", "Gipuzkoa" ,province),
+    province = ifelse(variable=="09 Alto Deba", "Gipuzkoa" ,province),
+    province = ifelse(variable=="10 San Eloy", "Bizkaia" ,province),
+    province = ifelse(variable=="11 Urduliz", "Bizkaia" ,province),
+    province = ifelse(variable=="12 Eibar", "Gipuzkoa" ,province),
+    province = ifelse(variable=="13 Leza", "Araba/Álava" ,province),
+    province = ifelse(variable=="14 Sta Marina", "Bizkaia" ,province),
+    province = ifelse(variable=="15 Gorliz", "Bizkaia" ,province),
+    province = ifelse(variable=="BERMEO H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZALDIBAR H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZAMUDIO H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ÁLAVA PSIQUIÁTRICO H.", "Araba/Álava" , province)
+  ) %>% group_by(province,date) %>% rename(
+    hospital = variable,
+    uci_nuevos = value,
+    provincia = province
+  ) %>% group_by(hospital) %>% arrange(date)  %>% mutate (
+    dunique = paste0(date,hospital),
+    uci_nuevos = replace_na(uci_nuevos, 0),
+    uci_cum = cumsum(uci_nuevos)
+  )
+
 #  fallecidos ----------
 euskadi_fallecidos <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "07")
 euskadi_fallecidos <- euskadi_fallecidos %>% rename( date = ...1 ) %>% filter( date != "Suma Total") %>%
@@ -164,24 +273,24 @@ euskadi_fallecidos <- euskadi_fallecidos %>% rename( date = ...1 ) %>% filter( d
     fallecidos_cum = cumsum(replace_na(fallecidos, 0))
   )
 
-
-
-
-
-
-
 # Merge data ---------
 euskadi_total <- merge( euskadi_hosp, euskadi_uci %>% ungroup() %>% select(-hospital,-date,-provincia), by.x="dunique", by.y="dunique" )
+euskadi_total <- merge( euskadi_total, euskadi_hosp_new %>% ungroup() %>% select(-hospital,-date,-provincia), by.x="dunique", by.y="dunique" )
+euskadi_total <- merge( euskadi_total, euskadi_uci_new %>% ungroup() %>% select(-hospital,-date,-provincia), by.x="dunique", by.y="dunique" )
 euskadi_total <- merge( euskadi_total, euskadi_fallecidos %>% ungroup() %>% select(-hospital,-date,-provincia), by.x="dunique", by.y="dunique" )
-euskadi_total <- merge( euskadi_total, euskadi_altas %>% ungroup() %>% select(-hospital,-date,-provincia), by.x="dunique", by.y="dunique" ) %>% select (-dunique)
-euskadi_total <- euskadi_total %>% mutate(
-  total_ingresados = hospitalizados+uci+fallecidos_cum+altas_cum
-)  %>% arrange(date) %>% group_by(hospital) %>% mutate(
-  daily_totat_ingresados = total_ingresados - lag(total_ingresados),
+euskadi_total <- merge( euskadi_total, euskadi_altas %>% ungroup() %>% select(-hospital,-date,-provincia), by.x="dunique", by.y="dunique" )
+euskadi_total <- merge( euskadi_total, euskadi_altas_uci %>% ungroup() %>% select(-hospital,-date,-provincia), by.x="dunique", by.y="dunique" ) %>% select (-dunique)
+euskadi_total <- euskadi_total %>% group_by(hospital) %>% arrange(date) %>% 
+  mutate(
+  # total_ingresados = hospitalizados_cum
+  # total_ingresados = hospitalizados+uci+fallecidos_cum+altas_cum 
+  )  %>% 
+  arrange(date)  %>% mutate(
+  # daily_totat_ingresados = total_ingresados - lag(total_ingresados),
   daily_deceassed = fallecidos_cum - lag(fallecidos_cum),
   daily_deceassed_avg =  round( ( daily_deceassed + lag(daily_deceassed,1 ) + lag(daily_deceassed,2 ) + lag(daily_deceassed,3 )+ lag(daily_deceassed,4 ) + lag(daily_deceassed,5 ) +
                                     lag(daily_deceassed,6 ) ) / 7, digits=1)
-)
+) %>% select( date,provincia,hospital, hospitalizados, hospitalizados_nuevos, hospitalizados_cum, uci, uci_nuevos, fallecidos, fallecidos_cum, altas, altas_cum, everything())
 
 write.csv(euskadi_total, file = "data/output/spain/euskadi/euskadi-hospital-dat.csv", row.names = FALSE)
 
@@ -446,3 +555,4 @@ euskadi_total %>%
        fill = "",
        caption = caption_provincia)
 dev.off()
+
