@@ -361,8 +361,8 @@ euskadi_total <- merge( euskadi_total, euskadi_altas %>% ungroup() %>% select(-h
 euskadi_total <- merge( euskadi_total, euskadi_altas_uci %>% ungroup() %>% select(-hospital,-date,-provincia), by.x="dunique", by.y="dunique" ) %>% select (-dunique)
 euskadi_total <- euskadi_total %>% group_by(hospital) %>% arrange(date) %>% 
   mutate(
-  total_ingresados = hospitalizados_cum
-  # total_ingresados = hospitalizados+uci+fallecidos_cum+altas_cum 
+  # total_ingresados = hospitalizados_cum
+  total_ingresados = hospitalizados+uci+fallecidos_cum+altas_cum
   )  %>% 
   arrange(date)  %>% mutate(
   # daily_totat_ingresados = total_ingresados - lag(total_ingresados),
@@ -372,6 +372,14 @@ euskadi_total <- euskadi_total %>% group_by(hospital) %>% arrange(date) %>%
 ) %>% select( date,provincia,hospital, hospitalizados, hospitalizados_nuevos, hospitalizados_cum, uci, uci_nuevos, fallecidos, fallecidos_cum, altas, altas_cum, everything())
 
 write.csv(euskadi_total, file = "data/output/spain/euskadi/euskadi-hospital-dat.csv", row.names = FALSE)
+
+euskadi_total <- euskadi_total %>% group_by(hospital) %>% arrange(date) %>%  mutate (
+  hospitalizados_per = round(hospitalizados/total_ingresados*100, digits=1),
+  fallecidos_cum_per = round(fallecidos_cum/total_ingresados*100, digits=1),
+  uci_per = round(uci/total_ingresados*100, digits=1),
+  altas_cum_per = round(altas_cum/total_ingresados*100, digits=1),
+  suma_per = round(hospitalizados_per+fallecidos_cum_per+uci_per+altas_cum_per , digits=1)
+)
 
 
 max_date  <- max(euskadi_total$date)
@@ -516,7 +524,7 @@ euskadi_total %>%
   geom_ribbon( aes(date, ymin=(hospitalizados+uci+fallecidos_cum)/total_ingresados*100, ymax=(hospitalizados+uci+fallecidos_cum+altas_cum)/total_ingresados*100, group=hospital, fill="#7ba934") ) +
   geom_text(data=filter( euskadi_total, date==max(euskadi_total$date) & hospitalizados > 1 ),
             aes(date + 1, ((hospitalizados)/total_ingresados*100),
-                label=paste0(format( round(hospitalizados/total_ingresados*100/2, digits = 0), nsmall=0, big.mark="."),"% (",hospitalizados,")")),
+                label=paste0( hospitalizados_per,"% (",hospitalizados,")")),
             color="#5b5bbb",
             size=4,
             hjust=0,
@@ -524,7 +532,7 @@ euskadi_total %>%
   ) +
   geom_text(data=filter( euskadi_total, date==max(euskadi_total$date) & fallecidos_cum > 1),
             aes(date + 1, (hospitalizados+fallecidos_cum)/total_ingresados*100,
-                label=paste0(format( round(fallecidos_cum/total_ingresados*100+4, digits = 0), nsmall=0, big.mark="."),"% (",format(fallecidos_cum, big.mark="."),")")),
+                label=paste0(fallecidos_cum_per,"% (",format(fallecidos_cum, big.mark="."),")")),
             color="#000000",
             size=4,
             hjust=0,
@@ -532,7 +540,7 @@ euskadi_total %>%
   ) +
   geom_text(data=filter( euskadi_total, date==max(euskadi_total$date) ),
             aes(date + 1, (hospitalizados+uci+fallecidos_cum)/total_ingresados*100 + ((hospitalizados+uci+fallecidos_cum+altas_cum)/total_ingresados*100)/2,
-                label=paste0(format( round(altas_cum/total_ingresados*100, digits = 0), nsmall=0, big.mark="."),"% (",format(altas_cum, big.mark="."),")")),
+                label=paste0(altas_cum_per,"% (",format(altas_cum, big.mark="."),")")),
             color="#7ba934",
             size=4,
             hjust=0,
@@ -550,7 +558,7 @@ euskadi_total %>%
   scale_x_date(
     # date_breaks = "3 day", 
     date_labels = "%d/%m",
-    limits=c( min(euskadi_total$date), max(euskadi_hosp$date +30)),
+    limits=c( min(euskadi_total$date), max(euskadi_hosp$date +34)),
     expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
