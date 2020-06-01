@@ -9,7 +9,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------  
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_f <- "Gráfico: lab.montera34.com/covid19. Datos: OpenCOVID19-fr"
-periodo_f <- "2020.03.04 - 05.28"
+periodo_f <- "2020.03.04 - 06.01"
 
 # COVID-19 in France-----------
 
@@ -478,7 +478,7 @@ data_f2_cases %>%
                   segment.color="#777777"
   ) +
   coord_cartesian(
-    xlim = c( min(data_f2_cases$date) + 42, max(data_f2_cases$date + 25) )
+    xlim = c( min(data_f2_cases$date) + 42, max(data_f2_cases$date + 38) )
   ) +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "5 day", 
@@ -516,14 +516,14 @@ data_f2_cases %>% # filter( source_type != "opencovid19-fr" | (source_type == "o
                   segment.color="#777777"
   ) +
   coord_cartesian(
-    xlim = c( min(data_f2_cases$date) + 39, max(data_f2_cases$date + 25) )
+    xlim = c( min(data_f2_cases$date) + 39, max(data_f2_cases$date + 38) )
   ) +
   scale_y_log10( 
     limits = c(1,max(data_f2_cases$deces)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
-  scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d"
+  scale_x_date(date_breaks = "1 week", 
+               date_labels = "%d/%m"
                # limits=c( min(data_f2_cases$date) + 43, max(data_f2_cases$date + 20)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -560,7 +560,7 @@ dev.off()
 #     limits = c(0.1,max(data_i_cases$deceassed_per_100000)),
 #     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
 #     minor_breaks = c(seq(0.1 , 1, 0.1),seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
-#   scale_x_date(date_breaks = "2 day", 
+#   scale_x_date(date_breaks = "1 week", 
 #                date_labels = "%d",
 #                limits=c( min(data_i_cases$date), max(data_i_cases$date +3.5)) 
 #   ) + 
@@ -605,9 +605,9 @@ data_f2_cases_death %>%
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
     expand = c(0,0.1)
   ) +
-  scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d",
-               limits=c( min(data_f2_cases$date + 40), max(data_f2_cases$date +13)),
+  scale_x_date(date_breaks = "1 week", 
+               date_labels = "%d/%m",
+               limits=c( min(data_f2_cases$date + 40), max(data_f2_cases$date +20)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -651,9 +651,9 @@ data_f2_cases_death %>%
   #   minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
   #   expand = c(0,0.1)
   # ) +
-  scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d",
-               limits=c( min(data_f2_cases$date + 40), max(data_f2_cases$date +13)),
+  scale_x_date(date_breaks = "1 week", 
+               date_labels = "%d/%m",
+               limits=c( min(data_f2_cases$date + 40), max(data_f2_cases$date +20)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -698,9 +698,9 @@ data_f2_cases_death %>%
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
     expand = c(0,0.1)
   ) +
-  scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d",
-               limits=c( min(data_f2_cases$date + 40), max(data_f2_cases$date +13)),
+  scale_x_date(date_breaks = "1 week", 
+               date_labels = "%d/%m",
+               limits=c( min(data_f2_cases$date + 40), max(data_f2_cases$date +20)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +

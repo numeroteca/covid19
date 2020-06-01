@@ -77,8 +77,8 @@ data_i_cases %>%
   geom_point(aes(date,cases_registered,group=region), size = 0.5 ) +
   facet_wrap( ~region) +
   scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)) +
-  scale_x_date(date_breaks = "10 day", 
-               date_labels = "%d"
+  scale_x_date(date_breaks = "1 month", 
+               date_labels = "%d/%m"
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -108,8 +108,8 @@ data_i_cases %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "10 day", 
-               date_labels = "%d"
+  scale_x_date(date_breaks = "1 month", 
+               date_labels = "%d/%m"
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -134,8 +134,8 @@ data_i_cases %>%
   geom_line(aes(date,cases_per_100000,group=region) ) +
   geom_point(aes(date,cases_per_100000,group=region), size = 0.5 ) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "10 day",
-               date_labels = "%d"
+  scale_x_date(date_breaks = "1 month",
+               date_labels = "%d/%m"
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -163,8 +163,8 @@ data_i_cases %>%
     limits = c(0.04,max(data_i_cases$cases_per_100000)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE), minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 3000, 100) )) +
   facet_wrap( ~region) +
-  scale_x_date(date_breaks = "10 day",
-               date_labels = "%d"
+  scale_x_date(date_breaks = "1 month",
+               date_labels = "%d/%m"
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -385,7 +385,7 @@ data_i_cases %>%
   geom_point(aes(date,deceassed), size= 0.5 ) +
   facet_wrap( ~region) +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  scale_x_date(date_breaks = "10 day", 
+  scale_x_date(date_breaks = "1 month", 
                date_labels = "%d/%m",
                limits=c( min(data_i_cases$date), max(data_i_cases$date)) 
   ) + 
@@ -417,7 +417,7 @@ data_i_cases %>%
     limits = c(1,max(data_i_cases$deceassed)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
-  scale_x_date(date_breaks = "10 day", 
+  scale_x_date(date_breaks = "1 month", 
                date_labels = "%d/%m",
                limits=c( min(data_i_cases$date), max(data_i_cases$date)) 
   ) + 
@@ -450,7 +450,7 @@ data_i_cases %>%
     # limits = c( 0 , max(data_i_cases$deceassed_per_100000) ),
     labels= function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100)) ) +
-  scale_x_date(date_breaks = "10 day", 
+  scale_x_date(date_breaks = "1 month", 
                date_labels = "%d/%m",
                limits=c( min(data_i_cases$date), max(data_i_cases$date)) 
   ) + 
@@ -486,7 +486,7 @@ data_i_cases %>%
                   segment.color="#777777"
   ) +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  scale_x_date(date_breaks = "2 week", 
+  scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
                limits=c( min(data_i_cases$date), max(data_i_cases$date + 18)),
                expand = c(0,0)
@@ -529,7 +529,7 @@ data_i_cases %>%
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000), seq(10000 , 100000, 10000)),
     expand = c(0,0.1)
     ) +
-  scale_x_date(date_breaks = "2 week", 
+  scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
                limits=c( min(data_i_cases$date), max(data_i_cases$date +25)),
                expand = c(0,0) 
@@ -575,7 +575,7 @@ data_i_cases %>%
     # minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
     # expand = c(0,0.1)
   ) +
-  scale_x_date(date_breaks = "10 day", 
+  scale_x_date(date_breaks = "1 month", 
                date_labels = "%d/%m",
                limits=c( min(data_i_cases$date), max(data_i_cases$date +18)),
                expand = c(0,0) 
@@ -620,7 +620,7 @@ data_i_cases %>%
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
     expand = c(0,0.1)
   ) +
-  scale_x_date(date_breaks = "2 week", 
+  scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
                limits=c( min(data_i_cases$date), max(data_i_cases$date +14)),
                expand = c(0,0) 
@@ -687,7 +687,7 @@ data_i_cases %>%
     # minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
     # expand = c(0,0.1)
   ) +
-  scale_x_date(date_breaks = "2 week", 
+  scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
                limits=c( min(data_i_cases$date), max(data_i_cases$date +14)),
                expand = c(0,0) 
@@ -759,7 +759,7 @@ data_i_cases %>%
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
     expand = c(0,0.1)
   ) +
-  scale_x_date(date_breaks = "2 week", 
+  scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
                limits=c( min(data_i_cases$date), max(data_i_cases$date +14)),
                expand = c(0,0) 
@@ -803,7 +803,7 @@ data_i_cases %>%
     breaks = c(0,1,5,10,20,50,100,200 ),
     minor_breaks = c(seq(0.1 , 1, 0.1),seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
     expand = c(0,0.1)  ) +
-  scale_x_date(date_breaks = "2 week", 
+  scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
                limits=c( min(data_i_cases$date), max(data_i_cases$date + 21)),
                expand = c(0,0)  
