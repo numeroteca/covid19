@@ -94,7 +94,86 @@ euskadi_hosp_new <- euskadi_hosp_new %>% rename( date = ...1 ) %>%
     dunique = paste0(date,hospital),
     hospitalizados_nuevos = replace_na(hospitalizados_nuevos, 0),
     hospitalizados_cum = cumsum(hospitalizados_nuevos)
-  )
+  ) 
+
+euskadi_hosp_new <- euskadi_hosp_new %>% mutate ( # Hay que añadir la cifra de hospitalizados inicial de cada hospital
+    hospitalizados_cum = ifelse(hospital=="01 Araba",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "01 Araba" & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "01 Araba" & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="02 Cruces",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "02 Cruces" & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "02 Cruces" & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="03 Donosti",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "03 Donosti" & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "03 Donosti" & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="04 Basurto",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "04 Basurto" & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "04 Basurto" & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="05 Galdakao",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "05 Galdakao" & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "05 Galdakao" & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="06 Zumarraga",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "06 Zumarraga" & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "06 Zumarraga" & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="07 Bidasoa",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "07 Bidasoa" & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "07 Bidasoa" & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="08 Mendaro",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "08 Mendaro" & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "08 Mendaro" & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="09 Alto Deba",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "09 Alto Deba" & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "09 Alto Deba" & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="10 San Eloy",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "10 San Eloy" & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "10 San Eloy" & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="11 Urduliz",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "11 Urduliz" & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "11 Urduliz" & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="12 Eibar",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "12 Eibar" & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "12 Eibar" & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="13 Leza",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "13 Leza" & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "13 Leza" & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="14 Sta Marina",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "14 Sta Marina" & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "14 Sta Marina" & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="15 Gorliz",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "15 Gorliz" & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "15 Gorliz" & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="BERMEO H.",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "BERMEO H." & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "BERMEO H." & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="ZALDIBAR H.",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "ZALDIBAR H." & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "ZALDIBAR H." & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="ZAMUDIO H.",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "ZAMUDIO H." & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "ZAMUDIO H." & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum),
+    hospitalizados_cum = ifelse(hospital=="ÁLAVA PSIQUIÁTRICO H.",
+                                hospitalizados_cum  + euskadi_hosp[euskadi_hosp$hospital == "ÁLAVA PSIQUIÁTRICO H." & euskadi_hosp$date == as.Date("2020-03-01"),  ]$hospitalizados -
+                                  euskadi_hosp_new[euskadi_hosp_new$hospital == "ÁLAVA PSIQUIÁTRICO H." & euskadi_hosp_new$date == as.Date("2020-03-01"),  ]$hospitalizados_nuevos,
+                                hospitalizados_cum)
+   )
 
 # altas ----------
 euskadi_altas <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "03")
@@ -282,7 +361,7 @@ euskadi_total <- merge( euskadi_total, euskadi_altas %>% ungroup() %>% select(-h
 euskadi_total <- merge( euskadi_total, euskadi_altas_uci %>% ungroup() %>% select(-hospital,-date,-provincia), by.x="dunique", by.y="dunique" ) %>% select (-dunique)
 euskadi_total <- euskadi_total %>% group_by(hospital) %>% arrange(date) %>% 
   mutate(
-  # total_ingresados = hospitalizados_cum
+  total_ingresados = hospitalizados_cum
   # total_ingresados = hospitalizados+uci+fallecidos_cum+altas_cum 
   )  %>% 
   arrange(date)  %>% mutate(
@@ -355,7 +434,7 @@ dev.off()
 
 # mix ----------------
 png(filename=paste0("img/spain/euskadi/covid19_hosp-mix-free-esc-pais-vasco.png", sep = ""),width = 1200,height = 700)
-euskadi_total %>% #filter( hospital == "14 Sta Marina") %>%
+euskadi_total %>% #filter( hospital == "14 Sta Marina") %>% 
   ggplot() +
   geom_ribbon(aes(date,  ymin=0, ymax=hospitalizados, group=hospital, fill="#5b5bbb")) +
   geom_ribbon(aes(date,   ymin=hospitalizados,ymax=hospitalizados+uci, group=hospital,fill="red") ) +
