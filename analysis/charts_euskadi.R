@@ -578,6 +578,40 @@ euskadi_total %>%
 dev.off()
 
 # daily data ---------
+# hospitalizados
+png(filename=paste0("img/spain/euskadi/covid19_hospitalizados-dia-pais-vasco.png", sep = ""),width = 1300,height = 700)
+euskadi_total %>%
+  ggplot() +
+  geom_col( aes(date,hospitalizados), size=1,color="#5b5bbb") +
+  facet_wrap( ~hospital) + #, scales = "free_x"
+  scale_y_continuous( 
+    # limits = c(0,100),
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(
+    # date_breaks = "3 day", 
+    date_labels = "%d/%m",
+    limits=c( min(euskadi_total$date), max(euskadi_hosp$date +30)),
+    expand = c(0,0)
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "top"
+  ) +
+  labs(title = paste0("Pacientes hospitalizados en plana diarios en hospitales por COVID-19 en Euskadi" ),
+       subtitle = paste0("",period_eus),
+       y = "falecidos",
+       x = "fecha",
+       fill = "",
+       caption = caption_provincia)
+dev.off()
+
+
+# UCI
 png(filename=paste0("img/spain/euskadi/covid19_uci-dia-pais-vasco.png", sep = ""),width = 1300,height = 700)
 euskadi_total %>%
   ggplot() +

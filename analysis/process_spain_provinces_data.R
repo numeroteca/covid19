@@ -388,9 +388,9 @@ uniprovinciales <- ciii %>%
             ccaa = ccaa %>% str_replace_all("Murcia", "Murcia, Región de"),
             ccaa = ccaa %>% str_replace_all("Navarra", "Navarra, Comunidad Foral de")
               )
-
 # Add uniprovinciales data 
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,uniprovinciales)
+
 
 # Catalunya: Overwrite Catalunya provinces cases  data ------------------
 # Download data from: https://analisi.transparenciacatalunya.cat/Salut/Registre-de-casos-de-COVID-19-realitzats-a-Catalun/jj6z-iyrp/data
@@ -742,6 +742,92 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 ) %>% select(-hospitalized_mad, -intensive_care_mad, -date_mad, -province_mad, -ccaa_mad, -date_new)
 
 rm(madrid_a, madrid_b,madrid_original)
+
+
+# Uniprovinciales @danielegrasso --------------------
+uniprovinciales_d <- read.delim("data/original/spain/uniprovinciales/data_uniprovs.csv",sep = ",") %>% mutate (
+  date_uni = as.Date(DATE, "%d/%m/%y")
+) %>% rename (
+  ccaa_uni = CCAA,
+  cases_accumulated_PCR_uni = PCR_acumuado,
+  deceased_uni = MUERTOS_acumulado
+) %>% mutate(
+  ccaa_uni = ccaa_uni %>% str_replace_all("La Rioja", "Rioja, La"),
+  ccaa_uni = ccaa_uni %>% str_replace_all("Baleares", "Balears, Illes"),
+  province_uni = ccaa_uni,
+  ccaa_uni = ccaa_uni %>% str_replace_all("Asturias", "Asturias, Principado de"),
+  ccaa_uni = ccaa_uni %>% str_replace_all("Madrid", "Madrid, Comunidad de"),
+  ccaa_uni = ccaa_uni %>% str_replace_all("Murcia", "Murcia, Región de"),
+  ccaa_uni = ccaa_uni %>% str_replace_all("Navarra", "Navarra, Comunidad Foral de")
+  # province = province %>% str_replace_all("Baleares", "Balears, Illes"),
+) %>% select (-DATE)
+
+table(uniprovinciales_d$ccaa)
+table(uniprovinciales_d$province)
+
+# xxx <- merge ( data_cases_sp_provinces  %>% mutate (dunique = paste0(date,province)),
+data_cases_sp_provinces <- merge ( data_cases_sp_provinces  %>% mutate (dunique = paste0(date,province)),
+               uniprovinciales_d %>% mutate (dunique = paste0(date_uni,province_uni)) ,
+               by.x = "dunique", by.y ="dunique", all = TRUE
+)
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+# xxx <- xxx %>% mutate(
+  # no sé por qué per ohe tenido que montar este lío para que las fechas funcionaran
+  date_new = ifelse( !is.na(province_uni), date_uni, NA ),
+  date_new = as.Date(date_uni, origin=as.Date("1970-01-01") ),
+  date = ifelse( !is.na(province_uni), date_new, date ),
+  date = as.Date(date, origin=as.Date("1970-01-01") ),
+  
+  province = ifelse( !is.na(province_uni), as.character(province_uni), province),
+  ccaa = ifelse( !is.na(province_uni), ccaa_uni, ccaa),
+  
+  cases_accumulated_PCR = ifelse( is.na(cases_accumulated_PCR_uni), cases_accumulated_PCR, cases_accumulated_PCR_uni),
+  deceased = ifelse( is.na(deceased_uni), deceased, deceased_uni),
+  
+  # source_name = ifelse(!is.na(province_uni), paste0(as.character(source_name),";Web de Comunidad autónoma por @danielegrasso"), as.character(source_name) ),
+  # source = ifelse( !is.na(province_uni), 
+  #                  paste0(source,";https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-historico.csv" ), 
+  #                  as.character(source) )
+  source_name = ifelse( province_uni == "Madrid" & !is.na(province_uni), paste0(as.character(source_name),";Comunidad de Madrid vía @danielegrasso"), as.character(source_name) ),
+  source = ifelse(  province_uni == "Madrid" & !is.na(province_uni),
+                   paste0(source,";https://www.comunidad.madrid/servicios/salud/2019-nuevo-coronavirus" ),
+                   as.character(source) ),
+  source_name = ifelse( province_uni == "Asturias" & !is.na(province_uni), paste0(as.character(source_name),";Gobierno del Principado de Asturias vía @danielegrasso"), as.character(source_name) ),
+  source = ifelse(  province_uni == "Asturias" & !is.na(province_uni),
+                    paste0(source,";https://app.transparenciaendatos.es/v/#!/5eb4344e16b9fc465933d217;https://coronavirus.asturias.es" ),
+                    as.character(source) ),
+  source_name = ifelse( province_uni == "Balears, Illes" & !is.na(province_uni), paste0(as.character(source_name),";Govern Illes Balears vía @danielegrasso"), as.character(source_name) ),
+  source = ifelse(  province_uni =="Balears, Illes" & !is.na(province_uni),
+                    paste0(source,";http://www.caib.es/sites/coronavirus/es/l/noticias_sobre_el_coronavirus_covid-19/" ),
+                    as.character(source) ),
+  source_name = ifelse( province_uni == "Cantabria" & !is.na(province_uni), paste0(as.character(source_name),";Servicio Cántabro de Salud vía @danielegrasso"), as.character(source_name) ),
+  source = ifelse(  province_uni =="Cantabria" & !is.na(province_uni),
+                    paste0(source,";https://www.scsalud.es/coronavirus" ),
+                    as.character(source) ),
+  source_name = ifelse( province_uni == "Rioja, La" & !is.na(province_uni), paste0(as.character(source_name),";Gobierno de La Rioja vía @danielegrasso"), as.character(source_name) ),
+  source = ifelse(  province_uni =="Rioja, La" & !is.na(province_uni),
+                    paste0(source,";https://actualidad.larioja.org/coronavirus" ),
+                    as.character(source) ),
+  source_name = ifelse( province_uni == "Navarra" & !is.na(province_uni), paste0(as.character(source_name),";Gobierno Abierto de Navarra vía @danielegrasso"), as.character(source_name) ),
+  source = ifelse(  province_uni =="Navarra" & !is.na(province_uni),
+                    paste0(source,";https://gobiernoabierto.navarra.es/es/coronavirus/impacto-situacion" ),
+                    as.character(source) ),
+  source_name = ifelse( province_uni == "Murcia" & !is.na(province_uni), paste0(as.character(source_name),";Murcia Salud vía @danielegrasso"), as.character(source_name) ),
+  source = ifelse(  province_uni =="Murcia" & !is.na(province_uni),
+                    paste0(source,";https://www.murciasalud.es/pagina.php?id=458869&idsec=6575" ),
+                    as.character(source) )
+    ) %>% select( -date_uni, -province_uni, -ccaa_uni, -date_new ,-cases_accumulated_PCR_uni, -deceased_uni)
+
+# Madrid: https://www.comunidad.madrid/servicios/salud/2019-nuevo-coronavirus ("Informe situación"
+# Asturias: https://app.transparenciaendatos.es/v/#!/5eb4344e16b9fc465933d217 y https://coronavirus.asturias.es
+# Baleares http://www.caib.es/sites/coronavirus/es/l/noticias_sobre_el_coronavirus_covid-19/
+# Cantabria: https://www.scsalud.es/coronavirus (Excel de "histórico)
+# La Rioja: https://actualidad.larioja.org/coronavirus 
+# Navarra: https://gobiernoabierto.navarra.es/es/coronavirus/impacto-situacion
+# Murcia: https://www.murciasalud.es/pagina.php?id=458869&idsec=6575
+
+
 
 # Add missing data deaths previous 2020.03.08 --------------
 

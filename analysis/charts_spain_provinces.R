@@ -14,8 +14,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-06-02)"
-filter_date <- as.Date("2020-06-02")
+period <- "(Actualizado: 2020-06-03)"
+filter_date <- as.Date("2020-06-03")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -406,7 +406,7 @@ data_cases_sp_provinces %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = c(0.1,0.6)
   ) +
-  labs(title = paste0("Casos acumulados de COVID-19 registrados por 100.000 habitantes en España ",updated)
+  labs(title = paste0("Casos acumulados de COVID-19 registrados por 100.000 habitantes en España ",updated),
        subtitle = paste0("Por provincia (escala logarítmica). ",period),
        y = "casos registrados por 100.000 habitantes",
        x = "fecha",
@@ -754,8 +754,8 @@ data_cases_sp_provinces %>%
   scale_y_log10( minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
                  labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
-  scale_x_date(date_breaks = "10 day", 
-               date_labels = "%d",
+  scale_x_date(date_breaks = "1 month", 
+               date_labels = "%d/%m",
                expand = c(0,22) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
