@@ -11,7 +11,7 @@ library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 library(plotly)
 
-update_date <- "2020.05.30"
+update_date <- "2020.06.01"
 
 # # load data
 # world_original <- read.delim("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv",sep = ",")
