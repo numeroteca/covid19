@@ -89,9 +89,13 @@ download.file("https://analisis.datosabiertos.jcyl.es/explore/dataset/situacion-
               "data/original/spain/cyl/covid19_cyl_a.csv")
 download.file("https://analisis.datosabiertos.jcyl.es/explore/dataset/situacion-de-hospitalizados-por-coronavirus-en-castilla-y-leon/download/?format=csv&timezone=Europe/Madrid&lang=en&use_labels_for_header=true&csv_separator=%3B", 
               "data/original/spain/cyl/covid19_cyl_b.csv")
+download.file("https://analisis.datosabiertos.jcyl.es/explore/dataset/pruebas-realizados-coronavirus/download/?format=csv&timezone=Europe/Madrid&lang=en&use_labels_for_header=true&csv_separator=%3B", 
+              "data/original/spain/cyl/covid19_cyl_pruebas-realizados-coronavirus.csv")
 
 cyla_original <- read.delim("data/original/spain/cyl/covid19_cyl_a.csv", sep=";")
 cylb_original <- read.delim("data/original/spain/cyl/covid19_cyl_b.csv", sep=";")
+# TODO PCR+
+cylc_original <- read.delim("data/original/spain/cyl/covid19_cyl_pruebas-realizados-coronavirus.csv", sep=";")
 
 # Remove existing CyL data
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( ccaa != "Castilla y León" )
@@ -774,7 +778,7 @@ data_cases_sp_provinces <- merge ( data_cases_sp_provinces  %>% mutate (dunique 
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   # xxx <- xxx %>% mutate(
-  # no sé por qué per ohe tenido que montar este lío para que las fechas funcionaran
+  # no sé por qué pero he tenido que montar este lío para que las fechas funcionaran
   date_new = ifelse( !is.na(province_uni), date_uni, NA ),
   date_new = as.Date(date_uni, origin=as.Date("1970-01-01") ),
   date = ifelse( !is.na(province_uni), date_new, date ),
@@ -792,31 +796,31 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   #                  as.character(source) )
   source_name = ifelse( province_uni == "Madrid" & !is.na(province_uni), paste0(as.character(source_name),";Comunidad de Madrid vía @danielegrasso"), as.character(source_name) ),
   source = ifelse(  province_uni == "Madrid" & !is.na(province_uni),
-                    paste0(source,";https://www.comunidad.madrid/servicios/salud/2019-nuevo-coronavirus" ),
+                    paste0(source,";https://www.comunidad.madrid/servicios/salud/2019-nuevo-coronavirus;https://gitlab.com/elpais/datos/-/raw/master/20_Covid-19/covid-provincias/data_uniprovs.csv?inline=false" ),
                     as.character(source) ),
   source_name = ifelse( province_uni == "Asturias" & !is.na(province_uni), paste0(as.character(source_name),";Gobierno del Principado de Asturias vía @danielegrasso"), as.character(source_name) ),
   source = ifelse(  province_uni == "Asturias" & !is.na(province_uni),
-                    paste0(source,";https://app.transparenciaendatos.es/v/#!/5eb4344e16b9fc465933d217;https://coronavirus.asturias.es" ),
+                    paste0(source,";https://app.transparenciaendatos.es/v/#!/5eb4344e16b9fc465933d217;https://coronavirus.asturias.es;https://gitlab.com/elpais/datos/-/raw/master/20_Covid-19/covid-provincias/data_uniprovs.csv?inline=false" ),
                     as.character(source) ),
   source_name = ifelse( province_uni == "Balears, Illes" & !is.na(province_uni), paste0(as.character(source_name),";Govern Illes Balears vía @danielegrasso"), as.character(source_name) ),
   source = ifelse(  province_uni =="Balears, Illes" & !is.na(province_uni),
-                    paste0(source,";http://www.caib.es/sites/coronavirus/es/l/noticias_sobre_el_coronavirus_covid-19/" ),
+                    paste0(source,";http://www.caib.es/sites/coronavirus/es/l/noticias_sobre_el_coronavirus_covid-19/;https://gitlab.com/elpais/datos/-/raw/master/20_Covid-19/covid-provincias/data_uniprovs.csv?inline=false" ),
                     as.character(source) ),
   source_name = ifelse( province_uni == "Cantabria" & !is.na(province_uni), paste0(as.character(source_name),";Servicio Cántabro de Salud vía @danielegrasso"), as.character(source_name) ),
   source = ifelse(  province_uni =="Cantabria" & !is.na(province_uni),
-                    paste0(source,";https://www.scsalud.es/coronavirus" ),
+                    paste0(source,";https://www.scsalud.es/coronavirus;https://gitlab.com/elpais/datos/-/raw/master/20_Covid-19/covid-provincias/data_uniprovs.csv?inline=false" ),
                     as.character(source) ),
   source_name = ifelse( province_uni == "Rioja, La" & !is.na(province_uni), paste0(as.character(source_name),";Gobierno de La Rioja vía @danielegrasso"), as.character(source_name) ),
   source = ifelse(  province_uni =="Rioja, La" & !is.na(province_uni),
-                    paste0(source,";https://actualidad.larioja.org/coronavirus" ),
+                    paste0(source,";https://actualidad.larioja.org/coronavirus;https://gitlab.com/elpais/datos/-/raw/master/20_Covid-19/covid-provincias/data_uniprovs.csv?inline=false" ),
                     as.character(source) ),
   source_name = ifelse( province_uni == "Navarra" & !is.na(province_uni), paste0(as.character(source_name),";Gobierno Abierto de Navarra vía @danielegrasso"), as.character(source_name) ),
   source = ifelse(  province_uni =="Navarra" & !is.na(province_uni),
-                    paste0(source,";https://gobiernoabierto.navarra.es/es/coronavirus/impacto-situacion" ),
+                    paste0(source,";https://gobiernoabierto.navarra.es/es/coronavirus/impacto-situacion;https://gitlab.com/elpais/datos/-/raw/master/20_Covid-19/covid-provincias/data_uniprovs.csv?inline=false" ),
                     as.character(source) ),
   source_name = ifelse( province_uni == "Murcia" & !is.na(province_uni), paste0(as.character(source_name),";Murcia Salud vía @danielegrasso"), as.character(source_name) ),
   source = ifelse(  province_uni =="Murcia" & !is.na(province_uni),
-                    paste0(source,";https://www.murciasalud.es/pagina.php?id=458869&idsec=6575" ),
+                    paste0(source,";https://www.murciasalud.es/pagina.php?id=458869&idsec=6575;https://gitlab.com/elpais/datos/-/raw/master/20_Covid-19/covid-provincias/data_uniprovs.csv?inline=false" ),
                     as.character(source) )
 ) #%>% select( -date_uni, -province_uni, -ccaa_uni, -date_new ,-cases_accumulated_PCR_uni, -deceased_uni)
 
