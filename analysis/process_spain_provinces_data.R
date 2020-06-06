@@ -822,17 +822,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   source = ifelse(  province_uni =="Murcia" & !is.na(province_uni),
                     paste0(source,";https://www.murciasalud.es/pagina.php?id=458869&idsec=6575;https://gitlab.com/elpais/datos/-/raw/master/20_Covid-19/covid-provincias/data_uniprovs.csv?inline=false" ),
                     as.character(source) )
-) #%>% select( -date_uni, -province_uni, -ccaa_uni, -date_new ,-cases_accumulated_PCR_uni, -deceased_uni)
-
-# Madrid: https://www.comunidad.madrid/servicios/salud/2019-nuevo-coronavirus ("Informe situación"
-# Asturias: https://app.transparenciaendatos.es/v/#!/5eb4344e16b9fc465933d217 y https://coronavirus.asturias.es
-# Baleares http://www.caib.es/sites/coronavirus/es/l/noticias_sobre_el_coronavirus_covid-19/
-# Cantabria: https://www.scsalud.es/coronavirus (Excel de "histórico)
-# La Rioja: https://actualidad.larioja.org/coronavirus 
-# Navarra: https://gobiernoabierto.navarra.es/es/coronavirus/impacto-situacion
-# Murcia: https://www.murciasalud.es/pagina.php?id=458869&idsec=6575
-
-
+) %>% select( -date_uni, -province_uni, -ccaa_uni, -date_new ,-cases_accumulated_PCR_uni, -deceased_uni)
 
 # Add missing data deaths previous 2020.03.08 --------------
 

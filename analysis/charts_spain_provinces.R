@@ -14,8 +14,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-06-05)"
-filter_date <- as.Date("2020-06-05")
+period <- "(Actualizado: 2020-06-06)"
+filter_date <- as.Date("2020-06-06")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -873,8 +873,8 @@ data_cases_sp_provinces %>%
   # scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
   #                minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
   #                expand = c(0,0.2) ) +
-  scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d",
+  scale_x_date(date_breaks = "1 week", 
+               date_labels = "%d/%m",
                limits=c( min(data_cases_sp_provinces$date)+5, max(data_cases_sp_provinces$date +12)),
                expand = c(0,0) 
   ) + 
@@ -918,8 +918,8 @@ data_cases_sp_provinces %>%
   # scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
   #                minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
   #                expand = c(0,0.2) ) +
-  scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d",
+  scale_x_date(date_breaks = "1 week", 
+               date_labels = "%d/%m",
                limits=c( min(data_cases_sp_provinces$date)+5, max(data_cases_sp_provinces$date +12)),
                expand = c(0,0) 
   ) + 
@@ -989,8 +989,8 @@ data_cases_sp_provinces %>%
   # scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
   #                minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
   #                expand = c(0,0.2) ) +
-  scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d",
+  scale_x_date(date_breaks = "1 week", 
+               date_labels = "%d/%m",
                limits=c( min(data_cases_sp_provinces$date)+5, max(data_cases_sp_provinces$date +14)),
                expand = c(0,0) 
   ) + 
@@ -1110,8 +1110,8 @@ data_cases_sp_provinces %>%
   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
                  minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
                  expand = c(0,0.2) ) +
-  scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d",
+  scale_x_date(date_breaks = "1 week", 
+               date_labels = "%d/%m",
                limits=c( min(data_cases_sp_provinces$date)+5, max(data_cases_sp_provinces$date +16)),
                expand = c(0,0) 
   ) + 
