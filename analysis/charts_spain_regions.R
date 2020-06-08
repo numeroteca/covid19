@@ -23,10 +23,12 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: various official sources. Check website."
 
 # Para ISCiii
-caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es) y Ministerio Sanidad (recopilados por Datadista)"
-caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es) & Ministerio Sanidad (recopilados por Datadista)"
-period <- "Actualizado: 2020.05.21. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
-updata_date <- "2020.05.21"
+# caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: Instituto de Salud CIII (covid19.isciii.es) y Ministerio Sanidad (recopilados por Datadista)"
+caption <- "Gráfico: @numeroteca (Montera34). Web: lab.montera34.com/covid19 | Datos: esCOVID19data"
+# caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: Instituto de Salud CIII (covid19.isciii.es) & Ministerio Sanidad (recopilados por Datadista)"
+caption_en <- "By: Montera34. lab.montera34.com/covid19 | Data: esCOVID19data"
+period <- "Actualizado: 2020.06.05. La cifra de casos es la suma de PCR y TestAc+ a partir de 2020.04.15"
+updata_date <- "2020.06.05"
 # warning <- " Nota: no se incluye Cataluña desde 2020.04.16"
 warning <- ""
 

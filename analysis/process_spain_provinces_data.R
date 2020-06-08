@@ -177,7 +177,7 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
                                    select(-source_b)
 )
 
-rm(cyl,cyla,cylb,cyla_original,cylb_original)
+rm(cyl,cyla,cylb,cyla_original,cylb_original, cylc_original)
 
 # Andalucía: Remove existing Andalucia data and add new one from new source ---------------------
 
@@ -313,6 +313,351 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
              -recovered_our, -province_new, -ccaa_new, -dunique)
 
 rm(ourense, ourense_a, ourense_b, ourense_hosp, ourense_original)
+
+# Galicia: las otras provincias ------------
+# Lugo
+# Ourense
+# Santiago + Ferrol + Coruña = A Coruña; 
+# Vigo + Pontevedra = Pontevedra; 
+
+# / Lugo ------
+download.file("https://github.com/lipido/galicia-covid19/raw/master/lugo.csv",
+              "data/original/spain/galicia/lugo.csv")
+lugo_original <- read.delim("data/original/spain/galicia/lugo.csv", sep=",")
+download.file("https://github.com/lipido/galicia-covid19/raw/master/lugo.ext.csv",
+              "data/original/spain/galicia/lugo.ext.csv")
+lugo_hosp <- read.delim("data/original/spain/galicia/lugo.ext.csv", sep=",")
+
+lugo_a <- lugo_original %>%
+  mutate(
+    date = as.Date(Fecha),
+  ) %>% rename (
+    cases_accumulated_PCR = Lugo.casos.acum, #solo para después de 25 de mayo 2020 Casos totales hasta la fecha. Los casos son con PCR positiva a partir del 25 de mayo con total seguridad. Antes de esta fecha se incluían casos diagnosticados clínicamente con posterior test positivo de anticuerpos. Podrían ser unos 200 casos y concentrados al principio de la serie.
+    recovered = Lugo.altas.acum,
+    deceased = Lugo.fallecidos.acum
+  )
+
+lugo_b <- lugo_hosp %>%
+  mutate(
+    date = as.Date(Fecha),
+  ) %>% rename(
+    hospitalized = Lugos.hospitalizados, # TODO advertir del error en el nombre de columna
+    intensive_care = Lugo.uci,
+    cases_accumulated_test_PCR = Lugo.PCR.acum
+  )
+
+lugo <- merge( lugo_a %>% select(-Fecha),
+               lugo_b %>% select(-Fecha),
+                  by.x = "date", by = "date") %>% mutate(
+                    province = "Lugo",
+                    ccaa = "Galicia",
+                    new_cases = NA,
+                    PCR = NA,
+                    TestAc = NA,
+                    activos = NA,
+                    cases_accumulated = NA,
+                    recovered = NA,
+                    source_name = "Área sanitaria Ourense via @lipido",
+                    source = "https://github.com/lipido/galicia-covid19/blob/master/lugo.csv;https://github.com/lipido/galicia-covid19/blob/master/lugo.ext.csv",
+                    comments = NA,
+                  ) %>% filter ( date > as.Date("2020-06-03") ) %>% # TODO, change date when more data are gathered
+  select( date, province, ccaa, new_cases,   PCR, TestAc,              
+          activos, hospitalized,intensive_care,  deceased, cases_accumulated, cases_accumulated_PCR, recovered, source_name, source, comments )
+
+write.csv( lugo, file = "data/output/spain/galicia/lugo.csv", row.names = FALSE)
+
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces, lugo)
+
+
+# / Pontevedra = Vigo + Pontevedra  ---------
+
+# Vigo
+download.file("https://github.com/lipido/galicia-covid19/raw/master/vigo.csv",
+              "data/original/spain/galicia/vigo.csv")
+vigo_original <- read.delim("data/original/spain/galicia/vigo.csv", sep=",")
+download.file("https://github.com/lipido/galicia-covid19/raw/master/vigo.ext.csv",
+              "data/original/spain/galicia/vigo.ext.csv")
+vigo_hosp <- read.delim("data/original/spain/galicia/vigo.ext.csv", sep=",")
+
+vigo_a <- vigo_original %>%
+  mutate(
+    date = as.Date(Fecha),
+  ) %>% rename (
+    cases_accumulated_PCR = Vigo.casos.acum, #solo para después de 25 de mayo 2020 Casos totales hasta la fecha. Los casos son con PCR positiva a partir del 25 de mayo con total seguridad. Antes de esta fecha se incluían casos diagnosticados clínicamente con posterior test positivo de anticuerpos. Podrían ser unos 200 casos y concentrados al principio de la serie.
+    recovered = Vigo.altas.acum,
+    deceased = Vigo.fallecidos.acum
+  )
+
+vigo_b <- vigo_hosp %>%
+  mutate(
+    date = as.Date(Fecha),
+  ) %>% rename(
+    hospitalized = Vigo.hospitalizados, # TODO advertir del error en el nombre de columna
+    intensive_care = Vigo.uci,
+    cases_accumulated_test_PCR = Vigo.PCR.acum
+  )
+
+vigo <- merge( vigo_a %>% select(-Fecha),
+               vigo_b %>% select(-Fecha),
+               by.x = "date", by = "date") %>% mutate(
+                 province = "Vigo",
+                 ccaa = "Galicia",
+                 new_cases = NA,
+                 PCR = NA,
+                 TestAc = NA,
+                 activos = NA,
+                 cases_accumulated = NA,
+                 recovered = NA,
+                 source_name = "Área sanitaria Ourense via @lipido",
+                 source = "https://github.com/lipido/galicia-covid19/blob/master/vigo.csv;https://github.com/lipido/galicia-covid19/blob/master/vigo.ext.csv",
+                 comments = NA,
+               ) %>% filter ( date > as.Date("2020-06-03") ) %>% # TODO, change date when more data are gathered
+  select( date, province, ccaa, new_cases,   PCR, TestAc,              
+          activos, hospitalized,intensive_care,  deceased, cases_accumulated, cases_accumulated_PCR, recovered, source_name, source, comments )
+
+write.csv( vigo, file = "data/output/spain/galicia/vigo_area.csv", row.names = FALSE)
+
+# Pontevedra
+download.file("https://github.com/lipido/galicia-covid19/raw/master/pontevedra.csv",
+              "data/original/spain/galicia/pontevedra.csv")
+pontevedra_original <- read.delim("data/original/spain/galicia/pontevedra.csv", sep=",")
+download.file("https://github.com/lipido/galicia-covid19/raw/master/pontevedra.ext.csv",
+              "data/original/spain/galicia/pontevedra.ext.csv")
+pontevedra_hosp <- read.delim("data/original/spain/galicia/pontevedra.ext.csv", sep=",")
+
+pontevedra_a <- pontevedra_original %>%
+  mutate(
+    date = as.Date(Fecha),
+  ) %>% rename (
+    cases_accumulated_PCR = Pontevedra.casos.acum, #solo para después de 25 de mayo 2020 Casos totales hasta la fecha. Los casos son con PCR positiva a partir del 25 de mayo con total seguridad. Antes de esta fecha se incluían casos diagnosticados clínicamente con posterior test positivo de anticuerpos. Podrían ser unos 200 casos y concentrados al principio de la serie.
+    recovered = Pontevedra.altas.acum,
+    deceased = Pontevedra.fallecidos.acum
+  )
+
+pontevedra_b <- pontevedra_hosp %>%
+  mutate(
+    date = as.Date(Fecha),
+  ) %>% rename(
+    hospitalized = Pontevedra.hospitalizados, # TODO advertir del error en el nombre de columna
+    intensive_care = Pontevedra.uci,
+    cases_accumulated_test_PCR = Pontevedra.PCR.acum
+  )
+
+pontevedra <- merge( pontevedra_a %>% select(-Fecha),
+               pontevedra_b %>% select(-Fecha),
+               by.x = "date", by = "date") %>% mutate(
+                 province = "Pontevedra",
+                 ccaa = "Galicia",
+                 new_cases = NA,
+                 PCR = NA,
+                 TestAc = NA,
+                 activos = NA,
+                 cases_accumulated = NA,
+                 recovered = NA,
+                 source_name = "Área sanitaria Ourense via @lipido",
+                 source = "https://github.com/lipido/galicia-covid19/blob/master/pontevedra.csv;https://github.com/lipido/galicia-covid19/blob/master/pontevedra.ext.csv",
+                 comments = NA,
+               ) %>% filter ( date > as.Date("2020-06-03") ) %>% # TODO, change date when more data are gathered
+  select( date, province, ccaa, new_cases,   PCR, TestAc,              
+          activos, hospitalized,intensive_care,  deceased, cases_accumulated, cases_accumulated_PCR, recovered, source_name, source, comments )
+
+write.csv( pontevedra, file = "data/output/spain/galicia/pontevedra_area.csv", row.names = FALSE)
+
+pontevedra_prov <- rbind(vigo, pontevedra) %>%  group_by(date) %>% summarise (
+  hospitalized = sum(hospitalized),
+  intensive_care = sum(intensive_care),
+  deceased = sum(deceased),
+  cases_accumulated_PCR = sum(cases_accumulated_PCR),
+  province = "Pontevedra",
+  ccaa = "Galicia",
+  new_cases = NA,
+  PCR = NA,
+  TestAc = NA,
+  activos = NA,
+  cases_accumulated = NA,
+  recovered = NA,
+  source_name = "Áreas sanitaria Pontevedra y Vigo via @lipido",
+  source = "https://github.com/lipido/galicia-covid19/blob/master/pontevedra.csv;https://github.com/lipido/galicia-covid19/blob/master/pontevedra.ext.csv;https://github.com/lipido/galicia-covid19/blob/master/vigo.csv;https://github.com/lipido/galicia-covid19/blob/master/vigo.ext.csv",
+  comments = NA
+) %>% select( date, province, ccaa, new_cases,   PCR, TestAc,              
+          activos, hospitalized,intensive_care,  deceased, cases_accumulated, cases_accumulated_PCR, recovered, source_name, source, comments )
+
+write.csv( pontevedra_prov, file = "data/output/spain/galicia/pontevedra_provincia.csv", row.names = FALSE)
+
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces, pontevedra_prov)
+
+
+# / A Coruña = Santiago + Ferrol + Coruña -------------
+# // Santiago -----
+download.file("https://github.com/lipido/galicia-covid19/raw/master/santiago.csv",
+              "data/original/spain/galicia/santiago.csv")
+santiago_original <- read.delim("data/original/spain/galicia/santiago.csv", sep=",")
+download.file("https://github.com/lipido/galicia-covid19/raw/master/santiago.ext.csv",
+              "data/original/spain/galicia/santiago.ext.csv")
+santiago_hosp <- read.delim("data/original/spain/galicia/santiago.ext.csv", sep=",")
+
+santiago_a <- santiago_original %>%
+  mutate(
+    date = as.Date(Fecha),
+  ) %>% rename (
+    cases_accumulated_PCR = Santiago.casos.acum, #solo para después de 25 de mayo 2020 Casos totales hasta la fecha. Los casos son con PCR positiva a partir del 25 de mayo con total seguridad. Antes de esta fecha se incluían casos diagnosticados clínicamente con posterior test positivo de anticuerpos. Podrían ser unos 200 casos y concentrados al principio de la serie.
+    recovered = Santiago.altas.acum,
+    deceased = Santiago.fallecidos.acum
+  )
+
+santiago_b <- santiago_hosp %>%
+  mutate(
+    date = as.Date(Fecha),
+  ) %>% rename(
+    hospitalized = Santiago.hospitalizados, # TODO advertir del error en el nombre de columna
+    intensive_care = Santiago.uci,
+    cases_accumulated_test_PCR = Santiago.PCR.acum
+  )
+
+santiago <- merge( santiago_a %>% select(-Fecha),
+                     santiago_b %>% select(-Fecha),
+                     by.x = "date", by = "date") %>% mutate(
+                       province = "Santiago",
+                       ccaa = "Galicia",
+                       new_cases = NA,
+                       PCR = NA,
+                       TestAc = NA,
+                       activos = NA,
+                       cases_accumulated = NA,
+                       recovered = NA,
+                       source_name = "Área sanitaria Ourense via @lipido",
+                       source = "https://github.com/lipido/galicia-covid19/blob/master/santiago.csv;https://github.com/lipido/galicia-covid19/blob/master/santiago.ext.csv",
+                       comments = NA
+                     ) %>% filter ( date > as.Date("2020-06-03") ) %>% # TODO, change date when more data are gathered
+  select( date, province, ccaa, new_cases,   PCR, TestAc,              
+          activos, hospitalized,intensive_care,  deceased, cases_accumulated, cases_accumulated_PCR, recovered, source_name, source, comments )
+
+write.csv( santiago, file = "data/output/spain/galicia/santiago_area.csv", row.names = FALSE)
+
+# // Ferrol  -----
+download.file("https://github.com/lipido/galicia-covid19/raw/master/ferrol.csv",
+              "data/original/spain/galicia/ferrol.csv")
+ferrol_original <- read.delim("data/original/spain/galicia/ferrol.csv", sep=",")
+download.file("https://github.com/lipido/galicia-covid19/raw/master/ferrol.ext.csv",
+              "data/original/spain/galicia/ferrol.ext.csv")
+ferrol_hosp <- read.delim("data/original/spain/galicia/ferrol.ext.csv", sep=",")
+
+ferrol_a <- ferrol_original %>%
+  mutate(
+    date = as.Date(Fecha),
+  ) %>% rename (
+    cases_accumulated_PCR = Ferrol.casos.acum, #solo para después de 25 de mayo 2020 Casos totales hasta la fecha. Los casos son con PCR positiva a partir del 25 de mayo con total seguridad. Antes de esta fecha se incluían casos diagnosticados clínicamente con posterior test positivo de anticuerpos. Podrían ser unos 200 casos y concentrados al principio de la serie.
+    recovered = Ferrol.altas.acum,
+    deceased = Ferrol.fallecidos.acum
+  )
+
+ferrol_b <- ferrol_hosp %>%
+  mutate(
+    date = as.Date(Fecha),
+  ) %>% rename(
+    hospitalized = Ferrol.hospitalizados, # TODO advertir del error en el nombre de columna
+    intensive_care = Ferrol.uci,
+    cases_accumulated_test_PCR = Ferrol.PCR.acum
+  )
+
+ferrol <- merge( ferrol_a %>% select(-Fecha),
+                   ferrol_b %>% select(-Fecha),
+                   by.x = "date", by = "date") %>% mutate(
+                     province = "Ferrol",
+                     ccaa = "Galicia",
+                     new_cases = NA,
+                     PCR = NA,
+                     TestAc = NA,
+                     activos = NA,
+                     cases_accumulated = NA,
+                     recovered = NA,
+                     source_name = "Área sanitaria Ourense via @lipido",
+                     source = "https://github.com/lipido/galicia-covid19/blob/master/ferrol.csv;https://github.com/lipido/galicia-covid19/blob/master/ferrol.ext.csv",
+                     comments = NA
+                   ) %>% filter ( date > as.Date("2020-06-03") ) %>% # TODO, change date when more data are gathered
+  select( date, province, ccaa, new_cases,   PCR, TestAc,              
+          activos, hospitalized,intensive_care,  deceased, cases_accumulated, cases_accumulated_PCR, recovered, source_name, source, comments )
+
+write.csv( ferrol, file = "data/output/spain/galicia/ferrol_area.csv", row.names = FALSE)
+
+# // Coruña  -----
+download.file("https://github.com/lipido/galicia-covid19/raw/master/coruna.csv",
+              "data/original/spain/galicia/coruna.csv")
+coruna_original <- read.delim("data/original/spain/galicia/coruna.csv", sep=",")
+download.file("https://github.com/lipido/galicia-covid19/raw/master/coruna.ext.csv",
+              "data/original/spain/galicia/coruna.ext.csv")
+coruna_hosp <- read.delim("data/original/spain/galicia/coruna.ext.csv", sep=",")
+
+coruna_a <- coruna_original %>%
+  mutate(
+    date = as.Date(Fecha),
+  ) %>% rename (
+    cases_accumulated_PCR = A_Coruña.casos.acum, #solo para después de 25 de mayo 2020 Casos totales hasta la fecha. Los casos son con PCR positiva a partir del 25 de mayo con total seguridad. Antes de esta fecha se incluían casos diagnosticados clínicamente con posterior test positivo de anticuerpos. Podrían ser unos 200 casos y concentrados al principio de la serie.
+    recovered = A_Coruña.altas.acum,
+    deceased = A_Coruña.fallecidos.acum
+  )
+
+coruna_b <- coruna_hosp %>%
+  mutate(
+    date = as.Date(Fecha),
+  ) %>% rename(
+    hospitalized = A_Coruña.hospitalizados, # TODO advertir del error en el nombre de columna
+    intensive_care = A_Coruña.uci,
+    cases_accumulated_test_PCR = A_Coruña.PCR.acum
+  )
+
+coruna <- merge( coruna_a %>% select(-Fecha),
+                 coruna_b %>% select(-Fecha),
+                 by.x = "date", by = "date") %>% mutate(
+                   province = "A Coruña",
+                   ccaa = "Galicia",
+                   new_cases = NA,
+                   PCR = NA,
+                   TestAc = NA,
+                   activos = NA,
+                   cases_accumulated = NA,
+                   recovered = NA,
+                   source_name = "Área sanitarias Ourense via @lipido",
+                   source = "https://github.com/lipido/galicia-covid19/blob/master/coruna.csv;https://github.com/lipido/galicia-covid19/blob/master/coruna.ext.csv",
+                   comments = NA
+                 ) %>% filter ( date > as.Date("2020-06-03") ) %>% # TODO, change date when more data are gathered
+  select( date, province, ccaa, new_cases,   PCR, TestAc,              
+          activos, hospitalized,intensive_care,  deceased, cases_accumulated, cases_accumulated_PCR, recovered, source_name, source, comments )
+
+write.csv( coruna, file = "data/output/spain/galicia/coruna_area.csv", row.names = FALSE)
+
+# // Une las areas de A Coruña --------
+coruna_prov <- rbind(santiago, ferrol, coruna) %>%  group_by(date) %>% summarise (
+  hospitalized = sum(hospitalized),
+  intensive_care = sum(intensive_care),
+  deceased = sum(deceased),
+  cases_accumulated_PCR = sum(cases_accumulated_PCR),
+  province = "Coruña, A",
+  ccaa = "Galicia",
+  new_cases = NA,
+  PCR = NA,
+  TestAc = NA,
+  activos = NA,
+  cases_accumulated = NA,
+  recovered = NA,
+  source_name = "Áreas sanitarias Santiago, El Ferrol y A Coruña via @lipido",
+  source = "https://github.com/lipido/galicia-covid19/blob/master/santiago.csv;https://github.com/lipido/galicia-covid19/blob/master/santiago.ext.csv;
+  https://github.com/lipido/galicia-covid19/blob/master/ferrol.csv;https://github.com/lipido/galicia-covid19/blob/master/ferrol.ext.csv;
+  https://github.com/lipido/galicia-covid19/blob/master/coruna.csv;https://github.com/lipido/galicia-covid19/blob/master/coruna.ext.csv",
+  comments = NA
+) %>% select( date, province, ccaa, new_cases,   PCR, TestAc,              
+              activos, hospitalized,intensive_care,  deceased, cases_accumulated, cases_accumulated_PCR, recovered, source_name, source, comments )
+
+write.csv( coruna_prov, file = "data/output/spain/galicia/coruna_provincia.csv", row.names = FALSE)
+
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces, coruna_prov)
+
+rm(lugo,lugo_a,lugo_b, lugo_hosp, lugo_original, 
+   pontevedra, pontevedra_a,pontevedra_b, pontevedra_hosp, pontevedra_original, pontevedra_prov,
+   santiago, santiago_a,santiago_b, santiago_hosp, santiago_original, 
+   vigo, vigo_a, vigo_b, vigo_hosp, vigo_original, 
+   ferrol, ferrol_a, ferrol_b, ferrol_hosp, ferrol_original, 
+   coruna, coruna_a, coruna_b, coruna_hosp, coruna_original, coruna_prov )
 
 # Uniprovinciales: Remove and add uniprovinciales from ISCIII -----
 
@@ -767,18 +1112,13 @@ uniprovinciales_d <- read.delim("data/original/spain/uniprovinciales/data_unipro
   # province = province %>% str_replace_all("Baleares", "Balears, Illes"),
 ) %>% select (-DATE)
 
-table(uniprovinciales_d$ccaa)
-table(uniprovinciales_d$province)
-
-# xxx <- merge ( data_cases_sp_provinces  %>% mutate (dunique = paste0(date,province)),
 data_cases_sp_provinces <- merge ( data_cases_sp_provinces  %>% mutate (dunique = paste0(date,province)),
                                    uniprovinciales_d %>% mutate (dunique = paste0(date_uni,province_uni)) ,
                                    by.x = "dunique", by.y ="dunique", all = TRUE
 )
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
-  # xxx <- xxx %>% mutate(
-  # no sé por qué pero he tenido que montar este lío para que las fechas funcionaran
+  # no sé por qué pero he tenido que montar este lío para que las fechas funcionaran: porque no puede evaluar NA!!
   date_new = ifelse( !is.na(province_uni), date_uni, NA ),
   date_new = as.Date(date_uni, origin=as.Date("1970-01-01") ),
   date = ifelse( !is.na(province_uni), date_new, date ),
@@ -823,6 +1163,8 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
                     paste0(source,";https://www.murciasalud.es/pagina.php?id=458869&idsec=6575;https://gitlab.com/elpais/datos/-/raw/master/20_Covid-19/covid-provincias/data_uniprovs.csv?inline=false" ),
                     as.character(source) )
 ) %>% select( -date_uni, -province_uni, -ccaa_uni, -date_new ,-cases_accumulated_PCR_uni, -deceased_uni)
+
+rm(uniprovinciales_d)
 
 # Add missing data deaths previous 2020.03.08 --------------
 
