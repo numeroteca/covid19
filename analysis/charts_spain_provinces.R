@@ -2481,7 +2481,7 @@ data_cases_sp_provinces %>%
 dev.off()
 
 
-# Superpuesto Log por CCAA -------------
+# Superpuesto Lineal por CCAA -------------
 
 for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
 # for ( i in 3:3  ) {
@@ -2526,16 +2526,16 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
                     segment.color="#777777"
     ) +
     # marca un día
-    geom_text_repel(data=filter( data_cases_sp_provinces, date==as.Date("2020-04-02") &  province == unaprov ),
-                    aes(date,daily_deaths, label=paste("muertes en un día en una provincia")),
-                    nudge_y = 5, # adjust the starting y position of the text label
-                    size=5,
-                    hjust=0,
-                    family = "Roboto Condensed",
-                    # direction="x",
-                    segment.size = 0.5,
-                    segment.color="#777777"
-    ) +
+    # geom_text_repel(data=filter( data_cases_sp_provinces, date==as.Date("2020-04-02") &  province == unaprov ),
+    #                 aes(date,daily_deaths, label=paste("muertes en un día en una provincia")),
+    #                 nudge_y = 5, # adjust the starting y position of the text label
+    #                 size=5,
+    #                 hjust=0,
+    #                 family = "Roboto Condensed",
+    #                 # direction="x",
+    #                 segment.size = 0.5,
+    #                 segment.color="#777777"
+    # ) +
   scale_color_manual(values = colors_prov) +
     # coord_cartesian(
     #   ylim = c(1,500)
@@ -2604,16 +2604,16 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
                   segment.color="#777777"
   ) +
   # marca un día
-  geom_text_repel(data=filter( data_cases_sp_provinces, date==as.Date("2020-04-02") &  province == unaprov ),
-                  aes(date,daily_deaths, label=paste("muertes en un día en una provincia")),
-                  nudge_y = 5, # adjust the starting y position of the text label
-                  size=5,
-                  hjust=0,
-                  family = "Roboto Condensed",
-                  # direction="x",
-                  segment.size = 0.5,
-                  segment.color="#777777"
-  ) +
+  # geom_text_repel(data=filter( data_cases_sp_provinces, date==as.Date("2020-04-02") &  province == unaprov ),
+  #                 aes(date,daily_deaths, label=paste("muertes en un día en una provincia")),
+  #                 nudge_y = 5, # adjust the starting y position of the text label
+  #                 size=5,
+  #                 hjust=0,
+  #                 family = "Roboto Condensed",
+  #                 # direction="x",
+  #                 segment.size = 0.5,
+  #                 segment.color="#777777"
+  # ) +
   # # marca la línea
   # geom_text_repel(data=filter( data_cases_sp_provinces, date==as.Date("2020-04-04") &  province == "Madrid" ),
   #                 aes(date+0.5,282, label=paste("media de 6 días")),
