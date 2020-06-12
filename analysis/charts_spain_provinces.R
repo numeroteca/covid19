@@ -14,8 +14,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-06-10)"
-filter_date <- as.Date("2020-06-10")
+period <- "(Actualizado: 2020-06-12)"
+filter_date <- as.Date("2020-06-12")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
