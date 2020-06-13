@@ -558,7 +558,7 @@ euskadi_total %>%
   scale_x_date(
     # date_breaks = "3 day", 
     date_labels = "%d/%m",
-    limits=c( min(euskadi_total$date), max(euskadi_hosp$date +34)),
+    limits=c( min(euskadi_total$date), max(euskadi_hosp$date +40)),
     expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
