@@ -672,7 +672,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
 # import Instituto de Salud CIII 
 download.file("https://cnecovid.isciii.es/covid19/resources/agregados.csv", 
               "data/original/spain/iscii_data.csv")
-ciii_original <- read.delim("data/original/spain/iscii_data.csv",sep = ",")  
+ciii_original <- read.delim("data/original/spain/iscii_data.csv",sep = ",")
 
 ciii <- ciii_original %>% head(nrow(ciii_original) - 9) %>% #TODO: Cambia el número en función de las notas que incluya el csv original
   ungroup() %>% mutate(
@@ -1208,16 +1208,153 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 ) %>% select(-dunique,-deceassed_datadista)
 
 
+# Add province ISCIII RENAVE data -----
+download.file("https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv", 
+              "data/original/spain/iscii_casos_renave.csv")
+ciii_renave <- read.delim("data/original/spain/iscii_casos_renave.csv",sep = ",") %>% 
+  mutate ( 
+    date = as.Date(as.character(fecha)),
+    provincia_iso = ifelse ( is.na(provincia_iso), "NA", as.character(provincia_iso) )
+  )
+
+ciii_renave <- ciii_renave %>%
+  mutate(
+    province =  "",
+    province = ifelse( provincia_iso =="C", "Coruña, A", province ),
+    province = ifelse( provincia_iso =="VI", "Araba/Álava", province ),
+    province = ifelse( provincia_iso =="AB", "Albacete", province ),
+    province = ifelse( provincia_iso =="A", "Alicante/Alacant", province ),
+    province = ifelse( provincia_iso =="AL", "Almería", province ),
+    province = ifelse( provincia_iso =="O", "Asturias", province ),
+    province = ifelse( provincia_iso =="AV", "Ávila", province ),
+    province = ifelse( provincia_iso =="BA", "Badajoz", province ),
+    province = ifelse( provincia_iso =="PM", "Balears, Illes", province ),
+    province = ifelse( provincia_iso =="B", "Barcelona", province ),
+    province = ifelse( provincia_iso =="BI", "Bizkaia", province ),
+    province = ifelse( provincia_iso =="BU", "Burgos", province ),
+    province = ifelse( provincia_iso =="CC", "Cáceres", province ),
+    province = ifelse( provincia_iso =="CA", "Cádiz", province ),
+    province = ifelse( provincia_iso =="S", "Cantabria", province ),
+    province = ifelse( provincia_iso =="CS", "Castellón/Castelló", province ),
+    province = ifelse( provincia_iso =="CR", "Ciudad Real", province ),
+    province = ifelse( provincia_iso =="CO", "Córdoba", province ),
+    province = ifelse( provincia_iso =="CU", "Cuenca", province ),
+    province = ifelse( provincia_iso =="SS", "Gipuzkoa", province ),
+    province = ifelse( provincia_iso =="GI", "Girona", province ),
+    province = ifelse( provincia_iso =="GR", "Granada", province ),
+    province = ifelse( provincia_iso =="GU", "Guadalajara", province ),
+    province = ifelse( provincia_iso =="H", "Huelva", province ),
+    province = ifelse( provincia_iso =="HU", "Huesca", province ),
+    province = ifelse( provincia_iso =="J", "Jaén", province ),
+    province = ifelse( provincia_iso =="LO", "Rioja, La", province ),
+    province = ifelse( provincia_iso =="GC", "Palmas, Las", province ),
+    province = ifelse( provincia_iso =="LE", "León", province ),
+    province = ifelse( provincia_iso =="L", "Lleida", province ),
+    province = ifelse( provincia_iso =="LU", "Lugo", province ),
+    province = ifelse( provincia_iso =="M", "Madrid", province ),
+    province = ifelse( provincia_iso =="MA", "Málaga", province ),
+    province = ifelse( provincia_iso =="MU", "Murcia", province ),
+    province = ifelse( provincia_iso =="OR", "Ourense", province ),
+    province = ifelse( provincia_iso =="P", "Palencia", province ),
+    province = ifelse( provincia_iso =="PO", "Pontevedra", province ),
+    province = ifelse( provincia_iso =="SA", "Salamanca", province ),
+    province = ifelse( provincia_iso =="TF", "Santa Cruz de Tenerife", province ),
+    province = ifelse( provincia_iso =="SE", "Sevilla", province ),
+    province = ifelse( provincia_iso =="SG", "Segovia", province ),
+    province = ifelse( provincia_iso =="SO", "Soria", province ),
+    province = ifelse( provincia_iso =="T", "Tarragona", province ),
+    province = ifelse( provincia_iso =="TE", "Teruel", province ),
+    province = ifelse( provincia_iso =="TO", "Toledo", province ),
+    province = ifelse( provincia_iso =="V", "Valencia/València", province ),
+    province = ifelse( provincia_iso =="VA", "Valladolid", province ),
+    province = ifelse( provincia_iso =="ZA", "Zamora", province ),
+    province = ifelse( provincia_iso =="Z", "Zaragoza", province ),
+    province = ifelse( provincia_iso =="CE", "Ceuta", province ),
+    province = ifelse( provincia_iso =="ME", "Melilla", province ),
+    province = ifelse( provincia_iso =="NA", "Navarra", province ),
+    dunique = paste0( date, province)
+  )
+
+
+data_cases_sp_provinces <- merge(
+  data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ),
+  ciii_renave %>% select (-provincia_iso, -fecha) %>% rename ( date_ren = date, province_ren = province ),
+  by.x = "dunique", by.y = "dunique", all= TRUE
+)
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+  # no sé por qué pero he tenido que montar este lío para que las fechas funcionaran
+  date_new = ifelse( is.na(date) , date_ren, NA ),
+  date_new = as.Date(date_ren, origin=as.Date("1970-01-01") ),
+  date = ifelse( is.na(date) & !is.na(date_ren), date_new, date ),
+  date = as.Date(date, origin=as.Date("1970-01-01") ),
+  
+  ccaa = "",
+  province = ifelse ( is.na(province), province_ren, province),
+  ccaa = ifelse( province == "Coruña, A", "Galicia", ccaa ),
+  ccaa = ifelse( province =="Araba/Álava", "País Vasco", ccaa ),
+  ccaa = ifelse( province =="Albacete", "Castilla - La Mancha", ccaa ),
+  ccaa = ifelse( province =="Alicante/Alacant", "Comunitat Valenciana", ccaa ),
+  ccaa = ifelse( province =="Almería", "Andalucía", ccaa ),
+  ccaa = ifelse( province =="Asturias", "Asturias, Principado de", ccaa ),
+  ccaa = ifelse( province =="Ávila", "Castilla y León", ccaa ),
+  ccaa = ifelse( province =="Badajoz", "Extremadura", ccaa ),
+  ccaa = ifelse( province =="Balears, Illes", "Balears, Illes", ccaa ),
+  ccaa = ifelse( province =="Barcelona", "Cataluña", ccaa ),
+  ccaa = ifelse( province =="Bizkaia", "País Vasco", ccaa ),
+  ccaa = ifelse( province =="Burgos", "Castilla y León", ccaa ),
+  ccaa = ifelse( province == "Cáceres", "Extremadura", ccaa ),
+  ccaa = ifelse( province == "Cádiz", "Andalucía", ccaa ),
+  ccaa = ifelse( province == "Cantabria", "Cantabria", ccaa ),
+  ccaa = ifelse( province == "Castellón/Castelló", "Comunitat Valenciana", ccaa ),
+  ccaa = ifelse( province == "Ciudad Real", "Castilla - La Mancha", ccaa ),
+  ccaa = ifelse( province == "Córdoba", "Andalucía", ccaa ),
+  ccaa = ifelse( province == "Cuenca", "Castilla - La Mancha", ccaa ),
+  ccaa = ifelse( province == "Gipuzkoa", "País Vasco", ccaa ),
+  ccaa = ifelse( province == "Girona", "Cataluña", ccaa ),
+  ccaa = ifelse( province == "Granada", "Andalucía", ccaa ),
+  ccaa = ifelse( province == "Guadalajara", "Castilla - La Mancha", ccaa ),
+  ccaa = ifelse( province == "Huelva", "Andalucía", ccaa ),
+  ccaa = ifelse( province == "Huesca", "Aragón", ccaa ),
+  ccaa = ifelse( province == "Jaén", "Andalucía", ccaa ),
+  ccaa = ifelse( province == "Rioja, La", "Rioja, La", ccaa ),
+  ccaa = ifelse( province == "Palmas, Las", "Canarias", ccaa ),
+  ccaa = ifelse( province == "León", "Castilla y León", ccaa ),
+  ccaa = ifelse( province == "Lleida", "Cataluña", ccaa ),
+  ccaa = ifelse( province == "Lugo", "Galicia", ccaa ),
+  ccaa = ifelse( province == "Madrid", "Madrid, Comunidad de", ccaa ),
+  ccaa = ifelse( province == "Málaga", "Andalucía", ccaa ),
+  ccaa = ifelse( province == "Murcia", "Murcia, Región de", ccaa ),
+  ccaa = ifelse( province == "Ourense", "Galicia", ccaa ),
+  ccaa = ifelse( province == "Palencia", "Castilla y León", ccaa ),
+  ccaa = ifelse( province == "Pontevedra", "Galicia", ccaa ),
+  ccaa = ifelse( province == "Salamanca", "Castilla y León", ccaa ),
+  ccaa = ifelse( province == "Santa Cruz de Tenerife", "Canarias", ccaa ),
+  ccaa = ifelse( province == "Sevilla", "Andalucía", ccaa ),
+  ccaa = ifelse( province == "Segovia", "Castilla y León", ccaa ),
+  ccaa = ifelse( province == "Soria", "Castilla y León", ccaa ),
+  ccaa = ifelse( province == "Tarragona", "Cataluña", ccaa ),
+  ccaa = ifelse( province == "Teruel", "Aragón", ccaa ),
+  ccaa = ifelse( province == "Toledo", "Castilla - La Mancha", ccaa ),
+  ccaa = ifelse( province == "Valencia/València", "Comunitat Valenciana", ccaa ),
+  ccaa = ifelse( province == "Valladolid", "Castilla y León", ccaa ),
+  ccaa = ifelse( province == "Zamora", "Castilla y León", ccaa ),
+  ccaa = ifelse( province == "Zaragoza", "Aragón", ccaa ),
+  ccaa = ifelse( province == "Ceuta", "Ceuta", ccaa ),
+  ccaa = ifelse( province == "Melilla", "Melilla", ccaa ),
+  ccaa = ifelse( province == "Navarra", "Navarra, Comunidad Foral de", ccaa )
+) %>% select (- province_ren, -date_new, -date_ren, -dunique)
+
 # add population data -----
 data_cases_sp_provinces <- merge( data_cases_sp_provinces, select(provincias_poblacion,provincia,poblacion,ine_code), by.x = "province", by.y = "provincia", all = TRUE   )
 
-# calculate values per 
+# calculate values per inhab. -------------- 
 data_cases_sp_provinces$cases_per_cienmil <- round( data_cases_sp_provinces$cases_accumulated / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 data_cases_sp_provinces$intensive_care_per_1000000 <- round( data_cases_sp_provinces$intensive_care / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 data_cases_sp_provinces$deceassed_per_100000 <- round( data_cases_sp_provinces$deceased / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 data_cases_sp_provinces$hospitalized_per_100000 <- round( data_cases_sp_provinces$hospitalized / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 
-# Calculates daily deaths
+# Calculates daily deaths ----------------
 data_cases_sp_provinces <- data_cases_sp_provinces %>% 
   group_by(province) %>% arrange(date) %>% 
   mutate( 
@@ -1245,7 +1382,8 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_code,everything())  
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(-source, -source_name,-comments,source_name,source,comments)
 
-# Re calculates factors to remove things like Andaluc'ia for provinces
+
+# Re calculates factors to remove things like Andalucía for provinces ---
 data_cases_sp_provinces$province <- factor(data_cases_sp_provinces$province)
 data_cases_sp_provinces$ccaa <- factor(data_cases_sp_provinces$ccaa)
 
@@ -1263,4 +1401,5 @@ write.csv(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-
 saveRDS(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-spain_consolidated.rds")
 
 # cleans environment
-rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_poblacion,datadista,ciii, galicia_cumulative)
+rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_poblacion,datadista,ciii, 
+   galicia_cumulative, madrid_original2)
