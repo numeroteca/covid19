@@ -8,11 +8,13 @@ library(ggrepel) # for geom_text_repel to prevent   overlapping
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de losS datos
 caption_i <- "Gráfico: @numeroteca (lab.montera34.com/covid19). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 06.12"
+periodo_i <- "2020.02.24 - 06.20"
 
 # COVID-19 in Italy -----------
 # Load data
-data_i_cases_original <- read.delim("https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-regioni/dpc-covid19-ita-regioni.csv",sep = ",")  
+download.file("https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-regioni/dpc-covid19-ita-regioni.csv", 
+              "data/original/italia/dpc-covid19-ita-regioni.csv")
+data_i_cases_original <- read.delim("data/original/italia/dpc-covid19-ita-regioni.csv",sep = ",")  
 
 # Population
 population_i_region <- read.delim("data/original/italia/population-region-italia.csv",sep = ",")  

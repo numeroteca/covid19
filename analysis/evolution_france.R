@@ -9,7 +9,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------  
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_f <- "Gráfico: lab.montera34.com/covid19. Datos: OpenCOVID19-fr"
-periodo_f <- "2020.03.04 - 06.12"
+periodo_f <- "2020.03.04 - 06.20"
 
 # COVID-19 in France-----------
 
@@ -20,7 +20,9 @@ periodo_f <- "2020.03.04 - 06.12"
 # new source
 # data_f_cases_original <- read.delim("https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.csv",sep = ",") %>% filter( granularite == "region")
 # data_f_cases_original2 <- read.delim("data/original/france/covid_hospit.csv",sep = ";")
-data_f2_cases_original <- read.delim("https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.csv",sep = ",")
+download.file("https://raw.githubusercontent.com/opencovid19-fr/data/master/dist/chiffres-cles.csv", 
+              "data/original/france/chiffres-cles.csv")
+data_f2_cases_original <- read.delim("data/original/france/chiffres-cles.csv",sep = ",")
 # table(data_f_cases_original$source_nom)
 # names(data_f_cases_original)
 # Population
