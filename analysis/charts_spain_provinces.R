@@ -14,8 +14,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-06-16)"
-filter_date <- as.Date("2020-06-16")
+period <- "(Actualizado: 2020-06-20)"
+filter_date <- as.Date("2020-06-20")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -4032,8 +4032,8 @@ scale_color_manual(values = colors_prov) +
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ),
     expand = c(0,0.2)
   ) +
-  scale_x_date(date_breaks = "2 day", 
-               date_labels = "%d",
+  scale_x_date(date_breaks = "1 week", 
+               date_labels = "%d/%m",
                limits=c( min(data_cases_sp_provincesX$date)+7, max(data_cases_sp_provincesX$date + 9)),
                expand = c(0,0)
   ) + 
@@ -4042,7 +4042,7 @@ scale_color_manual(values = colors_prov) +
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = c(0.1,0.6)
+    legend.position = c(0.3,0.2)
   ) +
   labs(title =  paste0("Hospitalizados prevalentes por COVID-19 por 100.000 habitantes en España ", updated ),
        subtitle = paste0("Por provincia (escala logarítmica). ",period),

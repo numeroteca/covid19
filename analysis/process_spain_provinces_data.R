@@ -17,7 +17,7 @@ provincias_poblacion <-  read.delim("data/original/spain/provincias-poblacion.cs
 # / By province -----------
 # donwload provincias data from googgle spreadsheet 
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=provincias", 
-              "data/original/spain/covid19_spain_provincias.csv")
+            "data/original/spain/covid19_spain_provincias.csv")
 # save in another repository # save file in another repository (comment this line!)
 write.csv(read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ","), file = "../escovid19data/data/original/covid19_spain_provincias.csv", row.names = FALSE)
 # load data
@@ -893,7 +893,7 @@ download.file("https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covi
 euskadi_original <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "01")
 
 euskadi_a <- euskadi_original %>% rename( date = ...1 ) %>% 
-  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Ingresados en Planta`)  %>% melt(
+  mutate( date = as.Date(date,"%m/%d/%Y")) %>% select( -`Ingresados en Planta`)  %>% melt(
     id.vars = c("date")
   ) %>% mutate(
     province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
