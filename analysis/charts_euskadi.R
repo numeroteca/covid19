@@ -18,7 +18,7 @@ caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos:
 # extends color paletter
 library(RColorBrewer)
 # creates extended color palette https://www.r-bloggers.com/how-to-expand-color-palette-with-ggplot-and-rcolorbrewer/
-colourCount <- length(unique(data_cases_sp_provinces$ccaa))
+colourCount <- 17
 getPalette <- colorRampPalette(brewer.pal(9, "Dark2"))
 colors_prov <- getPalette(colourCount )
 # Change yellow to blue
@@ -28,7 +28,7 @@ colors_prov <- getPalette(colourCount )
 euskadi_hosp <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "01")
 
 euskadi_hosp <- euskadi_hosp %>% rename( date = ...1 ) %>% 
-  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Ingresados en Planta`)  %>% melt(
+  mutate( date = as.Date(date,"%m/%d/%Y")) %>% select( -`Ingresados en Planta`)  %>% melt(
     id.vars = c("date")
   ) %>% mutate(
     province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
@@ -64,7 +64,7 @@ euskadi_hosp <- euskadi_hosp %>% rename( date = ...1 ) %>%
 euskadi_hosp_new <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "02")
 
 euskadi_hosp_new <- euskadi_hosp_new %>% rename( date = ...1 ) %>% 
-  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Nuevos Ingresos Hospitalarios`)  %>% melt(
+  mutate( date = as.Date(date,"%m/%d/%Y")) %>% select( -`Nuevos Ingresos Hospitalarios`)  %>% melt(
     id.vars = c("date")
   ) %>% mutate(
     province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
@@ -178,7 +178,7 @@ euskadi_hosp_new <- euskadi_hosp_new %>% mutate ( # Hay que añadir la cifra de 
 # altas ----------
 euskadi_altas <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "03")
 euskadi_altas <- euskadi_altas %>% rename( date = ...1 ) %>% 
-  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Altas Planta`)  %>% melt(
+  mutate( date = as.Date(date,"%m/%d/%Y")) %>% select( -`Altas Planta`)  %>% melt(
     id.vars = c("date")
   ) %>% mutate(
     province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
@@ -213,7 +213,7 @@ euskadi_altas <- euskadi_altas %>% rename( date = ...1 ) %>%
 # altas UCI ----------
 euskadi_altas_uci <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "06")
 euskadi_altas_uci <- euskadi_altas_uci %>% rename( date = ...1 ) %>% 
-  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Altas UCI`)  %>% melt(
+  mutate( date = as.Date(date,"%m/%d/%Y")) %>% select( -`Altas UCI`)  %>% melt(
     id.vars = c("date")
   ) %>% mutate(
     province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
@@ -249,7 +249,7 @@ euskadi_altas_uci <- euskadi_altas_uci %>% rename( date = ...1 ) %>%
 #  ingresados en UCI ----------
 euskadi_uci <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "04")
 euskadi_uci <- euskadi_uci %>% rename( date = ...1 ) %>%
-  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Ingresados UCI`)  %>% melt(
+  mutate( date = as.Date(date,"%m/%d/%Y")) %>% select( -`Ingresados UCI`)  %>% melt(
     id.vars = c("date")
   ) %>% mutate(
     province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
@@ -280,12 +280,11 @@ euskadi_uci <- euskadi_uci %>% rename( date = ...1 ) %>%
     uci = replace_na(uci, 0)
   )
 
-
 # uci nuevos cada dia
 euskadi_uci_new <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "05")
 
 euskadi_uci_new <- euskadi_uci_new %>% rename( date = ...1 ) %>% 
-  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Nuevos Ingresos UCI`)  %>% melt(
+  mutate( date = as.Date(date,"%m/%d/%Y")) %>% select( -`Nuevos Ingresos UCI`)  %>% melt(
     id.vars = c("date")
   ) %>% mutate(
     province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
@@ -320,7 +319,7 @@ euskadi_uci_new <- euskadi_uci_new %>% rename( date = ...1 ) %>%
 #  fallecidos ----------
 euskadi_fallecidos <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "07")
 euskadi_fallecidos <- euskadi_fallecidos %>% rename( date = ...1 ) %>% filter( date != "Suma Total") %>%
-  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Exitus`)  %>% melt(
+  mutate( date = as.Date(date,"%m/%d/%Y")) %>% select( -`Exitus`)  %>% melt(
     id.vars = c("date")
   ) %>% mutate(
     province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
