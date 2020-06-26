@@ -1237,7 +1237,8 @@
           segment.color="#777777"
         ) +
         scale_color_manual(values = colors_prov) +
-        scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+        scale_y_continuous( 
+          labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
                             # expand = c(0,0.2)
         ) +
         scale_x_date(date_breaks = "1 week", 
