@@ -8,6 +8,8 @@ library(tidyverse)
 library(reshape2)
 library(readxl)
 library(openxlsx)
+library(zoo)
+
 
 # Load Data ---------
 # / Population INE-------------
@@ -1275,7 +1277,6 @@ ciii_renave <- ciii_renave %>%
     dunique = paste0( date, province)
   )
 
-
 data_cases_sp_provinces <- merge(
   data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ),
   ciii_renave %>% select (-provincia_iso, -fecha) %>% rename ( date_ren = date, province_ren = province ),
@@ -1343,6 +1344,13 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   ccaa = ifelse( province == "Ceuta", "Ceuta", ccaa ),
   ccaa = ifelse( province == "Melilla", "Melilla", ccaa ),
   ccaa = ifelse( province == "Navarra", "Navarra, Comunidad Foral de", ccaa )
+) %>% mutate(
+  source = ifelse( is.na(province_ren), 
+                   source, 
+                   paste0( ifelse( is.na(source),"", source), ifelse( is.na(source),"",";"), "https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv")),
+  source_name = ifelse( is.na(province_ren), 
+                        source_name ,
+                        paste0( ifelse( is.na(source_name),"", source_name), ifelse( is.na(source_name),"",";") ,"ISCIII RENAVE") )
 ) %>% select (- province_ren, -date_new, -date_ren, -dunique)
 
 # add population data -----
@@ -1369,7 +1377,11 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
                                        lag(daily_cases_PCR,3)+lag(daily_cases_PCR,4) +lag(daily_cases_PCR,5) +lag(daily_cases_PCR,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
     daily_deaths = deceased - lag(deceased),
     daily_deaths_inc = round((deceased - lag(deceased)) /lag(deceased) * 100, digits = 1),
+
     daily_deaths_avg3 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2) ) / 3, digits = 1 ), # average of daily deaths of 3 last days
+    # daily_deaths_avg3_zoo =  round( rollmean( daily_deaths,3 , na.pad = TRUE  ), digits = 1), #TODO calculate roll mean with this function. Check why dates are shifted one day
+    daily_deaths_avg3_zoo_fix =   lag(daily_deaths_avg3_zoo,1),
+
     daily_deaths_avg7 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+
                                     lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5)+lag(daily_deaths,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
     # deaths_cum_last_week = deceased - lag(deceased,6),
@@ -1379,9 +1391,10 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
     
   )
 
+# xx <- data_cases_sp_provinces %>% select(date, ccaa, daily_deaths, daily_deaths_avg3,daily_deaths_avg3_zoo_fix,daily_deaths_avg3_zoo)
+
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_code,everything())  
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(-source, -source_name,-comments,source_name,source,comments)
-
 
 # Re calculates factors to remove things like Andalucía for provinces ---
 data_cases_sp_provinces$province <- factor(data_cases_sp_provinces$province)
