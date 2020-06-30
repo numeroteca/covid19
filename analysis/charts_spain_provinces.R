@@ -14,8 +14,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-06-28)"
-filter_date <- as.Date("2020-06-28")
+period <- "(Actualizado: 2020-06-30)"
+filter_date <- as.Date("2020-06-30")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -3815,8 +3815,8 @@ data_cases_sp_provincesX %>%
   ggplot() +
   geom_line(data = select(data_cases_sp_provincesX_sm,date,hospitalized_per_100000,province_cp,-province),
             aes(date,hospitalized_per_100000,group=province_cp), color="#CACACA", alpha = 0.4 ) +
-  geom_line(aes(date, hospitalized_per_100000,group=province)) +
-  geom_point(aes(date, hospitalized_per_100000), size= 0.5 ) +
+  geom_line(aes(date, hospitalized_per_100000,group=province, color=province)) +
+  geom_point(aes(date, hospitalized_per_100000, color=province), size= 0.3 ) +
   facet_wrap(~ccaa) +
   scale_y_log10(  
     limits = c(0.05,max(data_cases_sp_provincesX$hospitalized_per_100000)),
@@ -3831,7 +3831,7 @@ data_cases_sp_provincesX %>%
     panel.grid.minor.y = element_blank(),
     panel.grid.major.x = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = c(0.1,0.6),
+    legend.position = "none",
     axis.text.x = element_text(size = 9)
   ) +
   labs(title = paste0("Hospitalizados prevalentes por COVID-19 por 100.000 habitantes en España ", updated ),
@@ -3900,7 +3900,7 @@ data_cases_sp_provincesX %>%
   geom_point(aes(date, hospitalized, color=ccaa), size= 0.7 ) +
   geom_text_repel(
     
-    data = data_cases_sp_provincesX %>% group_by(province) %>% filter(!is.na(hospitalized) & hospitalized > 10 & date > filter_date-3 ) %>% top_n(1, date),
+    data = data_cases_sp_provincesX %>% group_by(province) %>% filter(!is.na(hospitalized) & hospitalized > 10 & date > filter_date-5 ) %>% top_n(1, date),
     
                   aes(date, hospitalized, color=ccaa, label=paste0(format(hospitalized, nsmall=0, big.mark="."), " ", province, "")),
                   nudge_x = 3, # adjust the starting y position of the text label
@@ -3953,7 +3953,7 @@ data_cases_sp_provincesX %>%
   geom_point(aes(date, hospitalized_per_100000, color=ccaa), size= 0.7 ) +
   geom_text_repel(
     
-    data = data_cases_sp_provincesX %>% group_by(province) %>% filter(!is.na(hospitalized_per_100000) & hospitalized_per_100000 > 7 & date > filter_date-3 ) %>% top_n(1, date),
+    data = data_cases_sp_provincesX %>% group_by(province) %>% filter(!is.na(hospitalized_per_100000) & hospitalized_per_100000 > 7 & date > filter_date-10 ) %>% top_n(1, date),
                   aes(date, hospitalized_per_100000, color=ccaa, 
                       label=paste(format( round(hospitalized_per_100000, digits = 1) , nsmall=1, big.mark=".", decimal.mark = ","),province)),
                   nudge_x = 3, # adjust the starting y position of the text label
@@ -4002,7 +4002,7 @@ data_cases_sp_provincesX %>%
   geom_line(aes(date, hospitalized_per_100000,group=province, color=ccaa), size= 0.7 ) +
   geom_point(aes(date, hospitalized_per_100000, color=ccaa), size= 0.7 ) +
   geom_text_repel(
-    data = data_cases_sp_provincesX %>% group_by(province) %>% filter(!is.na(hospitalized_per_100000) & hospitalized_per_100000 > 4 & date > filter_date-3 ) %>% top_n(1, date),
+    data = data_cases_sp_provincesX %>% group_by(province) %>% filter(!is.na(hospitalized_per_100000) & hospitalized_per_100000 > 2 & date > filter_date-5 ) %>% top_n(1, date),
                   aes(date, hospitalized_per_100000, color=ccaa, 
                       label=paste(format(round(hospitalized_per_100000, digits = 1) , nsmall=1, big.mark=".", decimal.mark = ","),province)),
                   nudge_x = 2, # adjust the starting y position of the text label

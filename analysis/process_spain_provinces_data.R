@@ -1379,7 +1379,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
 
     daily_deaths_avg3 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2) ) / 3, digits = 1 ), # average of daily deaths of 3 last days
     # daily_deaths_avg3_zoo =  round( rollmean( daily_deaths,3 , na.pad = TRUE  ), digits = 1), #TODO calculate roll mean with this function. Check why dates are shifted one day
-    daily_deaths_avg3_zoo_fix =   lag(daily_deaths_avg3_zoo,1),
+    # daily_deaths_avg3_zoo_fix =   lag(daily_deaths_avg3_zoo,1),
 
     daily_deaths_avg7 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+
                                     lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5)+lag(daily_deaths,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
@@ -1415,3 +1415,4 @@ saveRDS(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-sp
 # cleans environment
 rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_poblacion,datadista,ciii, 
    galicia_cumulative, madrid_original2)
+
