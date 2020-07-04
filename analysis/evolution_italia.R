@@ -8,7 +8,7 @@ library(ggrepel) # for geom_text_repel to prevent   overlapping
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de losS datos
 caption_i <- "Gráfico: @numeroteca (lab.montera34.com/covid19). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 06.28"
+periodo_i <- "2020.02.24 - 07.04"
 
 # COVID-19 in Italy -----------
 # Load data
@@ -275,7 +275,7 @@ data_i_cases %>%
   ) +
   scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date + 17)) 
+               limits=c( min(data_i_cases$date), max(data_i_cases$date + 25)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -314,7 +314,7 @@ data_i_cases %>%
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date + 9)) 
+               limits=c( min(data_i_cases$date), max(data_i_cases$date + 25)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -354,7 +354,7 @@ data_i_cases %>%
                  minor_breaks = c(  seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date + 17)) 
+               limits=c( min(data_i_cases$date), max(data_i_cases$date + 25)) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -490,7 +490,7 @@ data_i_cases %>%
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date + 18)),
+               limits=c( min(data_i_cases$date), max(data_i_cases$date + 25)),
                expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -579,7 +579,7 @@ data_i_cases %>%
   ) +
   scale_x_date(date_breaks = "1 month", 
                date_labels = "%d/%m",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date +18)),
+               limits=c( min(data_i_cases$date), max(data_i_cases$date +25)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -624,7 +624,7 @@ data_i_cases %>%
   ) +
   scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date +14)),
+               limits=c( min(data_i_cases$date), max(data_i_cases$date +25)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -691,7 +691,7 @@ data_i_cases %>%
   ) +
   scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date +14)),
+               limits=c( min(data_i_cases$date), max(data_i_cases$date +25)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -763,7 +763,7 @@ data_i_cases %>%
   ) +
   scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date +14)),
+               limits=c( min(data_i_cases$date), max(data_i_cases$date +25)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -807,7 +807,7 @@ data_i_cases %>%
     expand = c(0,0.1)  ) +
   scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
-               limits=c( min(data_i_cases$date), max(data_i_cases$date + 21)),
+               limits=c( min(data_i_cases$date), max(data_i_cases$date + 25)),
                expand = c(0,0)  
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
