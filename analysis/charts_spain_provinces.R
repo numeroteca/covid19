@@ -697,9 +697,21 @@ data_cases_sp_provinces %>%
   geom_line(aes(date, daily_cases_PCR_avg7,group=province, color = province ), size= 0.9, se = FALSE, span = 0.7, linetype = "11" ) +
   # geom_point(aes(date, daily_cases_avg7), size= 0.5 ) +
   geom_text_repel(
-    data = data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(daily_cases) ) %>% top_n(1, date),
-    aes(date, daily_cases_avg7, label=paste(format(daily_cases_avg7, nsmall=1, big.mark="."), substr(province,1,2) ) ),
-    nudge_x = 3, # adjust the starting x position of the text label
+    data = data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(daily_cases_PCR_avg7) ) %>% top_n(1, date),
+    aes(date, daily_cases_PCR_avg7, label=paste(format(daily_cases_PCR_avg7, nsmall=1, big.mark="."), substr(province,1,2) ) ),
+    nudge_x = 7, # adjust the starting x position of the text label
+    size=4,
+    hjust=0,
+    family = "Roboto Condensed",
+    direction="y",
+    segment.size = 0.1,
+    color = "#666666",
+    segment.color="#777777"
+  ) +
+  geom_text_repel(
+    data = data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date),
+    aes(date, daily_cases_avg7, label=paste( substr(province,1,1) ) ),
+    nudge_x = 2, # adjust the starting x position of the text label
     size=4,
     hjust=0,
     family = "Roboto Condensed",
@@ -710,7 +722,7 @@ data_cases_sp_provinces %>%
   ) +
   facet_wrap(~ccaa, scales = "free_y") +
   coord_cartesian(
-    xlim= c( as.Date("2020-03-15"),max(data_cases_sp_provinces$date)+20 )
+    xlim= c( as.Date("2020-03-15"),max(data_cases_sp_provinces$date)+35 )
   ) +
   scale_y_continuous( 
     # minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
