@@ -28,8 +28,8 @@ data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provinc
 # Download Andalucía data from https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228
 # that is uploaded manually to our own spreadsheet in google spreadsheet 
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=andalucia", 
-              "data/original/spain/canarias/canarias.csv")
-andalucia_original <- read.delim("data/original/spain/canarias/canarias.csv", sep=",")
+              "data/original/spain/andalucia/andalucia.csv")
+andalucia_original <- read.delim("data/original/spain/andalucia/andalucia.csv", sep=",")
 # TODO: make it work from direct source
 # andalucia_original <- read.delim("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=4dcace2a-394f-4e86-9d7b-fede695f0c92&type=3&foto=si&ejecutaDesde=&codConsulta=38228&consTipoVisua=JP", sep=";")
 
