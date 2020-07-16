@@ -14,8 +14,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-07-15)"
-filter_date <- as.Date("2020-07-15")
+period <- "(Actualizado: 2020-07-16)"
+filter_date <- as.Date("2020-07-16")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -804,9 +804,9 @@ data_cases_sp_provinces %>%
   geom_line(aes(date, daily_cases_PCR_avg7/poblacion*100000, group=province, color = province), size= 0.7, linetype="11") +
   # geom_point(aes(date, daily_cases_avg7), size= 0.5 ) +
   geom_text_repel(
-    data = data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(daily_cases) ) %>% top_n(1, date),
-    aes(date, daily_cases_avg7/poblacion*100000, label=paste(format( round(daily_cases_avg7/poblacion*100000, digits = 1), nsmall=1, big.mark="."), substr(province,1,2) ) ),
-    nudge_x = 2, # adjust the starting x position of the text label
+    data = data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date),
+    aes(date, daily_cases_avg7/poblacion*100000, label=paste( substr(province,1,1) ) ),
+    nudge_x = 3, # adjust the starting x position of the text label
     size=4,
     hjust=0,
     family = "Roboto Condensed",
@@ -815,7 +815,19 @@ data_cases_sp_provinces %>%
     color = "#666666",
     segment.color="#777777"
   ) +
-  facet_wrap(~ccaa, scales = "free_y") + #
+  geom_text_repel(
+    data = data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(daily_cases_PCR_avg7) ) %>% top_n(1, date),
+    aes(date, daily_cases_PCR_avg7/poblacion*100000, label=paste(format( round(daily_cases_PCR_avg7/poblacion*100000, digits = 1), nsmall=1, big.mark="."), substr(province,1,2) ) ),
+    nudge_x = 6, # adjust the starting x position of the text label
+    size=4,
+    hjust=0,
+    family = "Roboto Condensed",
+    direction="y",
+    segment.size = 0.1,
+    color = "#666666",
+    segment.color="#777777"
+  ) +
+   facet_wrap(~ccaa, scales = "free_y") + #
   coord_cartesian(
     xlim= c( as.Date("2020-03-15"),max(data_cases_sp_provinces$date) )
   ) +
@@ -824,8 +836,8 @@ data_cases_sp_provinces %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(date_breaks = "1 month", 
-               date_labels = "%d/%m",
-               expand = c(0,15) 
+               date_labels = "%m",
+               expand = c(0,47) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -839,7 +851,7 @@ data_cases_sp_provinces %>%
     title = paste0("Media de casos por día (ventana 7 días) por COVID-19 por 100.000 habitantes en España ",updated),
     subtitle = paste0("Por provincia (escala logarítmica). ",period),
     y = "media de casos por día",
-    x = "fecha",
+    x = "fecha (mes) 2020",
     caption = caption_provincia
   )
 dev.off()
@@ -873,7 +885,7 @@ data_cases_sp_provinces %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(date_breaks = "1 month", 
-               date_labels = "%d/%m",
+               date_labels = "%m",
                expand = c(0,18) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -887,7 +899,7 @@ data_cases_sp_provinces %>%
   labs(title = paste0("Media de casos por día (medía 7 días) por COVID-19 en España ",updated),
        subtitle = paste0("Por provincia (escala logarítmica). ",period),
        y = "media casos por día",
-       x = "fecha",
+       x = "fecha (mes) 2020",
        caption = caption_provincia)
 dev.off()
 
