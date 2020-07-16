@@ -9,53 +9,48 @@ library(maptools)
 library(rgdal)
 
 # load data -----
-# Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
-# or load it using:
 data_cases_sp_provinces <- readRDS(file = "data/output/spain/covid19-provincias-spain_consolidated.rds")
 
 # Load shapes
-# provincias <- readOGR("data/original/spain/shapes/ll_provinciales_inspire_peninbal_etrs89.json")
-# provincias <- readOGR("data/original/spain/shapes/ll_provinciales_inspire_peninbal_etrs89_simple.json")
 provincias <- readOGR("data/original/spain/shapes/recintos_provinciales_inspire_peninbal_etrs89.json")
 canarias <- readOGR("data/original/spain/shapes/recintos_provinciales_inspire_canarias_etrs89_simply.json")
 
-# Create INE code
+# Create INE code from existing variable
 provincias@data$ine_code <- substr(provincias@data$NATCODE,5,6) 
 provincias@data$ine_code <- as.integer(provincias@data$ine_code)
 
 canarias@data$ine_code <- substr(canarias@data$NATCODE,5,6)
 canarias@data$ine_code <- as.integer(canarias@data$ine_code)
 
-ppp <- provincias@data
-zzz <- canarias@data
-
+# get max date in the data
 maxdate <-  max(data_cases_sp_provinces$date)
 
-# adds airbnb data to shapes
+# adds data to shapes
+# provincias@data is the way to access the data stored in the shapes
 provincias@data <- left_join(provincias@data, data_cases_sp_provinces %>% filter(date == maxdate-2 ) %>% select(ine_code,deceassed_per_100000,province,date,poblacion)  , by= c("ine_code" = "ine_code"))
 canarias@data <- left_join(canarias@data, data_cases_sp_provinces %>% filter(date == maxdate-2 ) %>% select(ine_code,deceassed_per_100000,province,date,poblacion)  , by= c("ine_code" = "ine_code"))
 
-
-# tmap numer of listings MAP ----------------
+# tmap settings ----------------
 colores <- c("#ededed", "#0cb2ff")
-breaks.n <- c(seq(0,2200,by = 200))
+breaks.n <- c(seq(0,2400,by = 200))
 
-# ppp <- provincias@data
-# names(ppp)
-
-# provincias@data$initial <- substr(provincias@data$NAMEUNIT,1,2)
+# Calculates data per million (current data is per 100,000)
 provincias@data$dp1 <- round(provincias@data$deceassed_per_100000 * 10,digits = 0)
+# creates new label with first two charecters of province
 provincias@data$label <- paste(provincias@data$dp1, substr(provincias@data$province,1,2))
+# adds number to label
 provincias@data <- provincias@data %>% mutate( label = ifelse(is.na(province),"",label),
                                                label = ifelse(is.na(deceassed_per_100000),"",label),
 )
 
+# do the same for Canarias shapes
 canarias@data$dp1 <- round(canarias@data$deceassed_per_100000 * 10,digits = 0)
 canarias@data$label <- paste(canarias@data$dp1, substr(canarias@data$province,1,2))
 canarias@data <- canarias@data %>% mutate( label = ifelse(is.na(province),"",label),
                                                label = ifelse(is.na(deceassed_per_100000),"",label),
 )
 
+# Print map
 png(filename="img/spain/maps/mapa-coropletas-muertos-per-100000_peninsula.png",width = 1100,height = 400)
 tm_shape(provincias) +
   tm_polygons(col="dp1",
@@ -72,15 +67,15 @@ tm_shape(provincias) +
           size= 0.9, alpha = 0.8) +
   tm_layout(between.margin = 1, frame = FALSE,
             fontfamily = "Roboto Condensed", 
-            # title = "Data: Providencialdata19. By: @numeroteca. lab.montera34.com/covid19" ,
-            title = paste(as.character( provincias@data$date[1] ), "COVID-19" ),
+            title = "Data: Providencialdata19. By: @numeroteca. lab.montera34.com/covid19",
+            # # title = paste(as.character( provincias@data$date[1] ), "COVID-19" ),
             title.fontface = "bold",
             title.size = 2,
-            # legend.title.size = 1.9,
+            # # legend.title.size = 1.9,
             legend.format = list(text.separator = "-" ),
-            # legend.text.size = 1,
+            # # legend.text.size = 1,
             legend.width = 2,
-            # title.position = "TOP",
+            # # title.position = "TOP",
             legend.outside = TRUE,
             legend.outside.position = c("left","bottom")
   ) +
@@ -182,7 +177,7 @@ dev.off()
 # Generate one map per day -----
 # for (i in 8:length( unique(data_cases_sp_provinces$date) )) {
 # for (i in 74:74) {
-for (i in 8:length( unique(data_cases_sp_provinces$date) )) {
+for (i in 86:length( unique(data_cases_sp_provinces$date) )) {
   print(unique(data_cases_sp_provinces$date)[i])
   print(i)
   provincias <- readOGR("data/original/spain/shapes/recintos_provinciales_inspire_peninbal_etrs89.json")
@@ -212,7 +207,8 @@ for (i in 8:length( unique(data_cases_sp_provinces$date) )) {
   )
     
   png(filename= paste0("img/spain/maps/mapa-coropletas-muertos-per-100000_", unique(data_cases_sp_provinces$date)[i] ,".png"),width = 1000,height = 400)
-  mapprint <- tm_shape(provincias) +
+  # mapprint <- tm_shape(provincias) +
+  tm_shape(provincias) +
     tm_polygons(col="dp1",
                 palette = colores,
                 breaks = breaks.n,
@@ -271,8 +267,7 @@ for (i in 8:length( unique(data_cases_sp_provinces$date) )) {
 
 # convert -delay 55 -loop 0 mapa-coropletas-muertos-per-100000_2*.png animated-map-by-million-cumulative-deaths.gif
 
-# Contagios en los últimos 15 días -----
-
+# Contagios en los últimos 14 días -----
 
 zzzzzzz <- data_cases_sp_provinces %>%  
   select(ine_code,cases_per_cienmil,date) %>% mutate(
