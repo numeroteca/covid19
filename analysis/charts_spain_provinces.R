@@ -765,7 +765,7 @@ data_cases_sp_provinces %>%
   ) +
   facet_wrap(~ccaa, scales = "free_y") +
   coord_cartesian(
-    xlim= c( as.Date("2020-03-15"),max(data_cases_sp_provinces$date)+35 )
+    xlim= c( as.Date("2020-03-15"),max(data_cases_sp_provinces$date)+42 )
   ) +
   scale_y_continuous( 
     # minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
@@ -781,7 +781,8 @@ data_cases_sp_provinces %>%
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position =  "none"
+    legend.position =  "none",
+    axis.text.x = element_text(size = 10)
   ) +
   labs(
     title = paste0("Media de casos por día (ventana 7 días) por COVID-19 en España ",updated),
