@@ -8,7 +8,7 @@ library(ggrepel) # for geom_text_repel to prevent   overlapping
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de losS datos
 caption_i <- "Gráfico: @numeroteca (lab.montera34.com/covid19). Datos: Protezione Civile (Italia)"
-periodo_i <- "2020.02.24 - 07.04"
+periodo_i <- "2020.02.24 - 07.18"
 
 # COVID-19 in Italy -----------
 # Load data
@@ -572,6 +572,52 @@ data_i_cases %>%
     ylim=c(0, max(data_i_cases[!is.na(data_i_cases$daily_cases),]$daily_cases)*1.01 )
   ) +
   scale_y_continuous( 
+    # breaks = c(0,1,5,10,20,50,100,200,500,1000,2000,5000 ),
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+    # minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+    # expand = c(0,0.1)
+  ) +
+  scale_x_date(date_breaks = "1 month", 
+               date_labels = "%d/%m",
+               limits=c( min(data_i_cases$date), max(data_i_cases$date +25)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "none"
+  ) +
+  labs(title = "Media de casos (ventana de 7 días) por COVID-19 por día en Italia",
+       subtitle = paste0("Por región. ",periodo_i),
+       y = "casos",
+       x = "fecha",
+       caption = caption_i)
+dev.off()
+
+
+png(filename=paste("img/italia/covid19_casos-por-dia-region-superpuesto-log_media.png", sep = ""),width = 1200,height = 800)
+data_i_cases %>%
+  ggplot() +
+  geom_line(aes(date, daily_cases_avg7,group=region, color=region), size= 1, se = FALSE  ) +
+  geom_line(aes(date, daily_cases, color=region, group=region), size= 0.3, alpha=0.5) +
+  geom_point(aes(date, daily_cases, color=region), size= 0.6, alpha=0.5 ) +
+  geom_text_repel(data=filter( data_i_cases, date==max(data_i_cases$date)), 
+                  aes(date, daily_deaths_avg6, color=region, label=paste(format( daily_cases_avg7, nsmall=1, big.mark="."),region)),
+                  nudge_x = 1, # adjust the starting y position of the text label
+                  size=5,
+                  hjust=0,
+                  family = "Roboto Condensed",
+                  direction="y",
+                  segment.size = 0.1,
+                  segment.color="#777777"
+  ) +
+  # coord_cartesian(
+  #   ylim=c(0, max(data_i_cases[!is.na(data_i_cases$daily_cases),]$daily_cases)*1.01 )
+  # ) +
+  scale_y_log10( 
     # breaks = c(0,1,5,10,20,50,100,200,500,1000,2000,5000 ),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
     # minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
