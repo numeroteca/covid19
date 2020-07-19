@@ -3967,8 +3967,8 @@ data_cases_sp_provincesX %>%
   geom_line(aes(date, hospitalized_per_100000,group=province)) +
   geom_point(aes(date, hospitalized_per_100000), size= 0.5 ) +
   geom_text_repel(
-    data= data_cases_sp_provincesX %>% group_by(province)  %>% filter(!is.na(hospitalized) ) %>% top_n(1, date),
-    aes(date+1, hospitalized, label=paste(format(round(as.integer(hospitalized), digits = 0), big.mark="."), substr(province,1,2) ) ),
+    data= data_cases_sp_provincesX %>% group_by(province)  %>% filter(!is.na(hospitalized_per_100000) ) %>% top_n(1, date),
+    aes(date+1, hospitalized_per_100000, label=paste(format(round(as.integer(hospitalized_per_100000), digits = 1), big.mark="."), substr(province,1,2) ) ),
     nudge_x = 2, # adjust the starting x position of the text label
     size=4,
     hjust=0,
@@ -4010,8 +4010,8 @@ data_cases_sp_provincesX %>%
   geom_line(aes(date, hospitalized_per_100000,group=province, color=province)) +
   geom_point(aes(date, hospitalized_per_100000, color=province), size= 0.3 ) +
   geom_text_repel(
-    data= data_cases_sp_provincesX %>% group_by(province)  %>% filter(!is.na(hospitalized) ) %>% top_n(1, date),
-    aes(date+1, hospitalized, label=paste(format(round(as.integer(hospitalized), digits = 0), big.mark="."), substr(province,1,2) ) ),
+    data= data_cases_sp_provincesX %>% group_by(province)  %>% filter(!is.na(hospitalized_per_100000) ) %>% top_n(1, date),
+    aes(date+1, hospitalized_per_100000, label=paste(format(round(as.integer(hospitalized_per_100000), digits = 1), big.mark="."), substr(province,1,2) ) ),
     nudge_x = 2, # adjust the starting x position of the text label
     size=4,
     hjust=0,
@@ -4026,7 +4026,7 @@ data_cases_sp_provincesX %>%
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 month", 
                date_labels = "%m",
-               limits=c( min(data_cases_sp_provincesX$date), max(data_cases_sp_provincesX$date) ) 
+               limits=c( min(data_cases_sp_provincesX$date), max(data_cases_sp_provincesX$date)+35 ) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
