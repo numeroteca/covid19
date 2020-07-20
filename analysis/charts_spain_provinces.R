@@ -579,22 +579,12 @@ dev.off()
 png(filename=paste("img/spain/provincias/covid19_casos-por-dia-media-provincia-lineal_not-free.png", sep = ""),width = 1200,height = 800)
 data_cases_sp_provinces %>%
   ggplot() +
-  # geom_smooth(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(date,daily_cases_avg7,province_cp,-province),
-  #             aes(date,daily_cases_avg7,group=province_cp), se = FALSE, span = 0.6, color="#CACACA", size=0.5 ) +
   geom_point(aes(date, daily_cases_avg7,group=province, color="#000000"), size= 0.9, se = FALSE, span = 0.6,  ) +
   geom_point(aes(date, daily_cases_PCR_avg7,group=province, color="#d53030"), size= 1 ) +
-  # geom_smooth(aes(date, daily_cases_avg7,group=province), size= 0.7, se = FALSE, span = 0.6, color="#000000" ) +
-  # geom_point(aes(date, daily_cases), size= 0.5, alpha=0.4 ) +
   scale_color_identity(
     guide = "legend",
     labels = c("Casos positivos totales", "Casos PCR+")
   ) +
-  # geom_text(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)),
-  #           aes(date,max(data_cases_sp_provinces[!is.na(data_cases_sp_provinces$daily_cases_avg7),]$daily_cases_avg7)/2, label=paste(format(daily_cases_avg7, nsmall=1, big.mark="."))),
-  #           size=4,
-  #           hjust=1,
-  #           family = "Roboto Condensed"
-  # ) +
   facet_wrap(~province) +
   scale_x_date(date_breaks = "1 month", 
                date_labels = "%m",
