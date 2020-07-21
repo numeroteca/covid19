@@ -894,7 +894,7 @@ download.file("https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covi
 euskadi_original <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "01")
 
 euskadi_a <- euskadi_original %>% rename( date = ...1 ) %>% 
-  mutate( date = as.Date(date,"%m/%d/%Y")) %>% select( -`Ingresados en Planta`)  %>% melt(
+  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Ingresados en Planta`)  %>% melt(
     id.vars = c("date")
   ) %>% mutate(
     province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
@@ -1095,8 +1095,8 @@ rm(madrid_a, madrid_b,madrid_original)
 
 
 # Uniprovinciales @danielegrasso --------------------
-download.file("https://gitlab.com/elpais/datos/-/raw/master/20_Covid-19/covid-provincias/data_uniprovs.csv?inline=false",
-              "data/original/spain/uniprovinciales/data_uniprovs.csv")
+# download.file("https://gitlab.com/elpais/datos/-/raw/master/20_Covid-19/covid-provincias/data_uniprovs.csv?inline=false",
+#               "data/original/spain/uniprovinciales/data_uniprovs.csv") #TODO
 
 uniprovinciales_d <- read.delim("data/original/spain/uniprovinciales/data_uniprovs.csv",sep = ",") %>% mutate (
   date_uni = as.Date(DATE, "%d/%m/%y") - 1 # one day less as the date is the report date!
