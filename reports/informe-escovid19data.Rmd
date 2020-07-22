@@ -22,8 +22,8 @@ Un análisis automatizado de la base de datos por provincias de #COVID19 en Espa
 
 El código .Rmd para generar este informe [está disponile](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/reports/informe-escovid19data.Rmd).
 
-* [Días desde que se tiene el último dato](#última-fecha-publicada)
 * [¿Cómo de completos están los datos?](#cómo-de-completos-están-los-datos)
+* [Días desde que se tiene el último dato](#última-fecha-publicada)
 * [Clasificación de fuentes de información](#según-fuentes-de-información)
 * [Navega por todos los datos](#todos-los-datos)
 
@@ -44,66 +44,6 @@ fechas_hosp <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(
 
 ``` 
 
-### Días desde que se tiene el último dato disponible desagregado por provincia:
-
-NA indica valor no conocido.
-
-```{r fecha1, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
-
-table_total <- merge(
-  fechas_caso %>% rename (casos_acum = date ) , 
-  fechas_fallecidos %>% rename ( muertes_acum = date ) %>% select(-ccaa), 
-  by.x="province", by.y="province", all = TRUE  )
-
-table_total <- merge(
-  table_total, 
-  fechas_PCR_diario %>% rename ( PCR_diario = date ) %>% select(-ccaa), 
-  by.x="province", by.y="province", all = TRUE  )
-
-table_total <- merge(
-  table_total, 
-  fechas_PCR_acum %>% rename ( PCR_acum = date ) %>% select(-ccaa), 
-  by.x="province", by.y="province", all = TRUE  )
-
-table_total <- merge(
-  table_total, 
-  fechas_hosp %>% rename ( hospitalized = date ) %>% select(-ccaa), 
-  by.x="province", by.y="province", all = TRUE  )
-
-# fort(table_total %>% select(province, ccaa, casos_acum, muertes_acum ) %>% 
-#         mutate(
-#           casos = today - casos_acum,
-#           muertes = today - muertes_acum
-#         ) %>%
-#         mutate(
-#           casos = as.integer(casos),
-#           casos = color_bar("lightgreen")(casos)
-#         ) %>%
-#         select( province, ccaa, casos, casos_acum,  muertes, muertes_acum ) %>%
-#         arrange(casos_acum), caption="Última fecha disponible según variable") %>%
-#   kable_styling(bootstrap_options = c("hover", "condensed", "responsive"), fixed_thead = T)
-
-
-table_nice <- table_total %>% 
-        mutate(
-          casos = as.integer( today - casos_acum ),
-          muertes = as.integer( today - muertes_acum ),
-          PCR =  as.integer( today - PCR_diario ),
-          PCR_acum =  as.integer( today - PCR_acum ),
-          hospitalized =  as.integer( today - hospitalized )
-        ) %>%
-        select( province, ccaa, casos, casos_acum,  muertes, muertes_acum, PCR , PCR_acum,hospitalized ) %>%
-        arrange(casos_acum)
-
-# formatter(style = x ~ style(..., display = ifelse(is.na(x), "none", "inline-block"))
-
-as.datatable(
-formattable(table_nice, list(
-  area(col = c(casos, muertes,PCR, PCR_acum,hospitalized )) ~ normalize_bar("pink", 0.2,na.rm = TRUE)
-)), colnames = c('Provincia', 'CCAA', 'Casos acumulado (días desde último publicado)', 'Casos (última fecha)', 'Muertes acumulado (días desde último publicado)', 'Muertes (última fecha)','PCR diario (días desde último publicado)', 'PCR acumulado (días desde último publicado)', 'Hospitalizados (días desde)'   ),
-options = list(pageLength = 52)
-)
-``` 
 
 ## ¿Cómo de completos están los datos?
 
@@ -355,6 +295,66 @@ filter( !is.na(province)) %>%
   )
 ``` 
 
+### Días desde que se tiene el último dato disponible desagregado por provincia:
+
+NA indica valor no conocido.
+
+```{r fecha1, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+table_total <- merge(
+  fechas_caso %>% rename (casos_acum = date ) , 
+  fechas_fallecidos %>% rename ( muertes_acum = date ) %>% select(-ccaa), 
+  by.x="province", by.y="province", all = TRUE  )
+
+table_total <- merge(
+  table_total, 
+  fechas_PCR_diario %>% rename ( PCR_diario = date ) %>% select(-ccaa), 
+  by.x="province", by.y="province", all = TRUE  )
+
+table_total <- merge(
+  table_total, 
+  fechas_PCR_acum %>% rename ( PCR_acum = date ) %>% select(-ccaa), 
+  by.x="province", by.y="province", all = TRUE  )
+
+table_total <- merge(
+  table_total, 
+  fechas_hosp %>% rename ( hospitalized = date ) %>% select(-ccaa), 
+  by.x="province", by.y="province", all = TRUE  )
+
+# fort(table_total %>% select(province, ccaa, casos_acum, muertes_acum ) %>% 
+#         mutate(
+#           casos = today - casos_acum,
+#           muertes = today - muertes_acum
+#         ) %>%
+#         mutate(
+#           casos = as.integer(casos),
+#           casos = color_bar("lightgreen")(casos)
+#         ) %>%
+#         select( province, ccaa, casos, casos_acum,  muertes, muertes_acum ) %>%
+#         arrange(casos_acum), caption="Última fecha disponible según variable") %>%
+#   kable_styling(bootstrap_options = c("hover", "condensed", "responsive"), fixed_thead = T)
+
+
+table_nice <- table_total %>% 
+        mutate(
+          casos = as.integer( today - casos_acum ),
+          muertes = as.integer( today - muertes_acum ),
+          PCR =  as.integer( today - PCR_diario ),
+          PCR_acum =  as.integer( today - PCR_acum ),
+          hospitalized =  as.integer( today - hospitalized )
+        ) %>%
+        select( province, ccaa, casos, casos_acum,  muertes, muertes_acum, PCR , PCR_acum,hospitalized ) %>%
+        arrange(casos_acum)
+
+# formatter(style = x ~ style(..., display = ifelse(is.na(x), "none", "inline-block"))
+
+as.datatable(
+formattable(table_nice, list(
+  area(col = c(casos, muertes,PCR, PCR_acum,hospitalized )) ~ normalize_bar("pink", 0.2,na.rm = TRUE)
+)), colnames = c('Provincia', 'CCAA', 'Casos acumulado (días desde último publicado)', 'Casos (última fecha)', 'Muertes acumulado (días desde último publicado)', 'Muertes (última fecha)','PCR diario (días desde último publicado)', 'PCR acumulado (días desde último publicado)', 'Hospitalizados (días desde)'   ),
+options = list(pageLength = 52)
+)
+``` 
 
 
 ## Según fuentes de información

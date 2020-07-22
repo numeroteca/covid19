@@ -1171,7 +1171,7 @@ rm(uniprovinciales_d)
 
 # Add missing data deaths previous 2020.03.08 --------------
 
-# remove date previos to March 8. ISCIII does not have detahs before that day
+# remove date previos to March 8. ISCIII does not have deaths before that day
 datadista <- read.delim("https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_fallecidos.csv",sep = ",") %>% melt(
   id.vars = c("CCAA","cod_ine")) %>% mutate (
     date = as.Date(substr(variable,2,12),"%Y.%m.%d"),
@@ -1208,6 +1208,22 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   source =  ifelse( !is.na(deceassed_datadista), paste0(source,";https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_fallecidos.csv"), source),
 ) %>% select(-dunique,-deceassed_datadista)
 
+# Madrid substitute list of PCR+ by COmunidad de Madrid data --------
+download.file("https://raw.githubusercontent.com/alfonsotwr/snippets/master/covidia-cam/madrid-pcr.csv", 
+              "data/original/spain/madrid/madrid-pcr.csv")
+madrid_pcr <- read.delim("data/original/spain/madrid/madrid-pcr.csv",sep = ",") %>% mutate(
+  date = as.Date(as.character(Fecha), "%Y-%m-%d")
+)
+
+# add Madrid PCR+ data
+data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0(province,date) ),
+                                  madrid_pcr %>% mutate( dunique = paste0("Madrid",date)) %>% select(-date, -Fecha),
+                                  by.x = "dunique", by.y = "dunique", all.x = TRUE ) %>% mutate(
+                                    cases_accumulated_PCR = ifelse( !is.na(PCR.), PCR., cases_accumulated_PCR)
+                                  ) %>% select(-PCR., -dunique) %>% mutate (
+                                    source_name =  ifelse( province == "Madrid", paste0(source_name,";Comunidad de Madrid"), source_name),
+                                      source =  ifelse(province == "Madrid", paste0(source,";https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-pcr.csv"), source),
+                                  )
 
 # Add province ISCIII RENAVE data -----
 download.file("https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv", 

@@ -1665,7 +1665,7 @@ data_cases_sp_provinces %>%
   # ) +
   scale_y_log10( 
                   labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
-                 minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+                 # minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
                  expand = c(0,0.2) ) +
   scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
@@ -1687,7 +1687,6 @@ data_cases_sp_provinces %>%
        x = "fecha",
        caption = caption_provincia)
 dev.off()
-
 
 # Superpuesto Log por CCAA -------------
 # data_cases_sp_provinces %>% filter (ccaa == "Extremadura" ) %>%
