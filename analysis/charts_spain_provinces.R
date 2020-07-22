@@ -14,8 +14,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-07-21)"
-filter_date <- as.Date("2020-07-21")
+period <- "(Actualizado: 2020-07-22)"
+filter_date <- as.Date("2020-07-22")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -1514,6 +1514,57 @@ scale_color_manual(values = colors_prov) +
   ) +
   labs(title = paste0("Media de casos PCR+ por día (media 7 días) por COVID-19 en España ",updated),
        subtitle = paste0("Por provincia. Escala lineal  ",period),
+       y = "casos PCR+ por día (media 7 días)",
+       x = "fecha",
+       caption = caption_provincia)
+dev.off()
+
+png(filename=paste("img/spain/provincias/covid19_casos-PCR-por-dia-provincia-media-superpuesto-lineal_media_lastdays.png", sep = ""),width = 1200,height = 700)
+data_cases_sp_provinces %>% filter(date > filter_date - 30 ) %>%
+  ggplot() +
+  # geom_smooth(aes(date, daily_cases_avg7,group=province, color=ccaa), size= 1, se = FALSE, span = 0.6 ) +
+  geom_line(aes(date, daily_cases_PCR_avg7,group=province, color=ccaa), size= 1 ) +
+  geom_line(aes(date, daily_cases_PCR,group=province, color=ccaa), size= 0.2 ) +
+  geom_point(aes(date, daily_cases_PCR, color=ccaa), size= 0.5, alpha = 0.5 ) +
+  # geom_point(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), aes(date, daily_cases_avg7, color=province), size= 1.5, alpha = 0.3 ) +
+  geom_text_repel(
+    # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_cases_avg7 > 5), 
+    data = data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(daily_cases_PCR_avg7)  ) %>% top_n(1, date) %>% filter (daily_cases_PCR_avg7 > 10)  ,
+    aes(date, daily_cases_PCR_avg7, color=ccaa, label=paste(format(daily_cases_PCR_avg7, nsmall=1, big.mark=".", decimal.mark = ","),province)),
+    nudge_x = 4, # adjust the starting y position of the text label
+    size=5,
+    hjust=0,
+    family = "Roboto Condensed",
+    direction="y",
+    segment.size = 0.1,
+    segment.color="#777777"
+  ) +
+  scale_color_manual(values = colors_prov) +
+  # coord_cartesian(
+  #   
+  #   ylim = c( 0,max(data_cases_sp_provinces[!is.na(data_cases_sp_provinces$daily_cases_PCR),]$daily_cases_PCR) )
+  # ) +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
+  # scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #                minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+  #                expand = c(0,0.2) ) +
+  scale_x_date(date_breaks = "1 week", 
+               date_labels = "%d/%m",
+               limits=c( filter_date - 30, max(data_cases_sp_provinces$date +7)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    # legend.position = c(0.1,0.6)
+    legend.position = "none"
+  ) +
+  labs(title = paste0("Media de casos PCR+ por día (media 7 días) por COVID-19 en España ",updated),
+       subtitle = paste0("Por provincia. Últimos 30 días. Escala lineal  ",period),
        y = "casos PCR+ por día (media 7 días)",
        x = "fecha",
        caption = caption_provincia)
