@@ -421,7 +421,7 @@ euskadi_hosp %>%
   scale_x_date(
               date_breaks = "15 day",
                date_labels = "%d/%m",
-               limits=c( min(euskadi_hosp$date), max(euskadi_hosp$date +26)),
+               limits=c( min(euskadi_hosp$date), max(euskadi_hosp$date +33)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -456,7 +456,7 @@ euskadi_total %>% #filter( hospital == "14 Sta Marina") %>%
   ) +
   scale_x_date(
                 # date_breaks = "3 day", 
-               date_labels = "%d/%m",
+               date_labels = "%m",
                # limits=c( min(euskadi_hosp$date), max(euskadi_hosp$date +20)),
                expand = c(0,0) 
   ) + 
@@ -472,7 +472,7 @@ euskadi_total %>% #filter( hospital == "14 Sta Marina") %>%
   labs(title = paste0("Evolución ingresados por día por COVID-19 en Euskadi" ),
        subtitle = paste0("Por hospitales. ",period_eus),
        y = "hospitalizados",
-       x = "fecha",
+       x = "fecha (mes) 2020",
        fill = "",
        caption = caption_provincia)
 dev.off()
@@ -493,7 +493,7 @@ euskadi_total %>%
   ) +
   scale_x_date(
     # date_breaks = "3 day", 
-    date_labels = "%d/%m",
+    date_labels = "%m",
     # limits=c( min(euskadi_hosp$date), max(euskadi_hosp$date +20)),
     expand = c(0,0) 
   ) + 
@@ -508,7 +508,7 @@ euskadi_total %>%
   labs(title = paste0("Evolución ingresados por día por COVID-19 en Euskadi" ),
        subtitle = paste0("Por hospitales. ",period_eus),
        y = "hospitalizados",
-       x = "fecha",
+       x = "fecha (mes) 2020",
        fill = "",
        caption = caption_provincia)
 dev.off()
@@ -556,8 +556,8 @@ euskadi_total %>%
   ) +
   scale_x_date(
     # date_breaks = "3 day", 
-    date_labels = "%d/%m",
-    limits=c( min(euskadi_total$date), max(euskadi_hosp$date +47)),
+    date_labels = "%m",
+    limits=c( min(euskadi_total$date), max(euskadi_hosp$date +57)),
     expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -571,7 +571,7 @@ euskadi_total %>%
   labs(title = paste0("Evolución de ingresados en hospitales por COVID-19 en Euskadi" ),
        subtitle = paste0("Por hospitales en porcentaje sobre total de ingresados hasta la fecha (total personas entre paréntesis). ",period_eus),
        y = "hospitalizados",
-       x = "fecha",
+       x = "fecha (mes) 2020",
        fill = "",
        caption = caption_provincia)
 dev.off()
@@ -581,7 +581,7 @@ dev.off()
 png(filename=paste0("img/spain/euskadi/covid19_hospitalizados-dia-pais-vasco.png", sep = ""),width = 1300,height = 700)
 euskadi_total %>%
   ggplot() +
-  geom_col( aes(date,hospitalizados), size=1,color="#5b5bbb") +
+  geom_col( aes(date,hospitalizados), width=1, color="#5b5bbb") +
   facet_wrap( ~hospital) + #, scales = "free_x"
   scale_y_continuous( 
     # limits = c(0,100),
@@ -589,7 +589,7 @@ euskadi_total %>%
   ) +
   scale_x_date(
     # date_breaks = "3 day", 
-    date_labels = "%d/%m",
+    date_labels = "%m",
     limits=c( min(euskadi_total$date), max(euskadi_hosp$date +30)),
     expand = c(0,0)
   ) + 
@@ -604,7 +604,7 @@ euskadi_total %>%
   labs(title = paste0("Pacientes hospitalizados en plana diarios en hospitales por COVID-19 en Euskadi" ),
        subtitle = paste0("",period_eus),
        y = "falecidos",
-       x = "fecha",
+       x = "fecha (mes) 2020",
        fill = "",
        caption = caption_provincia)
 dev.off()
@@ -614,7 +614,7 @@ dev.off()
 png(filename=paste0("img/spain/euskadi/covid19_uci-dia-pais-vasco.png", sep = ""),width = 1300,height = 700)
 euskadi_total %>%
   ggplot() +
-  geom_col( aes(date,uci), size=1,color="red") +
+  geom_col( aes(date,uci), width=1,fill="red") +
   facet_wrap( ~hospital) + #, scales = "free_x"
   scale_y_continuous( 
     # limits = c(0,100),
@@ -622,7 +622,7 @@ euskadi_total %>%
   ) +
   scale_x_date(
     # date_breaks = "3 day", 
-    date_labels = "%d/%m",
+    date_labels = "%m",
     limits=c( min(euskadi_total$date), max(euskadi_hosp$date +30)),
     expand = c(0,0)
   ) + 
@@ -637,7 +637,7 @@ euskadi_total %>%
   labs(title = paste0("Pacientes UCI diarios en hospitales por COVID-19 en Euskadi" ),
        subtitle = paste0("",period_eus),
        y = "falecidos",
-       x = "fecha",
+       x = "fecha (mes) 2020",
        fill = "",
        caption = caption_provincia)
 dev.off()
@@ -647,7 +647,7 @@ dev.off()
 png(filename=paste0("img/spain/euskadi/covid19_muertes-dia-pais-vasco.png", sep = ""),width = 1300,height = 700)
 euskadi_total %>%
   ggplot() +
-  geom_col( aes(date,daily_deceassed), size=0.5, fill="grey") +
+  geom_col( aes(date,daily_deceassed), width=1, fill="grey") +
   geom_line( aes(date,daily_deceassed_avg, group=hospital), size=1) +
   facet_wrap( ~hospital) + #, scales = "free_x"
   scale_y_continuous( 
@@ -656,7 +656,7 @@ euskadi_total %>%
   ) +
   scale_x_date(
     # date_breaks = "3 day", 
-    date_labels = "%d/%m",
+    date_labels = "%m",
     limits=c( min(euskadi_total$date), max(euskadi_hosp$date +30)),
     expand = c(0,0)
   ) + 
@@ -671,7 +671,7 @@ euskadi_total %>%
   labs(title = paste0("Media de fallecidos diarios (ventana 7 días) en hospitales por COVID-19 en Euskadi" ),
        subtitle = paste0("",period_eus),
        y = "falecidos",
-       x = "fecha",
+       x = "fecha (mes) 2020",
        fill = "",
        caption = caption_provincia)
 dev.off()

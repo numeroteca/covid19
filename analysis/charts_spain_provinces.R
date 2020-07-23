@@ -334,7 +334,7 @@ data_cases_sp_provinces %>%
   geom_line(aes(date,cases_accumulated,group=province, color=ccaa ), size = 0.8 ) +
   geom_point(aes(date,cases_accumulated,group=province, color=ccaa), size = 0.6 ) +
   geom_text_repel(data = data_cases_sp_provinces %>% group_by(province) %>% 
-                    filter( (!is.na(cases_accumulated) & cases_accumulated > 5000  & date ) 
+                    filter( !is.na(cases_accumulated) & cases_accumulated > 5000
                               # (!is.na(cases_accumulated) & cases_accumulated > 5000  & date > filter_date -5 )
                              ) %>% top_n(1, date),
                     # filter( data_cases_sp_provinces,
