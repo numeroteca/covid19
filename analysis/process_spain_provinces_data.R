@@ -743,7 +743,7 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,uniprovinciales)
 
 
 # Catalunya: Overwrite Catalunya provinces cases  data ------------------
-# Download data from: https://analisi.transparenciacatalunya.cat/Salut/Registre-de-casos-de-COVID-19-realitzats-a-Catalun/jj6z-iyrp/data
+  # Download data from: https://analisi.transparenciacatalunya.cat/Salut/Registre-de-casos-de-COVID-19-realitzats-a-Catalun/jj6z-iyrp/data
 download.file("https://analisi.transparenciacatalunya.cat/api/views/jj6z-iyrp/rows.csv?accessType=DOWNLOAD&sorting=true", 
               "data/original/spain/catalunya/Registre_de_casos_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv")
 catalunya <-  read.delim("data/original/spain/catalunya/Registre_de_casos_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
@@ -946,10 +946,10 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 rm(euskadi_a,euskadi_original)
 
 # Aragón hospitalizados.  Overwrite hospitalized  data -------------- -----
-# download.file("https://www.aragon.es/documents/20127/38742837/casos_coronavirus_hospitales.xlsx", # TODO, ya no da datos por provincia
-#               "data/original/spain/aragon/casos_coronavirus_hospitales.xlsx")
+download.file("https://www.aragon.es/documents/20127/38742837/casos_coronavirus_hospitales.xlsx", # TODO, ya no da datos por provincia
+              "data/original/spain/aragon/casos_coronavirus_hospitales.xlsx")
 
-aragon_original <- read_excel("data/original/spain/aragon/casos_coronavirus_hospitales.xlsx", col_names = TRUE, sheet = "hoj")
+aragon_original <- read_excel("data/original/spain/aragon/casos_coronavirus_hospitales.xlsx", col_names = TRUE, sheet = "hoja")
 
 aragon_a <- aragon_original %>%
   rename(
@@ -1225,6 +1225,41 @@ data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique =
                                       source =  ifelse(province == "Madrid", paste0(source,";https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-pcr.csv"), source),
                                   )
 
+# Cantabria --------
+# web https://www.scsalud.es/coronavirus download CSV at the bottom
+# file https://www.scsalud.es/documents/2162705/9255280/2020_covid19_historico.csv 
+# TODO> avoid problem with CA certificate
+# download.file("https://serviweb.scsalud.es:10443/ficheros/COVID19_historico.csv", 
+#               "data/original/spain/cantabria/COVID19_historico.csv")
+
+cantabria <- read.delim("data/original/spain/cantabria/COVID19_historico.csv",sep = ";") %>% mutate(
+  date = as.Date(as.character(FECHA), "%d/%m/%Y"),
+  cases_accumulated_PCR_can = cumsum(CASOS.NUEVOS.PCR.) # TODO: calculates cumulative value, it's not original data
+) %>% rename (
+  cases_accumulated_can = TOTAL.CASOS,
+  PCR_can = CASOS.NUEVOS.PCR.,
+  hospitalized_can = TOTAL.HOSPITALIZADOS,
+  deceased_can = FALLECIDOS,
+  recovered_can = RECUPERADOS
+) %>% select(cases_accumulated_PCR_can,everything() )
+
+# add Cantabria data
+# aaaa <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0(province,date) ),
+data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0(province,date) ),
+                cantabria %>% mutate( dunique = paste0("Cantabria",date)) %>% select( dunique, cases_accumulated_can, PCR_can,
+                                                                                      hospitalized_can, deceased_can, recovered_can,cases_accumulated_PCR_can),
+                by.x = "dunique", by.y = "dunique", all.x = TRUE ) %>% mutate(
+                  cases_accumulated = ifelse( !is.na(cases_accumulated_can), cases_accumulated_can, cases_accumulated),
+                  cases_accumulated_PCR = ifelse( !is.na(cases_accumulated_PCR_can), cases_accumulated_PCR_can, cases_accumulated_PCR),
+                  PCR = ifelse( !is.na(PCR_can), PCR_can, PCR),
+                  hospitalized = ifelse( !is.na(hospitalized_can), hospitalized_can, hospitalized),
+                  deceased = ifelse( !is.na(deceased_can), deceased_can, deceased),
+                  recovered = ifelse( !is.na(recovered_can), recovered_can, recovered)
+                ) %>% select(-cases_accumulated_can,-cases_accumulated_PCR_can, -PCR_can, -hospitalized_can, -deceased_can, -recovered_can) %>% mutate (
+                  source_name =  ifelse( province == "Cantabria", paste0(source_name,";Servicio Cántabro de Salud"), source_name),
+                  source =  ifelse(province == "Cantabria", paste0(source,";https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-pcr.csv"), source),
+                )
+
 # Add province ISCIII RENAVE data -----
 download.file("https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv", 
               "data/original/spain/iscii_casos_renave.csv")
@@ -1379,7 +1414,7 @@ data_cases_sp_provinces$hospitalized_per_100000 <- round( data_cases_sp_province
 
 # Calculates daily deaths ----------------
 data_cases_sp_provinces <- data_cases_sp_provinces %>% 
-  group_by(province) %>% arrange(date) %>% 
+    group_by(province) %>% arrange(date) %>% 
   mutate( 
     cases_14days = cases_accumulated - lag(cases_accumulated,13),
     cases_7days = cases_accumulated - lag(cases_accumulated,6),
