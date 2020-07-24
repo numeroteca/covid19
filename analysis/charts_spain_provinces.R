@@ -2,7 +2,7 @@
 # Debe ejecutarse antes el script que procesa los datos : process_spain_provinces_data.R
 # o descargarse los datos de https://github.com/montera34/escovid19data/blob/master/data/output/covid19-provincias-spain_consolidated.csv
 # Los gráficos generados pueden verse en https://lab.montea34.com/covid9
- 
+  
 # Este archivo era antes "evolution_spain_provinces.R"
 library(tidyverse)
 library(reshape2)
@@ -14,8 +14,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-07-23)"
-filter_date <- as.Date("2020-07-22")
+period <- "(Actualizado: 2020-07-24)"
+filter_date <- as.Date("2020-07-23")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
