@@ -949,7 +949,7 @@ rm(euskadi_a,euskadi_original)
 download.file("https://www.aragon.es/documents/20127/38742837/casos_coronavirus_hospitales.xlsx", # TODO, ya no da datos por provincia
               "data/original/spain/aragon/casos_coronavirus_hospitales.xlsx")
 
-aragon_original <- read_excel("data/original/spain/aragon/casos_coronavirus_hospitales.xlsx", col_names = TRUE, sheet = "hoja")
+aragon_original <- read_excel("data/original/spain/aragon/casos_coronavirus_hospitales.xlsx", col_names = TRUE)
 
 aragon_a <- aragon_original %>%
   rename(
@@ -1418,6 +1418,8 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
   mutate( 
     cases_14days = cases_accumulated - lag(cases_accumulated,13),
     cases_7days = cases_accumulated - lag(cases_accumulated,6),
+    cases_PCR_14days = cases_accumulated_PCR - lag(cases_accumulated_PCR,13),
+    cases_PCR_7days = cases_accumulated_PCR - lag(cases_accumulated_PCR,6),
     daily_cases = cases_accumulated - lag(cases_accumulated),
     daily_cases_avg7 =  round( ( daily_cases + lag(daily_cases,1)+lag(daily_cases,2)+
                                    lag(daily_cases,3)+lag(daily_cases,4)+lag(daily_cases,5)+lag(daily_cases,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
