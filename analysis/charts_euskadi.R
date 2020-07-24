@@ -9,10 +9,12 @@ library(readxl)
 # Load data 
 download.file("https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covid_19_2020/opendata/datos-asistenciales.xlsx", 
               "data/original/spain/euskadi/datos-asistenciales.xlsx")
+download.file("https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covid_19_2020/opendata/situacion-epidemiologica.xlsx", 
+              "data/original/spain/euskadi/situacion-epidemiologica.xlsx")
 
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
-caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: Open Data Euskadi"
+caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19/euskadi.html) | Datos: Open Data Euskadi"
 
 # Set colors ---------
 # extends color paletter
@@ -673,6 +675,120 @@ euskadi_total %>%
        y = "falecidos",
        x = "fecha (mes) 2020",
        fill = "",
+       caption = caption_provincia)
+dev.off()
+
+
+# Municipio ------------
+municipios <- read_excel("data/original/spain/euskadi/situacion-epidemiologica.xlsx", skip = 1, col_names = TRUE, sheet = "05") %>% rename(
+  name = "OSASUN-EREMUAK/ZONAS DE SALUD"
+) %>% melt(  id.vars = c("name")) %>% rename ( date = variable) %>% 
+  group_by(name) %>% arrange(date) %>% 
+  mutate(
+  date =  as.Date( paste0(date,"/2020"), "%d/%m/%y"),
+  daily_cases_avg7 =  round( ( value + lag(value,1)+lag(value,2)+
+                                 lag(value,3)+lag(value,4)+lag(value,5)+lag(value,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
+  ) %>% filter( !is.na(date))
+
+municipios_top <- municipios %>% top_n(1, date) %>% filter (daily_cases_avg7 > 1 ) %>% select (name)
+
+png(filename=paste0("img/spain/euskadi/covid19_casos-municipios-pais-vasco.png", sep = ""),width = 1200,height = 800)
+municipios %>% # filter( name %in% municipios_top$name) %>%
+  ggplot() +
+  geom_line(aes(date, daily_cases_avg7, group=name, color = name), size= 0.5) +
+  geom_point(aes(date, value, color = name), size= 1) +
+  geom_text_repel(
+    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 1.8 ),
+    aes(date, daily_cases_avg7,  color = name,
+        label=paste(format(daily_cases_avg7, nsmall=0, big.mark=".", decimal.mark = ","), name)),
+    nudge_x = 3, # adjust the starting y position of the text label
+    size=5,
+    hjust=0,
+    family = "Roboto Condensed",
+    direction="y",
+    segment.size = 0.1,
+    segment.color="#777777"
+  ) +
+# scale_color_manual(values = colors_prov) +
+# scale_color_manual(values = c("#1b9e77","#d95f02","#7570b3")) +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(
+    date_breaks = "1 week",
+    date_labels = "%d/%m",
+    limits=c( min(municipios$date)+70, max(municipios$date +9)),
+    expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "none"
+  ) +
+  labs(title = paste0("Casos PCR+ por COVID-19 por municipio por día en Euskadi" ),
+       subtitle = paste0("Media: ventana de 7 días. ",period_eus),
+       y = "casos por día",
+       x = "fecha",
+       caption = caption_provincia)
+dev.off()
+
+png(filename=paste0("img/spain/euskadi/covid19_casos-municipios-pais-vasco_rejilla.png", sep = ""),width = 1200,height = 800)
+municipios %>% filter( name %in% municipios_top$name) %>%
+  ggplot() +
+  geom_line(aes(date, daily_cases_avg7, group=name), size= 0.5, color= "#999999") +
+  geom_point(aes(date, value), size= 1) +
+  facet_wrap( ~name, scales = "free_y") + #, scales = "free_x"
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(
+    date_breaks = "1 month",
+    date_labels = "%m",
+    limits=c( min(municipios$date)+70, max(municipios$date +9)),
+    expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "none"
+  ) +
+  labs(title = paste0("Casos PCR+ por COVID-19 por municipio por día en Euskadi" ),
+       subtitle = paste0("Media: ventana de 7 días. ",period_eus),
+       y = "casos por día",
+       x = "fecha",
+       caption = caption_provincia)
+dev.off()
+
+png(filename=paste0("img/spain/euskadi/covid19_casos-municipios-pais-vasco_rejilla_not-free.png", sep = ""),width = 1200,height = 800)
+municipios %>% filter( name %in% municipios_top$name) %>%
+  ggplot() +
+  geom_line(aes(date, daily_cases_avg7, group=name), size= 0.5, color= "#999999") +
+  geom_point(aes(date, value), size= 1) +
+  facet_wrap( ~name) + #, scales = "free_x"
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(
+    date_breaks = "1 month",
+    date_labels = "%m",
+    limits=c( min(municipios$date)+70, max(municipios$date +9)),
+    expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "none"
+  ) +
+  labs(title = paste0("Casos PCR+ por COVID-19 por municipio por día en Euskadi" ),
+       subtitle = paste0("Media: ventana de 7 días. ",period_eus),
+       y = "casos por día",
+       x = "fecha",
        caption = caption_provincia)
 dev.off()
 
