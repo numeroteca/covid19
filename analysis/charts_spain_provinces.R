@@ -14,8 +14,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-07-24)"
-filter_date <- as.Date("2020-07-23")
+period <- "(Actualizado: 2020-07-26)"
+filter_date <- as.Date("2020-07-25")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -3316,7 +3316,7 @@ htmlwidgets::saveWidget(as_widget(interactive_dp_p), paste0(getwd(),"/interactiv
 for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
 # for ( i in 1:c(7,8,11,12,18)  ) { print(i)}
   # for ( i in 3:3  ) {
-  if (i %in% c(2,6,7,8,9,11,12,13,14,18) ) {
+  if (i %in% c(2,6,7,8,9,11,12,13,14,16,18) ) {
     
   prov <- levels(data_cases_sp_provinces$ccaa)[i]
   unaprov <- data_cases_sp_provinces %>% filter (ccaa == prov ) %>% select (province) %>% first() 
@@ -4202,7 +4202,7 @@ dev.off()
 
 # Solamente deja las ccaa prevalentes
 noprevalentes <- c("Andalucía",  "Asturias, Principado de", "Balears, Illes", 
-                   "Canarias", "Ceuta", "Melilla",  "Murcia, Región de", "Navarra, Comunidad Foral de", "Rioja, La")
+                   "Canarias", "Ceuta", "Melilla", "Navarra, Comunidad Foral de", "Rioja, La")
 
 data_cases_sp_provincesX <- data_cases_sp_provinces %>% filter( ! ccaa %in% noprevalentes ) 
 data_cases_sp_provincesX_sm  <- data_cases_sp_provinces_sm %>% filter( ! ccaa %in% noprevalentes ) 
