@@ -887,7 +887,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 #                             data_cases_sp_provinces$province == "Barcelona", ]$deceased <- catalunya_datadista[catalunya_datadista$date > as.Date("2020-03-05") &
 #                                                                                                                  catalunya_datadista$date < as.Date("2020-04-13") ,]$deaths_bcn
 
-# Euskadi hospitalizados.  Overwrite hospitalized  data --------------
+# Euskadi hospitalizados. Overwrite hospitalized  data --------------
 download.file("https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covid_19_2020/opendata/datos-asistenciales.xlsx", 
               "data/original/spain/euskadi/datos-asistenciales.xlsx")
 
@@ -944,6 +944,62 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 ) %>% select(-hospitalized_eus)
 
 rm(euskadi_a,euskadi_original)
+
+
+# Euskadi fallecidos en hospitales. --------------
+euskadi_original <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "07")
+
+euskadi_b <- euskadi_original %>% rename( date = ...1 ) %>% filter( date != "Grand Total" ) %>%
+  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Exitus`) %>% melt(
+    id.vars = c("date")
+  ) %>% mutate(
+    province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
+    province = ifelse(variable=="02 Cruces", "Bizkaia"  ,province),
+    province = ifelse(variable=="03 Donosti", "Gipuzkoa" ,province),
+    province = ifelse(variable=="04 Basurto", "Bizkaia"  ,province),
+    province = ifelse(variable=="05 Galdakao", "Bizkaia" ,province),
+    province = ifelse(variable=="06 Zumarraga", "Gipuzkoa" ,province),
+    province = ifelse(variable=="07 Bidasoa", "Gipuzkoa" ,province),
+    province = ifelse(variable=="08 Mendaro", "Gipuzkoa" ,province),
+    province = ifelse(variable=="09 Alto Deba", "Gipuzkoa" ,province),
+    province = ifelse(variable=="10 San Eloy", "Bizkaia" ,province),
+    province = ifelse(variable=="11 Urduliz", "Bizkaia" ,province),
+    province = ifelse(variable=="12 Eibar", "Gipuzkoa" ,province),
+    province = ifelse(variable=="13 Leza", "Araba/Álava" ,province),
+    province = ifelse(variable=="14 Sta Marina", "Bizkaia" ,province),
+    province = ifelse(variable=="15 Gorliz", "Bizkaia" ,province),
+    province = ifelse(variable=="BERMEO H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZALDIBAR H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZAMUDIO H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ÁLAVA PSIQUIÁTRICO H.", "Araba/Álava" , province)
+  ) %>% group_by(province,date) %>% 
+  mutate( 
+    value = ifelse(is.na(value),0,value)) %>%
+  summarise(
+    deceased_per_day = sum(value)
+  ) %>% filter ( !is.na(province) ) %>% group_by(province) %>% arrange(date) %>% mutate(
+    deceased = cumsum(deceased_per_day)
+  )
+
+data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
+euskadi_b$dunique <- paste0(euskadi_b$date,euskadi_b$province)
+
+data_cases_sp_provinces <- merge(data_cases_sp_provinces,
+                                 euskadi_b %>% ungroup() %>% select(dunique,deceased_per_day) %>% 
+                                   rename(
+                                     deceased_per_day_eus = deceased_per_day
+                                   ) , 
+                                 by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique)
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+  hospitalized = ifelse( ccaa == "País Vasco", hospitalized_eus, hospitalized),
+  source_name = ifelse( ccaa == "País Vasco", paste0(as.character(source_name),";Open Data Euskadi"), as.character(source_name) ),
+  source = ifelse( ccaa == "País Vasco", 
+                   paste0(source,";https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covid_19_2020/opendata/datos-asistenciales.xlsx" ), 
+                   as.character(source) )
+) %>% select(-hospitalized_eus)
+
+rm(euskadi_b,euskadi_original)
 
 # Aragón hospitalizados.  Overwrite hospitalized  data -------------- -----
 download.file("https://www.aragon.es/documents/20127/38742837/casos_coronavirus_hospitales.xlsx", # TODO, ya no da datos por provincia
@@ -1258,8 +1314,35 @@ data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique =
                   recovered = ifelse( !is.na(recovered_can), recovered_can, recovered)
                 ) %>% select(-cases_accumulated_can,-cases_accumulated_PCR_can, -PCR_can, -hospitalized_can, -deceased_can, -recovered_can, -dunique) %>% mutate (
                   source_name =  ifelse( province == "Cantabria", paste0(source_name,";Servicio Cántabro de Salud"), source_name),
-                  source =  ifelse(province == "Cantabria", paste0(source,";https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-pcr.csv"), source),
+                  source =  ifelse(province == "Cantabria", paste0(source,";https://serviweb.scsalud.es:10443/ficheros/COVID19_historico.csv;https://www.scsalud.es/coronavirus"), source),
                 )
+
+cantabria <- cantabria %>% filter (date > as.Date("2020-07-19")) %>% rename(
+  PCR = PCR_can,
+  cases_accumulated = cases_accumulated_can,
+  deceased = deceased_can,
+  recovered = recovered_can,
+  hospitalized = hospitalized_can
+) %>% mutate(
+  province = "Cantabria",
+  ccaa = "Cantabria",
+  new_cases = NA,
+  TestAc = NA,
+  activos = NA,
+  cases_accumulated_PCR = NA,
+  intensive_care = NA,
+  recovered = NA,
+  source_name = "Servicio Cántabro de Salud",
+  source = "https://github.com/lipido/galicia-covid19/blob/master/ferrol.csv;https://github.com/lipido/galicia-covid19/blob/master/ferrol.ext.csv",
+  comments = NA
+) %>% select(names(data_cases_sp_provinces)  )
+
+# Add rows that don-t have an existing previous date created for cantabria
+data_cases_sp_provinces <- rbind(
+  data_cases_sp_provinces,
+  cantabria
+)
+
 
 # Murcia -------
 # donwload provincias data from googgle spreadsheet 
@@ -1269,15 +1352,7 @@ download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIX
 murcia <- read.delim("data/original/spain/murcia/murcia.csv",sep = ",") %>% mutate(
   date = as.Date(as.character(date), "%d/%m/%Y"),
 ) %>% select(-Pruebas.diagnósticas.totales, -recovered_PCR ) %>% mutate(
-  PCR = ""
-  # hospitalized_mur = hospitalized,
-  # intensive_care_mur = intensive_care,
-  # deceased_mur = deceased,
-  # cases_accumulated_mur = cases_accumulated,
-  # cases_accumulated_PCR_mur = cases_accumulated_PCR,
-  # recovered_mur = recovered,
-  # source_mur = source,
-  # source_name_mur = source_name
+  PCR = NA
 )
 
 # Add rows
@@ -1286,29 +1361,19 @@ data_cases_sp_provinces <- rbind(
   murcia %>% filter( date > as.Date("2020-07-16") )
 )
 
-# add Murcia data
-# aaaa <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0(province,date) ),
-# data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0(province,date) ),
-                                  # murcia %>% mutate( dunique = paste0(province,date)) %>% select( dunique, intensive_care_mur, 
-                                  #                                                                 hospitalized_mur, deceased_mur, cases_accumulated_mur,
-                                  #                                                                 cases_accumulated_PCR_mur, recovered_mur, source_mur, source_name_mur), 
-                                  # by.x = "dunique", by.y = "dunique", all.x = TRUE ) %>% mutate(
-                                  #   cases_accumulated = ifelse( !is.na(intensive_care_mur), intensive_care_mur, cases_accumulated),
-                                  #   hospitalized = ifelse( !is.na(hospitalized_mur), hospitalized_mur, hospitalized),
-                                  #   deceased = ifelse( !is.na(deceased_mur), deceased_mur, deceased),
-                                  #   cases_accumulated = ifelse( !is.na(cases_accumulated_mur), cases_accumulated_mur, cases_accumulated),
-                                  #   cases_accumulated_PCR = ifelse( !is.na(cases_accumulated_PCR_mur), cases_accumulated_PCR_mur, cases_accumulated_PCR),
-                                  #   recovered = ifelse( !is.na(recovered_mur), recovered_mur, recovered),
-                                  #   source = ifelse( province == "Murcia" & !is.na(source_mur),
-                                  #                         paste0(as.character(source_mur),";",source), 
-                                  #                         source ),
-                                  #   source_name = ifelse( province == "Murcia" & !is.na(source_name_mur),
-                                  #                         paste0(as.character(source_name_mur),";",source_name), 
-                                  #                         source_name )
-                                  #   
-                                  # ) %>% select(-dunique, -intensive_care_mur, 
-                                  #              -hospitalized_mur, -deceased_mur, -cases_accumulated_mur,
-                                  #              -cases_accumulated_PCR_mur, -recovered_mur, -source, -source_name)  
+# Navarra -------
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Navarra", 
+              "data/original/spain/navarra/navarra.csv")
+
+# load data
+navarra <- read.delim("data/original/spain/navarra/navarra.csv",sep = ",") %>% mutate(
+  date = as.Date( date )
+)
+
+data_cases_sp_provinces <- rbind(
+  data_cases_sp_provinces %>% filter( !( date > as.Date("2020-07-18") & province == "Navarra" ) ), #remove unwanted Navarra rows
+  navarra %>% filter( date > as.Date("2020-07-18") )
+)
 
 
 # Add province ISCIII RENAVE data -----
@@ -1475,7 +1540,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
     daily_cases_avg7 =  round( ( daily_cases + lag(daily_cases,1)+lag(daily_cases,2)+
                                    lag(daily_cases,3)+lag(daily_cases,4)+lag(daily_cases,5)+lag(daily_cases,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
     daily_cases_PCR = cases_accumulated_PCR - lag(cases_accumulated_PCR),
-    # daily_cases_PCR = ifelse( is.na(daily_cases_PCR), PCR, daily_cases_PCR), # inserta datos originales de PCR diarios si la diferencia del acumulado no se puede calcular
+    daily_cases_PCR = ifelse( is.na(daily_cases_PCR), PCR, daily_cases_PCR), # inserta datos originales de PCR diarios si la diferencia del acumulado no se puede calcular
     daily_cases_PCR_avg7 =  round( ( daily_cases_PCR + lag(daily_cases_PCR,1)+lag(daily_cases_PCR,2)+
                                        lag(daily_cases_PCR,3)+lag(daily_cases_PCR,4) +lag(daily_cases_PCR,5) +lag(daily_cases_PCR,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
     daily_deaths = deceased - lag(deceased),
@@ -1518,5 +1583,5 @@ saveRDS(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-sp
 
 # cleans environment
 rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_poblacion,datadista,ciii, 
-   galicia_cumulative, madrid_original2, cantabria, murcia, madrid_pcr)
+   galicia_cumulative, madrid_original2, cantabria, murcia, madrid_pcr,navarra)
 
