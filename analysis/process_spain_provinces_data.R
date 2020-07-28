@@ -24,15 +24,6 @@ write.csv(read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",
 # load data
 data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")
 
-
-# Download Andalucía data from https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228
-# that is uploaded manually to our own spreadsheet in google spreadsheet 
-download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=andalucia", 
-              "data/original/spain/andalucia/andalucia.csv")
-andalucia_original <- read.delim("data/original/spain/andalucia/andalucia.csv", sep=",")
-# TODO: make it work from direct source
-# andalucia_original <- read.delim("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=4dcace2a-394f-4e86-9d7b-fede695f0c92&type=3&foto=si&ejecutaDesde=&codConsulta=38228&consTipoVisua=JP", sep=";")
-
 # Process data ------
 # Create date variable
 data_cases_sp_provinces$date  <- as.Date(data_cases_sp_provinces$date)
@@ -184,6 +175,12 @@ rm(cyl,cyla,cylb,cyla_original,cylb_original, cylc_original)
 
 # Andalucía: Remove existing Andalucia data and add new one from new source ---------------------
 
+# Download Andalucía data from https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228
+# that is uploaded manually to our own spreadsheet in google spreadsheet 
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=andalucia", 
+              "data/original/spain/andalucia/andalucia.csv")
+andalucia_original <- read.delim("data/original/spain/andalucia/andalucia.csv", sep=",")
+
 # Remove existing Andalucia data
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( ccaa != "Andalucía")
 
@@ -243,12 +240,17 @@ andalucia2 <- andalucia2 %>% filter( Territorio != "Andalucía" ) %>%
                                     intensive_care, deceased, cases_accumulated, cases_accumulated_PCR, 
                                     recovered, source_name, source, comments) %>% filter(date > as.Date("2020-07-24"))
 
-
-
 # Add new Andalucía data
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,andalucia,andalucia2) 
 
 rm(andalucia,andalucia_original)
+
+# País Vasco --------------
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=pais-vasco", 
+              "data/original/spain/euskadi/pais-vasco.csv")
+euskadi <- read.delim("data/original/spain/euskadi/pais-vasco.csv", sep=",")
+
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces,euskadi) 
 
 # Galicia: Remove existing Galicia data and add new one from new source ---------------------
 # Remove existing Galicia data

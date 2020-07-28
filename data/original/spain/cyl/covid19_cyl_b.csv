@@ -564,6 +564,11 @@ fecha;hospital;provincia;nuevos_hospitalizados_planta;hospitalizados_planta;nuev
 2020-07-27;Complejo Asistencial de Soria;Soria;0;2;0;1;0;435;0;123;42173;41.666667,-2.666667
 2020-07-27;Hospital Universitario Río Hortega;Valladolid;0;3;0;1;0;902;0;171;47186;41.583333,-4.666667
 2020-07-27;Complejo Asistencial de Zamora;Zamora;0;3;0;1;2;362;0;92;49275;41.75,-6.0
+2020-07-28;Complejo Asistencial Universitario de Burgos;Burgos;1;5;0;2;2;729;0;139;9059;42.383333,-3.666667
+2020-07-28;Complejo Asistencial Universitario de León;León;0;0;0;0;0;1458;0;351;24089;42.666667,-6.0
+2020-07-28;Complejo Asistencial de Segovia;Segovia;1;2;0;0;0;932;0;213;40004;41.166667,-4.0
+2020-07-28;Hospital Universitario Río Hortega;Valladolid;0;2;1;2;1;903;0;171;47186;41.583333,-4.666667
+2020-07-28;Complejo Asistencial de Zamora;Zamora;0;4;0;0;0;362;0;92;49275;41.75,-6.0
 2020-03-18;Hospital Santiago Apóstol;Burgos;7;6;2;0;1;2;0;0;9059;42.383333,-3.666667
 2020-03-18;Hospital El Bierzo;León;8;5;0;1;1;0;1;0;24089;42.666667,-6.0
 2020-03-18;Complejo Asistencial Universitario de León;León;2;32;0;6;0;3;0;4;24089;42.666667,-6.0
@@ -1182,6 +1187,11 @@ fecha;hospital;provincia;nuevos_hospitalizados_planta;hospitalizados_planta;nuev
 2020-07-27;Complejo Asistencial de Segovia;Segovia;0;1;0;0;0;932;0;213;40004;41.166667,-4.0
 2020-07-27;Hospital Clínico Universitario de Valladolid;Valladolid;1;4;0;0;0;845;0;196;47186;41.583333,-4.666667
 2020-07-27;Hospital de Medina del Campo;Valladolid;0;1;0;0;0;127;0;27;47186;41.583333,-4.666667
+2020-07-28;Complejo Asistencial de Ávila;Ávila;0;0;0;0;0;673;0;143;5019;40.616092,-4.929031
+2020-07-28;Hospital El Bierzo;León;0;1;0;0;0;292;0;73;24089;42.666667,-6.0
+2020-07-28;Complejo Asistencial Universitario de Palencia;Palencia;0;3;0;0;0;380;0;88;34120;42.432128,-4.520647
+2020-07-28;Complejo Asistencial Universitario de Salamanca;Salamanca;2;9;0;0;0;1291;0;373;37274;40.833333,-6.0
+2020-07-28;Hospital Clínico Universitario de Valladolid;Valladolid;0;3;0;0;1;846;0;196;47186;41.583333,-4.666667
 2020-03-18;Complejo Asistencial de Ávila;Ávila;6;24;0;1;0;1;1;1;5019;40.616092,-4.929031
 2020-03-18;Complejo Asistencial Universitario de Salamanca;Salamanca;8;44;0;4;0;4;2;8;37274;40.833333,-6.0
 2020-03-18;Complejo Asistencial de Zamora;Zamora;6;15;0;4;0;0;1;1;49275;41.75,-6.0
@@ -1749,3 +1759,7 @@ fecha;hospital;provincia;nuevos_hospitalizados_planta;hospitalizados_planta;nuev
 2020-07-27;Hospital Santiago Apóstol;Burgos;0;1;0;0;0;134;0;35;9059;42.383333,-3.666667
 2020-07-27;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
 2020-07-27;Complejo Asistencial Universitario de Palencia;Palencia;0;3;0;0;0;380;0;88;34120;42.432128,-4.520647
+2020-07-28;Hospital Santiago Apóstol;Burgos;2;3;0;0;0;134;0;35;9059;42.383333,-3.666667
+2020-07-28;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
+2020-07-28;Complejo Asistencial de Soria;Soria;0;2;0;1;0;435;0;123;42173;41.666667,-2.666667
+2020-07-28;Hospital de Medina del Campo;Valladolid;0;1;0;0;0;127;0;27;47186;41.583333,-4.666667

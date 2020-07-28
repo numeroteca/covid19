@@ -14,8 +14,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-07-27)"
-filter_date <- as.Date("2020-07-26")
+period <- "(Actualizado: 2020-07-28)"
+filter_date <- as.Date("2020-07-27")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -1266,8 +1266,8 @@ data_cases_sp_provinces %>%
   geom_line(aes(date, daily_cases_PCR_avg7,group=province, color=province), size= 0.7, linetype = "11" ) +
   # geom_point(aes(date, daily_cases_avg7), size= 0.5 ) +
   geom_text_repel(
-    data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(daily_cases) ) %>% top_n(1, date),
-    aes(date, daily_cases_avg7, label=paste(format(daily_cases_avg7, nsmall=1, big.mark="."), substr(province,1,2) ) ),
+    data= data_cases_sp_provinces %>% group_by(province)  %>% filter(!is.na(daily_cases_PCR_avg7) ) %>% top_n(1, date),
+    aes(date, daily_cases_PCR_avg7, label=paste(format(daily_cases_PCR_avg7, nsmall=1, big.mark="."), substr(province,1,2) ) ),
     nudge_x = 2, # adjust the starting x position of the text label
     size=4,
     hjust=0,
