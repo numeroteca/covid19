@@ -216,7 +216,7 @@ download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografi
 andalucia_original2 <- read_csv2("data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
 andalucia2 <- spread(andalucia_original2, Medida, Valor) #from long to wide format
 
-andalucia2 <- andalucia2 %>%
+andalucia2 <- andalucia2 %>% filter( Territorio != "Andalucía" ) %>%
   mutate(
     date = as.Date(Fecha,"%d/%m/%Y"),
     ccaa = "Andalucía"
@@ -1316,6 +1316,30 @@ data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique =
                                       source =  ifelse(province == "Madrid", paste0(source,";https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-pcr.csv"), source),
                                   )
 
+# Add manually the day that do not exist, therefore merge does not work TODO
+data_cases_sp_provinces <- rbind(
+  data_cases_sp_provinces,
+  madrid_pcr %>% filter ( (date == as.Date("2020-07-25") ) | (date == as.Date("2020-07-26") )) %>% mutate(
+    hospitalized = NA,
+    intensive_care = NA,
+    cases_accumulated_PCR = PCR.,
+    PCR = NA,
+    cases_accumulated = NA,
+    deceased = NA,
+    recovered = NA,
+    province = "Madrid",
+    ccaa = "Madrid, Comunidad de",
+    new_cases = NA,
+    TestAc = NA,
+    activos = NA,
+    recovered = NA,
+    source_name = "Comunidad de Madrid",
+    source = "https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-pcr.csv",
+    comments = NA
+  ) %>% select(names(data_cases_sp_provinces) ) 
+  )
+
+
 # Cantabria --------
 # web https://www.scsalud.es/coronavirus download CSV at the bottom
 # file https://www.scsalud.es/documents/2162705/9255280/2020_covid19_historico.csv 
@@ -1376,7 +1400,6 @@ data_cases_sp_provinces <- rbind(
   cantabria
 )
 
-
 # Murcia -------
 # donwload provincias data from googgle spreadsheet 
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Murcia", 
@@ -1408,6 +1431,33 @@ data_cases_sp_provinces <- rbind(
   navarra %>% filter( date > as.Date("2020-07-18") )
 )
 
+# Asturias --------------
+asturias <- read.delim("data/original/spain/asturias/historico-datos-asturias.csv",sep = ",") %>% mutate(
+  date = as.Date( FECHA, "%d/%m/%Y" )
+) %>% rename(
+  hospitalized = Personas.hospitalizadas.actualmente.en.planta,
+  intensive_care = Personas.hospitalizadas.actualmente.en.UCI,
+  cases_accumulated_PCR = Casos.confirmados.por.PCR,
+) %>% mutate(
+  PCR = NA,
+  cases_accumulated = NA,
+  deceased = NA,
+  recovered = NA,
+  province = "Asturias",
+  ccaa = "Asturias, Principado de",
+  new_cases = NA,
+  TestAc = NA,
+  activos = NA,
+  recovered = NA,
+  source_name = "Gobierno del Principado de Asturias",
+  source = "https://app.transparenciaendatos.es/v/#!/5eb4344e16b9fc465933d217",
+  comments = NA
+) %>% select(names(data_cases_sp_provinces)  )
+
+data_cases_sp_provinces <- rbind(
+  data_cases_sp_provinces %>% filter( !( date > as.Date("2020-07-19") & province == "Asturias" ) ), #remove unwanted Asturias rows
+  asturias %>% filter( date > as.Date("2020-07-19") )
+)
 
 # Add province ISCIII RENAVE data -----
 download.file("https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv", 
@@ -1616,5 +1666,4 @@ saveRDS(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-sp
 
 # cleans environment
 rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_poblacion,datadista,ciii, 
-   galicia_cumulative, madrid_original2, cantabria, murcia, madrid_pcr,navarra)
-
+   galicia_cumulative, madrid_original2, cantabria, murcia, madrid_pcr,navarra,asturias)

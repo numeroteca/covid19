@@ -696,7 +696,7 @@ png(filename=paste0("img/spain/euskadi/covid19_casos-municipios-pais-vasco.png",
 municipios %>% # filter( name %in% municipios_top$name) %>%
   ggplot() +
   geom_line(aes(date, daily_cases_avg7, group=name, color = name), size= 0.5) +
-  geom_point(aes(date, value, color = name), size= 1) +
+  geom_pcol(aes(date, value, color = name), size= 1) +
   geom_text_repel(
     data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 1.8 ),
     aes(date, daily_cases_avg7,  color = name,
@@ -737,8 +737,8 @@ dev.off()
 png(filename=paste0("img/spain/euskadi/covid19_casos-municipios-pais-vasco_rejilla.png", sep = ""),width = 1200,height = 800)
 municipios %>% filter( name %in% municipios_top$name) %>%
   ggplot() +
-  geom_line(aes(date, daily_cases_avg7, group=name), size= 0.5, color= "#999999") +
-  geom_point(aes(date, value), size= 1) +
+  geom_col(aes(date, value), width= 1, fill = "#AAAAAA") +
+  geom_line(aes(date, daily_cases_avg7, group=name), size= 1.1, color= "#565656") +
   facet_wrap( ~name, scales = "free_y") + #, scales = "free_x"
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
@@ -752,7 +752,7 @@ municipios %>% filter( name %in% municipios_top$name) %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     legend.position =  "none"
   ) +
@@ -766,8 +766,8 @@ dev.off()
 png(filename=paste0("img/spain/euskadi/covid19_casos-municipios-pais-vasco_rejilla_not-free.png", sep = ""),width = 1200,height = 800)
 municipios %>% filter( name %in% municipios_top$name) %>%
   ggplot() +
-  geom_line(aes(date, daily_cases_avg7, group=name), size= 0.5, color= "#999999") +
-  geom_point(aes(date, value), size= 1) +
+  geom_col(aes(date, value), width= 1, fill = "#AAAAAA") +
+  geom_line(aes(date, daily_cases_avg7, group=name), size= 1.1, color= "#565656") +
   facet_wrap( ~name) + #, scales = "free_x"
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
@@ -781,7 +781,7 @@ municipios %>% filter( name %in% municipios_top$name) %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     legend.position =  "none"
   ) +
