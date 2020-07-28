@@ -1409,7 +1409,7 @@ murcia <- read.delim("data/original/spain/murcia/murcia.csv",sep = ",") %>% muta
   date = as.Date(as.character(date), "%d/%m/%Y"),
 ) %>% select(-Pruebas.diagnósticas.totales, -recovered_PCR ) %>% mutate(
   PCR = NA
-)
+) %>% select( names(data_cases_sp_provinces) )
 
 # Add rows
 data_cases_sp_provinces <- rbind(
@@ -1432,6 +1432,7 @@ data_cases_sp_provinces <- rbind(
 )
 
 # Asturias --------------
+# TODO download manually from https://app.transparenciaendatos.es/v/#!/5eb4344e16b9fc465933d217. Table at the bottom
 asturias <- read.delim("data/original/spain/asturias/historico-datos-asturias.csv",sep = ",") %>% mutate(
   date = as.Date( FECHA, "%d/%m/%Y" )
 ) %>% rename(

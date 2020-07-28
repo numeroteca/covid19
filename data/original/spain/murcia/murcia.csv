@@ -1,4 +1,4 @@
-"date","province","ccaa","new_cases","Pruebas diagnósticas totales","PCR","TestAc","activos","activos_PCR","hospitalized","intensive_care","deceased","cases_accumulated","cases_accumulated_PCR","recovered","recovered_PCR","source_name","source","comments"
+"date","province","ccaa","new_cases","Pruebas diagnósticas totales","PCR realizadas","TestAc","activos","activos_PCR","hospitalized","intensive_care","deceased","cases_accumulated","cases_accumulated_PCR","recovered","recovered_PCR","source_name","source","comments"
 "15/07/2020","Murcia","Región de Murcia","","138391","","","","","20","0","148","3475","1781","3228","1536","Informe epidemiológico del Portal Sanitario de la Región de Murcia, a 15 de julio de 2020","https://www.murciasalud.es/recursos/ficheros/459151-INFORME_COVID-19_REGION_DE_MURCIA_20200715.pdf",""
 "16/07/2020","Murcia","Región de Murcia","","","","","","","","","","","","","","","",""
 "17/07/2020","Murcia","Región de Murcia","","","","","106","","21","1","151","3508","1808","3251","1551","Nota de prensa del Portal Sanitario de la Región de Murcia","https://www.murciasalud.es/noticias.php?op=ver&id=465935&idsec=66",""
