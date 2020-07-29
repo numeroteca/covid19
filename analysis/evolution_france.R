@@ -9,7 +9,7 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Settings -------  
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_f <- "Gráfico: lab.montera34.com/covid19. Datos: OpenCOVID19-fr"
-periodo_f <- "2020.03.04 - 07.25"
+periodo_f <- "2020.03.04 - 07.29"
 
 # COVID-19 in France-----------
 
@@ -480,11 +480,11 @@ data_f2_cases %>%
                   segment.color="#777777"
   ) +
   coord_cartesian(
-    xlim = c( min(data_f2_cases$date) + 42, max(data_f2_cases$date + 38) )
+    xlim = c( min(data_f2_cases$date) + 42, max(data_f2_cases$date + 60) )
   ) +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
-  scale_x_date(date_breaks = "5 day", 
-               date_labels = "%d"
+  scale_x_date(date_breaks = "15 day", 
+               date_labels = "%d/%m"
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
@@ -518,13 +518,13 @@ data_f2_cases %>% # filter( source_type != "opencovid19-fr" | (source_type == "o
                   segment.color="#777777"
   ) +
   coord_cartesian(
-    xlim = c( min(data_f2_cases$date) + 39, max(data_f2_cases$date + 38) )
+    xlim = c( min(data_f2_cases$date) + 39, max(data_f2_cases$date + 60) )
   ) +
   scale_y_log10( 
     limits = c(1,max(data_f2_cases$deces)),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
-  scale_x_date(date_breaks = "1 week", 
+  scale_x_date(date_breaks = "15 day", 
                date_labels = "%d/%m"
                # limits=c( min(data_f2_cases$date) + 43, max(data_f2_cases$date + 20)) 
   ) + 
@@ -590,7 +590,7 @@ data_f2_cases_death %>%
   geom_point(aes(date, daily_deaths, color=region), size= 0.6 ) +
   geom_text_repel(data=filter( data_f2_cases_death, date==max(data_f2_cases_death$date),  region != "Total"), 
                   aes(date, daily_deaths, color=region, label=paste(format( daily_deaths, nsmall=1, big.mark="."), substr(region,1,20) )),
-                  nudge_x = 1, # adjust the starting y position of the text label
+                  nudge_x = 3, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -607,9 +607,9 @@ data_f2_cases_death %>%
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
     expand = c(0,0.1)
   ) +
-  scale_x_date(date_breaks = "1 week", 
+  scale_x_date(date_breaks = "15 days", 
                date_labels = "%d/%m",
-               limits=c( min(data_f2_cases$date + 40), max(data_f2_cases$date +20)),
+               limits=c( min(data_f2_cases$date + 40), max(data_f2_cases$date +40)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -636,7 +636,7 @@ data_f2_cases_death %>%
   geom_point(aes(date, daily_deaths, color=region), size= 0.6, alpha=0.5 ) +
   geom_text_repel(data=filter( data_f2_cases_death, date==max(data_f2_cases_death$date),  region != "Total"), 
                   aes(date, daily_deaths_avg6, color=region, label=paste(format( daily_deaths_avg6, nsmall=1, big.mark="."), substr(region,1,20) )),
-                  nudge_x = 1, # adjust the starting y position of the text label
+                  nudge_x = 4, # adjust the starting y position of the text label
                   size=5,
                   hjust=0,
                   family = "Roboto Condensed",
@@ -653,9 +653,9 @@ data_f2_cases_death %>%
   #   minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
   #   expand = c(0,0.1)
   # ) +
-  scale_x_date(date_breaks = "1 week", 
+  scale_x_date(date_breaks = "15 days", 
                date_labels = "%d/%m",
-               limits=c( min(data_f2_cases$date + 40), max(data_f2_cases$date +20)),
+               limits=c( min(data_f2_cases$date + 40), max(data_f2_cases$date +30)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -700,9 +700,9 @@ data_f2_cases_death %>%
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
     expand = c(0,0.1)
   ) +
-  scale_x_date(date_breaks = "1 week", 
+  scale_x_date(date_breaks = "15 days", 
                date_labels = "%d/%m",
-               limits=c( min(data_f2_cases$date + 40), max(data_f2_cases$date +20)),
+               limits=c( min(data_f2_cases$date + 40), max(data_f2_cases$date +40)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
