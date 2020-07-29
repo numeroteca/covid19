@@ -925,8 +925,11 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 #                                                                                                                  catalunya_datadista$date < as.Date("2020-04-13") ,]$deaths_bcn
 
 # Euskadi hospitalizados. Overwrite hospitalized  data --------------
-download.file("https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covid_19_2020/opendata/datos-asistenciales.xlsx", 
-              "data/original/spain/euskadi/datos-asistenciales.xlsx")
+# download.file("https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covid_19_2020/opendata/datos-asistenciales.xlsx",
+#               "data/original/spain/euskadi/datos-asistenciales.xlsx") 
+#TODO: volver a activar cuando arreglen als fechas, mietnras trabajar con los CSV del .zip
+download.file("https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covid_19_2020/opendata/datos-asistenciales.zip",
+              "data/original/spain/euskadi/datos-asistenciales.zip")
 
 euskadi_original <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "01")
 
