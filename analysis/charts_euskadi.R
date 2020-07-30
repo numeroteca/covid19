@@ -680,6 +680,9 @@ dev.off()
 
 
 # Municipio ------------
+
+period_eus <- paste("Actualizado:", "2020-07-29")
+
 municipios <- read_excel("data/original/spain/euskadi/situacion-epidemiologica.xlsx", skip = 1, col_names = TRUE, sheet = "05") %>% rename(
   name = "OSASUN-EREMUAK/ZONAS DE SALUD"
 ) %>% melt(  id.vars = c("name")) %>% rename ( date = variable) %>% 
@@ -696,7 +699,7 @@ png(filename=paste0("img/spain/euskadi/covid19_casos-municipios-pais-vasco.png",
 municipios %>% # filter( name %in% municipios_top$name) %>%
   ggplot() +
   geom_line(aes(date, daily_cases_avg7, group=name, color = name), size= 0.5) +
-  geom_pcol(aes(date, value, color = name), size= 1) +
+  geom_point(aes(date, value, color = name), size= 1) +
   geom_text_repel(
     data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 1.8 ),
     aes(date, daily_cases_avg7,  color = name,
@@ -748,7 +751,7 @@ municipios %>% filter( name %in% municipios_top$name) %>%
     limits=c( min(municipios$date)+70, max(municipios$date +9)),
     expand = c(0,0) 
   ) + 
-  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
@@ -777,7 +780,7 @@ municipios %>% filter( name %in% municipios_top$name) %>%
     limits=c( min(municipios$date)+70, max(municipios$date +9)),
     expand = c(0,0) 
   ) + 
-  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),

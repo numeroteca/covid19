@@ -930,38 +930,40 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 #TODO: volver a activar cuando arreglen als fechas, mietnras trabajar con los CSV del .zip
 download.file("https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covid_19_2020/opendata/datos-asistenciales.zip",
               "data/original/spain/euskadi/datos-asistenciales.zip")
+unzip(zipfile = "data/original/spain/euskadi/datos-asistenciales.zip", exdir = "data/original/spain/euskadi/")
 
-euskadi_original <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "01")
+# euskadi_original <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "01")
+euskadi_original <- read.delim("data/original/spain/euskadi/01.csv",sep = ";", skip = 2)
 
-euskadi_a <- euskadi_original %>% rename( date = ...1 ) %>% 
-  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Ingresados en Planta`)  %>% melt(
+euskadi_a <- euskadi_original %>% rename( date = X ) %>%
+  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Ingresados.en.Planta`)  %>% melt(
     id.vars = c("date")
   ) %>% mutate(
-    province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
-    province = ifelse(variable=="02 Cruces", "Bizkaia"  ,province),
-    province = ifelse(variable=="03 Donosti", "Gipuzkoa" ,province),
-    province = ifelse(variable=="04 Basurto", "Bizkaia"  ,province),
-    province = ifelse(variable=="05 Galdakao", "Bizkaia" ,province),
-    province = ifelse(variable=="06 Zumarraga", "Gipuzkoa" ,province),
-    province = ifelse(variable=="07 Bidasoa", "Gipuzkoa" ,province),
-    province = ifelse(variable=="08 Mendaro", "Gipuzkoa" ,province),
-    province = ifelse(variable=="09 Alto Deba", "Gipuzkoa" ,province),
-    province = ifelse(variable=="10 San Eloy", "Bizkaia" ,province),
-    province = ifelse(variable=="11 Urduliz", "Bizkaia" ,province),
-    province = ifelse(variable=="12 Eibar", "Gipuzkoa" ,province),
-    province = ifelse(variable=="13 Leza", "Araba/Álava" ,province),
-    province = ifelse(variable=="14 Sta Marina", "Bizkaia" ,province),
-    province = ifelse(variable=="15 Gorliz", "Bizkaia" ,province),
-    province = ifelse(variable=="BERMEO H.", "Bizkaia" ,province),
-    province = ifelse(variable=="ZALDIBAR H.", "Bizkaia" ,province),
-    province = ifelse(variable=="ZAMUDIO H.", "Bizkaia" ,province),
-    province = ifelse(variable=="ÁLAVA PSIQUIÁTRICO H.", "Araba/Álava" , province)
+    province = ifelse(variable=="X01.Araba", "Araba/Álava" ,NA),
+    province = ifelse(variable=="X02.Cruces", "Bizkaia"  ,province),
+    province = ifelse(variable=="X03.Donosti", "Gipuzkoa" ,province),
+    province = ifelse(variable=="X04.Basurto", "Bizkaia"  ,province),
+    province = ifelse(variable=="X05.Galdakao", "Bizkaia" ,province),
+    province = ifelse(variable=="X06.Zumarraga", "Gipuzkoa" ,province),
+    province = ifelse(variable=="X07.Bidasoa", "Gipuzkoa" ,province),
+    province = ifelse(variable=="X08.Mendaro", "Gipuzkoa" ,province),
+    province = ifelse(variable=="X09.Alto.Deba", "Gipuzkoa" ,province),
+    province = ifelse(variable=="X10.San.Eloy", "Bizkaia" ,province),
+    province = ifelse(variable=="X11.Urduliz", "Bizkaia" ,province),
+    province = ifelse(variable=="X12.Eibar", "Gipuzkoa" ,province),
+    province = ifelse(variable=="X13.Leza", "Araba/Álava" ,province),
+    province = ifelse(variable=="X14.Sta.Marina", "Bizkaia" ,province),
+    province = ifelse(variable=="X15.Gorliz", "Bizkaia" ,province),
+    province = ifelse(variable=="BERMEO.H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZALDIBAR.H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZAMUDIO.H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ALAVA.PSIQUIATRICO.H.", "Araba/Álava" , province)
   ) %>% group_by(province,date) %>% 
   mutate( 
     value = ifelse(is.na(value),0,value)) %>%
   summarise(
     hospitalized = sum(value)
-  )
+  ) %>% filter( !is.na(province) )
 
 data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
 euskadi_a$dunique <- paste0(euskadi_a$date,euskadi_a$province)
