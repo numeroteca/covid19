@@ -1,12 +1,11 @@
 # Genera gráficos de Coronavirus COVID-19 en España por provincia
 # Debe ejecutarse antes el script que procesa los datos : process_spain_provinces_data.R
-# o descargarse los datos de https://github.com/montera34/escovid19data/blob/master/data/output/covid19-provincias-spain_consolidated.csv
+# o descargarse los datos de https://github.com/montera34/escovid19data/blob/master/d ata/output/covid19-provincias-spain_consolidated.csv
 # Los gráficos generados pueden verse en https://lab.montea34.com/covid9
-  
+
 # Este archivo era antes "evolution_spain_provinces.R"
 library(tidyverse)
 library(reshape2)
-library(ggrepel) # for geom_text_repel to prevent overlapping
 
 # Settings -------
 # Cambia el pie del gráfico pero conserva la fuente de los datos
@@ -14,8 +13,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-07-28)"
-filter_date <- as.Date("2020-07-27")
+period <- "(Actualizado: 2020-07-31)"
+filter_date <- as.Date("2020-07-30")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -63,7 +62,7 @@ data_cases_sp_provinces %>%
     limits = c(0,max(data_cases_sp_provinces$cases_accumulated) ),
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "1 month",
-               date_labels = "%d/%m",
+               date_labels = "%m",
                expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
@@ -78,7 +77,7 @@ data_cases_sp_provinces %>%
   labs(title = paste0("Casos acumulados y de PCR de COVID-19 registrados en España ",updated),
        subtitle = paste0("Por provincia. Línea de puntos: casos confirmados con PCR postivo. ",period),
        y = "casos registrados",
-       x = "fecha",
+       x = "fecha (mes) 2020",
        color = "",
        caption = caption_provincia)
 dev.off()
@@ -102,7 +101,7 @@ data_cases_sp_provinces %>%
     minor_breaks = c(  seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000) ) ) +
   facet_wrap( ~province) +
   scale_x_date(date_breaks = "1 month",
-               date_labels = "%d/%m",
+               date_labels = "%m",
                expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
@@ -117,7 +116,7 @@ data_cases_sp_provinces %>%
   labs(title = paste0("Casos acumulados y de PCR de COVID-19 registrados en España ",updated),
        subtitle = paste0("Por provincia (escala log.). Línea de puntos: casos confirmados con PCR postivos. ",period),
        y = "casos registrados",
-       x = "fecha",
+       x = "fecha (mes) 2020",
        color = "",
        caption = caption_provincia)
 dev.off()
