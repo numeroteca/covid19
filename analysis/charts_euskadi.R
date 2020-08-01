@@ -1016,8 +1016,8 @@ osi %>% # filter( name %in% municipios_top$name) %>%
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(
-    date_breaks = "1 month",
-    date_labels = "%m",
+    date_breaks = "15 days",
+    date_labels = "%d/%m",
     limits=c( min(municipios$date)+70, max(municipios$date +9)),
     expand = c(0,0) 
   ) + 
@@ -1029,7 +1029,7 @@ osi %>% # filter( name %in% municipios_top$name) %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position =  "top"
   ) +
-  labs(title = paste0("Casos PCR+ por COVID-19 por zonas de salud por día en Euskadi" ),
+  labs(title = paste0("Casos PCR+ por COVID-19 por OSI por día en Euskadi" ),
        subtitle = paste0("Media: ventana de 7 días. ",period_eus),
        y = "casos por día",
        x = "fecha",
