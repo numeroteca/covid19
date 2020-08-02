@@ -2005,63 +2005,63 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
 }
 
 
-# Interactive ---------------
-library(plotly)
-
-interactive_dp  <- data_cases_sp_provinces %>% ungroup(province) %>%
-  ggplot() +
-  geom_line(aes(date, daily_cases_avg7, group = province, color=ccaa,
-                text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(daily_cases_avg7, digits = 1), 
-                                                                                big.mark=".", decimal.mark = ","), " media casos diaria (ventana 7 días)" ,"<br>",date )),                   
-            size= 0.7, se = FALSE, span = 0.6 ) +
-  geom_point(aes(date, daily_cases, color=ccaa,
-                 text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(daily_cases, digits = 1), 
-                                                                                 big.mark=".", decimal.mark = ","), " casos el día " ,"<br>",date )),    
-             size= 0.3
-  ) +
-  scale_color_manual(values = colors_prov) +
-  coord_cartesian(
-    ylim = c(1,1200)
-  ) +
-  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
-                 minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
-                 expand = c(0,0.2) ) +
-  scale_x_date(date_breaks = "1 week",
-               date_labels = "%d/%m",
-               limits=c( min(data_cases_sp_provinces$date)+13, max(data_cases_sp_provinces$date + 1)),
-               expand = c(0,0)
-  ) +
-  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
-  theme(
-    panel.grid.minor.x = element_blank(),
-    panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000"),
-    legend.position =  c(0.3,0.9)
-  ) +
-  labs(title = paste0("Media de casos por día (media 7 días) por COVID-19. España ", updated ),
-       subtitle = paste0("Por provincia. Escala logarítmica ",period),
-       y = "casos por día (media 7 días)",
-       x = "fecha",
-       caption = caption_provincia)
-
-
-# save interactvive
-interactive_dp_p <- ggplotly(interactive_dp, tooltip = "text") %>% 
-  layout(title = list(text = paste0('Media de casos por día (media 7 días) por COVID-19 por provincias',
-                                    '<br>',
-                                    '<sup>',
-                                    'Por provincia. Escala logarítmica. Actualizado: 2020.04.28',
-                                    '</sup>'))
-         , annotations = 
-           list(x = 1, y = -0.11, text = "<a style='color:grey;' href='https://lab.montera34.com/covid19'>lab.montera34.com/covid19</a> | Data: <a  style='color:grey;'href='https://github.com/montera34/escovid19data9'>esCOVID19data</a>", 
-                showarrow = F, xref='paper', yref='paper', 
-                xanchor='right', yanchor='auto', xshift=0, yshift=0,
-                font=list(size=15, color="grey")
-           )
-  )
-
-htmlwidgets::saveWidget(as_widget(interactive_dp_p), paste0(getwd(),"/interactive/daily-cases-provinces-index.html") )
+# # Interactive ---------------
+# library(plotly)
+# 
+# interactive_dp  <- data_cases_sp_provinces %>% ungroup(province) %>%
+#   ggplot() +
+#   geom_line(aes(date, daily_cases_avg7, group = province, color=ccaa,
+#                 text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(daily_cases_avg7, digits = 1), 
+#                                                                                 big.mark=".", decimal.mark = ","), " media casos diaria (ventana 7 días)" ,"<br>",date )),                   
+#             size= 0.7, se = FALSE, span = 0.6 ) +
+#   geom_point(aes(date, daily_cases, color=ccaa,
+#                  text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(daily_cases, digits = 1), 
+#                                                                                  big.mark=".", decimal.mark = ","), " casos el día " ,"<br>",date )),    
+#              size= 0.3
+#   ) +
+#   scale_color_manual(values = colors_prov) +
+#   coord_cartesian(
+#     ylim = c(1,1200)
+#   ) +
+#   scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+#                  minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+#                  expand = c(0,0.2) ) +
+#   scale_x_date(date_breaks = "1 week",
+#                date_labels = "%d/%m",
+#                limits=c( min(data_cases_sp_provinces$date)+13, max(data_cases_sp_provinces$date + 1)),
+#                expand = c(0,0)
+#   ) +
+#   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+#   theme(
+#     panel.grid.minor.x = element_blank(),
+#     panel.grid.major.x = element_blank(),
+#     # panel.grid.minor.y = element_blank(),
+#     axis.ticks.x = element_line(color = "#000000"),
+#     legend.position =  c(0.3,0.9)
+#   ) +
+#   labs(title = paste0("Media de casos por día (media 7 días) por COVID-19. España ", updated ),
+#        subtitle = paste0("Por provincia. Escala logarítmica ",period),
+#        y = "casos por día (media 7 días)",
+#        x = "fecha",
+#        caption = caption_provincia)
+# 
+# 
+# # save interactvive
+# interactive_dp_p <- ggplotly(interactive_dp, tooltip = "text") %>% 
+#   layout(title = list(text = paste0('Media de casos por día (media 7 días) por COVID-19 por provincias',
+#                                     '<br>',
+#                                     '<sup>',
+#                                     'Por provincia. Escala logarítmica. Actualizado: 2020.04.28',
+#                                     '</sup>'))
+#          , annotations = 
+#            list(x = 1, y = -0.11, text = "<a style='color:grey;' href='https://lab.montera34.com/covid19'>lab.montera34.com/covid19</a> | Data: <a  style='color:grey;'href='https://github.com/montera34/escovid19data9'>esCOVID19data</a>", 
+#                 showarrow = F, xref='paper', yref='paper', 
+#                 xanchor='right', yanchor='auto', xshift=0, yshift=0,
+#                 font=list(size=15, color="grey")
+#            )
+#   )
+# 
+# htmlwidgets::saveWidget(as_widget(interactive_dp_p), paste0(getwd(),"/interactive/daily-cases-provinces-index.html") )
 
 # / 3. Deceassed (Fallecimientos) ------------
 
