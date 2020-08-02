@@ -3,6 +3,8 @@ title: "esCOVID19data: datos COVID19 por provincias en España"
 output: 
   flexdashboard::flex_dashboard:
     orientation: rows
+    includes:
+       in_header: web_stats.html
 ---
 
 ```{r setup, include=FALSE}
