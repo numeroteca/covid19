@@ -1,0 +1,340 @@
+---
+title: "esCOVID19data: datos COVID19 por provincias en España"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+---
+
+```{r setup, include=FALSE}
+# load libraries
+library(flexdashboard)
+library(tidyverse)
+library(plotly)
+
+# Este archivo era antes "evolution_spain_provinces.R"
+library(tidyverse)
+library(reshape2)
+library(ggrepel) # for geom_text_repel to prevent overlapping
+
+
+# Settings -------
+# Cambia el pie del gráfico pero conserva la fuente de los datos
+caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
+caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
+updated <- ""
+# period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
+period <- "(Actualizado: 2020-08-02)"
+filter_date <- as.Date("2020-08-01")
+
+# Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
+# or load it using:
+data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( (date > as.Date("2020-02-25") ) & ( date < filter_date ) )
+
+# Set colors ---------
+# extends color paletter
+library(RColorBrewer)
+# creates extended color palette https://www.r-bloggers.com/how-to-expand-color-palette-with-ggplot-and-rcolorbrewer/
+colourCount <- length(unique(data_cases_sp_provinces$ccaa))
+getPalette <- colorRampPalette(brewer.pal(9, "Set1"))
+colors_prov <- getPalette(colourCount )
+# Change yellow to blue
+colors_prov[1] <- "#a60000"
+colors_prov[12] <- "#84d3e7"
+
+
+# Remove not prevalent hospitalized data for Murcia
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+  hospitalized = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
+  hospitalized_per_100000 = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 )
+)
+
+# create temp dataframes to be able to plot all the values in small multiples
+data_cases_sp_provinces_sm <- data_cases_sp_provinces %>% filter( date < filter_date)
+data_cases_sp_provinces_sm$province_cp <- data_cases_sp_provinces[data_cases_sp_provinces$date < filter_date,]$province 
+
+# Remove last day
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( date < filter_date)
+
+```
+
+Casos por día
+=====================================  
+
+Row {.tabset .tabset-fade}
+-----------------------------------------------------------------------
+
+### Casos por día en los últimos 50 días
+
+```{r}
+interactive_dp  <- data_cases_sp_provinces %>% ungroup(province) %>% filter ( date > filter_date - 50 ) %>%
+  ggplot() +
+  geom_line(aes(date, daily_cases_PCR_avg7, group = province, color=ccaa,
+                text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(daily_cases_PCR_avg7, digits = 1),
+                                                                                big.mark=".", decimal.mark = ","), " media casos diaria (ventana 7 días)" ,"<br>",date )),
+            size= 0.7, se = FALSE, span = 0.6 ) +
+  # geom_point(aes(date, daily_cases_PCR, color=ccaa,
+  #                text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(daily_cases_PCR, digits = 1),
+  #                                                                                big.mark=".", decimal.mark = ","), " casos el día " ,"<br>",date )),
+  #            size= 0.3
+  # ) +
+  scale_color_manual(values = colors_prov) +
+  coord_cartesian(
+    ylim = c(1,800)
+  ) +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+                 # minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+                 expand = c(0,0.2) ) +
+  scale_x_date(date_breaks = "1 week",
+               date_labels = "%d/%m",
+               limits=c( filter_date - 50, max(data_cases_sp_provinces$date + 1)),
+               expand = c(0,0)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  c(0.3,0.9)
+  ) +
+  labs(title = paste0("Media de casos PCR+ por día (media 7 días) por COVID-19. España ", updated ),
+       subtitle = paste0("Por provincia. Escala logarítmica ",period),
+       y = "casos por día (media 7 días)",
+       x = "2020",
+       caption = caption_provincia)
+
+
+# save interactvive
+interactive_dp_p <- ggplotly(interactive_dp, tooltip = "text") %>%
+  layout(title = list(text = paste0('Media de casos PCR+ por día (ventana 7 días) por COVID-19.',
+                                    '<br>',
+                                    '<sup>',
+                                    ' Últimos 50 días. Por provincia. Escala lineal',
+                                    '</sup>'))
+         # , annotations =
+         #   list(x = 1, y = -0.11, text = "<a style='color:grey;' href='https://lab.montera34.com/covid19'>lab.montera34.com/covid19</a> | Data: <a  style='color:grey;'href='https://github.com/montera34/escovid19data9'>esCOVID19data</a>",
+         #        showarrow = F, xref='paper', yref='paper',
+         #        xanchor='right', yanchor='auto', xshift=0, yshift=0,
+         #        font=list(size=15, color="grey")
+         #   )
+  )
+
+interactive_dp_p 
+```
+
+
+### Casos por día Log
+
+```{r}
+interactive_dp  <- data_cases_sp_provinces %>% ungroup(province) %>%
+  ggplot() +
+  geom_line(aes(date, daily_cases_PCR_avg7, group = province, color=ccaa,
+                text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(daily_cases_PCR_avg7, digits = 1),
+                                                                                big.mark=".", decimal.mark = ","), " media casos diaria (ventana 7 días)" ,"<br>",date )),
+            size= 0.7, se = FALSE, span = 0.6 ) +
+  # geom_point(aes(date, daily_cases_PCR, color=ccaa,
+  #                text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(daily_cases_PCR, digits = 1),
+  #                                                                                big.mark=".", decimal.mark = ","), " casos el día " ,"<br>",date )),
+  #            size= 0.3
+  # ) +
+  scale_color_manual(values = colors_prov) +
+  coord_cartesian(
+    ylim = c(1,2000)
+  ) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+                 minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+                 expand = c(0,0.2) ) +
+  scale_x_date(date_breaks = "15 days",
+               date_labels = "%d/%m",
+               limits=c( min(data_cases_sp_provinces$date)+13, max(data_cases_sp_provinces$date + 1)),
+               expand = c(0,0)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  c(0.3,0.9)
+  ) +
+  labs(title = paste0("Media de casos PCR+ por día (media 7 días) por COVID-19. España ", updated ),
+       subtitle = paste0("Por provincia. Escala logarítmica ",period),
+       y = "casos por día (media 7 días)",
+       x = "2020",
+       caption = caption_provincia)
+
+
+# save interactvive
+interactive_dp_p <- ggplotly(interactive_dp, tooltip = "text") %>%
+  layout(title = list(text = paste0('Media de casos PCR+ por día (ventana 7 días) por COVID-19',
+                                    '<br>',
+                                    '<sup>',
+                                    'Por provincia. Escala logarítmica.',
+                                    '</sup>'))
+         , annotations =
+           list(x = 1, y = -0.11, text = "<a style='color:grey;' href='https://lab.montera34.com/covid19'>lab.montera34.com/covid19</a> | Data: <a  style='color:grey;'href='https://github.com/montera34/escovid19data9'>esCOVID19data</a>",
+                showarrow = F, xref='paper', yref='paper',
+                xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                font=list(size=15, color="grey")
+           )
+  )
+
+interactive_dp_p 
+
+```
+
+Incidencia
+=====================================  
+
+Row {.tabset .tabset-fade}
+-----------------------------------------------------------------------
+### Casos por 100.000 hab en 14 días
+
+```{r}
+p <- data_cases_sp_provinces %>%  ungroup(province) %>%
+  ggplot() +
+  # geom_line(aes(date, daily_cases,group=province, color=ccaa), size= 0.8 ) +
+  geom_line( aes(date, cases_PCR_14days/poblacion*100000,group=province, color=ccaa, text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(cases_PCR_14days/poblacion*100000, digits = 1),
+                                                                                big.mark=".", decimal.mark = ","), "" ,"<br>",date )), size= 0.8
+             
+) +
+  # geom_point(aes(date, daily_cases, color=ccaa), size= 1 ) +
+  # geom_point(aes(date, cases_PCR_14days/poblacion*100000, color=ccaa), size= 0.5 ) +
+  # geom_text_repel(
+  #   data = data_cases_sp_provinces %>% group_by(province) %>% filter( !is.na(cases_PCR_14days) ) %>% top_n(1, date) %>% 
+  #     filter ( cases_PCR_14days/poblacion*100000 > 15 & date > filter_date-4),
+  #   # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & cases_14days/poblacion*100000 > 40),
+  #   aes(date, cases_PCR_14days/poblacion*100000, color=ccaa, 
+  #       label=paste(format( round(cases_PCR_14days/poblacion*100000, digits = 1), nsmall=1, big.mark=".", decimal.mark = ","),province)),
+  #   nudge_x = 2, # adjust the starting y position of the text label
+  #   size=5,
+  #   hjust=0,
+  #   family = "Roboto Condensed",
+  #   direction="y",
+  #   segment.size = 0.1,
+  #   segment.color="#777777"
+  # ) +
+  scale_color_manual(values = colors_prov) +
+  coord_cartesian(
+    # ylim = c( 0,max(data_cases_sp_provinces[!is.na(data_cases_sp_provinces$daily_cases),]$daily_cases) )
+  ) +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
+  # scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+  #                minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+  #                expand = c(0,0.2) ) +
+  scale_x_date(date_breaks = "2 week", 
+               date_labels = "%d/%m",
+               limits=c( min(data_cases_sp_provinces$date)+15, max(data_cases_sp_provinces$date)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "right"
+  ) +
+  labs(title = paste0("Incidencia acumulada 14 días COVID-19 en España ", updated),
+       subtitle = paste0("Casos PCR+ por 100.000 habitantes en últimos 14 días por provincia ",period),
+       y = "Incidencia acumulada 14 días",
+       x = "fecha",
+       color = "CCAA",
+       caption = caption_provincia)
+
+
+# save interactvive
+p <- ggplotly( p, tooltip = "text") %>%
+  layout(title = list(text = paste0('Incidencia acumulada 14 días COVID-19 en España',
+                                    '<br>',
+                                    '<sup>',
+                                    'Casos PCR+ por 100.000 habitantes en últimos 14 días por provincia.',
+                                    '</sup>'))
+         , annotations =
+           list(x = 1, y = -0.11, text = "<a style='color:grey;' href='https://lab.montera34.com/covid19'>lab.montera34.com/covid19</a> | Data: <a  style='color:grey;'href='https://github.com/montera34/escovid19data9'>esCOVID19data</a>",
+                showarrow = F, xref='paper', yref='paper',
+                xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                font=list(size=15, color="grey")
+           )
+  )
+
+p
+```
+
+### Incidencia: casos por 100.000 hab en 14 días
+
+```{r}
+p2  <- data_cases_sp_provinces %>%  ungroup(province) %>%
+  ggplot() +
+  geom_line(aes(date, cases_PCR_14days,group=province, color=ccaa, text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(cases_PCR_14days, digits = 1),
+                                                                                big.mark=".", decimal.mark = ","), " casos en 14 días" ,"<br>",date )), size= 0.8 ) +
+  # geom_point(aes(date, cases_PCR_14days, color=ccaa), size= 1 ) +
+  # geom_text_repel( data = data_cases_sp_provinces %>% group_by(province) %>% filter( !is.na(cases_PCR_14days) ) %>% top_n(1, date) %>% 
+  #                    filter ( cases_PCR_14days > 100 & date > filter_date-7),
+  #                  aes(date, cases_PCR_14days, color=ccaa, label=paste(format(cases_PCR_14days, nsmall=1, big.mark=".", decimal.mark = ","),province)),
+  #                  nudge_x = 4, # adjust the starting y position of the text label
+  #                  size=5,
+  #                  hjust=0,
+  #                  family = "Roboto Condensed",
+  #                  direction="y",
+  #                  segment.size = 0.1,
+  #                  segment.color="#777777"
+  # ) +
+  scale_color_manual(values = colors_prov) +
+  coord_cartesian(
+  ) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(date_breaks = "2 week", 
+               date_labels = "%d/%m",
+               limits=c( min(data_cases_sp_provinces$date)+15, max(data_cases_sp_provinces$date)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000")
+    # legend.position = "none"
+  ) +
+  labs(title = paste0("Casos PCR+ últimos 14 días por COVID-19 en España ", updated),
+       subtitle = paste0("Por provincia ",period),
+       y = "casos",
+       x = "fecha",
+       caption = caption_provincia)
+
+# save interactvive
+p2 <- ggplotly(p2, tooltip = "text") %>%
+  layout(title = list(text = paste0('Casos PCR+ en los últimos 14 días por COVID-19 en España',
+                                    '<br>',
+                                    '<sup>',
+                                    'Por provincia',
+                                    '</sup>'))
+         , annotations =
+           list(x = 1, y = -0.11, text = "<a style='color:grey;' href='https://lab.montera34.com/covid19'>lab.montera34.com/covid19</a> | Data: <a  style='color:grey;'href='https://github.com/montera34/escovid19data9'>esCOVID19data</a>",
+                showarrow = F, xref='paper', yref='paper',
+                xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                font=list(size=15, color="grey")
+           )
+  )
+
+p2
+
+```
+
+Datos
+=====================================  
+
+Row {.tabset .tabset-fade}
+-----------------------------------------------------------------------
+
+### Proyecto esCOVID19data
+
+Más información sobre los datos recopilados de las comunidades autónomas en esCOVID19data, proeycto colaborativo: https://github.com/montera34/escovid19data
+
+Más visualizaciones en https://lab.montera34.com/covid19/provincias.html
+
+Código de las visualizaciones realizadas en R: https://code.montera34.com/numeroteca/covid19/
