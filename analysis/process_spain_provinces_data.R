@@ -1102,6 +1102,39 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 
 rm(aragon_a,aragon_original)
 
+# Aragon 2 new hospitalized data ------
+# https://transparencia.aragon.es/sites/default/files/documents/20200731_casos_confirmados_zona_basica_salud.xlsx
+# https://transparencia.aragon.es/sites/default/files/documents/20200802_casos_confirmados_zbs.xlsx
+
+# Datos de https://opendata.aragon.es/datos/catalogo/dataset/publicaciones-y-anuncios-relacionados-con-el-coronavirus-en-aragon
+download.file("https://www.aragon.es/documents/20127/38742837/casos_coronavirus_hospitales.csv", 
+              "data/original/spain/aragon/casos_coronavirus_hospitales.csv")
+
+# aragon_original <- read.delim("data/original/spain/aragon/casos_coronavirus_hospitales.csv",sep = ";") 
+aragon_b <- read.delim("data/original/spain/aragon/casos_coronavirus_hospitales.csv",sep = ";") %>% mutate(
+  date_ara = as.Date(fecha, "%Y-%m-%d"),
+  camas_ocupadas_total = ifelse(is.na(camas_ocupadas_total),0,camas_ocupadas_total),
+  camas_uci_ocupadas = ifelse(is.na(camas_uci_ocupadas),0,camas_uci_ocupadas)
+) %>% group_by(provincia,date_ara) %>% summarise(
+  hosp_ara = sum( camas_ocupadas_total),
+  uci_ara = sum( camas_uci_ocupadas)
+)
+
+# add data
+data_cases_sp_provinces <- merge(
+# zzz <- merge(
+  data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ) %>% ungroup(),
+  aragon_b %>% mutate ( dunique = paste0( date_ara, provincia) ) %>% ungroup() %>% select (dunique, hosp_ara, uci_ara,provincia,date_ara ) ,
+  by.x = "dunique", by.y = "dunique", all = TRUE
+) %>% mutate (
+ province = ifelse( is.na(provincia), as.character(province), as.character(provincia ) ),
+ ccaa = ifelse( !is.na(provincia), "Aragón", ccaa),
+ date = as.Date( ifelse( is.na(date), date_ara, date), origin=as.Date("1970-01-01") ),
+ # 
+ hospitalized = ifelse( ccaa == "Aragón", hosp_ara, hospitalized),
+ intensive_care = ifelse( ccaa == "Aragón", uci_ara, intensive_care)
+) %>% select(-dunique, -hosp_ara,- uci_ara, -provincia, -date_ara)
+
 
 # Madrid hospitalizados.  Overwrite hospitalized  data -------------------
 # download data from https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-series.csv
@@ -1368,7 +1401,6 @@ data_cases_sp_provinces <- rbind(
   ) %>% select(names(data_cases_sp_provinces) ) 
   )
 
-
 # Cantabria --------
 # web https://www.scsalud.es/coronavirus download CSV at the bottom
 # file https://www.scsalud.es/documents/2162705/9255280/2020_covid19_historico.csv 
@@ -1489,7 +1521,51 @@ data_cases_sp_provinces <- rbind(
   asturias %>% filter( date > as.Date("2020-07-19") )
 )
 
-# Add province ISCIII RENAVE data -----
+# Catalunya deaths---------
+# de la web https://analisi.transparenciacatalunya.cat/es/Salut/Dades-di-ries-de-COVID-19-per-rees-de-gesti-assist/dmzh-fz47 y 
+# a su vez de https://dadescovid.cat/descarregues?drop_es_residencia=1
+download.file("https://analisi.transparenciacatalunya.cat/api/views/dmzh-fz47/rows.csv?accessType=DOWNLOAD&bom=true&format=true&delimiter=%3B&sorting=true", 
+              "data/original/spain/catalunya/Dades_di_ries_de_COVID-19_per__rees_de_gesti__assistencials__AGA_.csv")
+# informaci'on de coorespondenica AGA con provincias http://www.aceba.cat/files/doc386/aga-arees-gestio-assistencial.pdf
+catalunya <- read.delim("data/original/spain/catalunya/Dades_di_ries_de_COVID-19_per__rees_de_gesti__assistencials__AGA_.csv",sep = ";") 
+aga_prov <-  read.delim("data/original/spain/catalunya/aga-provincias-catalunya.csv",sep = ",") 
+
+# creates date format
+catalunya <- catalunya %>% mutate (date = as.Date(DATA, "%d/%m/%Y") ) %>% select(date, everything())
+
+# add province information to AGA
+catalunya <- merge( catalunya,
+                    aga_prov,
+                    by.x = "NOM", by.y= "aga" )
+
+# iterates through data to count cases and other measures
+catalunya_process <- catalunya %>% group_by(date,province) %>% arrange(date) %>% 
+  summarise ( 
+    pcr_by_day = sum(PCR),
+    cases_by_day = sum(CASOS_CONFIRMAT),
+    ingresos_by_day = sum(INGRESSOS_TOTAL),
+    ingresos_critic_by_day = sum(INGRESSOS_CRITIC),
+    ingresados_by_day = sum(INGRESSATS_CRITIC),
+    deceased_by_day = sum(EXITUS)
+  )
+
+catalunya_process <- catalunya_process %>% group_by(province) %>% mutate (
+  deceased_cum = cumsum(deceased_by_day)
+)
+
+data_cases_sp_provinces <- merge(
+  data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ) %>% ungroup(),
+  catalunya_process %>% mutate ( dunique = paste0( date, province) ) %>% ungroup() %>% select (dunique, deceased_cum ) ,
+  by.x = "dunique", by.y = "dunique", all = TRUE
+)
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+ deceased = ifelse(ccaa == "Cataluña", deceased_cum, deceased ),
+ source = ifelse(!is.na(deceased_cum), paste0(source,";https://analisi.transparenciacatalunya.cat/Salut/Dades-di-ries-de-COVID-19-per-rees-de-gesti-assist/dmzh-fz47"), source ),
+ source = ifelse(!is.na(deceased_cum), paste0(source_name,"Transparencia Catalunya"), source_name )
+) %>% select (-deceased_cum)
+
+# C. Add province ISCIII RENAVE data -----
 download.file("https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv", 
               "data/original/spain/iscii_casos_renave.csv")
 ciii_renave <- read.delim("data/original/spain/iscii_casos_renave.csv",sep = ",") %>% 

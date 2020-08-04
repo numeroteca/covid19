@@ -15,8 +15,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-08-02)"
-filter_date <- as.Date("2020-08-01")
+period <- "(Actualizado: 2020-08-03)"
+filter_date <- as.Date("2020-08-02")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -1718,7 +1718,7 @@ dev.off()
 #     segment.color="#777777"
 #   )
 
-# Lineal detalle CCAA -----------------
+# Loop Lineal CCAA -----------------
 for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   # for ( i in 3:3  ) {
   
@@ -1818,7 +1818,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
 }
 
 
-# Lineal detalle CCAA last 50 days-----------------
+# Loop 50 days-----------------
 for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   # for ( i in 3:3  ) {
   
@@ -1917,7 +1917,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   dev.off()
 }
 
-# Log ----
+# Loop Log ----
 for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   
   prov <- levels(data_cases_sp_provinces$ccaa)[i]
@@ -3176,7 +3176,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
                    ) +
     scale_x_date(date_breaks = "1 week", 
                  date_labels = "%d/%m",
-                 limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +9)),
+                 limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +16)),
                  expand = c(0,0) 
     ) + 
     theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -3265,7 +3265,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
                  expand = c(0,0.2) ) +
   scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
-               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +9)),
+               limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +16)),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -3842,45 +3842,45 @@ dev.off()
 
 
 # Días de la semana -------------------
-data_cases_sp_provinces$weekday <- weekdays(data_cases_sp_provinces$date)
-
-data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
-                                              "sábado","domingo" ) )
-
-png(filename=paste("tmp/weekdays/dias-semana-euskadi-01.png", sep = ""),width = 1150,height = 400)
-data_cases_sp_provinces %>% filter ( ccaa == "País Vasco") %>% # filter ( province == "Bizkaia") %>%
-  ggplot() +
-  geom_col( aes(date,daily_deaths, fill=weekday), width = 1 ) +
-  geom_line( aes(date,daily_deaths_avg7, group=province), size = 2 ) +
-  # geom_col( data = data_cases_sp_provinces %>% filter(weekday == "jueves"), aes(date,daily_deaths, group=province, fill="#DD0000")) +
-  facet_wrap(~province) +
-  scale_fill_manual(values = c("#AAAAAA","#AAAAAA","#FF88AA","#AAAAAA","#AAAAAA","#CCAAAA","#CCAAAA") ) +
-  scale_y_continuous( 
-    # breaks = c(200,400,600,800,1000,1200,1400,1600,1800,2000)
-    # minor_breaks = c(70,80,90,100)
-  ) + 
-  scale_x_date(
-    date_breaks = "10 day",
-     date_labels = "%d",
-     limits=c( min(data_cases_sp_provinces$date)+20, max(data_cases_sp_provinces$date)+2),
-     expand = c(0,1)
-  ) +
-  theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
-  theme(
-    panel.grid.minor.x = element_blank(),
-    # panel.grid.major.x = element_blank(),
-    panel.grid.minor.y = element_blank(),
-    axis.ticks.x = element_line(color = "#000000"),
-    legend.position = "top"
-  ) +
-  labs(title = "Muertes por día COVID-19 en Euskadi",
-       subtitle = paste0("Buscando un patrón para la fecha de notificación de fallecidos. Línea: media de 7 días. Actualizado: ", filter_date ),
-       y = "fallecimientos por día",
-       x = "fecha",
-       caption = caption_provincia,
-       fill = "día de la semana"
-  )
-  dev.off()
+# data_cases_sp_provinces$weekday <- weekdays(data_cases_sp_provinces$date)
+# 
+# data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
+#                                               "sábado","domingo" ) )
+# 
+# png(filename=paste("tmp/weekdays/dias-semana-euskadi-01.png", sep = ""),width = 1150,height = 400)
+# data_cases_sp_provinces %>% filter ( ccaa == "País Vasco") %>% # filter ( province == "Bizkaia") %>%
+#   ggplot() +
+#   geom_col( aes(date,daily_deaths, fill=weekday), width = 1 ) +
+#   geom_line( aes(date,daily_deaths_avg7, group=province), size = 2 ) +
+#   # geom_col( data = data_cases_sp_provinces %>% filter(weekday == "jueves"), aes(date,daily_deaths, group=province, fill="#DD0000")) +
+#   facet_wrap(~province) +
+#   scale_fill_manual(values = c("#AAAAAA","#AAAAAA","#FF88AA","#AAAAAA","#AAAAAA","#CCAAAA","#CCAAAA") ) +
+#   scale_y_continuous( 
+#     # breaks = c(200,400,600,800,1000,1200,1400,1600,1800,2000)
+#     # minor_breaks = c(70,80,90,100)
+#   ) + 
+#   scale_x_date(
+#     date_breaks = "10 day",
+#      date_labels = "%d",
+#      limits=c( min(data_cases_sp_provinces$date)+20, max(data_cases_sp_provinces$date)+2),
+#      expand = c(0,1)
+#   ) +
+#   theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
+#   theme(
+#     panel.grid.minor.x = element_blank(),
+#     # panel.grid.major.x = element_blank(),
+#     panel.grid.minor.y = element_blank(),
+#     axis.ticks.x = element_line(color = "#000000"),
+#     legend.position = "top"
+#   ) +
+#   labs(title = "Muertes por día COVID-19 en Euskadi",
+#        subtitle = paste0("Buscando un patrón para la fecha de notificación de fallecidos. Línea: media de 7 días. Actualizado: ", filter_date ),
+#        y = "fallecimientos por día",
+#        x = "fecha",
+#        caption = caption_provincia,
+#        fill = "día de la semana"
+#   )
+#   dev.off()
 # 
 # png(filename=paste("tmp/weekdays/dias-semana-euskadi-02.png", sep = ""),width = 900,height = 900)
 # data_cases_sp_provinces %>% filter ( ccaa == "País Vasco") %>%
