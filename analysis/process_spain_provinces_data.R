@@ -1591,14 +1591,15 @@ download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIX
               "data/original/spain/rioja/rioja.csv")
 rioja <- read.delim("data/original/spain/rioja/rioja.csv",sep = ",") %>% mutate (
   deceased_cum = cumsum(deceased),
-  deceased = deceased_cum
+  deceased = deceased_cum,
+  date = as.Date( as.character(date))
 ) %>% select(names(data_cases_sp_provinces))
 
 # Remove Rioja 
 # TODO: try to not lose data taht are not in this new data source
 # Add Baleares data
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
-                                 rioja %>% filter( date > as.Date("2020-07-19")
+                                 rioja %>% filter( date > as.Date("2020-07-19") )
                                                    )
 
 # C. Add province ISCIII RENAVE data -----
