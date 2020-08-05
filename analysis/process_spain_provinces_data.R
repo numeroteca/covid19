@@ -78,7 +78,7 @@ rm(tenerife,palmas,canarias_bind)
 # Remove last -usually incomplete- day
 data_cases_sp_provinces <- filter(data_cases_sp_provinces, !is.na(date))
 
-# Castilla y León: Remove existing Andalucia data and add new one from new source ---------------------
+# Castilla y León: Remove existing Castilla y León data and add new one from new source ---------------------
 download.file("https://analisis.datosabiertos.jcyl.es/explore/dataset/situacion-epidemiologica-coronavirus-en-castilla-y-leon/download/?format=csv&timezone=Europe/Madrid&lang=en&use_labels_for_header=true&csv_separator=%3B", 
               "data/original/spain/cyl/covid19_cyl_a.csv")
 download.file("https://analisis.datosabiertos.jcyl.es/explore/dataset/situacion-de-hospitalizados-por-coronavirus-en-castilla-y-leon/download/?format=csv&timezone=Europe/Madrid&lang=en&use_labels_for_header=true&csv_separator=%3B", 
@@ -207,8 +207,9 @@ andalucia <- andalucia_original %>% filter( Territorio != "Andalucía" ) %>%
     comments=""
   ) %>% select( -Fecha) %>% select( date, province, ccaa, new_cases, PCR, TestAc, activos, hospitalized, intensive_care, deceased, cases_accumulated, cases_accumulated_PCR, recovered, source_name, source, comments) 
 
-download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=0b200bc6-3e8a-4991-a9ad-848e31c6cc69&type=3&foto=si&ejecutaDesde=&codConsulta=39464&consTipoVisua=JP",
-              "data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
+# TODO: hasta que funcione usar el antiguo
+# download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=0b200bc6-3e8a-4991-a9ad-848e31c6cc69&type=3&foto=si&ejecutaDesde=&codConsulta=39464&consTipoVisua=JP",
+#               "data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
 
 andalucia_original2 <- read_csv2("data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
 andalucia2 <- spread(andalucia_original2, Medida, Valor) #from long to wide format
@@ -1361,22 +1362,32 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   source =  ifelse( !is.na(deceassed_datadista), paste0(source,";https://github.com/datadista/datasets/raw/master/COVID%2019/ccaa_covid19_fallecidos.csv"), source),
 ) %>% select(-dunique,-deceassed_datadista)
 
-# Madrid substitute list of PCR+ by COmunidad de Madrid data --------
+# Madrid substitute list of PCR+ by Comunidad de Madrid data --------
 download.file("https://raw.githubusercontent.com/alfonsotwr/snippets/master/covidia-cam/madrid-pcr.csv", 
               "data/original/spain/madrid/madrid-pcr.csv")
 madrid_pcr <- read.delim("data/original/spain/madrid/madrid-pcr.csv",sep = ",") %>% mutate(
   date = as.Date(as.character(Fecha), "%Y-%m-%d")
 )
 
-# add Madrid PCR+ data
+# add Madrid PCR+ data 
 data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0(province,date) ),
-                                  madrid_pcr %>% mutate( dunique = paste0("Madrid",date)) %>% select(-date, -Fecha),
-                                  by.x = "dunique", by.y = "dunique", all.x = TRUE ) %>% mutate(
+# zzz <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0(province,date) ),
+                                  madrid_pcr %>% mutate( dunique = paste0("Madrid",date)) %>% select(-Fecha) %>% rename(date_mad = date),
+                                  by.x = "dunique", by.y = "dunique", all = TRUE ) %>% mutate(
                                     cases_accumulated_PCR = ifelse( !is.na(PCR.), PCR., cases_accumulated_PCR)
-                                  ) %>% select(-PCR., -dunique) %>% mutate (
+                                  ) %>% select(-PCR.) %>% mutate (
+                                    province = ifelse(is.na(province),"Madrid",province ), #TODO: repasar qué es lo que fallaba
+                                    ccaa = ifelse(is.na(ccaa),"Madrid, Comunidad de",ccaa ),
+                                    # dunique = paste0("Madrid",date),
+                                    date = ifelse(is.na(date),date_mad,date ),
+                                    # date = ifelse(is.na("NANA"),substr(dunique,7,16),date ),
+                                    date = as.Date(date,  origin=as.Date("1970-01-01") ),
                                     source_name =  ifelse( province == "Madrid", paste0(source_name,";Comunidad de Madrid"), source_name),
-                                      source =  ifelse(province == "Madrid", paste0(source,";https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-pcr.csv"), source),
-                                  )
+                                    source =  ifelse(province == "Madrid", paste0(source,";https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-pcr.csv"), source),
+                                  ) %>% select( -date_mad, -dunique) %>% filter ( !is.na(date))
+
+# test <- madrid_pcr %>% mutate( dunique = paste0("Madrid",date)) %>% select(-date, -Fecha)
+
 
 # Add manually the day that do not exist, therefore merge does not work TODO
 data_cases_sp_provinces <- rbind(
@@ -1563,7 +1574,32 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
  deceased = ifelse(ccaa == "Cataluña", deceased_cum, deceased ),
  source = ifelse(!is.na(deceased_cum), paste0(source,";https://analisi.transparenciacatalunya.cat/Salut/Dades-di-ries-de-COVID-19-per-rees-de-gesti-assist/dmzh-fz47"), source ),
  source = ifelse(!is.na(deceased_cum), paste0(source_name,"Transparencia Catalunya"), source_name )
-) %>% select (-deceased_cum)
+) %>% select (-deceased_cum, -dunique)
+
+# Baleares --------------
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Baleares", 
+              "data/original/spain/baleares/baleares.csv")
+baleares <- read.delim("data/original/spain/baleares/baleares.csv",sep = ",")
+
+# Remove Balerares  
+data_cases_sp_provinces <-  data_cases_sp_provinces %>% filter( ccaa != "Balears, Illes")
+# Add Baleares data
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces,baleares)
+
+# La Rioja --------------
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Rioja", 
+              "data/original/spain/rioja/rioja.csv")
+rioja <- read.delim("data/original/spain/rioja/rioja.csv",sep = ",") %>% mutate (
+  deceased_cum = cumsum(deceased),
+  deceased = deceased_cum
+) %>% select(names(data_cases_sp_provinces))
+
+# Remove Rioja 
+# TODO: try to not lose data taht are not in this new data source
+# Add Baleares data
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
+                                 rioja %>% filter( date > as.Date("2020-07-19")
+                                                   )
 
 # C. Add province ISCIII RENAVE data -----
 download.file("https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv", 
