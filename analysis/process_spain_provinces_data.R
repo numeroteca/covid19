@@ -209,8 +209,8 @@ andalucia <- andalucia_original %>% filter( Territorio != "Andalucía" ) %>%
 
 # TODO: hasta que funcione usar el antiguo
 # download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=0b200bc6-3e8a-4991-a9ad-848e31c6cc69&type=3&foto=si&ejecutaDesde=&codConsulta=39464&consTipoVisua=JP",
-download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=e31f8668-049c-4c17-a879-e097e9b3dfc8&type=3&foto=si&ejecutaDesde=&codConsulta=38228&consTipoVisua=JP",
-              "data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
+# download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=e31f8668-049c-4c17-a879-e097e9b3dfc8&type=3&foto=si&ejecutaDesde=&codConsulta=38228&consTipoVisua=JP",
+#               "data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
 
 # andalucia_original2 <- read_csv2("data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
 andalucia_original2 <- read.delim("data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv", sep=";") %>% select(-X) %>% filter( !(Territorio  == "") )
@@ -1603,6 +1603,19 @@ rioja <- read.delim("data/original/spain/rioja/rioja.csv",sep = ",") %>% mutate 
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
                                  rioja %>% filter( date > as.Date("2020-07-19") )
                                                    )
+# Melilla --------------
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Melilla", 
+              "data/original/spain/melilla/melilla.csv")
+melilla <- read.delim("data/original/spain/melilla/melilla.csv",sep = ",") %>% mutate (
+  date = as.Date( as.character(date))
+) %>% select(names(data_cases_sp_provinces))
+
+# Remove melilla 
+# TODO: try to not lose data taht are not in this new data source
+# Add Melilla data
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
+                                 rioja %>% filter( date > as.Date("2020-07-19") )
+)
 
 # C. Add province ISCIII RENAVE data -----
 download.file("https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv", 
