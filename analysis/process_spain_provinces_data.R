@@ -209,9 +209,11 @@ andalucia <- andalucia_original %>% filter( Territorio != "Andalucía" ) %>%
 
 # TODO: hasta que funcione usar el antiguo
 # download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=0b200bc6-3e8a-4991-a9ad-848e31c6cc69&type=3&foto=si&ejecutaDesde=&codConsulta=39464&consTipoVisua=JP",
-#               "data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
+download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=e31f8668-049c-4c17-a879-e097e9b3dfc8&type=3&foto=si&ejecutaDesde=&codConsulta=38228&consTipoVisua=JP",
+              "data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
 
-andalucia_original2 <- read_csv2("data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
+# andalucia_original2 <- read_csv2("data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
+andalucia_original2 <- read.delim("data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv", sep=";") %>% select(-X) %>% filter( !(Territorio  == "") )
 andalucia2 <- spread(andalucia_original2, Medida, Valor) #from long to wide format
 
 andalucia2 <- andalucia2 %>% filter( Territorio != "Andalucía" ) %>%
