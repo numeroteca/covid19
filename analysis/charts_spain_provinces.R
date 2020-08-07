@@ -13,8 +13,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-08-05)"
-filter_date <- as.Date("2020-08-05")
+period <- "(Actualizado: 2020-08-07)"
+filter_date <- as.Date("2020-08-07")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -1575,6 +1575,57 @@ data_cases_sp_provinces %>% filter(date > filter_date - 30 ) %>%
        caption = caption_provincia)
 dev.off()
 
+png(filename=paste("img/spain/provincias/covid19_casos-PCR-por-dia-provincia-media-superpuesto-log_media_lastdays.png", sep = ""),width = 1200,height = 700)
+data_cases_sp_provinces %>% filter(date > filter_date - 30 ) %>%
+  ggplot() +
+  # geom_smooth(aes(date, daily_cases_avg7,group=province, color=ccaa), size= 1, se = FALSE, span = 0.6 ) +
+  geom_line(aes(date, daily_cases_PCR_avg7,group=province, color=ccaa), size= 1 ) +
+  geom_line(aes(date, daily_cases_PCR,group=province, color=ccaa), size= 0.2 ) +
+  geom_point(aes(date, daily_cases_PCR, color=ccaa), size= 0.5, alpha = 0.5 ) +
+  # geom_point(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), aes(date, daily_cases_avg7, color=province), size= 1.5, alpha = 0.3 ) +
+  geom_text_repel(
+    # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_cases_avg7 > 5), 
+    data = data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(daily_cases_PCR_avg7)  ) %>% top_n(1, date) %>% filter (daily_cases_PCR_avg7 > 10)  ,
+    aes(date, daily_cases_PCR_avg7, color=ccaa, label=paste(format(daily_cases_PCR_avg7, nsmall=1, big.mark=".", decimal.mark = ","),province)),
+    nudge_x = 2, # adjust the starting y position of the text label
+    size=5,
+    hjust=0,
+    family = "Roboto Condensed",
+    direction="y",
+    segment.size = 0.1,
+    segment.color="#777777"
+  ) +
+  scale_color_manual(values = colors_prov) +
+  # coord_cartesian(
+  #   
+  #   ylim = c( 0,max(data_cases_sp_provinces[!is.na(data_cases_sp_provinces$daily_cases_PCR),]$daily_cases_PCR) )
+  # ) +
+  # scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  # ) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+                 minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+                 expand = c(0,0.2) ) +
+  scale_x_date(date_breaks = "1 week", 
+               date_labels = "%d/%m",
+               limits=c( filter_date - 30, max(data_cases_sp_provinces$date +7)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    # legend.position = c(0.1,0.6)
+    legend.position = "none"
+  ) +
+  labs(title = paste0("Media de casos PCR+ por día (media 7 días) por COVID-19 en España ",updated),
+       subtitle = paste0("Por provincia. Últimos 30 días. Escala logaritmica  ",period),
+       y = "casos PCR+ por día (media 7 días)",
+       x = "fecha",
+       caption = caption_provincia)
+dev.off()
+
 # Superpuesto Log
 png(filename=paste("img/spain/provincias/covid19_casos-por-dia-provincia-media-superpuesto-log_media.png", sep = ""),width = 1200,height = 800)
 data_cases_sp_provinces %>% 
@@ -1732,6 +1783,13 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   } else {
     png(filename=paste0("img/spain/provincias/covid19_casos-por-dia-provincia-media-superpuesto-lineal_media-", tolower( substr(prov,1,4) ),".png", sep = ""),width = 1200,height = 800)
   }
+  
+  # if ( unaprov == "Cataluña" ) {
+  #   data_cases_sp_provincesTemp <- data_cases_sp_provinces %>% filter( )
+  # } else {
+  #   
+  # }
+  
   the_province  <- data_cases_sp_provinces %>% filter (ccaa == prov ) %>%
     ggplot() +
     geom_line(aes(date, daily_cases_avg7,group=province, color=province), size= 1.5, se = FALSE, span = 0.6 ) +
@@ -1910,6 +1968,106 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
         segment.size = 0.1,
         segment.color="#777777"
       )
+  }
+  print(the_province)
+  print(paste("plot",prov))
+  dev.off()
+}
+
+# Loop 50 days Log-----------------
+for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
+  # for ( i in 3:3  ) {
+  
+  prov <- levels(data_cases_sp_provinces$ccaa)[i]
+  unaprov <- data_cases_sp_provinces %>% filter (ccaa == prov ) %>% select (province) %>% first() 
+  unaprov <- unaprov[1]
+  
+  print(prov)
+  if (i == 8 ) {
+    png(filename=paste0("img/spain/provincias/covid19_casos-por-dia-provincia-media-superpuesto-log-last50-media-", tolower( substr(prov,1,4) ),"leon.png", sep = ""),width = 1200,height = 800)
+  } else if (i == 18 ) {
+    png(filename=paste0("img/spain/provincias/covid19_casos-por-dia-provincia-media-superpuesto-log-last50-media-pais.png", sep = ""),width = 1200,height = 800)
+  } else {
+    png(filename=paste0("img/spain/provincias/covid19_casos-por-dia-provincia-media-superpuesto-log-last50-media-", tolower( substr(prov,1,4) ),".png", sep = ""),width = 1200,height = 800)
+  }
+  the_province  <- data_cases_sp_provinces %>% filter ( (ccaa == prov) & (date > filter_date - 50) ) %>%
+    ggplot() +
+    geom_line(aes(date, daily_cases_avg7,group=province, color=province), size= 1.5, se = FALSE, span = 0.6 ) +
+    geom_point(aes(date, daily_cases, color=province), size= 1.2, alpha = 0.5 ) +
+    geom_line(aes(date, daily_cases, color=province, group=province), size= 0.2, alpha = 0.5 ) +
+    geom_text_repel(
+      data = data_cases_sp_provinces %>% filter( ccaa == prov ) %>% group_by(province) %>% filter(!is.na(daily_cases) ) %>% top_n(1, date),
+      aes(date, daily_cases_avg7, color=province, 
+          label=paste(format(daily_cases_avg7, nsmall=1, big.mark=".", decimal.mark = ","),province)),
+      nudge_x = 1, # adjust the starting y position of the text label
+      size=5,
+      hjust=0,
+      family = "Roboto Condensed",
+      direction="y",
+      segment.size = 0.1,
+      segment.color="#777777"
+    ) +
+    scale_color_manual(values = colors_prov) +
+    scale_y_log10( 
+      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+      expand = c(0,0.2)
+    ) +
+    scale_x_date(date_breaks = "1 week", 
+                 date_labels = "%d/%m",
+                 limits=c( filter_date - 50, max(data_cases_sp_provinces$date +9)),
+                 expand = c(0,0) 
+    ) + 
+    theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+    theme(
+      panel.grid.minor.x = element_blank(),
+      panel.grid.major.x = element_blank(),
+      # panel.grid.minor.y = element_blank(),
+      axis.ticks.x = element_line(color = "#000000"),
+      legend.position =  "none"
+    ) +
+    labs(title = paste0("Media de casos por día (media 7 días) por COVID-19 en ",prov, " ", updated ),
+         subtitle = paste0("Línea de puntos:casos PCR+, media de 7 días. Últimos 50 días. Por provincia. ",period),
+         y = "casos por día (media 7 días)",
+         x = "fecha",
+         caption = caption_provincia)
+  
+  if ( prov=="Aragón" | prov=="Andalucía" | prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Cataluña" | prov=="Cantabria"  |  prov=="Ceuta" |  prov=="Castilla - La Mancha" |   prov=="Melilla"  | prov=="Comunitat Valenciana"  | 
+       prov=="Extremadura" | prov=="Madrid, Comunidad de" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="Rioja, La" | prov=="País Vasco" | prov=="Galicia") {
+    the_province  <- the_province + 
+      geom_line( aes(date, daily_cases_PCR_avg7,group=province, color=province), size= 1.4, linetype = "11")  +
+      geom_point(aes(date, daily_cases_PCR, color=province), size= 1.4, alpha = 0.7, shape= 21 ) +
+      geom_line(aes(date, daily_cases_PCR, color=province, group=province), size= 0.3, alpha = 0.5, linetype="11" ) 
+  }
+  # TODO: por qué hay que quitar a Baleares tras el cambio de fuente de datos? Investigar.
+  # if ( prov=="Aragón" | prov=="Andalucía" | prov=="Balears, Illes" | prov=="Asturias, Principado de"   | prov=="Cantabria" |  prov=="Ceuta"  |  prov=="Castilla - La Mancha" | prov=="Comunitat Valenciana"  | prov=="Extremadura" | 
+  if ( prov=="Aragón" | prov=="Andalucía" | prov=="Asturias, Principado de"   | prov=="Cantabria" |  prov=="Ceuta"  |  prov=="Castilla - La Mancha" | prov=="Comunitat Valenciana"  | prov=="Extremadura" | 
+       prov=="Madrid, Comunidad de" | prov=="Melilla" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="País Vasco"  | prov=="Rioja, La" ) {
+    the_province  <- the_province + geom_text_repel(
+      data = data_cases_sp_provinces %>% filter( ccaa == prov ) %>% group_by(province) %>% filter(!is.na(daily_cases_PCR_avg7) ) %>% top_n(1, date),
+      aes(date, daily_cases_PCR_avg7, color=province,
+          label=paste(format(daily_cases_PCR_avg7, nsmall=1, big.mark=".", decimal.mark = ","), "(PCR+)", substr( province,1,3))),
+      nudge_x = 4, # adjust the starting y position of the text label
+      size=5,
+      hjust=0,
+      family = "Roboto Condensed",
+      direction="y",
+      segment.size = 0.1,
+      segment.color="#777777"
+    )
+  }
+  if (  prov=="Cataluña"  ) {
+    the_province  <- the_province + geom_text_repel(
+      data = data_cases_sp_provinces %>% filter( ccaa == prov & province == "Barcelona" ) %>% group_by(province) %>% filter(!is.na(daily_cases_PCR_avg7) ) %>% top_n(1, date),
+      aes(date, daily_cases_PCR_avg7, color=province,
+          label=paste(format(daily_cases_PCR_avg7, nsmall=1, big.mark=".", decimal.mark = ","), "(PCR+)", substr( province,1,3))),
+      nudge_x = 4, # adjust the starting y position of the text label
+      size=5,
+      hjust=0,
+      family = "Roboto Condensed",
+      direction="y",
+      segment.size = 0.1,
+      segment.color="#777777"
+    )
   }
   print(the_province)
   print(paste("plot",prov))

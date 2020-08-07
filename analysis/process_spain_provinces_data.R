@@ -173,6 +173,19 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
 
 rm(cyl,cyla,cylb,cyla_original,cylb_original, cylc_original)
 
+# C. Valenciana ------------------
+# Download C. Valenciana  data from https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228
+# that is uploaded manually to our own spreadsheet in google spreadsheet 
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=cvalenciana", 
+              "data/original/spain/valencia/valencia.csv")
+valencia <- read.delim("data/original/spain/valencia/valencia.csv", sep=",")
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( ccaa != "Comunitat Valenciana")
+data_cases_sp_provinces <- rbind(
+  data_cases_sp_provinces,
+  valencia
+)
+
 # Andalucía: Remove existing Andalucia data and add new one from new source ---------------------
 
 # Download Andalucía data from https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228
@@ -1392,27 +1405,27 @@ data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique =
 
 
 # Add manually the day that do not exist, therefore merge does not work TODO
-data_cases_sp_provinces <- rbind(
-  data_cases_sp_provinces,
-  madrid_pcr %>% filter ( (date == as.Date("2020-07-25") ) | (date == as.Date("2020-07-26") )) %>% mutate(
-    hospitalized = NA,
-    intensive_care = NA,
-    cases_accumulated_PCR = PCR.,
-    PCR = NA,
-    cases_accumulated = NA,
-    deceased = NA,
-    recovered = NA,
-    province = "Madrid",
-    ccaa = "Madrid, Comunidad de",
-    new_cases = NA,
-    TestAc = NA,
-    activos = NA,
-    recovered = NA,
-    source_name = "Comunidad de Madrid",
-    source = "https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-pcr.csv",
-    comments = NA
-  ) %>% select(names(data_cases_sp_provinces) ) 
-  )
+# data_cases_sp_provinces <- rbind(
+#   data_cases_sp_provinces,
+#   madrid_pcr %>% filter ( (date == as.Date("2020-07-26") )) %>% mutate(
+#     hospitalized = NA,
+#     intensive_care = NA,
+#     cases_accumulated_PCR = PCR.,
+#     PCR = NA,
+#     cases_accumulated = NA,
+#     deceased = NA,
+#     recovered = NA,
+#     province = "Madrid",
+#     ccaa = "Madrid, Comunidad de",
+#     new_cases = NA,
+#     TestAc = NA,
+#     activos = NA,
+#     recovered = NA,
+#     source_name = "Comunidad de Madrid",
+#     source = "https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-pcr.csv",
+#     comments = NA
+#   ) %>% select(names(data_cases_sp_provinces) ) 
+#   )
 
 # Cantabria --------
 # web https://www.scsalud.es/coronavirus download CSV at the bottom
@@ -1614,7 +1627,7 @@ melilla <- read.delim("data/original/spain/melilla/melilla.csv",sep = ",") %>% m
 # TODO: try to not lose data taht are not in this new data source
 # Add Melilla data
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
-                                 rioja %>% filter( date > as.Date("2020-07-19") )
+                                 melilla %>% filter( date > as.Date("2020-07-19") )
 )
 
 # C. Add province ISCIII RENAVE data -----
@@ -1788,7 +1801,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
     daily_deaths_inc = round((deceased - lag(deceased)) /lag(deceased) * 100, digits = 1),
 
     daily_deaths_avg3 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2) ) / 3, digits = 1 ), # average of daily deaths of 3 last days
-    # daily_deaths_avg3_zoo =  round( rollmean( daily_deaths,3 , na.pad = TRUE  ), digits = 1), #TODO calculate roll mean with this function. Check why dates are shifted one day
+    # daily_deaths_avg3_zoo =  round( zoo::rollmean( daily_deaths,3 , na.pad = TRUE  ), digits = 1), #TODO calculate roll mean with this function. Check why dates are shifted one day
     # daily_deaths_avg3_zoo_fix =   lag(daily_deaths_avg3_zoo,1),
 
     daily_deaths_avg7 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+
@@ -1800,7 +1813,12 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
     
   )
 
-# xx <- data_cases_sp_provinces %>% select(date, ccaa, daily_deaths, daily_deaths_avg3,daily_deaths_avg3_zoo_fix,daily_deaths_avg3_zoo)
+zzz <- data_cases_sp_provinces %>% group_by(province) %>%
+  mutate(dif_casos = c(NA,diff(cases_accumulated_PCR))) %>%
+  filter(dif_casos >= 0 | is.na(dif_casos)) %>% arrange(date) %>%
+  mutate(
+    daily_cases_PCR_avg7_zoo = zoo::rollmeanr(dif_casos,7,na.pad=T)) %>%
+   select(date, province, daily_cases_PCR_avg7, daily_cases_PCR_avg7_zoo, daily_cases_PCR )
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_code,everything())  
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(-source, -source_name,-comments,source_name,source,comments)
