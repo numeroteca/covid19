@@ -8,7 +8,7 @@ library(tidyverse)
 library(reshape2)
 library(readxl)
 library(openxlsx)
-# library(zoo)
+library(zoo)
 
 # Load Data ---------
 # / Population INE-------------
@@ -220,7 +220,7 @@ andalucia <- andalucia_original %>% filter( Territorio != "Andalucía" ) %>%
     comments=""
   ) %>% select( -Fecha) %>% select( date, province, ccaa, new_cases, PCR, TestAc, activos, hospitalized, intensive_care, deceased, cases_accumulated, cases_accumulated_PCR, recovered, source_name, source, comments) 
 
-# TODO: hasta que funcione usar el antiguo
+# TODO: hasta que funcione usar el nuevom da problemas de 'Peer certificate cannot be authenticated with given CA certificates'
 # download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=0b200bc6-3e8a-4991-a9ad-848e31c6cc69&type=3&foto=si&ejecutaDesde=&codConsulta=39464&consTipoVisua=JP",
 # download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=e31f8668-049c-4c17-a879-e097e9b3dfc8&type=3&foto=si&ejecutaDesde=&codConsulta=38228&consTipoVisua=JP",
 #               "data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
@@ -1597,9 +1597,11 @@ download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIX
 baleares <- read.delim("data/original/spain/baleares/baleares.csv",sep = ",")
 
 # Remove Balerares  
-data_cases_sp_provinces <-  data_cases_sp_provinces %>% filter( ccaa != "Balears, Illes")
+# data_cases_sp_provinces <-  data_cases_sp_provinces %>% filter( ccaa != "Balears, Illes")
+
 # Add Baleares data
-data_cases_sp_provinces <- rbind(data_cases_sp_provinces,baleares)
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
+                                 baleares)
 
 # La Rioja --------------
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Rioja", 
@@ -1817,8 +1819,10 @@ zzz <- data_cases_sp_provinces %>% group_by(province) %>%
   mutate(dif_casos = c(NA,diff(cases_accumulated_PCR))) %>%
   filter(dif_casos >= 0 | is.na(dif_casos)) %>% arrange(date) %>%
   mutate(
-    daily_cases_PCR_avg7_zoo = zoo::rollmeanr(dif_casos,7,na.pad=T)) %>%
-   select(date, province, daily_cases_PCR_avg7, daily_cases_PCR_avg7_zoo, daily_cases_PCR )
+    daily_cases_PCR_avg7_zoo = round( zoo::rollmeanr(dif_casos,7,na.pad=T), digits = 1 ),
+    fechas_dif = c(NA, diff(date))
+    ) %>%
+   select(date, province, daily_cases_PCR, dif_casos, daily_cases_PCR_avg7, daily_cases_PCR_avg7_zoo, daily_cases_PCR,fechas_dif )
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_code,everything())  
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(-source, -source_name,-comments,source_name,source,comments)
