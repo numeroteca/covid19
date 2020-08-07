@@ -823,7 +823,7 @@ municipios %>% # filter( name %in% municipios_top$name) %>%
     data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 1.8 ),
     aes(date, daily_cases_avg7,  color = name,
         label=paste(format(daily_cases_avg7, nsmall=0, big.mark=".", decimal.mark = ","), substr(name,1,7))),
-    nudge_x = 1, # adjust the starting y position of the text label
+    nudge_x = 3, # adjust the starting y position of the text label
     size=3,
     hjust=0,
     family = "Roboto Condensed",
@@ -839,7 +839,7 @@ municipios %>% # filter( name %in% municipios_top$name) %>%
   scale_x_date(
     date_breaks = "15 days",
     date_labels = "%d/%m",
-    limits=c( min(municipios$date)+70, max(municipios$date +8)),
+    limits=c( min(municipios$date)+70, max(municipios$date +18)),
     expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -866,7 +866,7 @@ municipios %>% # filter( name %in% municipios_top$name) %>%
     data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 1.8 ),
     aes(date, daily_cases_avg7,  color = name,
         label=paste(format(daily_cases_avg7, nsmall=0, big.mark=".", decimal.mark = ","), substr(name,1,7))),
-    nudge_x = 1, # adjust the starting y position of the text label
+    nudge_x = 3, # adjust the starting y position of the text label
     size=3,
     hjust=0,
     family = "Roboto Condensed",
@@ -882,7 +882,7 @@ municipios %>% # filter( name %in% municipios_top$name) %>%
   scale_x_date(
     date_breaks = "15 days",
     date_labels = "%d/%m",
-    limits=c( min(municipios$date)+70, max(municipios$date +8)),
+    limits=c( min(municipios$date)+70, max(municipios$date +18)),
     expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -914,7 +914,7 @@ municipios %>% filter( name %in% municipios_top$name) %>%
   scale_x_date(
     date_breaks = "15 days",
     date_labels = "%d/%m",
-    limits=c( min(municipios$date)+70, max(municipios$date)),
+    limits=c( min(municipios$date)+70, max(municipios$date)+1),
     expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
@@ -928,7 +928,7 @@ municipios %>% filter( name %in% municipios_top$name) %>%
     legend.position =  "top"
   ) +
   labs(title = paste0("Casos PCR+ por COVID-19 por zonas de salud por día en Euskadi" ),
-       subtitle = paste0("Media: ventana de 7 días. ",period_eus),
+       subtitle = paste0("Media: ventana de 7 días. Zonas de salud con media mayor que 1. ",period_eus),
        y = "casos por día",
        x = "fecha",
        fill = "casos por dia",
@@ -949,7 +949,7 @@ municipios %>% filter( name %in% municipios_top$name) %>%
   scale_x_date(
     date_breaks = "15 days",
     date_labels = "%d/%m",
-    limits=c( min(municipios$date)+70, max(municipios$date)),
+    limits=c( min(municipios$date)+70, max(municipios$date)+1),
     expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
@@ -963,7 +963,7 @@ municipios %>% filter( name %in% municipios_top$name) %>%
     legend.position =  "top"
   ) +
   labs(title = paste0("Casos PCR+ por COVID-19 por zonas de salud por día en Euskadi" ),
-       subtitle = paste0("Media: ventana de 7 días. ",period_eus),
+       subtitle = paste0("Media: ventana de 7 días. . Zonas de salud con media mayor que 1. ",period_eus),
        y = "casos por día",
        x = "fecha",
        fill = "casos por dia",
@@ -999,7 +999,7 @@ osi %>% # filter( name %in% municipios_top$name) %>%
   labs(title = paste0("Casos PCR+ por COVID-19 por OSI por día en Euskadi" ),
        subtitle = paste0("Media: ventana de 7 días. ",period_eus),
        y = "casos por día",
-       x = "fecha",
+       x = "fecha 2020",
        fill = "casos por dia",
        colour = "media",
        caption = caption_provincia)
@@ -1018,7 +1018,7 @@ osi %>% # filter( name %in% municipios_top$name) %>%
   scale_x_date(
     date_breaks = "15 days",
     date_labels = "%d/%m",
-    limits=c( min(municipios$date)+70, max(municipios$date +9)),
+    limits=c( min(municipios$date)+70, max(municipios$date) +1),
     expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
@@ -1032,7 +1032,7 @@ osi %>% # filter( name %in% municipios_top$name) %>%
   labs(title = paste0("Casos PCR+ por COVID-19 por OSI por día en Euskadi" ),
        subtitle = paste0("Media: ventana de 7 días. ",period_eus),
        y = "casos por día",
-       x = "fecha",
+       x = "fecha 2020",
        fill = "casos por dia",
        colour = "media",
        caption = caption_provincia)
