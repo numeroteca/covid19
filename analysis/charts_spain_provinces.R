@@ -13,8 +13,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-08-07)"
-filter_date <- as.Date("2020-08-07")
+period <- "(Actualizado: 2020-08-08)"
+filter_date <- as.Date("2020-08-08")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -23,7 +23,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( (date > as.Date("
 
 # Remove last days for unconsolidated data:
 # Barcelona
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date-2 )  ) )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date-3 )  ) )
 
 
 # Set colors ---------
@@ -1825,7 +1825,6 @@ dev.off()
 
 # Loop Lineal CCAA -----------------
 for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
-  # for ( i in 3:3  ) {
   
   prov <- levels(data_cases_sp_provinces$ccaa)[i]
   unaprov <- data_cases_sp_provinces %>% filter (ccaa == prov ) %>% select (province) %>% first() 
@@ -1870,7 +1869,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
     ) +
     scale_x_date(date_breaks = "1 week", 
                  date_labels = "%d/%m",
-                 limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +16)),
+                 limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +23)),
                  expand = c(0,0) 
     ) + 
     theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -1890,11 +1889,15 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   if ( prov=="Aragón" | prov=="Andalucía" | prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Cataluña" | prov=="Cantabria"  |  prov=="Ceuta" |  prov=="Castilla - La Mancha" |   prov=="Melilla"  | prov=="Comunitat Valenciana"  | 
        prov=="Extremadura" | prov=="Madrid, Comunidad de" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="Rioja, La" | prov=="País Vasco" | prov=="Galicia") {
     the_province  <- the_province + 
-      geom_line( aes(date, daily_cases_PCR_avg7,group=province, color=province), size= 1.4, linetype = "11")  +
+      geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11")  +
       geom_point(aes(date, daily_cases_PCR, color=province), size= 1.4, alpha = 0.7, shape= 21 ) +
       geom_line(aes(date, daily_cases_PCR, color=province, group=province), size= 0.3, alpha = 0.5, linetype="11" ) 
+      # extra line for places with gaps in the data.
+      # geom_line(data = pcr_avg7 %>% filter (ccaa == prov ), aes(x = date, y = daily_cases_PCR_avg7_complete, group = province, color=province), 
+                # size= 1.4, linetype = "11")
   }
   
+  # text ggrepel for PCR+ cases averages
   if ( prov=="Aragón" | prov=="Andalucía"   | prov=="Asturias, Principado de"   | prov=="Cantabria" |  prov=="Ceuta"  |  prov=="Castilla - La Mancha" | prov=="Comunitat Valenciana"  | prov=="Extremadura" | 
        prov=="Madrid, Comunidad de" | prov=="Melilla" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="País Vasco"  | prov=="Rioja, La" ) {
     the_province  <- the_province + geom_text_repel(
@@ -1928,7 +1931,6 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   print(paste("plot",prov))
   dev.off()
 }
-
 
 # Loop 50 days-----------------
 for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
@@ -5056,3 +5058,5 @@ scale_color_manual(values = colors_provX) +
        x = "fechaç",
        caption = caption_provincia)
 dev.off()
+
+rm(letalidad_a, the_province, weekdaychart)

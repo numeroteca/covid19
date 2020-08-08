@@ -3,18 +3,18 @@
 # Crea un dataframe que es utilizado en charts_spain_provinces.R para generar los gráficos que pueden verse en lab.montera34.com/covid19
 # El data set resultante se publicaa en https://github.com/montera34/escovid19data
 
-# Load libraries -----------
+# A. Load libraries -----------
 library(tidyverse)
 library(reshape2)
 library(readxl)
 library(openxlsx)
 library(zoo)
 
-# Load Data ---------
+# B. Load Data ---------
 # / Population INE-------------
 provincias_poblacion <-  read.delim("data/original/spain/provincias-poblacion.csv",sep = ",")
 
-# / COVID-19 in Spain -----------
+# COVID-19 in Spain
 # / By province -----------
 # donwload provincias data from googgle spreadsheet 
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=provincias", 
@@ -24,7 +24,7 @@ write.csv(read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",
 # load data
 data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")
 
-# Process data ------
+# C. Process data ------
 # Create date variable
 data_cases_sp_provinces$date  <- as.Date(data_cases_sp_provinces$date)
 
@@ -220,12 +220,15 @@ andalucia <- andalucia_original %>% filter( Territorio != "Andalucía" ) %>%
     comments=""
   ) %>% select( -Fecha) %>% select( date, province, ccaa, new_cases, PCR, TestAc, activos, hospitalized, intensive_care, deceased, cases_accumulated, cases_accumulated_PCR, recovered, source_name, source, comments) 
 
+
+# Andalucía 2 ------------
 # TODO: hasta que funcione usar el nuevom da problemas de 'Peer certificate cannot be authenticated with given CA certificates'
+# Initial file
 # download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=0b200bc6-3e8a-4991-a9ad-848e31c6cc69&type=3&foto=si&ejecutaDesde=&codConsulta=39464&consTipoVisua=JP",
+# then it changed to this one:
 # download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=e31f8668-049c-4c17-a879-e097e9b3dfc8&type=3&foto=si&ejecutaDesde=&codConsulta=38228&consTipoVisua=JP",
 #               "data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
 
-# andalucia_original2 <- read_csv2("data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
 andalucia_original2 <- read.delim("data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv", sep=";") %>% select(-X) %>% filter( !(Territorio  == "") )
 andalucia2 <- spread(andalucia_original2, Medida, Valor) #from long to wide format
 
@@ -1334,9 +1337,21 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   source = ifelse(  province_uni =="Murcia" & !is.na(province_uni),
                     paste0(source,";https://www.murciasalud.es/pagina.php?id=458869&idsec=6575;https://gitlab.com/elpais/datos/-/raw/master/20_Covid-19/covid-provincias/data_uniprovs.csv?inline=false" ),
                     as.character(source) )
-) %>% select( -date_uni, -province_uni, -ccaa_uni, -date_new ,-cases_accumulated_PCR_uni, -deceased_uni)
+) %>% select( -date_uni, -province_uni, -ccaa_uni, -date_new ,-cases_accumulated_PCR_uni, -deceased_uni, -dunique)
 
 rm(uniprovinciales_d)
+
+# Baleares --------------
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Baleares", 
+              "data/original/spain/baleares/baleares.csv")
+baleares <- read.delim("data/original/spain/baleares/baleares.csv",sep = ",")
+
+# Remove Balerares  
+data_cases_sp_provinces <-  data_cases_sp_provinces %>% filter( ccaa != "Balears, Illes")
+
+# Add Baleares data
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
+                                 baleares)
 
 # Add missing data deaths previous 2020.03.08 --------------
 
@@ -1591,18 +1606,6 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
  source = ifelse(!is.na(deceased_cum), paste0(source_name,"Transparencia Catalunya"), source_name )
 ) %>% select (-deceased_cum, -dunique)
 
-# Baleares --------------
-download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Baleares", 
-              "data/original/spain/baleares/baleares.csv")
-baleares <- read.delim("data/original/spain/baleares/baleares.csv",sep = ",")
-
-# Remove Balerares  
-# data_cases_sp_provinces <-  data_cases_sp_provinces %>% filter( ccaa != "Balears, Illes")
-
-# Add Baleares data
-data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
-                                 baleares)
-
 # La Rioja --------------
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Rioja", 
               "data/original/spain/rioja/rioja.csv")
@@ -1632,7 +1635,22 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
                                  melilla %>% filter( date > as.Date("2020-07-19") )
 )
 
-# C. Add province ISCIII RENAVE data -----
+# Ceuta --------------
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Ceuta", 
+              "data/original/spain/ceuta/ceuta.csv")
+ceuta <- read.delim("data/original/spain/ceuta/ceuta.csv",sep = ",") %>% mutate (
+  date = as.Date( as.character(date))
+) %>% select(names(data_cases_sp_provinces))
+
+# Remove Ceuta 
+# TODO: try to not lose data taht are not in this new data source
+# Add Melilla data
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
+                                 ceuta %>% filter( date > as.Date("2020-07-19") )
+)
+
+
+# D. Add province ISCIII RENAVE data -----
 download.file("https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv", 
               "data/original/spain/iscii_casos_renave.csv")
 ciii_renave <- read.delim("data/original/spain/iscii_casos_renave.csv",sep = ",") %>% 
@@ -1775,16 +1793,16 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
                         paste0( ifelse( is.na(source_name),"", source_name), ifelse( is.na(source_name),"",";") ,"ISCIII RENAVE") )
 ) %>% select (- province_ren, -date_new, -date_ren, -dunique)
 
-# add population data -----
+# Add population data -----
 data_cases_sp_provinces <- merge( data_cases_sp_provinces, select(provincias_poblacion,provincia,poblacion,ine_code), by.x = "province", by.y = "provincia", all = TRUE   )
 
-# calculate values per inhab. -------------- 
+# Calculate values per inhab. -------------- 
 data_cases_sp_provinces$cases_per_cienmil <- round( data_cases_sp_provinces$cases_accumulated / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 data_cases_sp_provinces$intensive_care_per_1000000 <- round( data_cases_sp_provinces$intensive_care / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 data_cases_sp_provinces$deceassed_per_100000 <- round( data_cases_sp_provinces$deceased / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 data_cases_sp_provinces$hospitalized_per_100000 <- round( data_cases_sp_provinces$hospitalized / data_cases_sp_provinces$poblacion * 100000, digits = 2)
 
-# Calculates daily deaths ----------------
+# E. Calculates daily data and averages ----------------
 data_cases_sp_provinces <- data_cases_sp_provinces %>% 
     group_by(province) %>% arrange(date) %>% 
   mutate( 
@@ -1815,15 +1833,59 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
     
   )
 
-zzz <- data_cases_sp_provinces %>% group_by(province) %>%
-  mutate(dif_casos = c(NA,diff(cases_accumulated_PCR))) %>%
-  filter(dif_casos >= 0 | is.na(dif_casos)) %>% arrange(date) %>%
-  mutate(
-    daily_cases_PCR_avg7_zoo = round( zoo::rollmeanr(dif_casos,7,na.pad=T), digits = 1 ),
-    fechas_dif = c(NA, diff(date))
-    ) %>%
-   select(date, province, daily_cases_PCR, dif_casos, daily_cases_PCR_avg7, daily_cases_PCR_avg7_zoo, daily_cases_PCR,fechas_dif )
+# zzz <- data_cases_sp_provinces %>% group_by(province) %>%
+#   mutate(dif_casos = c(NA,diff(cases_accumulated_PCR))) %>%
+#   filter(dif_casos >= 0 | is.na(dif_casos)) %>% arrange(date) %>%
+#   mutate(
+#     daily_cases_PCR_avg7_zoo = round( zoo::rollmeanr(dif_casos,7,na.pad=T), digits = 1 ),
+#     fechas_dif = c(NA, diff(date))
+#     ) %>%
+#    select(date, province, daily_cases_PCR, dif_casos, daily_cases_PCR_avg7, daily_cases_PCR_avg7_zoo, daily_cases_PCR,fechas_dif )
 
+
+# Code provided by @picanumeros
+# Caclulates average when no values are available. Usually when in the weekends no data are available, daily_cases_PCR_avg7 can't be calculated
+# Lo que propongo es que cuando haya un hueco de varios días sin datos, el dato del primer día en el 
+# que vuelva a haber se promedie entre los días 
+# que se ha estado sin datos. Digamos que se "reparten" los casos a lo largo de los días.
+pcr_avg7 <- data_cases_sp_provinces %>% # filter(date >= as.Date("2020-05-11")) %>%  
+  group_by(province) %>%
+  mutate(
+    dif_casos = c(NA,diff(cases_accumulated_PCR)),
+    dif_casos = ifelse( is.na(dif_casos),daily_cases_PCR,dif_casos)
+    ) %>%
+  filter(dif_casos >= 0 | !is.na(dif_casos)) %>% # filter(dif_casos < 60) %>%
+  # filter(province == "Alicante/Alacant") %>%
+  arrange(date) %>%
+  mutate(
+          fechas_dif = c(NA, diff(date)),
+         serie = dif_casos/fechas_dif,
+         daily_cases_PCR_avg7_complete = round( zoo::rollmeanr(serie, 7, na.pad = T), digits = 1))  %>%
+  select(date, ccaa, province, daily_cases_PCR, dif_casos, daily_cases_PCR_avg7, daily_cases_PCR,fechas_dif, serie, daily_cases_PCR_avg7_complete )
+  # select(date, ccaa, province, PCR, cases_accumulated_PCR,daily_cases_PCR, dif_casos, daily_cases_PCR_avg7, daily_cases_PCR )
+
+# Check plot
+# pcr_avg7 %>% filter(province == "Alicante/Alacant") %>%
+#   ggplot(aes(x = date, y = serie)) +
+#   geom_point() +
+#   geom_line(aes(x = date, y = daily_cases_PCR_avg7_complete), col = "blue", size = 1.05) +
+#   geom_point(aes(x = date, y = daily_cases_PCR_avg7_complete), col = "green", size = 2)
+
+# Add data to the source
+  # data_cases_sp_provinces <- merge(
+data_cases_sp_provinces <- merge(
+    data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ),
+    pcr_avg7 %>% mutate ( dunique = paste0( date, province) ) %>% ungroup() %>% select (dunique,daily_cases_PCR_avg7_complete),
+    by.x = "dunique", by.y = "dunique", all= TRUE
+  ) %>% mutate (
+    daily_cases_PCR_avg7 = daily_cases_PCR_avg7_complete
+  ) %>% select (-daily_cases_PCR_avg7_complete)
+  # select(date, province,daily_cases_PCR,daily_cases_PCR_avg7,daily_cases_PCR_avg7_complete)
+  
+
+
+# Reorder columns
+data_cases_sp_provinces <- data_cases_sp_provinces  %>% select(-dunique)
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_code,everything())  
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(-source, -source_name,-comments,source_name,source,comments)
 
@@ -1833,7 +1895,7 @@ data_cases_sp_provinces$ccaa <- factor(data_cases_sp_provinces$ccaa)
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter(!is.na(date))
 
-# saves data in the other repository
+# E. Saves data in the other repository
 write.csv(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
 saveRDS(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.rds")
 write.xlsx(data_cases_sp_provinces, "../escovid19data/data/output/covid19-provincias-spain_consolidated.xlsx", colNames = TRUE)
@@ -1846,4 +1908,7 @@ saveRDS(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-sp
 
 # cleans environment
 rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_poblacion,datadista,ciii, 
-   galicia_cumulative, madrid_original2, cantabria, murcia, madrid_pcr,navarra,asturias)
+   galicia_cumulative, madrid_original2, cantabria, murcia, madrid_pcr,navarra,asturias, aga_prov, 
+   andalucia_original2, andalucia2, aragon_b, baleares, catalunya_process, ceuta, ciii_original, ciii_renave,
+   euskadi, melilla,rioja,valencia )
+
