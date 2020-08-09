@@ -1842,7 +1842,6 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
 #     ) %>%
 #    select(date, province, daily_cases_PCR, dif_casos, daily_cases_PCR_avg7, daily_cases_PCR_avg7_zoo, daily_cases_PCR,fechas_dif )
 
-
 # Code provided by @picanumeros
 # Caclulates average when no values are available. Usually when in the weekends no data are available, daily_cases_PCR_avg7 can't be calculated
 # Lo que propongo es que cuando haya un hueco de varios días sin datos, el dato del primer día en el 
@@ -1879,13 +1878,11 @@ data_cases_sp_provinces <- merge(
     by.x = "dunique", by.y = "dunique", all= TRUE
   ) %>% mutate (
     daily_cases_PCR_avg7 = daily_cases_PCR_avg7_complete
-  ) %>% select (-daily_cases_PCR_avg7_complete)
+  ) %>% select (-daily_cases_PCR_avg7_complete,-dunique)
   # select(date, province,daily_cases_PCR,daily_cases_PCR_avg7,daily_cases_PCR_avg7_complete)
   
 
-
 # Reorder columns
-data_cases_sp_provinces <- data_cases_sp_provinces  %>% select(-dunique)
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_code,everything())  
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(-source, -source_name,-comments,source_name,source,comments)
 
