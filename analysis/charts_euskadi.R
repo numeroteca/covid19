@@ -736,7 +736,7 @@ municipios %>% # filter( name %in% municipios_top$name) %>%
   geom_line(aes(date, daily_cases_avg7, group=name, color = name), size= 0.5) +
   geom_point(aes(date, value, color = name), size= 1) +
   geom_text_repel(
-    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 1.8 ),
+    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 2 ),
     aes(date, daily_cases_avg7,  color = name,
         label=paste(format(daily_cases_avg7, nsmall=0, big.mark=".", decimal.mark = ","), name)),
     nudge_x = 3, # adjust the starting y position of the text label
@@ -778,7 +778,7 @@ municipios %>% # filter( name %in% municipios_top$name) %>%
   geom_line(aes(date, daily_cases_avg7, group=name, color = name), size= 0.5) +
   geom_point(aes(date, value, color = name), size= 1) +
   geom_text_repel(
-    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 1.8 ),
+    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 2 ),
     aes(date, daily_cases_avg7,  color = name,
         label=paste(format(daily_cases_avg7, nsmall=0, big.mark=".", decimal.mark = ","), name)),
     nudge_x = 3, # adjust the starting y position of the text label
