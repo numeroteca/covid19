@@ -38,10 +38,12 @@ colors_prov[1] <- "#a60000"
 colors_prov[12] <- "#84d3e7"
 
 
-# Remove not prevalent hospitalized data for Murcia
+# Remove not prevalent hospitalized data for Murcia and Navarra early days
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   hospitalized = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
-  hospitalized_per_100000 = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 )
+  hospitalized = ifelse( (province== "Navarra") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
+  hospitalized_per_100000 = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
+  hospitalized_per_100000 = ifelse( (province== "Navarra") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 )
 )
 
 # Plots --------------------
@@ -3555,7 +3557,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
 for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
 # for ( i in 1:c(7,8,11,12,18)  ) { print(i)}
   # for ( i in 3:3  ) {
-  if (i %in% c(2,6,7,8,9,11,12,13,14,16,18) ) {
+  if (i %in% c(2,6,7,8,9,11,12,13,14,16,17,18) ) {
     
   prov <- levels(data_cases_sp_provinces$ccaa)[i]
   unaprov <- data_cases_sp_provinces %>% filter (ccaa == prov ) %>% select (province) %>% first() 
@@ -4574,7 +4576,7 @@ dev.off()
 
 # Solamente deja las ccaa prevalentes
 noprevalentes <- c("Andalucía",  "Asturias, Principado de", "Balears, Illes", 
-                   "Canarias", "Ceuta", "Melilla", "Navarra, Comunidad Foral de", "Rioja, La")
+                   "Canarias", "Ceuta", "Melilla", "Rioja, La")
 
 data_cases_sp_provincesX <- data_cases_sp_provinces %>% filter( ! ccaa %in% noprevalentes ) 
 data_cases_sp_provincesX_sm  <- data_cases_sp_provinces_sm %>% filter( ! ccaa %in% noprevalentes ) 
