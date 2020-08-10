@@ -14,6 +14,9 @@ library(zoo)
 # / Population INE-------------
 provincias_poblacion <-  read.delim("data/original/spain/provincias-poblacion.csv",sep = ",")
 
+# Manually download:
+# Andalucía, Asturias, Cantabria data. 
+
 # COVID-19 in Spain
 # / By province -----------
 # donwload provincias data from googgle spreadsheet 
@@ -85,11 +88,18 @@ download.file("https://analisis.datosabiertos.jcyl.es/explore/dataset/situacion-
               "data/original/spain/cyl/covid19_cyl_b.csv")
 download.file("https://analisis.datosabiertos.jcyl.es/explore/dataset/pruebas-realizados-coronavirus/download/?format=csv&timezone=Europe/Madrid&lang=en&use_labels_for_header=true&csv_separator=%3B", 
               "data/original/spain/cyl/covid19_cyl_pruebas-realizados-coronavirus.csv")
+# TODO PCR+: Desde el 18 de mayo 2020, los nuevos casos confirmados solo reflejan resultados de PCR. 
+# Fuente https://datosabiertos.jcyl.es/web/jcyl/set/es/salud/situacion-epidemiologica-coronavirus/1284940407131
+download.file("https://datosabiertos.jcyl.es/web/jcyl/risp/es/salud/situacion-epidemiologica-coronavirus/1284940407131.csv", 
+              "data/original/spain/cyl/situacion-epidemiologica.csv")
+
 
 cyla_original <- read.delim("data/original/spain/cyl/covid19_cyl_a.csv", sep=";")
 cylb_original <- read.delim("data/original/spain/cyl/covid19_cyl_b.csv", sep=";")
+
 # TODO PCR+
 cylc_original <- read.delim("data/original/spain/cyl/covid19_cyl_pruebas-realizados-coronavirus.csv", sep=";")
+cyld_original <- read.delim("data/original/spain/cyl/situacion-epidemiologica.csv", sep=";")
 
 # Remove existing CyL data
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( ccaa != "Castilla y León" )
@@ -100,7 +110,7 @@ cyla <- cyla_original %>%
     ccaa = "Castilla y León"
   ) %>% rename(
     province = provincia,
-    cases_accumulated = casos_confirmados ,
+    cases_temp = casos_confirmados,
     deceased = fallecimientos ,
     recovered = altas,
     new_cases = nuevos_positivos,
@@ -112,7 +122,8 @@ cyla <- cyla_original %>%
     source = "https://analisis.datosabiertos.jcyl.es/explore/dataset/situacion-epidemiologica-coronavirus-en-castilla-y-leon/download/?format=csv&timezone=Europe/Madrid&lang=en&use_labels_for_header=true&csv_separator=%3B",
     PCR = NA,
     TestAc = NA,
-    cases_accumulated_PCR = NA,
+    cases_accumulated = ifelse( date > as.Date("2020-05-17"), NA, cases_temp),
+    cases_accumulated_PCR = ifelse( date > as.Date("2020-05-17"), cases_temp, NA),
     PCR_14days = NA,
     comments=""
   ) %>% select( date, province, ccaa, new_cases, PCR, TestAc, activos, hospitalized, intensive_care, deceased, cases_accumulated, 
@@ -163,17 +174,17 @@ cylb <- cylb_original %>%
 # Merge cyla y cylb
 cyl <-  merge(cyla %>% select(-hospitalized,-intensive_care), 
               cylb %>% ungroup() %>%  select(dunique,hospitalized,intensive_care,source) %>% rename(source_b = source) , 
-              by.x="dunique", by.y="dunique", all = TRUE) %>% select( -dunique)
-
+              by.x="dunique", by.y="dunique", all = TRUE) %>% select( -dunique) %>% mutate (
+                  source = paste0(source,";",source_b) 
+                  ) %>% select(-source_b)
+                
 # Add new CyL data
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces, 
-                                 cyl %>% mutate( source = paste(source,source_b) ) %>% 
-                                   select(-source_b)
-)
+                                 cyl)
 
 rm(cyl,cyla,cylb,cyla_original,cylb_original, cylc_original)
 
-# C. Valenciana ------------------
+# Comunidad Valenciana ------------------
 # Download C. Valenciana  data from https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228
 # that is uploaded manually to our own spreadsheet in google spreadsheet 
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=cvalenciana", 
@@ -1603,7 +1614,7 @@ data_cases_sp_provinces <- merge(
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
  deceased = ifelse(ccaa == "Cataluña", deceased_cum, deceased ),
  source = ifelse(!is.na(deceased_cum), paste0(source,";https://analisi.transparenciacatalunya.cat/Salut/Dades-di-ries-de-COVID-19-per-rees-de-gesti-assist/dmzh-fz47"), source ),
- source = ifelse(!is.na(deceased_cum), paste0(source_name,"Transparencia Catalunya"), source_name )
+ source_name = ifelse(!is.na(deceased_cum), paste0(source_name,"Transparencia Catalunya"), source_name )
 ) %>% select (-deceased_cum, -dunique)
 
 # La Rioja --------------
@@ -1787,7 +1798,10 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 ) %>% mutate(
   source = ifelse( is.na(province_ren), 
                    source, 
-                   paste0( ifelse( is.na(source),"", source), ifelse( is.na(source),"",";"), "https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv")),
+                   paste0( ifelse( 
+                     is.na(source),
+                     "", 
+                     source), ifelse( is.na(source),"",";"), "https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv")),
   source_name = ifelse( is.na(province_ren), 
                         source_name ,
                         paste0( ifelse( is.na(source_name),"", source_name), ifelse( is.na(source_name),"",";") ,"ISCIII RENAVE") )
