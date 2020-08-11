@@ -1546,31 +1546,46 @@ data_cases_sp_provinces <- rbind(
 
 # Asturias --------------
 # TODO download manually from https://app.transparenciaendatos.es/v/#!/5eb4344e16b9fc465933d217. Table at the bottom
-asturias <- read.delim("data/original/spain/asturias/historico-datos-asturias.csv",sep = ",") %>% mutate(
-  date = as.Date( FECHA, "%d/%m/%Y" )
-) %>% rename(
-  hospitalized = Personas.hospitalizadas.actualmente.en.planta,
-  intensive_care = Personas.hospitalizadas.actualmente.en.UCI,
-  cases_accumulated_PCR = Casos.confirmados.por.PCR,
-) %>% mutate(
-  PCR = NA,
-  cases_accumulated = NA,
-  deceased = NA,
-  recovered = NA,
-  province = "Asturias",
-  ccaa = "Asturias, Principado de",
-  new_cases = NA,
-  TestAc = NA,
-  activos = NA,
-  recovered = NA,
-  source_name = "Gobierno del Principado de Asturias",
-  source = "https://app.transparenciaendatos.es/v/#!/5eb4344e16b9fc465933d217",
-  comments = NA
-) %>% select(names(data_cases_sp_provinces)  )
+# No uso este método: de momento usamos la pestaña con datos a mano de la hoja de cálculo
+# asturias <- read.delim("data/original/spain/asturias/historico-datos-asturias.csv",sep = ",") %>% mutate(
+#   date = as.Date( FECHA, "%d/%m/%Y" )
+# ) %>% rename(
+#   hospitalized = Personas.hospitalizadas.actualmente.en.planta,
+#   intensive_care = Personas.hospitalizadas.actualmente.en.UCI,
+#   cases_accumulated_PCR = Casos.confirmados.por.PCR,
+# ) %>% mutate(
+#   PCR = NA,
+#   cases_accumulated = NA,
+#   deceased = NA,
+#   recovered = NA,
+#   province = "Asturias",
+#   ccaa = "Asturias, Principado de",
+#   new_cases = NA,
+#   TestAc = NA,
+#   activos = NA,
+#   recovered = NA,
+#   source_name = "Gobierno del Principado de Asturias",
+#   source = "https://app.transparenciaendatos.es/v/#!/5eb4344e16b9fc465933d217",
+#   comments = NA
+# ) %>% select(names(data_cases_sp_provinces)  )
+# 
+# data_cases_sp_provinces <- rbind(
+#   data_cases_sp_provinces %>% filter( !( date > as.Date("2020-07-19") & province == "Asturias" ) ), #remove unwanted Asturias rows
+#   asturias %>% filter( date > as.Date("2020-07-19") )
+# )
 
+# download manual data from spreadsheet
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Asturias", 
+              "data/original/spain/asturias/asturias.csv")
+
+# load data
+asturias2 <- read.delim("data/original/spain/asturias/asturias.csv",sep = ",") %>% mutate(
+  date = as.Date( date )
+)
+# add data after 
 data_cases_sp_provinces <- rbind(
   data_cases_sp_provinces %>% filter( !( date > as.Date("2020-07-19") & province == "Asturias" ) ), #remove unwanted Asturias rows
-  asturias %>% filter( date > as.Date("2020-07-19") )
+  asturias2 %>% filter( date > as.Date("2020-07-19") ) %>% select(names(data_cases_sp_provinces))
 )
 
 # Catalunya deaths---------
@@ -1582,13 +1597,24 @@ download.file("https://analisi.transparenciacatalunya.cat/api/views/dmzh-fz47/ro
 catalunya <- read.delim("data/original/spain/catalunya/Dades_di_ries_de_COVID-19_per__rees_de_gesti__assistencials__AGA_.csv",sep = ";") 
 aga_prov <-  read.delim("data/original/spain/catalunya/aga-provincias-catalunya.csv",sep = ",") 
 
-# creates date format
-catalunya <- catalunya %>% mutate (date = as.Date(DATA, "%d/%m/%Y") ) %>% select(date, everything())
+# creates date format and fix characters with accents
+catalunya <- catalunya %>% mutate (date = as.Date(DATA, "%d/%m/%Y") ) %>% select(date, everything()) %>% mutate(
+  NOM = as.character(NOM),
+  NOM = NOM %>% str_replace_all("Ã\u0080", "À"),
+  NOM = NOM %>% str_replace_all("Ã\u0088", "È"),
+  NOM = NOM %>% str_replace_all("Ã\u0087", "Ç"),
+  NOM = as.factor(NOM)
+)
+
+# sum(catalunya$EXITUS)
+# levels(catalunya$NOM)
+# levels(aga_prov$aga)
 
 # add province information to AGA
 catalunya <- merge( catalunya,
                     aga_prov,
                     by.x = "NOM", by.y= "aga" )
+
 
 # iterates through data to count cases and other measures
 catalunya_process <- catalunya %>% group_by(date,province) %>% arrange(date) %>% 
@@ -1856,6 +1882,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
 #     ) %>%
 #    select(date, province, daily_cases_PCR, dif_casos, daily_cases_PCR_avg7, daily_cases_PCR_avg7_zoo, daily_cases_PCR,fechas_dif )
 
+# Calculates averages when no enough data available-----------
 # Code provided by @picanumeros
 # Caclulates average when no values are available. Usually when in the weekends no data are available, daily_cases_PCR_avg7 can't be calculated
 # Lo que propongo es que cuando haya un hueco de varios días sin datos, el dato del primer día en el 
@@ -1894,7 +1921,32 @@ data_cases_sp_provinces <- merge(
     daily_cases_PCR_avg7 = daily_cases_PCR_avg7_complete
   ) %>% select (-daily_cases_PCR_avg7_complete,-dunique)
   # select(date, province,daily_cases_PCR,daily_cases_PCR_avg7,daily_cases_PCR_avg7_complete)
-  
+
+# calculate average 7 days deaths
+deaths_avg7 <- data_cases_sp_provinces %>% # filter(date >= as.Date("2020-05-11")) %>%  
+  group_by(province) %>%
+  mutate(
+    dif_deaths = c(NA,diff(deceased)),
+    dif_deaths = ifelse( is.na(dif_deaths),daily_deaths,dif_deaths)
+  ) %>%
+  filter(dif_deaths >= 0 | !is.na(dif_deaths)) %>% # filter(dif_casos < 60) %>%
+  # filter(province == "Alicante/Alacant") %>%
+  arrange(date) %>%
+  mutate(
+    fechas_dif = c(NA, diff(date)),
+    serie = dif_deaths/fechas_dif,
+    daily_deaths_avg7_complete = round( zoo::rollmeanr(serie, 7, na.pad = T), digits = 1))  %>%
+  select(date, ccaa, province, deceased, serie, fechas_dif, dif_deaths, daily_deaths_avg7_complete, daily_deaths_avg7 )
+
+# Add data to the source
+data_cases_sp_provinces <- merge(
+  data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ),
+  deaths_avg7 %>% mutate ( dunique = paste0( date, province) ) %>% ungroup() %>% select (dunique,daily_deaths_avg7_complete,),
+  by.x = "dunique", by.y = "dunique", all= TRUE
+) %>% mutate (
+  daily_deaths_avg7 = daily_deaths_avg7_complete,
+) %>% select (-daily_deaths_avg7_complete,-dunique)
+
 
 # Reorder columns
 data_cases_sp_provinces <- data_cases_sp_provinces %>% select(date,province,ine_code,everything())  
@@ -1906,7 +1958,7 @@ data_cases_sp_provinces$ccaa <- factor(data_cases_sp_provinces$ccaa)
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter(!is.na(date))
 
-# E. Saves data in the other repository
+# F. Saves data in the other repository -------------
 write.csv(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
 saveRDS(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.rds")
 write.xlsx(data_cases_sp_provinces, "../escovid19data/data/output/covid19-provincias-spain_consolidated.xlsx", colNames = TRUE)
@@ -1919,7 +1971,7 @@ saveRDS(data_cases_sp_provinces, file = "data/output/spain/covid19-provincias-sp
 
 # cleans environment
 rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_poblacion,datadista,ciii, 
-   galicia_cumulative, madrid_original2, cantabria, murcia, madrid_pcr,navarra,asturias, aga_prov, 
+   galicia_cumulative, madrid_original2, cantabria, murcia, madrid_pcr,navarra,asturias2, aga_prov, 
    andalucia_original2, andalucia2, aragon_b, baleares, catalunya_process, ceuta, ciii_original, ciii_renave,
    euskadi, melilla,rioja,valencia )
 

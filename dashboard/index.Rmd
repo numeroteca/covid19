@@ -265,7 +265,7 @@ p <- ggplotly( p, tooltip = "text") %>%
 p
 ```
 
-### Incidencia: casos por 100.000 hab en 14 días
+### Incidencia: casos en 14 días
 
 ```{r}
 p2  <- data_cases_sp_provinces %>%  ungroup(province) %>%
