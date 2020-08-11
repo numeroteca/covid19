@@ -13,8 +13,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-08-10)"
-filter_date <- as.Date("2020-08-10")
+period <- "(Actualizado: 2020-08-11)"
+filter_date <- as.Date("2020-08-11")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -23,8 +23,9 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( (date > as.Date("
 
 # Remove last days for unconsolidated data:
 # Barcelona
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date-4 )  ) )
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-1 )  ) )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date-2 )  ) )
+# Madrid
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-0 )  ) )
 
 
 # Set colors ---------
@@ -1939,7 +1940,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   dev.off()
 }
 
-# Loop 50 days-----------------
+# Loop 50 days Lin-----------------
 for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   # for ( i in 3:3  ) {
   
@@ -2416,7 +2417,7 @@ data_cases_sp_provinces %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(date_breaks = "1 month", 
-               date_labels = "%d/%m",
+               date_labels = "%m",
                expand = c(0,1) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -2431,7 +2432,7 @@ data_cases_sp_provinces %>%
   labs(title = paste0("Número de fallecimientos acumulados por COVID-19 registrados en España ", updated ),
        subtitle = paste0("Por provincia (escala lin.). ",period),
        y = "fallecidos",
-       x = "fecha",
+       x = "fecha (mes) 2020",
        caption = caption_provincia)
 dev.off()
 
@@ -2476,7 +2477,7 @@ data_cases_sp_provinces %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
     minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)) ) +
   scale_x_date(date_breaks = "1 month", 
-               date_labels = "%d/%m",
+               date_labels = "%m",
                expand = c(0,1) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -2491,7 +2492,7 @@ data_cases_sp_provinces %>%
   labs(title = paste0("Número de fallecimientos acumulados por COVID-19 registrados en España ", updated ),
        subtitle = paste0("Por provincia (escala logarítmica). ",period),
        y = "fallecidos",
-       x = "fecha",
+       x = "fecha (mes) 2020",
        caption = caption_provincia)
 dev.off()
 
@@ -2514,7 +2515,7 @@ data_cases_sp_provinces %>%
   ) +
   facet_wrap(~province) +
   scale_x_date(date_breaks = "1 month", 
-               date_labels = "%d/%m",
+               date_labels = "%m",
                limits=c( min(data_cases_sp_provinces$date)+12, max(data_cases_sp_provinces$date)),
                expand = c(0,0) 
   ) + 
@@ -2530,7 +2531,7 @@ data_cases_sp_provinces %>%
   labs(title = paste0("Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España ", updated ),
        subtitle = paste0("Por provincia  (escala lineal). ",period),
        y = "fallecidos por 100.000 habitantes",
-       x = "fecha",
+       x = "fecha (mes) 2020",
        caption = caption_provincia)
 dev.off()
 
@@ -2556,7 +2557,7 @@ data_cases_sp_provinces %>%
     limits = c(0.05,max(data_cases_sp_provinces$deceassed_per_100000)),
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 month", 
-               date_labels = "%d/%m",
+               date_labels = "%m",
                limits=c( min(data_cases_sp_provinces$date)+15, max(data_cases_sp_provinces$date) ),
                expand = c(0,0) 
   ) + 
@@ -2572,7 +2573,7 @@ data_cases_sp_provinces %>%
   labs(title = paste0("Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España ", updated ),
        subtitle = paste0("Por provincia (escala logarítmica). ",period),
        y = "fallecidos por 100.000 habitantes",
-       x = "fecha",
+       x = "fecha (mes) 2020",
        caption = caption_provincia)
 dev.off()
 
@@ -2601,7 +2602,7 @@ data_cases_sp_provinces %>%
     limits = c(0.05,max(data_cases_sp_provinces$deceassed_per_100000)),
     minor_breaks =  c(  seq(0.01 , 0.1, 0.01), seq(0.1 , 1, 0.1), seq(1 , 10, 1), seq(10 , 100, 10), seq(100 , 1000, 100) ) ) +
   scale_x_date(date_breaks = "1 month", 
-               date_labels = "%d/%m",
+               date_labels = "%m",
                # limits=c( min(data_cases_sp_provinces$date), max(data_cases_sp_provinces$date) ) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -2616,7 +2617,7 @@ data_cases_sp_provinces %>%
   labs(title = paste0("Número de fallecimientos acumulados por COVID-19 registrados por 100.000 habitantes en España ", updated ),
        subtitle = paste0("Por provincia (escala logarítmica). ",period),
        y = "fallecidos por 100.000 habitantes",
-       x = "fecha",
+       x = "fecha (mes) 2020",
        caption = caption_provincia)
 dev.off()
 
@@ -4613,7 +4614,7 @@ data_cases_sp_provincesX %>% filter( ! ccaa %in% noprevalentes ) %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
   scale_x_date(date_breaks = "1 month", 
                date_labels = "%m",
-               limits=c( min(data_cases_sp_provincesX$date), max(data_cases_sp_provincesX$date)+20),
+               limits=c( min(data_cases_sp_provincesX$date), max(data_cases_sp_provincesX$date)+35),
                expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -4772,7 +4773,7 @@ data_cases_sp_provincesX %>%
   geom_point(aes(date, hospitalized_per_100000), size= 0.5 ) +
   facet_wrap(~province) +
   scale_x_date(date_breaks = "1 month", 
-               date_labels = "%%m",
+               date_labels = "%m",
                limits=c( min(data_cases_sp_provincesX$date), max(data_cases_sp_provincesX$date)),
                expand = c(0,0) 
   ) + 
