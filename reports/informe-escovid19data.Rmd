@@ -15,7 +15,7 @@ library(kableExtra)
 library(formattable)
 library(DT)
 library(viridis)
-today <- as.Date("2020-08-11")
+today <- as.Date("2020-08-12")
 ```
 
 Un análisis automatizado de la base de datos por provincias de #COVID19 en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data
@@ -432,6 +432,46 @@ labs(title = "Fuentes usadas en Escovid19data",
      caption = paste0("Numero de filas:",lineas)
      ) +
 coord_flip()
+
+
+fuentes <- data_cases_sp_provinces %>% group_by (ccaa,source_name) %>% summarise(
+  Freq  = n()
+) %>% rename ( Var1 = source_name )
+
+```
+
+```{r rejillaccaa0, fig.width=10, fig.height=13, echo=FALSE, warning=FALSE}
+# for ( i in 1:19) {
+# conteo <- fuentes %>% filter(ccaa == levels(fuentes$ccaa)[i] )
+# numerolineas <- sum(conteo$Freq)
+# 
+# ploteo <- fuentes %>% filter(ccaa == levels(fuentes$ccaa)[i] ) %>% arrange(-Freq) %>% head(50) %>%
+# ggplot( aes(x = reorder(Var1, Freq), y = Freq)) +
+# geom_col(fill = "grey") +
+# geom_text(aes(label = paste0(Freq, " (", format(round( Freq/numerolineas*100, digits = 1),decimal.mark = ","), "%) ", substr(Var1,1,70 )), y= 2 ),
+#           hjust = 0,
+#           size=5,color="#000000",family = "Roboto Condensed") +
+# scale_y_continuous(labels=function(x) format(x, big.mark = ".", scientific = FALSE)) +
+# theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
+# theme(
+#   # panel.grid.minor.x = element_blank(),
+#   # panel.grid.major.x = element_blank(),
+#   panel.grid.major.y = element_blank(),
+#   panel.grid.minor.y = element_blank(),
+#   axis.text.y = element_blank(),
+#   axis.ticks.x = element_blank(),
+#   axis.ticks.y = element_blank()
+#   # legend.position = "bottom"
+# ) +
+# labs(title = paste0(levels(fuentes$ccaa)[i],". Fuentes usadas en Escovid19data"),
+#      subtitle = paste("Veces que aparece cada fuente (% respecto total). ",today,sep=""),
+#      y = "Número de filas con esta fuente",
+#      x = "fuente",
+#      caption = paste0("Numero de filas:",numerolineas)
+#      ) +
+# coord_flip()
+# print(ploteo)
+# }
 
 ```
 

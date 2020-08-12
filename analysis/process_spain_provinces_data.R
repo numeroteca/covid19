@@ -1040,11 +1040,12 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 rm(euskadi_a,euskadi_original)
 
 
-# Euskadi fallecidos en hospitales. -------------- TODO: no se usa porque los fallecidos notificados 
+# Euskadi fallecidos en hospitales. -------------- 
+# TODO: no se usa porque los fallecidos notificados 
 # son solamente los de hospitales desde el 15 de mayo 2020
 # euskadi_original <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "07")
 # 
-# euskadi_b <- euskadi_original %>% rename( date = ...1 ) %>% filter( date != "Grand Total" ) %>%
+# euskadi_b <- euskadi_original %>% rename( date = ...1 ) %>% filter( date != "Suma Total" ) %>%
 #   mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Exitus`) %>% melt(
 #     id.vars = c("date")
 #   ) %>% mutate(
@@ -1067,8 +1068,8 @@ rm(euskadi_a,euskadi_original)
 #     province = ifelse(variable=="ZALDIBAR H.", "Bizkaia" ,province),
 #     province = ifelse(variable=="ZAMUDIO H.", "Bizkaia" ,province),
 #     province = ifelse(variable=="ÁLAVA PSIQUIÁTRICO H.", "Araba/Álava" , province)
-#   ) %>% group_by(province,date) %>% 
-#   mutate( 
+#   ) %>% group_by(province,date) %>%
+#   mutate(
 #     value = ifelse(is.na(value),0,value)) %>%
 #   summarise(
 #     deceased_per_day = sum(value)
@@ -1080,16 +1081,19 @@ rm(euskadi_a,euskadi_original)
 # euskadi_b$dunique <- paste0(euskadi_b$date,euskadi_b$province)
 # 
 # data_cases_sp_provinces <- merge(data_cases_sp_provinces,
-#                                  euskadi_b %>% ungroup() %>% select(dunique,deceased_per_day, deceased) %>% 
+#                                  euskadi_b %>% ungroup() %>% select(dunique,deceased_per_day, deceased) %>%
 #                                    rename(
 #                                      deceased_per_day_eus = deceased_per_day,
 #                                      deceased_eus = deceased
-#                                    ) , 
+#                                    ) ,
 #                                  by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique)
 # 
 # data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
-#   hospitalized = ifelse( ccaa == "País Vasco", deceased_eus, deceased),
+#   deceased = ifelse( (ccaa == "País Vasco") & (date > as.Date("2020-05-20")), deceased_eus, deceased)
 # ) # %>% select(-deceased_eus,deceased_per_day_eus)
+# 
+# 
+# data_cases_sp_provinces <- deceased_per_day_eus %>% select(-deceased_per_day_eus ,-deceased_eus )
 # 
 # rm(euskadi_b,euskadi_original)
 
@@ -1647,8 +1651,8 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Rioja", 
               "data/original/spain/rioja/rioja.csv")
 rioja <- read.delim("data/original/spain/rioja/rioja.csv",sep = ",") %>% mutate (
-  deceased_cum = cumsum(deceased),
-  deceased = deceased_cum,
+  # deceased_cum = cumsum(deceased),
+  # deceased = deceased_cum,
   date = as.Date( as.character(date))
 ) %>% select(names(data_cases_sp_provinces))
 
@@ -1926,9 +1930,9 @@ data_cases_sp_provinces <- merge(
 deaths_avg7 <- data_cases_sp_provinces %>% # filter(date >= as.Date("2020-05-11")) %>%  
   group_by(province) %>%
   mutate(
-    dif_deaths = c(NA,diff(deceased)),
-    dif_deaths = ifelse( is.na(dif_deaths),daily_deaths,dif_deaths)
-  ) %>%
+    dif_deaths = c(NA,diff(deceased))
+    # dif_deaths = ifelse( is.na(dif_deaths),daily_deaths,dif_deaths)
+  ) %>%  #select(date, ccaa, province, deceased, dif_deaths, daily_deaths) %>%
   filter(dif_deaths >= 0 | !is.na(dif_deaths)) %>% # filter(dif_casos < 60) %>%
   # filter(province == "Alicante/Alacant") %>%
   arrange(date) %>%
@@ -1936,7 +1940,7 @@ deaths_avg7 <- data_cases_sp_provinces %>% # filter(date >= as.Date("2020-05-11"
     fechas_dif = c(NA, diff(date)),
     serie = dif_deaths/fechas_dif,
     daily_deaths_avg7_complete = round( zoo::rollmeanr(serie, 7, na.pad = T), digits = 1))  %>%
-  select(date, ccaa, province, deceased, serie, fechas_dif, dif_deaths, daily_deaths_avg7_complete, daily_deaths_avg7 )
+  select(date, ccaa, province, deceased, serie, fechas_dif, dif_deaths, daily_deaths, daily_deaths_avg7_complete, daily_deaths_avg7 )
 
 # Add data to the source
 data_cases_sp_provinces <- merge(
