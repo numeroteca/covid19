@@ -736,7 +736,7 @@ municipios %>% # filter( name %in% municipios_top$name) %>%
   geom_line(aes(date, daily_cases_avg7, group=name, color = name), size= 0.5) +
   geom_point(aes(date, value, color = name), size= 1) +
   geom_text_repel(
-    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 2 ),
+    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 4 ),
     aes(date, daily_cases_avg7,  color = name,
         label=paste(format(daily_cases_avg7, nsmall=0, big.mark=".", decimal.mark = ","), name)),
     nudge_x = 3, # adjust the starting y position of the text label
@@ -778,7 +778,7 @@ municipios %>% # filter( name %in% municipios_top$name) %>%
   geom_line(aes(date, daily_cases_avg7, group=name, color = name), size= 0.5) +
   geom_point(aes(date, value, color = name), size= 1) +
   geom_text_repel(
-    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 2 ),
+    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 4 ),
     aes(date, daily_cases_avg7,  color = name,
         label=paste(format(daily_cases_avg7, nsmall=0, big.mark=".", decimal.mark = ","), name)),
     nudge_x = 3, # adjust the starting y position of the text label
@@ -820,7 +820,7 @@ municipios %>% # filter( name %in% municipios_top$name) %>%
   geom_line(aes(date, daily_cases_avg7, group=name, color = name), size= 0.5) +
   geom_point(aes(date, value, color = name), size= 1, alpha=0.4) +
   geom_text_repel(
-    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 1.8 ),
+    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 2 ),
     aes(date, daily_cases_avg7,  color = name,
         label=paste(format(daily_cases_avg7, nsmall=0, big.mark=".", decimal.mark = ","), substr(name,1,7))),
     nudge_x = 3, # adjust the starting y position of the text label
@@ -863,7 +863,7 @@ municipios %>% # filter( name %in% municipios_top$name) %>%
   geom_line(aes(date, daily_cases_avg7, group=name, color = name), size= 0.5) +
   geom_point(aes(date, value, color = name), size= 1) +
   geom_text_repel(
-    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 1.8 ),
+    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 2 ),
     aes(date, daily_cases_avg7,  color = name,
         label=paste(format(daily_cases_avg7, nsmall=0, big.mark=".", decimal.mark = ","), substr(name,1,7))),
     nudge_x = 3, # adjust the starting y position of the text label
@@ -963,7 +963,77 @@ municipios %>% filter( name %in% municipios_top$name) %>%
     legend.position =  "top"
   ) +
   labs(title = paste0("Casos PCR+ por COVID-19 por zonas de salud por día en Euskadi" ),
-       subtitle = paste0("Media: ventana de 7 días. . Zonas de salud con media mayor que 1. ",period_eus),
+       subtitle = paste0("Media: ventana de 7 días. Zonas de salud con media mayor que 1. ",period_eus),
+       y = "casos por día",
+       x = "fecha",
+       fill = "casos por dia",
+       colour = "media",
+       caption = caption_provincia)
+dev.off()
+
+png(filename=paste0("img/spain/euskadi/covid19_casos-pais-vasco_osi-bilbao_rejilla.png", sep = ""),width = 1200,height = 800)
+municipios %>% filter( OSI_NOM_eu == "Bilbao - Basurto" ) %>% 
+  ggplot() +
+  geom_col(aes(date, value, fill = ""), width= 1 ) +
+  scale_fill_manual(values=c("#AAAAAA")  )+
+  geom_line(aes(date, daily_cases_avg7, group=name, color= ""), size= 1.1 ) +
+  scale_color_manual(values=c("#565656")  )+
+  facet_wrap( ~name, scales = "free_y") + #, scales = "free_x"
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(
+    date_breaks = "15 days",
+    date_labels = "%d/%m",
+    limits=c( min(municipios$date)+70, max(municipios$date)+1),
+    expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 20) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 11),
+    axis.text.y = element_text(size = 11),
+    legend.position =  "top"
+  ) +
+  labs(title = paste0("Casos PCR+ por COVID-19 por zonas de salud por día en Bilbao-Basurto." ),
+       subtitle = paste0("Media: ventana de 7 días. Zonas de salud con media mayor que 1. ",period_eus),
+       y = "casos por día",
+       x = "fecha",
+       fill = "casos por dia",
+       colour = "media",
+       caption = caption_provincia)
+dev.off()
+
+png(filename=paste0("img/spain/euskadi/covid19_casos-pais-vasco_osi-bilbao_rejilla_not-free.png", sep = ""),width = 1200,height = 800)
+municipios %>% filter( OSI_NOM_eu == "Bilbao - Basurto" ) %>% 
+  ggplot() +
+  geom_col(aes(date, value, fill = ""), width= 1 ) +
+  scale_fill_manual(values=c("#AAAAAA")  )+
+  geom_line(aes(date, daily_cases_avg7, group=name, color= ""), size= 1.1 ) +
+  scale_color_manual(values=c("#565656")  )+
+  facet_wrap( ~name) + #, scales = "free_x"
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(
+    date_breaks = "15 days",
+    date_labels = "%d/%m",
+    limits=c( min(municipios$date)+70, max(municipios$date)+1),
+    expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 11),
+    axis.text.y = element_text(size = 11),
+    legend.position =  "top"
+  ) +
+  labs(title = paste0("Casos PCR+ por COVID-19 por zonas de salud por día en Bilbao-Basurto." ),
+       subtitle = paste0("Media: ventana de 7 días. Zonas de salud con media mayor que 1. ",period_eus),
        y = "casos por día",
        x = "fecha",
        fill = "casos por dia",
