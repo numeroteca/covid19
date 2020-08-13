@@ -13,8 +13,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-08-12)"
-filter_date <- as.Date("2020-08-12")
+period <- "(Actualizado: 2020-08-13)"
+filter_date <- as.Date("2020-08-13")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -25,7 +25,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( (date > as.Date("
 # Barcelona
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date-2 )  ) )
 # Madrid
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-2 )  ) )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-3 )  ) )
 
 
 # Set colors ---------
@@ -1898,10 +1898,11 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
          x = "fecha",
          caption = caption_provincia)
   
-  if ( prov=="Aragón" | prov=="Andalucía"   | prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Canarias"  | prov=="Cantabria" |  prov=="Ceuta"  |  
+  # multiprovincia
+  if ( prov=="Aragón" | prov=="Andalucía"   | prov=="Canarias"  | 
        prov=="Castilla - La Mancha" | prov=="Castilla y León" | 
        prov=="Comunitat Valenciana"  | prov=="Extremadura" | 
-       prov=="Madrid, Comunidad de" | prov=="Melilla" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="País Vasco"  | prov=="Rioja, La" ) {
+      prov=="País Vasco") {
     the_province  <- the_province + 
       geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11")  +
       geom_point(aes(date, daily_cases_PCR, color=province), size= 1.4, alpha = 0.7, shape= 21 ) +
@@ -1909,6 +1910,17 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
       # extra line for places with gaps in the data.
       # geom_line(data = pcr_avg7 %>% filter (ccaa == prov ), aes(x = date, y = daily_cases_PCR_avg7_complete, group = province, color=province), 
                 # size= 1.4, linetype = "11")
+  }
+  
+  # uniprovincia
+  if ( prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Cantabria" |  prov=="Ceuta"  |  
+       prov=="Madrid, Comunidad de" | prov=="Melilla" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | 
+       prov=="Rioja, La" ) {
+    the_province  <- the_province + 
+      geom_col(aes(date, daily_cases_PCR, fill=province), width=1, alpha = 0.3) +
+      # quito la línea de casos
+      # geom_line(aes(date, daily_cases_avg7,group=province, color=province), size= 1.5, se = FALSE, span = 0.6 ) +
+      geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11") 
   }
   
   # text ggrepel for PCR+ cases averages
@@ -2005,12 +2017,29 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
          x = "fecha",
          caption = caption_provincia)
   
-  if ( prov=="Aragón" | prov=="Andalucía" | prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Canarias" | prov=="Castilla y León" | prov=="Cataluña" | prov=="Cantabria"  |  prov=="Ceuta" |  prov=="Castilla - La Mancha" |   prov=="Melilla"  | prov=="Comunitat Valenciana"  | 
-       prov=="Extremadura" | prov=="Madrid, Comunidad de" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="Rioja, La" | prov=="País Vasco" | prov=="Galicia") {
+  # multiprovincia
+  if ( prov=="Aragón" | prov=="Andalucía"   | prov=="Canarias"  | 
+       prov=="Castilla - La Mancha" | prov=="Castilla y León" | 
+       prov=="Comunitat Valenciana"  | prov=="Extremadura" | 
+       prov=="País Vasco") {
     the_province  <- the_province + 
-      geom_line( aes(date, daily_cases_PCR_avg7,group=province, color=province), size= 1.4, linetype = "11")  +
+      geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11")  +
       geom_point(aes(date, daily_cases_PCR, color=province), size= 1.4, alpha = 0.7, shape= 21 ) +
       geom_line(aes(date, daily_cases_PCR, color=province, group=province), size= 0.3, alpha = 0.5, linetype="11" ) 
+    # extra line for places with gaps in the data.
+    # geom_line(data = pcr_avg7 %>% filter (ccaa == prov ), aes(x = date, y = daily_cases_PCR_avg7_complete, group = province, color=province), 
+    # size= 1.4, linetype = "11")
+  }
+  
+  # uniprovincia
+  if ( prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Cantabria" |  prov=="Ceuta"  |  
+       prov=="Madrid, Comunidad de" | prov=="Melilla" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | 
+       prov=="Rioja, La" ) {
+    the_province  <- the_province + 
+      geom_col(aes(date, daily_cases_PCR, fill=province), width=1, alpha = 0.3) +
+      # quito la línea de casos
+      # geom_line(aes(date, daily_cases_avg7,group=province, color=province), size= 1.5, se = FALSE, span = 0.6 ) +
+      geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11") 
   }
   # TODO: por qué hay que quitar a Baleares tras el cambio de fuente de datos? Investigar.
   if ( prov=="Aragón" | prov=="Andalucía" | prov=="Balears, Illes" | prov=="Asturias, Principado de"   | prov=="Cantabria" |  prov=="Ceuta"  |  prov=="Castilla - La Mancha" | prov=="Comunitat Valenciana"  | prov=="Extremadura" |
@@ -4586,8 +4615,7 @@ dev.off()
 # 5. Hospitalizados ------------
 
 # Solamente deja las ccaa prevalentes
-noprevalentes <- c("Andalucía",  
-                   "Canarias")
+noprevalentes <- c("Andalucía",  "Rioja, La", "Canarias")
 
 data_cases_sp_provincesX <- data_cases_sp_provinces %>% filter( ! ccaa %in% noprevalentes ) 
 data_cases_sp_provincesX_sm  <- data_cases_sp_provinces_sm %>% filter( ! ccaa %in% noprevalentes ) 
@@ -5021,7 +5049,7 @@ scale_color_manual(values = colors_provX) +
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = c(0.08,0.85)
+    legend.position = c(0.5,0.8)
   ) +
   labs(title =  paste0("Hospitalizados prevalentes por COVID-19 por 100.000 habitantes en España ", updated ),
        subtitle = paste0("Por provincia  (escala lineal). ",period),
