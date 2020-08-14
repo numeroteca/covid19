@@ -998,7 +998,7 @@ municipios %>% filter( OSI_NOM_eu == "Bilbao - Basurto" ) %>%
     legend.position =  "top"
   ) +
   labs(title = paste0("Casos PCR+ por COVID-19 por zonas de salud por día en Bilbao-Basurto." ),
-       subtitle = paste0("Media: ventana de 7 días. Zonas de salud con media mayor que 1. ",period_eus),
+       subtitle = paste0("Media: ventana de 7 días. ",period_eus),
        y = "casos por día",
        x = "fecha",
        fill = "casos por dia",
@@ -1022,7 +1022,7 @@ municipios %>% filter( OSI_NOM_eu == "Bilbao - Basurto" ) %>%
     limits=c( min(municipios$date)+70, max(municipios$date)+1),
     expand = c(0,0) 
   ) + 
-  theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 20) +
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
@@ -1033,7 +1033,7 @@ municipios %>% filter( OSI_NOM_eu == "Bilbao - Basurto" ) %>%
     legend.position =  "top"
   ) +
   labs(title = paste0("Casos PCR+ por COVID-19 por zonas de salud por día en Bilbao-Basurto." ),
-       subtitle = paste0("Media: ventana de 7 días. Zonas de salud con media mayor que 1. ",period_eus),
+       subtitle = paste0("Media: ventana de 7 días. ",period_eus),
        y = "casos por día",
        x = "fecha",
        fill = "casos por dia",
