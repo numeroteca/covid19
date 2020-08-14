@@ -1144,198 +1144,6 @@ fecha;hospital;provincia;nuevos_hospitalizados_planta;hospitalizados_planta;nuev
 2020-07-06;Complejo Asistencial de Soria;Soria;0;3;1;1;0;431;0;123;42173;41.666667,-2.666667
 2020-07-06;Hospital Clínico Universitario de Valladolid;Valladolid;0;5;0;3;0;840;0;196;47186;41.583333,-4.666667
 2020-07-06;Complejo Asistencial de Zamora;Zamora;0;6;0;0;0;353;0;92;49275;41.75,-6.0
-2020-07-07;Hospital El Bierzo;León;0;2;0;0;0;290;0;72;24089;42.666667,-6.0
-2020-07-07;Complejo Asistencial Universitario de Salamanca;Salamanca;1;6;0;0;0;1285;0;371;37274;40.833333,-6.0
-2020-07-07;Complejo Asistencial de Segovia;Segovia;1;8;0;0;1;922;1;210;40004;41.166667,-4.0
-2020-07-07;Hospital de Medina del Campo;Valladolid;0;0;0;0;0;126;0;27;47186;41.583333,-4.666667
-2020-07-07;Hospital Universitario Río Hortega;Valladolid;0;3;0;2;2;878;0;171;47186;41.583333,-4.666667
-2020-07-08;Complejo Asistencial de Ávila;Ávila;0;3;0;0;0;669;0;143;5019;40.616092,-4.929031
-2020-07-08;Complejo Asistencial Universitario de León;León;0;0;0;4;0;1458;0;351;24089;42.666667,-6.0
-2020-07-08;Complejo Asistencial Universitario de Palencia;Palencia;0;4;0;0;0;377;0;88;34120;42.432128,-4.520647
-2020-07-08;Hospital Universitario Río Hortega;Valladolid;0;3;0;2;2;880;0;171;47186;41.583333,-4.666667
-2020-07-09;Complejo Asistencial de Ávila;Ávila;0;3;0;0;0;669;0;143;5019;40.616092,-4.929031
-2020-07-09;Hospital Santiago Apóstol;Burgos;0;0;0;0;0;134;0;35;9059;42.383333,-3.666667
-2020-07-09;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
-2020-07-09;Hospital El Bierzo;León;0;1;0;0;1;291;0;72;24089;42.666667,-6.0
-2020-07-09;Hospital Clínico Universitario de Valladolid;Valladolid;0;3;0;2;1;843;0;196;47186;41.583333,-4.666667
-2020-07-09;Hospital de Medina del Campo;Valladolid;0;1;0;0;0;126;0;27;47186;41.583333,-4.666667
-2020-07-10;Complejo Asistencial Universitario de Burgos;Burgos;0;2;0;1;0;725;0;139;9059;42.383333,-3.666667
-2020-07-10;Hospital Santiago Apóstol;Burgos;0;0;0;0;0;134;0;35;9059;42.383333,-3.666667
-2020-07-10;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
-2020-07-10;Complejo Asistencial Universitario de Salamanca;Salamanca;0;4;0;0;1;1286;0;372;37274;40.833333,-6.0
-2020-07-10;Complejo Asistencial de Soria;Soria;0;1;0;1;0;435;0;123;42173;41.666667,-2.666667
-2020-07-10;Complejo Asistencial de Zamora;Zamora;0;5;0;0;0;354;0;92;49275;41.75,-6.0
-2020-07-11;Complejo Asistencial Universitario de Palencia;Palencia;0;2;0;1;0;378;0;88;34120;42.432128,-4.520647
-2020-07-11;Hospital Clínico Universitario de Valladolid;Valladolid;0;3;0;1;0;844;0;196;47186;41.583333,-4.666667
-2020-07-11;Hospital Universitario Río Hortega;Valladolid;0;2;0;1;2;883;0;171;47186;41.583333,-4.666667
-2020-07-11;Complejo Asistencial de Zamora;Zamora;1;4;0;0;2;356;0;92;49275;41.75,-6.0
-2020-07-13;Complejo Asistencial de Ávila;Ávila;0;4;0;0;0;670;0;143;5019;40.616092,-4.929031
-2020-07-13;Complejo Asistencial Universitario de Palencia;Palencia;1;2;0;2;0;378;0;88;34120;42.432128,-4.520647
-2020-07-13;Complejo Asistencial Universitario de Salamanca;Salamanca;2;4;0;0;2;1288;0;372;37274;40.833333,-6.0
-2020-07-13;Complejo Asistencial de Segovia;Segovia;0;5;0;0;2;927;1;212;40004;41.166667,-4.0
-2020-07-13;Hospital de Medina del Campo;Valladolid;0;0;0;0;0;126;0;27;47186;41.583333,-4.666667
-2020-07-14;Complejo Asistencial de Ávila;Ávila;1;4;0;0;1;671;0;143;5019;40.616092,-4.929031
-2020-07-14;Hospital Santiago Apóstol;Burgos;0;1;0;0;0;134;0;35;9059;42.383333,-3.666667
-2020-07-14;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
-2020-07-14;Complejo Asistencial Universitario de León;León;0;0;0;3;0;1458;0;351;24089;42.666667,-6.0
-2020-07-14;Complejo Asistencial de Soria;Soria;0;2;0;0;0;435;0;123;42173;41.666667,-2.666667
-2020-07-14;Hospital Clínico Universitario de Valladolid;Valladolid;0;3;0;1;0;844;0;196;47186;41.583333,-4.666667
-2020-07-15;Hospital Santiago Apóstol;Burgos;0;1;0;0;0;134;0;35;9059;42.383333,-3.666667
-2020-07-15;Complejo Asistencial Universitario de León;León;0;0;0;2;0;1458;0;351;24089;42.666667,-6.0
-2020-07-15;Complejo Asistencial Universitario de Palencia;Palencia;0;3;0;0;0;378;0;88;34120;42.432128,-4.520647
-2020-07-15;Complejo Asistencial Universitario de Salamanca;Salamanca;0;4;0;0;1;1289;0;372;37274;40.833333,-6.0
-2020-07-15;Complejo Asistencial de Soria;Soria;0;2;0;0;0;435;0;123;42173;41.666667,-2.666667
-2020-07-15;Hospital Clínico Universitario de Valladolid;Valladolid;0;3;0;1;0;844;0;196;47186;41.583333,-4.666667
-2020-07-15;Complejo Asistencial de Zamora;Zamora;0;1;0;0;1;359;0;92;49275;41.75,-6.0
-2020-07-16;Complejo Asistencial Universitario de Burgos;Burgos;0;2;0;1;1;726;0;139;9059;42.383333,-3.666667
-2020-07-16;Hospital Santiago Apóstol;Burgos;0;0;0;0;0;134;0;35;9059;42.383333,-3.666667
-2020-07-16;Hospital de Medina del Campo;Valladolid;0;1;0;0;0;126;0;27;47186;41.583333,-4.666667
-2020-07-16;Complejo Asistencial de Zamora;Zamora;0;1;0;0;0;359;0;92;49275;41.75,-6.0
-2020-07-17;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
-2020-07-17;Complejo Asistencial Universitario de León;León;0;0;0;2;0;1458;0;351;24089;42.666667,-6.0
-2020-07-17;Hospital Clínico Universitario de Valladolid;Valladolid;1;5;0;0;0;844;0;196;47186;41.583333,-4.666667
-2020-07-17;Complejo Asistencial de Zamora;Zamora;1;2;0;0;0;359;0;92;49275;41.75,-6.0
-2020-07-18;Complejo Asistencial Universitario de León;León;0;0;0;2;0;1458;0;351;24089;42.666667,-6.0
-2020-07-18;Complejo Asistencial de Soria;Soria;0;2;0;0;0;435;0;123;42173;41.666667,-2.666667
-2020-07-18;Hospital Universitario Río Hortega;Valladolid;0;2;0;1;1;894;0;171;47186;41.583333,-4.666667
-2020-07-20;Hospital Santiago Apóstol;Burgos;0;0;0;0;0;134;0;35;9059;42.383333,-3.666667
-2020-07-20;Complejo Asistencial Universitario de León;León;0;0;0;2;0;1458;0;351;24089;42.666667,-6.0
-2020-07-20;Hospital El Bierzo;León;1;1;0;0;0;292;0;73;24089;42.666667,-6.0
-2020-07-20;Complejo Asistencial Universitario de Salamanca;Salamanca;0;4;0;0;0;1291;0;373;37274;40.833333,-6.0
-2020-07-21;Complejo Asistencial de Ávila;Ávila;0;3;0;0;0;673;0;143;5019;40.616092,-4.929031
-2020-07-21;Complejo Asistencial Universitario de Burgos;Burgos;2;4;1;2;0;726;0;139;9059;42.383333,-3.666667
-2020-07-21;Complejo Asistencial de Segovia;Segovia;0;3;0;0;0;931;0;213;40004;41.166667,-4.0
-2020-07-21;Complejo Asistencial de Soria;Soria;0;2;0;0;0;435;0;123;42173;41.666667,-2.666667
-2020-07-22;Complejo Asistencial de Ávila;Ávila;0;0;0;0;0;673;0;143;5019;40.616092,-4.929031
-2020-07-22;Complejo Asistencial Universitario de Salamanca;Salamanca;0;4;0;0;0;1291;0;373;37274;40.833333,-6.0
-2020-07-22;Hospital Clínico Universitario de Valladolid;Valladolid;0;3;0;0;0;844;0;196;47186;41.583333,-4.666667
-2020-07-22;Complejo Asistencial de Zamora;Zamora;1;2;0;0;0;360;0;92;49275;41.75,-6.0
-2020-07-23;Complejo Asistencial de Ávila;Ávila;0;0;0;0;0;673;0;143;5019;40.616092,-4.929031
-2020-07-23;Complejo Asistencial Universitario de Burgos;Burgos;0;3;0;2;0;727;0;139;9059;42.383333,-3.666667
-2020-07-23;Hospital Santiago Apóstol;Burgos;2;2;0;0;0;134;0;35;9059;42.383333,-3.666667
-2020-07-23;Complejo Asistencial Universitario de Palencia;Palencia;0;4;0;0;1;379;0;88;34120;42.432128,-4.520647
-2020-07-23;Complejo Asistencial de Segovia;Segovia;0;1;0;0;0;932;0;213;40004;41.166667,-4.0
-2020-07-23;Hospital Clínico Universitario de Valladolid;Valladolid;1;4;0;0;1;845;0;196;47186;41.583333,-4.666667
-2020-07-23;Hospital de Medina del Campo;Valladolid;0;1;0;0;0;127;0;27;47186;41.583333,-4.666667
-2020-07-24;Hospital Santiago Apóstol;Burgos;0;0;0;0;0;134;0;35;9059;42.383333,-3.666667
-2020-07-24;Complejo Asistencial de Zamora;Zamora;1;3;0;0;0;360;0;92;49275;41.75,-6.0
-2020-07-25;Complejo Asistencial Universitario de Burgos;Burgos;0;3;0;2;0;727;0;139;9059;42.383333,-3.666667
-2020-07-25;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
-2020-07-25;Hospital El Bierzo;León;0;1;0;0;0;292;0;73;24089;42.666667,-6.0
-2020-07-25;Complejo Asistencial Universitario de Salamanca;Salamanca;0;6;0;1;0;1291;0;373;37274;40.833333,-6.0
-2020-07-25;Complejo Asistencial de Segovia;Segovia;0;1;0;0;0;932;0;213;40004;41.166667,-4.0
-2020-07-25;Complejo Asistencial de Soria;Soria;1;2;0;1;0;435;0;123;42173;41.666667,-2.666667
-2020-07-25;Hospital de Medina del Campo;Valladolid;0;1;0;0;0;127;0;27;47186;41.583333,-4.666667
-2020-07-25;Complejo Asistencial de Zamora;Zamora;0;3;1;1;0;360;0;92;49275;41.75,-6.0
-2020-07-27;Hospital Santiago Apóstol;Burgos;0;1;0;0;0;134;0;35;9059;42.383333,-3.666667
-2020-07-27;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
-2020-07-27;Complejo Asistencial Universitario de Palencia;Palencia;0;3;0;0;0;380;0;88;34120;42.432128,-4.520647
-2020-07-28;Hospital Santiago Apóstol;Burgos;2;3;0;0;0;134;0;35;9059;42.383333,-3.666667
-2020-07-28;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
-2020-07-28;Complejo Asistencial de Soria;Soria;0;2;0;1;0;435;0;123;42173;41.666667,-2.666667
-2020-07-28;Hospital de Medina del Campo;Valladolid;0;1;0;0;0;127;0;27;47186;41.583333,-4.666667
-2020-07-29;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
-2020-07-29;Hospital Clínico Universitario de Valladolid;Valladolid;1;2;0;0;3;849;0;196;47186;41.583333,-4.666667
-2020-07-29;Hospital de Medina del Campo;Valladolid;0;2;0;0;0;127;0;27;47186;41.583333,-4.666667
-2020-07-29;Hospital Universitario Río Hortega;Valladolid;0;2;0;2;3;906;0;171;47186;41.583333,-4.666667
-2020-07-30;Hospital El Bierzo;León;0;1;0;0;0;292;0;73;24089;42.666667,-6.0
-2020-07-30;Complejo Asistencial Universitario de Palencia;Palencia;0;4;0;0;0;380;0;88;34120;42.432128,-4.520647
-2020-07-30;Complejo Asistencial de Soria;Soria;0;1;0;1;1;436;0;123;42173;41.666667,-2.666667
-2020-07-30;Hospital Clínico Universitario de Valladolid;Valladolid;2;3;0;0;0;849;0;196;47186;41.583333,-4.666667
-2020-07-30;Complejo Asistencial de Zamora;Zamora;1;4;0;0;0;363;0;92;49275;41.75,-6.0
-2020-07-31;Complejo Asistencial de Ávila;Ávila;0;0;0;0;0;673;0;143;5019;40.616092,-4.929031
-2020-07-31;Hospital Santos Reyes;Burgos;1;1;0;0;0;119;0;43;9059;42.383333,-3.666667
-2020-07-31;Complejo Asistencial Universitario de León;León;0;0;0;0;0;1458;0;351;24089;42.666667,-6.0
-2020-07-31;Complejo Asistencial de Segovia;Segovia;1;3;0;0;0;933;0;213;40004;41.166667,-4.0
-2020-07-31;Complejo Asistencial de Soria;Soria;0;1;0;1;0;436;0;123;42173;41.666667,-2.666667
-2020-08-01;Complejo Asistencial de Ávila;Ávila;0;0;0;0;0;673;0;143;5019;40.616092,-4.929031
-2020-08-01;Hospital Santiago Apóstol;Burgos;0;3;0;0;0;134;0;35;9059;42.383333,-3.666667
-2020-08-01;Hospital Santos Reyes;Burgos;0;1;0;0;0;119;0;43;9059;42.383333,-3.666667
-2020-08-01;Hospital El Bierzo;León;0;1;0;0;0;293;0;73;24089;42.666667,-6.0
-2020-08-01;Complejo Asistencial de Soria;Soria;2;2;0;1;1;437;0;123;42173;41.666667,-2.666667
-2020-08-01;Hospital Universitario Río Hortega;Valladolid;0;0;0;2;0;909;0;171;47186;41.583333,-4.666667
-2020-08-01;Complejo Asistencial de Zamora;Zamora;1;4;0;0;1;365;0;92;49275;41.75,-6.0
-2020-08-02;Hospital Santiago Apóstol;Burgos;0;3;0;0;0;134;0;35;9059;42.383333,-3.666667
-2020-08-02;Complejo Asistencial Universitario de León;León;0;0;0;0;0;1458;0;351;24089;42.666667,-6.0
-2020-08-02;Hospital El Bierzo;León;0;1;0;0;0;293;0;73;24089;42.666667,-6.0
-2020-08-02;Complejo Asistencial Universitario de Palencia;Palencia;1;1;0;0;0;384;0;88;34120;42.432128,-4.520647
-2020-08-02;Complejo Asistencial de Segovia;Segovia;2;6;0;0;0;933;0;213;40004;41.166667,-4.0
-2020-08-02;Hospital Universitario Río Hortega;Valladolid;2;2;0;2;2;911;0;171;47186;41.583333,-4.666667
-2020-08-03;Complejo Asistencial de Ávila;Ávila;1;1;0;0;0;673;0;143;5019;40.616092,-4.929031
-2020-08-03;Complejo Asistencial Universitario de Burgos;Burgos;0;3;0;1;1;734;0;139;9059;42.383333,-3.666667
-2020-08-03;Complejo Asistencial Universitario de León;León;0;0;0;0;0;1458;0;351;24089;42.666667,-6.0
-2020-08-03;Hospital El Bierzo;León;0;1;1;1;0;293;0;73;24089;42.666667,-6.0
-2020-08-03;Complejo Asistencial de Segovia;Segovia;0;6;0;0;0;933;0;213;40004;41.166667,-4.0
-2020-08-03;Hospital Clínico Universitario de Valladolid;Valladolid;0;3;0;0;0;852;0;197;47186;41.583333,-4.666667
-2020-08-04;Hospital Santos Reyes;Burgos;0;2;0;0;0;119;0;43;9059;42.383333,-3.666667
-2020-08-04;Complejo Asistencial Universitario de León;León;0;0;0;0;0;1458;0;351;24089;42.666667,-6.0
-2020-08-04;Hospital El Bierzo;León;0;1;0;1;0;293;0;73;24089;42.666667,-6.0
-2020-08-04;Complejo Asistencial de Segovia;Segovia;0;5;0;0;0;933;0;213;40004;41.166667,-4.0
-2020-08-05;Complejo Asistencial Universitario de Burgos;Burgos;1;3;0;1;1;736;0;139;9059;42.383333,-3.666667
-2020-08-05;Hospital Santiago Apóstol;Burgos;0;3;0;0;0;134;0;35;9059;42.383333,-3.666667
-2020-08-05;Complejo Asistencial Universitario de Palencia;Palencia;0;1;0;0;2;386;0;88;34120;42.432128,-4.520647
-2020-08-05;Complejo Asistencial Universitario de Salamanca;Salamanca;1;12;0;1;2;1302;0;375;37274;40.833333,-6.0
-2020-08-05;Hospital de Medina del Campo;Valladolid;0;1;0;0;1;128;0;27;47186;41.583333,-4.666667
-2020-08-06;Complejo Asistencial de Ávila;Ávila;0;1;0;0;0;673;0;143;5019;40.616092,-4.929031
-2020-08-06;Hospital Santos Reyes;Burgos;0;0;0;0;1;121;0;43;9059;42.383333,-3.666667
-2020-08-06;Complejo Asistencial Universitario de Palencia;Palencia;1;2;0;0;0;386;0;88;34120;42.432128,-4.520647
-2020-08-07;Hospital Santiago Apóstol;Burgos;1;1;0;0;2;137;0;35;9059;42.383333,-3.666667
-2020-08-07;Hospital El Bierzo;León;0;0;0;1;0;294;0;73;24089;42.666667,-6.0
-2020-08-07;Complejo Asistencial de Segovia;Segovia;0;2;0;0;4;937;1;214;40004;41.166667,-4.0
-2020-08-07;Hospital Clínico Universitario de Valladolid;Valladolid;0;3;0;0;0;854;0;197;47186;41.583333,-4.666667
-2020-08-07;Complejo Asistencial de Zamora;Zamora;0;5;0;0;0;366;0;92;49275;41.75,-6.0
-2020-08-08;Complejo Asistencial de Ávila;Ávila;0;0;0;0;0;674;0;143;5019;40.616092,-4.929031
-2020-08-08;Complejo Asistencial Universitario de Burgos;Burgos;3;8;1;2;2;738;0;139;9059;42.383333,-3.666667
-2020-08-08;Complejo Asistencial Universitario de Palencia;Palencia;0;2;0;0;0;387;0;88;34120;42.432128,-4.520647
-2020-08-08;Complejo Asistencial Universitario de Salamanca;Salamanca;5;14;0;1;2;1308;0;376;37274;40.833333,-6.0
-2020-08-08;Hospital Universitario Río Hortega;Valladolid;0;6;1;4;0;911;0;171;47186;41.583333,-4.666667
-2020-08-09;Complejo Asistencial Universitario de Burgos;Burgos;2;10;0;2;0;738;0;139;9059;42.383333,-3.666667
-2020-08-09;Hospital El Bierzo;León;0;0;0;1;0;294;0;73;24089;42.666667,-6.0
-2020-08-09;Complejo Asistencial Universitario de Salamanca;Salamanca;1;15;0;1;0;1308;0;376;37274;40.833333,-6.0
-2020-08-09;Hospital de Medina del Campo;Valladolid;0;0;0;0;1;131;0;27;47186;41.583333,-4.666667
-2020-08-09;Hospital Universitario Río Hortega;Valladolid;2;5;0;6;2;913;0;171;47186;41.583333,-4.666667
-2020-08-10;Complejo Asistencial de Ávila;Ávila;0;0;0;0;0;674;0;143;5019;40.616092,-4.929031
-2020-08-10;Complejo Asistencial Universitario de Salamanca;Salamanca;1;14;0;0;2;1310;2;378;37274;40.833333,-6.0
-2020-08-10;Complejo Asistencial de Segovia;Segovia;0;3;0;0;0;937;0;214;40004;41.166667,-4.0
-2020-08-10;Complejo Asistencial de Soria;Soria;1;10;0;0;0;440;0;123;42173;41.666667,-2.666667
-2020-08-10;Complejo Asistencial de Zamora;Zamora;1;6;0;0;0;368;0;92;49275;41.75,-6.0
-2020-08-11;Complejo Asistencial de Segovia;Segovia;0;2;0;0;1;938;0;214;40004;41.166667,-4.0
-2020-08-11;Complejo Asistencial de Zamora;Zamora;1;7;0;0;0;368;0;92;49275;41.75,-6.0
-2020-08-12;Complejo Asistencial Universitario de Burgos;Burgos;0;11;0;2;3;743;0;139;9059;42.383333,-3.666667
-2020-08-12;Hospital Santos Reyes;Burgos;3;8;0;0;0;121;0;43;9059;42.383333,-3.666667
-2020-08-12;Hospital El Bierzo;León;0;2;0;1;0;294;0;73;24089;42.666667,-6.0
-2020-08-12;Complejo Asistencial Universitario de Salamanca;Salamanca;2;14;0;0;3;1314;0;378;37274;40.833333,-6.0
-2020-08-12;Complejo Asistencial de Soria;Soria;0;10;0;0;0;440;0;123;42173;41.666667,-2.666667
-2020-08-12;Hospital Universitario Río Hortega;Valladolid;3;12;0;5;0;913;0;171;47186;41.583333,-4.666667
-2020-08-13;Complejo Asistencial Universitario de Burgos;Burgos;1;9;0;1;3;746;0;139;9059;42.383333,-3.666667
-2020-08-13;Hospital Santos Reyes;Burgos;3;11;0;0;0;121;0;43;9059;42.383333,-3.666667
-2020-08-13;Complejo Asistencial Universitario de León;León;0;4;0;0;0;1458;0;351;24089;42.666667,-6.0
-2020-08-13;Complejo Asistencial Universitario de Salamanca;Salamanca;4;15;0;0;4;1318;0;378;37274;40.833333,-6.0
-2020-08-13;Complejo Asistencial de Segovia;Segovia;0;6;0;0;0;938;0;214;40004;41.166667,-4.0
-2020-08-13;Complejo Asistencial de Soria;Soria;0;8;0;0;2;442;0;123;42173;41.666667,-2.666667
-2020-08-13;Hospital de Medina del Campo;Valladolid;0;1;0;0;0;131;0;27;47186;41.583333,-4.666667
-2020-08-13;Hospital Universitario Río Hortega;Valladolid;4;12;0;5;4;917;1;172;47186;41.583333,-4.666667
-2020-05-19;Hospital Universitario Río Hortega;Valladolid;2;25;0;14;8;728;1;156;47186;41.583333,-4.666667
-2020-05-20;Hospital Santiago Apóstol;Burgos;1;1;0;0;0;128;0;33;9059;42.383333,-3.666667
-2020-05-20;Hospital Clínico Universitario de Valladolid;Valladolid;0;45;0;7;4;756;0;186;47186;41.583333,-4.666667
-2020-05-20;Hospital Universitario Río Hortega;Valladolid;3;27;1;11;7;735;0;156;47186;41.583333,-4.666667
-2020-05-21;Hospital El Bierzo;León;0;4;0;1;2;282;0;72;24089;42.666667,-6.0
-2020-05-21;Complejo Asistencial Universitario de Salamanca;Salamanca;2;41;0;12;4;1194;0;358;37274;40.833333,-6.0
-2020-05-22;Complejo Asistencial de Ávila;Ávila;0;9;0;4;2;634;0;134;5019;40.616092,-4.929031
-2020-05-22;Complejo Asistencial de Segovia;Segovia;1;41;0;4;4;881;0;202;40004;41.166667,-4.0
-2020-05-23;Complejo Asistencial Universitario de Burgos;Burgos;0;16;0;8;5;684;1;131;9059;42.383333,-3.666667
-2020-05-23;Complejo Asistencial Universitario de Palencia;Palencia;0;13;0;3;1;339;0;83;34120;42.432128,-4.520647
-2020-05-23;Hospital Clínico Universitario de Valladolid;Valladolid;1;44;0;5;3;764;1;188;47186;41.583333,-4.666667
-2020-05-24;Hospital Santiago Apóstol;Burgos;0;1;0;0;0;129;0;33;9059;42.383333,-3.666667
-2020-05-25;Complejo Asistencial Universitario de Burgos;Burgos;0;17;0;5;0;685;0;132;9059;42.383333,-3.666667
-2020-05-25;Hospital Santos Reyes;Burgos;0;4;0;0;0;112;0;43;9059;42.383333,-3.666667
-2020-05-25;Hospital El Bierzo;León;0;1;0;1;0;285;0;72;24089;42.666667,-6.0
-2020-05-25;Complejo Asistencial de Soria;Soria;0;22;0;6;0;402;0;119;42173;41.666667,-2.666667
-2020-05-27;Hospital Santiago Apóstol;Burgos;0;1;0;0;0;129;0;33;9059;42.383333,-3.666667
-2020-05-27;Hospital Santos Reyes;Burgos;1;5;0;0;0;112;0;43;9059;42.383333,-3.666667
-2020-05-27;Hospital El Bierzo;León;0;1;0;1;0;285;0;72;24089;42.666667,-6.0
-2020-05-27;Complejo Asistencial Universitario de Palencia;Palencia;1;15;0;2;0;342;0;84;34120;42.432128,-4.520647
-2020-05-28;Hospital Santiago Apóstol;Burgos;0;2;0;0;0;129;0;33;9059;42.383333,-3.666667
 2020-03-18;Hospital Santos Reyes;Burgos;0;8;0;0;1;0;0;0;9059;42.383333,-3.666667
 2020-03-18;Complejo Asistencial Universitario de Burgos;Burgos;3;53;0;19;0;9;0;5;9059;42.383333,-3.666667
 2020-03-18;Complejo Asistencial Universitario de Palencia;Palencia;2;7;0;1;0;1;0;0;34120;42.432128,-4.520647
@@ -1516,157 +1324,328 @@ fecha;hospital;provincia;nuevos_hospitalizados_planta;hospitalizados_planta;nuev
 2020-04-26;Complejo Asistencial de Zamora;Zamora;2;54;0;11;14;262;4;75;49275;41.75,-6.0
 2020-04-27;Hospital Santiago Apóstol;Burgos;2;21;0;0;2;92;2;26;9059;42.383333,-3.666667
 2020-04-27;Complejo Asistencial Universitario de León;León;0;85;0;25;10;1045;2;283;24089;42.666667,-6.0
+2020-07-07;Hospital El Bierzo;León;0;2;0;0;0;290;0;72;24089;42.666667,-6.0
 2020-04-27;Complejo Asistencial de Segovia;Segovia;0;88;0;8;8;746;4;191;40004;41.166667,-4.0
+2020-07-07;Complejo Asistencial Universitario de Salamanca;Salamanca;1;6;0;0;0;1285;0;371;37274;40.833333,-6.0
 2020-04-27;Hospital Universitario Río Hortega;Valladolid;1;66;0;34;1;557;1;120;47186;41.583333,-4.666667
+2020-07-07;Complejo Asistencial de Segovia;Segovia;1;8;0;0;1;922;1;210;40004;41.166667,-4.0
 2020-04-28;Complejo Asistencial Universitario de Burgos;Burgos;4;96;0;25;12;552;3;118;9059;42.383333,-3.666667
+2020-07-07;Hospital de Medina del Campo;Valladolid;0;0;0;0;0;126;0;27;47186;41.583333,-4.666667
 2020-04-28;Hospital El Bierzo;León;1;21;0;7;7;243;2;67;24089;42.666667,-6.0
+2020-07-07;Hospital Universitario Río Hortega;Valladolid;0;3;0;2;2;878;0;171;47186;41.583333,-4.666667
 2020-04-28;Complejo Asistencial Universitario de Palencia;Palencia;9;53;0;14;10;271;2;73;34120;42.432128,-4.520647
+2020-07-08;Complejo Asistencial de Ávila;Ávila;0;3;0;0;0;669;0;143;5019;40.616092,-4.929031
 2020-04-28;Complejo Asistencial Universitario de Salamanca;Salamanca;8;182;0;32;20;964;3;316;37274;40.833333,-6.0
+2020-07-08;Complejo Asistencial Universitario de León;León;0;0;0;4;0;1458;0;351;24089;42.666667,-6.0
 2020-04-28;Complejo Asistencial de Segovia;Segovia;3;82;0;7;9;755;1;192;40004;41.166667,-4.0
+2020-07-08;Complejo Asistencial Universitario de Palencia;Palencia;0;4;0;0;0;377;0;88;34120;42.432128,-4.520647
 2020-04-28;Complejo Asistencial de Soria;Soria;1;56;0;14;6;334;2;109;42173;41.666667,-2.666667
+2020-07-08;Hospital Universitario Río Hortega;Valladolid;0;3;0;2;2;880;0;171;47186;41.583333,-4.666667
 2020-04-28;Complejo Asistencial de Zamora;Zamora;2;48;0;11;6;271;0;75;49275;41.75,-6.0
+2020-07-09;Complejo Asistencial de Ávila;Ávila;0;3;0;0;0;669;0;143;5019;40.616092,-4.929031
 2020-04-29;Complejo Asistencial de Ávila;Ávila;3;49;0;6;11;548;2;127;5019;40.616092,-4.929031
+2020-07-09;Hospital Santiago Apóstol;Burgos;0;0;0;0;0;134;0;35;9059;42.383333,-3.666667
 2020-04-29;Complejo Asistencial Universitario de Burgos;Burgos;8;91;0;25;13;565;1;119;9059;42.383333,-3.666667
+2020-07-09;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
 2020-04-29;Hospital Universitario Río Hortega;Valladolid;5;61;0;33;9;574;2;125;47186;41.583333,-4.666667
+2020-07-09;Hospital El Bierzo;León;0;1;0;0;1;291;0;72;24089;42.666667,-6.0
 2020-04-30;Hospital Santiago Apóstol;Burgos;1;17;0;0;4;100;1;28;9059;42.383333,-3.666667
+2020-07-09;Hospital Clínico Universitario de Valladolid;Valladolid;0;3;0;2;1;843;0;196;47186;41.583333,-4.666667
 2020-04-30;Hospital Santos Reyes;Burgos;1;6;0;0;0;106;0;42;9059;42.383333,-3.666667
+2020-07-09;Hospital de Medina del Campo;Valladolid;0;1;0;0;0;126;0;27;47186;41.583333,-4.666667
 2020-04-30;Complejo Asistencial de Soria;Soria;2;51;0;13;6;346;0;110;42173;41.666667,-2.666667
+2020-07-10;Complejo Asistencial Universitario de Burgos;Burgos;0;2;0;1;0;725;0;139;9059;42.383333,-3.666667
 2020-04-30;Hospital Universitario Río Hortega;Valladolid;4;57;0;29;8;582;3;128;47186;41.583333,-4.666667
+2020-07-10;Hospital Santiago Apóstol;Burgos;0;0;0;0;0;134;0;35;9059;42.383333,-3.666667
 2020-04-30;Complejo Asistencial de Zamora;Zamora;3;45;0;9;10;283;2;77;49275;41.75,-6.0
+2020-07-10;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
 2020-05-01;Complejo Asistencial de Ávila;Ávila;1;35;0;5;9;563;1;128;5019;40.616092,-4.929031
+2020-07-10;Complejo Asistencial Universitario de Salamanca;Salamanca;0;4;0;0;1;1286;0;372;37274;40.833333,-6.0
 2020-05-01;Complejo Asistencial Universitario de Burgos;Burgos;2;74;0;24;16;587;3;123;9059;42.383333,-3.666667
+2020-07-10;Complejo Asistencial de Soria;Soria;0;1;0;1;0;435;0;123;42173;41.666667,-2.666667
 2020-05-01;Complejo Asistencial Universitario de León;León;6;76;0;22;18;1137;2;295;24089;42.666667,-6.0
+2020-07-10;Complejo Asistencial de Zamora;Zamora;0;5;0;0;0;354;0;92;49275;41.75,-6.0
 2020-05-01;Complejo Asistencial Universitario de Palencia;Palencia;2;38;0;13;8;289;0;74;34120;42.432128,-4.520647
+2020-07-11;Complejo Asistencial Universitario de Palencia;Palencia;0;2;0;1;0;378;0;88;34120;42.432128,-4.520647
 2020-05-01;Hospital Clínico Universitario de Valladolid;Valladolid;5;89;0;17;15;645;3;167;47186;41.583333,-4.666667
+2020-07-11;Hospital Clínico Universitario de Valladolid;Valladolid;0;3;0;1;0;844;0;196;47186;41.583333,-4.666667
 2020-05-01;Hospital de Medina del Campo;Valladolid;1;13;0;0;4;90;0;21;47186;41.583333,-4.666667
+2020-07-11;Hospital Universitario Río Hortega;Valladolid;0;2;0;1;2;883;0;171;47186;41.583333,-4.666667
 2020-05-01;Hospital Universitario Río Hortega;Valladolid;8;38;0;29;21;603;2;130;47186;41.583333,-4.666667
+2020-07-11;Complejo Asistencial de Zamora;Zamora;1;4;0;0;2;356;0;92;49275;41.75,-6.0
 2020-05-02;Complejo Asistencial Universitario de Burgos;Burgos;2;70;1;25;5;592;1;124;9059;42.383333,-3.666667
+2020-07-13;Complejo Asistencial de Ávila;Ávila;0;4;0;0;0;670;0;143;5019;40.616092,-4.929031
 2020-05-02;Complejo Asistencial Universitario de Salamanca;Salamanca;4;142;0;28;6;1027;2;329;37274;40.833333,-6.0
+2020-07-13;Complejo Asistencial Universitario de Palencia;Palencia;1;2;0;2;0;378;0;88;34120;42.432128,-4.520647
 2020-05-02;Hospital Universitario Río Hortega;Valladolid;4;38;0;29;0;603;1;131;47186;41.583333,-4.666667
+2020-07-13;Complejo Asistencial Universitario de Salamanca;Salamanca;2;4;0;0;2;1288;0;372;37274;40.833333,-6.0
 2020-05-03;Complejo Asistencial Universitario de Burgos;Burgos;1;67;0;25;3;595;0;124;9059;42.383333,-3.666667
+2020-07-13;Complejo Asistencial de Segovia;Segovia;0;5;0;0;2;927;1;212;40004;41.166667,-4.0
 2020-05-03;Hospital El Bierzo;León;0;18;0;5;0;255;0;68;24089;42.666667,-6.0
+2020-07-13;Hospital de Medina del Campo;Valladolid;0;0;0;0;0;126;0;27;47186;41.583333,-4.666667
 2020-05-03;Complejo Asistencial de Soria;Soria;1;43;0;12;2;355;1;113;42173;41.666667,-2.666667
+2020-07-14;Complejo Asistencial de Ávila;Ávila;1;4;0;0;1;671;0;143;5019;40.616092,-4.929031
 2020-05-04;Complejo Asistencial Universitario de Palencia;Palencia;1;39;0;13;1;291;0;74;34120;42.432128,-4.520647
+2020-07-14;Hospital Santiago Apóstol;Burgos;0;1;0;0;0;134;0;35;9059;42.383333,-3.666667
 2020-05-05;Complejo Asistencial Universitario de Burgos;Burgos;1;63;0;24;7;604;0;126;9059;42.383333,-3.666667
+2020-07-14;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
 2020-05-05;Complejo Asistencial Universitario de León;León;4;82;0;20;23;1184;5;313;24089;42.666667,-6.0
+2020-07-14;Complejo Asistencial Universitario de León;León;0;0;0;3;0;1458;0;351;24089;42.666667,-6.0
 2020-05-05;Hospital El Bierzo;León;0;10;0;5;3;260;0;69;24089;42.666667,-6.0
+2020-07-14;Complejo Asistencial de Soria;Soria;0;2;0;0;0;435;0;123;42173;41.666667,-2.666667
 2020-05-05;Complejo Asistencial Universitario de Palencia;Palencia;0;31;0;12;8;299;2;76;34120;42.432128,-4.520647
+2020-07-14;Hospital Clínico Universitario de Valladolid;Valladolid;0;3;0;1;0;844;0;196;47186;41.583333,-4.666667
 2020-05-05;Hospital Clínico Universitario de Valladolid;Valladolid;5;88;0;11;9;661;0;173;47186;41.583333,-4.666667
+2020-07-15;Hospital Santiago Apóstol;Burgos;0;1;0;0;0;134;0;35;9059;42.383333,-3.666667
 2020-05-05;Hospital de Medina del Campo;Valladolid;3;18;0;0;3;94;0;22;47186;41.583333,-4.666667
+2020-07-15;Complejo Asistencial Universitario de León;León;0;0;0;2;0;1458;0;351;24089;42.666667,-6.0
 2020-05-05;Hospital Universitario Río Hortega;Valladolid;10;46;1;26;9;624;2;138;47186;41.583333,-4.666667
+2020-07-15;Complejo Asistencial Universitario de Palencia;Palencia;0;3;0;0;0;378;0;88;34120;42.432128,-4.520647
 2020-05-06;Complejo Asistencial de Ávila;Ávila;0;34;0;7;6;585;0;129;5019;40.616092,-4.929031
+2020-07-15;Complejo Asistencial Universitario de Salamanca;Salamanca;0;4;0;0;1;1289;0;372;37274;40.833333,-6.0
 2020-05-06;Complejo Asistencial Universitario de León;León;4;74;0;18;20;1204;6;319;24089;42.666667,-6.0
+2020-07-15;Complejo Asistencial de Soria;Soria;0;2;0;0;0;435;0;123;42173;41.666667,-2.666667
 2020-05-06;Complejo Asistencial Universitario de Palencia;Palencia;2;31;0;11;3;302;0;76;34120;42.432128,-4.520647
+2020-07-15;Hospital Clínico Universitario de Valladolid;Valladolid;0;3;0;1;0;844;0;196;47186;41.583333,-4.666667
 2020-05-06;Complejo Asistencial Universitario de Salamanca;Salamanca;6;111;2;25;11;1075;1;339;37274;40.833333,-6.0
+2020-07-15;Complejo Asistencial de Zamora;Zamora;0;1;0;0;1;359;0;92;49275;41.75,-6.0
 2020-05-07;Hospital El Bierzo;León;0;10;0;4;3;266;1;70;24089;42.666667,-6.0
+2020-07-16;Complejo Asistencial Universitario de Burgos;Burgos;0;2;0;1;1;726;0;139;9059;42.383333,-3.666667
 2020-05-07;Complejo Asistencial Universitario de Palencia;Palencia;1;31;0;11;1;303;1;77;34120;42.432128,-4.520647
+2020-07-16;Hospital Santiago Apóstol;Burgos;0;0;0;0;0;134;0;35;9059;42.383333,-3.666667
 2020-05-07;Hospital Clínico Universitario de Valladolid;Valladolid;1;73;0;11;9;681;1;176;47186;41.583333,-4.666667
+2020-07-16;Hospital de Medina del Campo;Valladolid;0;1;0;0;0;126;0;27;47186;41.583333,-4.666667
 2020-05-07;Hospital de Medina del Campo;Valladolid;3;13;0;0;3;99;1;23;47186;41.583333,-4.666667
+2020-07-16;Complejo Asistencial de Zamora;Zamora;0;1;0;0;0;359;0;92;49275;41.75,-6.0
 2020-05-07;Hospital Universitario Río Hortega;Valladolid;0;40;0;23;9;651;0;142;47186;41.583333,-4.666667
+2020-07-17;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
 2020-05-08;Complejo Asistencial de Ávila;Ávila;0;26;0;6;3;596;0;131;5019;40.616092,-4.929031
+2020-07-17;Complejo Asistencial Universitario de León;León;0;0;0;2;0;1458;0;351;24089;42.666667,-6.0
 2020-05-08;Hospital Santiago Apóstol;Burgos;1;10;0;0;0;114;0;32;9059;42.383333,-3.666667
+2020-07-17;Hospital Clínico Universitario de Valladolid;Valladolid;1;5;0;0;0;844;0;196;47186;41.583333,-4.666667
 2020-05-09;Complejo Asistencial de Ávila;Ávila;0;25;0;6;6;602;0;131;5019;40.616092,-4.929031
+2020-07-17;Complejo Asistencial de Zamora;Zamora;1;2;0;0;0;359;0;92;49275;41.75,-6.0
 2020-05-09;Hospital Santiago Apóstol;Burgos;1;8;0;0;3;117;0;32;9059;42.383333,-3.666667
+2020-07-18;Complejo Asistencial Universitario de León;León;0;0;0;2;0;1458;0;351;24089;42.666667,-6.0
 2020-05-09;Hospital Santos Reyes;Burgos;0;5;0;0;0;108;0;43;9059;42.383333,-3.666667
+2020-07-18;Complejo Asistencial de Soria;Soria;0;2;0;0;0;435;0;123;42173;41.666667,-2.666667
 2020-05-09;Complejo Asistencial Universitario de León;León;3;54;0;15;23;1258;1;322;24089;42.666667,-6.0
+2020-07-18;Hospital Universitario Río Hortega;Valladolid;0;2;0;1;1;894;0;171;47186;41.583333,-4.666667
 2020-05-09;Complejo Asistencial Universitario de Salamanca;Salamanca;11;101;0;19;17;1119;2;346;37274;40.833333,-6.0
+2020-07-20;Hospital Santiago Apóstol;Burgos;0;0;0;0;0;134;0;35;9059;42.383333,-3.666667
 2020-05-09;Complejo Asistencial de Segovia;Segovia;0;57;0;6;5;833;0;198;40004;41.166667,-4.0
+2020-07-20;Complejo Asistencial Universitario de León;León;0;0;0;2;0;1458;0;351;24089;42.666667,-6.0
 2020-05-09;Complejo Asistencial de Soria;Soria;0;29;0;8;11;380;1;118;42173;41.666667,-2.666667
+2020-07-20;Hospital El Bierzo;León;1;1;0;0;0;292;0;73;24089;42.666667,-6.0
 2020-05-09;Hospital de Medina del Campo;Valladolid;0;15;0;0;3;105;0;24;47186;41.583333,-4.666667
+2020-07-20;Complejo Asistencial Universitario de Salamanca;Salamanca;0;4;0;0;0;1291;0;373;37274;40.833333,-6.0
 2020-05-09;Hospital Universitario Río Hortega;Valladolid;5;38;0;19;12;676;2;144;47186;41.583333,-4.666667
+2020-07-21;Complejo Asistencial de Ávila;Ávila;0;3;0;0;0;673;0;143;5019;40.616092,-4.929031
 2020-05-10;Complejo Asistencial Universitario de Burgos;Burgos;0;40;0;18;1;642;1;130;9059;42.383333,-3.666667
+2020-07-21;Complejo Asistencial Universitario de Burgos;Burgos;2;4;1;2;0;726;0;139;9059;42.383333,-3.666667
 2020-05-10;Hospital Santos Reyes;Burgos;0;5;0;0;0;108;0;43;9059;42.383333,-3.666667
+2020-07-21;Complejo Asistencial de Segovia;Segovia;0;3;0;0;0;931;0;213;40004;41.166667,-4.0
 2020-05-10;Hospital El Bierzo;León;1;7;0;4;1;271;0;70;24089;42.666667,-6.0
+2020-07-21;Complejo Asistencial de Soria;Soria;0;2;0;0;0;435;0;123;42173;41.666667,-2.666667
 2020-05-10;Complejo Asistencial Universitario de Palencia;Palencia;1;23;0;10;0;315;0;80;34120;42.432128,-4.520647
+2020-07-22;Complejo Asistencial de Ávila;Ávila;0;0;0;0;0;673;0;143;5019;40.616092,-4.929031
 2020-05-10;Complejo Asistencial de Segovia;Segovia;0;54;0;5;4;837;1;199;40004;41.166667,-4.0
+2020-07-22;Complejo Asistencial Universitario de Salamanca;Salamanca;0;4;0;0;0;1291;0;373;37274;40.833333,-6.0
 2020-05-10;Hospital Clínico Universitario de Valladolid;Valladolid;4;63;0;12;2;701;1;179;47186;41.583333,-4.666667
+2020-07-22;Hospital Clínico Universitario de Valladolid;Valladolid;0;3;0;0;0;844;0;196;47186;41.583333,-4.666667
 2020-05-10;Hospital de Medina del Campo;Valladolid;0;12;0;0;3;108;0;24;47186;41.583333,-4.666667
+2020-07-22;Complejo Asistencial de Zamora;Zamora;1;2;0;0;0;360;0;92;49275;41.75,-6.0
 2020-05-11;Hospital Santiago Apóstol;Burgos;1;9;0;0;0;117;0;32;9059;42.383333,-3.666667
+2020-07-23;Complejo Asistencial de Ávila;Ávila;0;0;0;0;0;673;0;143;5019;40.616092,-4.929031
 2020-05-11;Complejo Asistencial Universitario de León;León;1;48;0;14;3;1267;1;327;24089;42.666667,-6.0
+2020-07-23;Complejo Asistencial Universitario de Burgos;Burgos;0;3;0;2;0;727;0;139;9059;42.383333,-3.666667
 2020-05-11;Hospital El Bierzo;León;0;8;0;4;0;271;0;70;24089;42.666667,-6.0
+2020-07-23;Hospital Santiago Apóstol;Burgos;2;2;0;0;0;134;0;35;9059;42.383333,-3.666667
 2020-05-11;Complejo Asistencial Universitario de Salamanca;Salamanca;3;88;0;18;5;1129;2;349;37274;40.833333,-6.0
+2020-07-23;Complejo Asistencial Universitario de Palencia;Palencia;0;4;0;0;1;379;0;88;34120;42.432128,-4.520647
 2020-05-11;Hospital Clínico Universitario de Valladolid;Valladolid;1;59;0;12;5;706;1;180;47186;41.583333,-4.666667
+2020-07-23;Complejo Asistencial de Segovia;Segovia;0;1;0;0;0;932;0;213;40004;41.166667,-4.0
 2020-05-12;Complejo Asistencial Universitario de Burgos;Burgos;1;37;0;18;6;648;0;130;9059;42.383333,-3.666667
+2020-07-23;Hospital Clínico Universitario de Valladolid;Valladolid;1;4;0;0;1;845;0;196;47186;41.583333,-4.666667
 2020-05-12;Hospital Santiago Apóstol;Burgos;0;7;0;0;2;119;0;32;9059;42.383333,-3.666667
+2020-07-23;Hospital de Medina del Campo;Valladolid;0;1;0;0;0;127;0;27;47186;41.583333,-4.666667
 2020-05-12;Complejo Asistencial Universitario de León;León;0;36;0;14;12;1279;0;327;24089;42.666667,-6.0
+2020-07-24;Hospital Santiago Apóstol;Burgos;0;0;0;0;0;134;0;35;9059;42.383333,-3.666667
 2020-05-12;Hospital El Bierzo;León;2;10;0;3;1;272;1;71;24089;42.666667,-6.0
+2020-07-24;Complejo Asistencial de Zamora;Zamora;1;3;0;0;0;360;0;92;49275;41.75,-6.0
 2020-05-12;Complejo Asistencial de Zamora;Zamora;2;31;0;7;2;309;0;83;49275;41.75,-6.0
+2020-07-25;Complejo Asistencial Universitario de Burgos;Burgos;0;3;0;2;0;727;0;139;9059;42.383333,-3.666667
 2020-05-13;Complejo Asistencial Universitario de Burgos;Burgos;0;29;0;16;9;657;0;130;9059;42.383333,-3.666667
+2020-07-25;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
 2020-05-13;Hospital Santos Reyes;Burgos;0;4;0;0;0;109;0;43;9059;42.383333,-3.666667
+2020-07-25;Hospital El Bierzo;León;0;1;0;0;0;292;0;73;24089;42.666667,-6.0
 2020-05-13;Hospital El Bierzo;León;0;10;0;2;1;273;0;71;24089;42.666667,-6.0
+2020-07-25;Complejo Asistencial Universitario de Salamanca;Salamanca;0;6;0;1;0;1291;0;373;37274;40.833333,-6.0
 2020-05-13;Complejo Asistencial Universitario de Palencia;Palencia;0;17;0;7;3;322;0;80;34120;42.432128,-4.520647
+2020-07-25;Complejo Asistencial de Segovia;Segovia;0;1;0;0;0;932;0;213;40004;41.166667,-4.0
 2020-05-13;Complejo Asistencial de Segovia;Segovia;1;47;0;4;11;850;0;200;40004;41.166667,-4.0
+2020-07-25;Complejo Asistencial de Soria;Soria;1;2;0;1;0;435;0;123;42173;41.666667,-2.666667
 2020-05-13;Hospital Clínico Universitario de Valladolid;Valladolid;2;57;1;11;6;719;0;180;47186;41.583333,-4.666667
+2020-07-25;Hospital de Medina del Campo;Valladolid;0;1;0;0;0;127;0;27;47186;41.583333,-4.666667
 2020-05-14;Hospital Santos Reyes;Burgos;1;4;0;0;1;110;0;43;9059;42.383333,-3.666667
+2020-07-25;Complejo Asistencial de Zamora;Zamora;0;3;1;1;0;360;0;92;49275;41.75,-6.0
 2020-05-14;Hospital El Bierzo;León;1;10;0;2;1;274;0;71;24089;42.666667,-6.0
+2020-07-27;Hospital Santiago Apóstol;Burgos;0;1;0;0;0;134;0;35;9059;42.383333,-3.666667
 2020-05-14;Complejo Asistencial de Segovia;Segovia;0;42;0;3;7;857;0;200;40004;41.166667,-4.0
+2020-07-27;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
 2020-05-14;Hospital de Medina del Campo;Valladolid;0;9;0;0;3;113;1;25;47186;41.583333,-4.666667
+2020-07-27;Complejo Asistencial Universitario de Palencia;Palencia;0;3;0;0;0;380;0;88;34120;42.432128,-4.520647
 2020-05-14;Complejo Asistencial de Zamora;Zamora;0;24;0;5;3;317;1;85;49275;41.75,-6.0
+2020-07-28;Hospital Santiago Apóstol;Burgos;2;3;0;0;0;134;0;35;9059;42.383333,-3.666667
 2020-05-15;Complejo Asistencial de Ávila;Ávila;1;20;0;6;5;618;1;133;5019;40.616092,-4.929031
+2020-07-28;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
 2020-05-15;Complejo Asistencial Universitario de Palencia;Palencia;2;17;0;6;2;326;1;81;34120;42.432128,-4.520647
+2020-07-28;Complejo Asistencial de Soria;Soria;0;2;0;1;0;435;0;123;42173;41.666667,-2.666667
 2020-05-15;Complejo Asistencial Universitario de Salamanca;Salamanca;0;59;0;13;6;1173;1;355;37274;40.833333,-6.0
+2020-07-28;Hospital de Medina del Campo;Valladolid;0;1;0;0;0;127;0;27;47186;41.583333,-4.666667
 2020-05-15;Complejo Asistencial de Segovia;Segovia;0;45;0;3;4;861;0;200;40004;41.166667,-4.0
+2020-07-29;Hospital Santos Reyes;Burgos;0;0;0;0;0;119;0;43;9059;42.383333,-3.666667
 2020-05-15;Hospital de Medina del Campo;Valladolid;1;8;0;0;1;114;0;25;47186;41.583333,-4.666667
+2020-07-29;Hospital Clínico Universitario de Valladolid;Valladolid;1;2;0;0;3;849;0;196;47186;41.583333,-4.666667
 2020-05-15;Hospital Universitario Río Hortega;Valladolid;2;35;1;16;6;709;2;151;47186;41.583333,-4.666667
+2020-07-29;Hospital de Medina del Campo;Valladolid;0;2;0;0;0;127;0;27;47186;41.583333,-4.666667
 2020-05-16;Complejo Asistencial Universitario de Burgos;Burgos;0;30;0;12;2;664;0;130;9059;42.383333,-3.666667
+2020-07-29;Hospital Universitario Río Hortega;Valladolid;0;2;0;2;3;906;0;171;47186;41.583333,-4.666667
 2020-05-16;Hospital Santiago Apóstol;Burgos;1;3;0;0;1;125;0;32;9059;42.383333,-3.666667
+2020-07-30;Hospital El Bierzo;León;0;1;0;0;0;292;0;73;24089;42.666667,-6.0
 2020-05-16;Hospital Santos Reyes;Burgos;0;3;0;0;0;111;0;43;9059;42.383333,-3.666667
+2020-07-30;Complejo Asistencial Universitario de Palencia;Palencia;0;4;0;0;0;380;0;88;34120;42.432128,-4.520647
 2020-05-16;Complejo Asistencial Universitario de León;León;2;30;0;12;29;1346;1;334;24089;42.666667,-6.0
+2020-07-30;Complejo Asistencial de Soria;Soria;0;1;0;1;1;436;0;123;42173;41.666667,-2.666667
 2020-05-16;Hospital El Bierzo;León;0;6;0;1;2;279;0;71;24089;42.666667,-6.0
+2020-07-30;Hospital Clínico Universitario de Valladolid;Valladolid;2;3;0;0;0;849;0;196;47186;41.583333,-4.666667
 2020-05-16;Complejo Asistencial Universitario de Salamanca;Salamanca;0;53;1;14;5;1178;1;356;37274;40.833333,-6.0
+2020-07-30;Complejo Asistencial de Zamora;Zamora;1;4;0;0;0;363;0;92;49275;41.75,-6.0
 2020-05-16;Complejo Asistencial de Zamora;Zamora;0;20;0;5;3;322;0;85;49275;41.75,-6.0
+2020-07-31;Complejo Asistencial de Ávila;Ávila;0;0;0;0;0;673;0;143;5019;40.616092,-4.929031
 2020-05-17;Complejo Asistencial de Ávila;Ávila;0;15;0;5;0;623;0;133;5019;40.616092,-4.929031
+2020-07-31;Hospital Santos Reyes;Burgos;1;1;0;0;0;119;0;43;9059;42.383333,-3.666667
 2020-05-17;Complejo Asistencial de Soria;Soria;0;21;0;6;0;397;0;119;42173;41.666667,-2.666667
+2020-07-31;Complejo Asistencial Universitario de León;León;0;0;0;0;0;1458;0;351;24089;42.666667,-6.0
 2020-05-17;Hospital Universitario Río Hortega;Valladolid;1;32;0;16;0;718;0;153;47186;41.583333,-4.666667
+2020-07-31;Complejo Asistencial de Segovia;Segovia;1;3;0;0;0;933;0;213;40004;41.166667,-4.0
 2020-05-18;Hospital El Bierzo;León;0;5;0;1;1;280;1;72;24089;42.666667,-6.0
+2020-07-31;Complejo Asistencial de Soria;Soria;0;1;0;1;0;436;0;123;42173;41.666667,-2.666667
 2020-05-18;Hospital Universitario Río Hortega;Valladolid;2;32;0;14;2;720;2;155;47186;41.583333,-4.666667
+2020-08-01;Complejo Asistencial de Ávila;Ávila;0;0;0;0;0;673;0;143;5019;40.616092,-4.929031
 2020-05-18;Complejo Asistencial de Zamora;Zamora;0;21;0;5;0;322;0;85;49275;41.75,-6.0
+2020-08-01;Hospital Santiago Apóstol;Burgos;0;3;0;0;0;134;0;35;9059;42.383333,-3.666667
 2020-05-19;Hospital Santiago Apóstol;Burgos;0;0;0;0;2;128;0;33;9059;42.383333,-3.666667
+2020-08-01;Hospital Santos Reyes;Burgos;0;1;0;0;0;119;0;43;9059;42.383333,-3.666667
 2020-05-19;Hospital Santos Reyes;Burgos;0;3;0;0;0;111;0;43;9059;42.383333,-3.666667
+2020-08-01;Hospital El Bierzo;León;0;1;0;0;0;293;0;73;24089;42.666667,-6.0
 2020-05-19;Complejo Asistencial Universitario de León;León;0;26;0;11;5;1357;1;338;24089;42.666667,-6.0
+2020-08-01;Complejo Asistencial de Soria;Soria;2;2;0;1;1;437;0;123;42173;41.666667,-2.666667
 2020-05-19;Hospital Clínico Universitario de Valladolid;Valladolid;1;49;0;7;4;752;1;186;47186;41.583333,-4.666667
+2020-08-01;Hospital Universitario Río Hortega;Valladolid;0;0;0;2;0;909;0;171;47186;41.583333,-4.666667
 2020-05-20;Complejo Asistencial de Ávila;Ávila;1;18;0;5;1;628;0;133;5019;40.616092,-4.929031
+2020-08-01;Complejo Asistencial de Zamora;Zamora;1;4;0;0;1;365;0;92;49275;41.75,-6.0
 2020-05-20;Hospital Santos Reyes;Burgos;0;3;0;0;0;111;0;43;9059;42.383333,-3.666667
+2020-08-02;Hospital Santiago Apóstol;Burgos;0;3;0;0;0;134;0;35;9059;42.383333,-3.666667
 2020-05-20;Complejo Asistencial Universitario de León;León;1;20;0;10;13;1370;1;339;24089;42.666667,-6.0
+2020-08-02;Complejo Asistencial Universitario de León;León;0;0;0;0;0;1458;0;351;24089;42.666667,-6.0
 2020-05-20;Hospital El Bierzo;León;0;6;0;1;0;280;0;72;24089;42.666667,-6.0
+2020-08-02;Hospital El Bierzo;León;0;1;0;0;0;293;0;73;24089;42.666667,-6.0
 2020-05-20;Complejo Asistencial Universitario de Salamanca;Salamanca;0;44;0;12;3;1190;0;358;37274;40.833333,-6.0
+2020-08-02;Complejo Asistencial Universitario de Palencia;Palencia;1;1;0;0;0;384;0;88;34120;42.432128,-4.520647
 2020-05-20;Hospital de Medina del Campo;Valladolid;0;4;0;0;2;119;1;27;47186;41.583333,-4.666667
+2020-08-02;Complejo Asistencial de Segovia;Segovia;2;6;0;0;0;933;0;213;40004;41.166667,-4.0
 2020-05-21;Complejo Asistencial Universitario de Palencia;Palencia;1;13;0;3;2;338;0;83;34120;42.432128,-4.520647
+2020-08-02;Hospital Universitario Río Hortega;Valladolid;2;2;0;2;2;911;0;171;47186;41.583333,-4.666667
 2020-05-21;Complejo Asistencial de Zamora;Zamora;1;19;0;4;1;326;0;85;49275;41.75,-6.0
+2020-08-03;Complejo Asistencial de Ávila;Ávila;1;1;0;0;0;673;0;143;5019;40.616092,-4.929031
 2020-05-22;Hospital Santiago Apóstol;Burgos;0;0;0;0;1;129;0;33;9059;42.383333,-3.666667
+2020-08-03;Complejo Asistencial Universitario de Burgos;Burgos;0;3;0;1;1;734;0;139;9059;42.383333,-3.666667
 2020-05-22;Hospital Santos Reyes;Burgos;0;2;0;0;1;112;0;43;9059;42.383333,-3.666667
+2020-08-03;Complejo Asistencial Universitario de León;León;0;0;0;0;0;1458;0;351;24089;42.666667,-6.0
 2020-05-22;Complejo Asistencial Universitario de León;León;0;18;0;9;4;1386;1;342;24089;42.666667,-6.0
+2020-08-03;Hospital El Bierzo;León;0;1;1;1;0;293;0;73;24089;42.666667,-6.0
 2020-05-22;Complejo Asistencial Universitario de Palencia;Palencia;1;14;0;3;0;338;0;83;34120;42.432128,-4.520647
+2020-08-03;Complejo Asistencial de Segovia;Segovia;0;6;0;0;0;933;0;213;40004;41.166667,-4.0
 2020-05-22;Complejo Asistencial de Soria;Soria;2;22;0;6;1;401;0;119;42173;41.666667,-2.666667
+2020-08-03;Hospital Clínico Universitario de Valladolid;Valladolid;0;3;0;0;0;852;0;197;47186;41.583333,-4.666667
 2020-05-22;Hospital de Medina del Campo;Valladolid;0;1;0;0;1;123;0;27;47186;41.583333,-4.666667
+2020-08-04;Hospital Santos Reyes;Burgos;0;2;0;0;0;119;0;43;9059;42.383333,-3.666667
 2020-05-23;Complejo Asistencial de Ávila;Ávila;0;7;0;3;3;637;1;135;5019;40.616092,-4.929031
+2020-08-04;Complejo Asistencial Universitario de León;León;0;0;0;0;0;1458;0;351;24089;42.666667,-6.0
 2020-05-23;Hospital Santiago Apóstol;Burgos;1;1;0;0;0;129;0;33;9059;42.383333,-3.666667
+2020-08-04;Hospital El Bierzo;León;0;1;0;1;0;293;0;73;24089;42.666667,-6.0
 2020-05-23;Hospital El Bierzo;León;0;1;0;1;1;285;0;72;24089;42.666667,-6.0
+2020-08-04;Complejo Asistencial de Segovia;Segovia;0;5;0;0;0;933;0;213;40004;41.166667,-4.0
 2020-05-23;Complejo Asistencial de Segovia;Segovia;0;18;0;2;3;884;0;202;40004;41.166667,-4.0
+2020-08-05;Complejo Asistencial Universitario de Burgos;Burgos;1;3;0;1;1;736;0;139;9059;42.383333,-3.666667
 2020-05-23;Hospital de Medina del Campo;Valladolid;0;1;0;0;0;123;0;27;47186;41.583333,-4.666667
+2020-08-05;Hospital Santiago Apóstol;Burgos;0;3;0;0;0;134;0;35;9059;42.383333,-3.666667
 2020-05-24;Complejo Asistencial de Ávila;Ávila;0;8;0;3;0;637;0;135;5019;40.616092,-4.929031
+2020-08-05;Complejo Asistencial Universitario de Palencia;Palencia;0;1;0;0;2;386;0;88;34120;42.432128,-4.520647
 2020-05-24;Hospital Santos Reyes;Burgos;1;3;0;0;0;112;0;43;9059;42.383333,-3.666667
+2020-08-05;Complejo Asistencial Universitario de Salamanca;Salamanca;1;12;0;1;2;1302;0;375;37274;40.833333,-6.0
 2020-05-24;Hospital El Bierzo;León;0;1;0;1;0;285;0;72;24089;42.666667,-6.0
+2020-08-05;Hospital de Medina del Campo;Valladolid;0;1;0;0;1;128;0;27;47186;41.583333,-4.666667
 2020-05-24;Complejo Asistencial Universitario de Palencia;Palencia;3;16;0;3;0;339;0;83;34120;42.432128,-4.520647
+2020-08-06;Complejo Asistencial de Ávila;Ávila;0;1;0;0;0;673;0;143;5019;40.616092,-4.929031
 2020-05-24;Complejo Asistencial de Segovia;Segovia;0;17;0;2;0;884;0;202;40004;41.166667,-4.0
+2020-08-06;Hospital Santos Reyes;Burgos;0;0;0;0;1;121;0;43;9059;42.383333,-3.666667
 2020-05-24;Complejo Asistencial de Soria;Soria;1;22;0;6;0;402;0;119;42173;41.666667,-2.666667
+2020-08-06;Complejo Asistencial Universitario de Palencia;Palencia;1;2;0;0;0;386;0;88;34120;42.432128,-4.520647
 2020-05-24;Hospital Clínico Universitario de Valladolid;Valladolid;0;44;0;11;0;764;0;188;47186;41.583333,-4.666667
+2020-08-07;Hospital Santiago Apóstol;Burgos;1;1;0;0;2;137;0;35;9059;42.383333,-3.666667
 2020-05-25;Complejo Asistencial de Ávila;Ávila;0;8;0;3;1;638;1;136;5019;40.616092,-4.929031
+2020-08-07;Hospital El Bierzo;León;0;0;0;1;0;294;0;73;24089;42.666667,-6.0
 2020-05-25;Hospital Santiago Apóstol;Burgos;0;1;0;0;0;129;0;33;9059;42.383333,-3.666667
+2020-08-07;Complejo Asistencial de Segovia;Segovia;0;2;0;0;4;937;1;214;40004;41.166667,-4.0
 2020-05-25;Complejo Asistencial Universitario de Salamanca;Salamanca;0;36;0;10;0;1211;0;361;37274;40.833333,-6.0
+2020-08-07;Hospital Clínico Universitario de Valladolid;Valladolid;0;3;0;0;0;854;0;197;47186;41.583333,-4.666667
 2020-05-25;Complejo Asistencial de Segovia;Segovia;1;17;0;3;1;885;1;203;40004;41.166667,-4.0
+2020-08-07;Complejo Asistencial de Zamora;Zamora;0;5;0;0;0;366;0;92;49275;41.75,-6.0
 2020-05-25;Hospital de Medina del Campo;Valladolid;0;0;0;0;1;124;0;27;47186;41.583333,-4.666667
+2020-08-08;Complejo Asistencial de Ávila;Ávila;0;0;0;0;0;674;0;143;5019;40.616092,-4.929031
 2020-05-25;Complejo Asistencial de Zamora;Zamora;0;12;0;2;0;333;0;85;49275;41.75,-6.0
+2020-08-08;Complejo Asistencial Universitario de Burgos;Burgos;3;8;1;2;2;738;0;139;9059;42.383333,-3.666667
 2020-05-26;Complejo Asistencial Universitario de León;León;1;11;0;8;5;1404;1;346;24089;42.666667,-6.0
+2020-08-08;Complejo Asistencial Universitario de Palencia;Palencia;0;2;0;0;0;387;0;88;34120;42.432128,-4.520647
 2020-05-26;Complejo Asistencial Universitario de Palencia;Palencia;1;15;0;2;1;342;0;84;34120;42.432128,-4.520647
+2020-08-08;Complejo Asistencial Universitario de Salamanca;Salamanca;5;14;0;1;2;1308;0;376;37274;40.833333,-6.0
 2020-05-26;Complejo Asistencial Universitario de Salamanca;Salamanca;1;33;0;8;4;1215;1;362;37274;40.833333,-6.0
+2020-08-08;Hospital Universitario Río Hortega;Valladolid;0;6;1;4;0;911;0;171;47186;41.583333,-4.666667
 2020-05-27;Complejo Asistencial Universitario de Salamanca;Salamanca;1;27;0;6;9;1224;1;363;37274;40.833333,-6.0
+2020-08-09;Complejo Asistencial Universitario de Burgos;Burgos;2;10;0;2;0;738;0;139;9059;42.383333,-3.666667
 2020-05-27;Complejo Asistencial de Segovia;Segovia;0;14;0;2;5;892;0;203;40004;41.166667,-4.0
+2020-08-09;Hospital El Bierzo;León;0;0;0;1;0;294;0;73;24089;42.666667,-6.0
 2020-05-27;Complejo Asistencial de Soria;Soria;2;13;0;5;2;405;0;119;42173;41.666667,-2.666667
+2020-08-09;Complejo Asistencial Universitario de Salamanca;Salamanca;1;15;0;1;0;1308;0;376;37274;40.833333,-6.0
 2020-05-27;Hospital Universitario Río Hortega;Valladolid;1;24;0;9;7;767;0;159;47186;41.583333,-4.666667
+2020-08-09;Hospital de Medina del Campo;Valladolid;0;0;0;0;1;131;0;27;47186;41.583333,-4.666667
 2020-05-28;Complejo Asistencial de Ávila;Ávila;0;11;0;4;0;644;0;137;5019;40.616092,-4.929031
+2020-08-09;Hospital Universitario Río Hortega;Valladolid;2;5;0;6;2;913;0;171;47186;41.583333,-4.666667
 2020-05-28;Hospital Santos Reyes;Burgos;0;3;0;0;2;114;0;43;9059;42.383333,-3.666667
+2020-08-10;Complejo Asistencial de Ávila;Ávila;0;0;0;0;0;674;0;143;5019;40.616092,-4.929031
 2020-05-28;Hospital El Bierzo;León;0;0;0;1;1;286;0;72;24089;42.666667,-6.0
+2020-08-10;Complejo Asistencial Universitario de Salamanca;Salamanca;1;14;0;0;2;1310;2;378;37274;40.833333,-6.0
+2020-08-10;Complejo Asistencial de Segovia;Segovia;0;3;0;0;0;937;0;214;40004;41.166667,-4.0
+2020-08-10;Complejo Asistencial de Soria;Soria;1;10;0;0;0;440;0;123;42173;41.666667,-2.666667
+2020-08-10;Complejo Asistencial de Zamora;Zamora;1;6;0;0;0;368;0;92;49275;41.75,-6.0
+2020-08-11;Complejo Asistencial de Segovia;Segovia;0;2;0;0;1;938;0;214;40004;41.166667,-4.0
+2020-08-11;Complejo Asistencial de Zamora;Zamora;1;7;0;0;0;368;0;92;49275;41.75,-6.0
+2020-08-12;Complejo Asistencial Universitario de Burgos;Burgos;0;11;0;2;3;743;0;139;9059;42.383333,-3.666667
+2020-08-12;Hospital Santos Reyes;Burgos;3;8;0;0;0;121;0;43;9059;42.383333,-3.666667
+2020-08-12;Hospital El Bierzo;León;0;2;0;1;0;294;0;73;24089;42.666667,-6.0
+2020-08-12;Complejo Asistencial Universitario de Salamanca;Salamanca;2;14;0;0;3;1314;0;378;37274;40.833333,-6.0
+2020-08-12;Complejo Asistencial de Soria;Soria;0;10;0;0;0;440;0;123;42173;41.666667,-2.666667
+2020-08-12;Hospital Universitario Río Hortega;Valladolid;3;12;0;5;0;913;0;171;47186;41.583333,-4.666667
+2020-08-13;Complejo Asistencial Universitario de Burgos;Burgos;1;9;0;1;3;746;0;139;9059;42.383333,-3.666667
+2020-08-13;Hospital Santos Reyes;Burgos;3;11;0;0;0;121;0;43;9059;42.383333,-3.666667
+2020-08-13;Complejo Asistencial Universitario de León;León;0;4;0;0;0;1458;0;351;24089;42.666667,-6.0
+2020-08-13;Complejo Asistencial Universitario de Salamanca;Salamanca;4;15;0;0;4;1318;0;378;37274;40.833333,-6.0
+2020-08-13;Complejo Asistencial de Segovia;Segovia;0;6;0;0;0;938;0;214;40004;41.166667,-4.0
+2020-08-13;Complejo Asistencial de Soria;Soria;0;8;0;0;2;442;0;123;42173;41.666667,-2.666667
+2020-08-13;Hospital de Medina del Campo;Valladolid;0;1;0;0;0;131;0;27;47186;41.583333,-4.666667
+2020-08-13;Hospital Universitario Río Hortega;Valladolid;4;12;0;5;4;917;1;172;47186;41.583333,-4.666667
 2020-05-28;Complejo Asistencial Universitario de Palencia;Palencia;0;13;0;2;2;344;0;84;34120;42.432128,-4.520647
 2020-05-28;Complejo Asistencial Universitario de Salamanca;Salamanca;1;27;0;6;3;1227;0;363;37274;40.833333,-6.0
 2020-05-28;Complejo Asistencial de Soria;Soria;2;16;0;5;0;405;0;119;42173;41.666667,-2.666667
@@ -1987,3 +1966,24 @@ fecha;hospital;provincia;nuevos_hospitalizados_planta;hospitalizados_planta;nuev
 2020-08-12;Complejo Asistencial de Zamora;Zamora;2;8;0;0;1;369;0;92;49275;41.75,-6.0
 2020-08-13;Complejo Asistencial Universitario de Palencia;Palencia;1;3;0;0;0;389;0;88;34120;42.432128,-4.520647
 2020-08-13;Hospital Clínico Universitario de Valladolid;Valladolid;0;7;0;0;1;857;0;198;47186;41.583333,-4.666667
+2020-05-19;Hospital Universitario Río Hortega;Valladolid;2;25;0;14;8;728;1;156;47186;41.583333,-4.666667
+2020-05-20;Hospital Santiago Apóstol;Burgos;1;1;0;0;0;128;0;33;9059;42.383333,-3.666667
+2020-05-20;Hospital Clínico Universitario de Valladolid;Valladolid;0;45;0;7;4;756;0;186;47186;41.583333,-4.666667
+2020-05-20;Hospital Universitario Río Hortega;Valladolid;3;27;1;11;7;735;0;156;47186;41.583333,-4.666667
+2020-05-21;Hospital El Bierzo;León;0;4;0;1;2;282;0;72;24089;42.666667,-6.0
+2020-05-21;Complejo Asistencial Universitario de Salamanca;Salamanca;2;41;0;12;4;1194;0;358;37274;40.833333,-6.0
+2020-05-22;Complejo Asistencial de Ávila;Ávila;0;9;0;4;2;634;0;134;5019;40.616092,-4.929031
+2020-05-22;Complejo Asistencial de Segovia;Segovia;1;41;0;4;4;881;0;202;40004;41.166667,-4.0
+2020-05-23;Complejo Asistencial Universitario de Burgos;Burgos;0;16;0;8;5;684;1;131;9059;42.383333,-3.666667
+2020-05-23;Complejo Asistencial Universitario de Palencia;Palencia;0;13;0;3;1;339;0;83;34120;42.432128,-4.520647
+2020-05-23;Hospital Clínico Universitario de Valladolid;Valladolid;1;44;0;5;3;764;1;188;47186;41.583333,-4.666667
+2020-05-24;Hospital Santiago Apóstol;Burgos;0;1;0;0;0;129;0;33;9059;42.383333,-3.666667
+2020-05-25;Complejo Asistencial Universitario de Burgos;Burgos;0;17;0;5;0;685;0;132;9059;42.383333,-3.666667
+2020-05-25;Hospital Santos Reyes;Burgos;0;4;0;0;0;112;0;43;9059;42.383333,-3.666667
+2020-05-25;Hospital El Bierzo;León;0;1;0;1;0;285;0;72;24089;42.666667,-6.0
+2020-05-25;Complejo Asistencial de Soria;Soria;0;22;0;6;0;402;0;119;42173;41.666667,-2.666667
+2020-05-27;Hospital Santiago Apóstol;Burgos;0;1;0;0;0;129;0;33;9059;42.383333,-3.666667
+2020-05-27;Hospital Santos Reyes;Burgos;1;5;0;0;0;112;0;43;9059;42.383333,-3.666667
+2020-05-27;Hospital El Bierzo;León;0;1;0;1;0;285;0;72;24089;42.666667,-6.0
+2020-05-27;Complejo Asistencial Universitario de Palencia;Palencia;1;15;0;2;0;342;0;84;34120;42.432128,-4.520647
+2020-05-28;Hospital Santiago Apóstol;Burgos;0;2;0;0;0;129;0;33;9059;42.383333,-3.666667

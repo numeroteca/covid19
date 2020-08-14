@@ -590,3 +590,7 @@ ggplot( aes(x = reorder(Var1, Freq), y = Freq)) +
        ) +
   coord_flip()
 ```
+
+## Todos los datos
+
+Consulta todos los datos en una tabla navegable en https://lab.montera34.com/covid19-r/reports/data-escovid19data.html 

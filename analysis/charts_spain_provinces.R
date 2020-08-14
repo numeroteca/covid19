@@ -23,9 +23,9 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( (date > as.Date("
 
 # Remove last days for unconsolidated data:
 # Barcelona
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date-2 )  ) )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date-3 )  ) )
 # Madrid
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-3 )  ) )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-2 )  ) )
 
 
 # Set colors ---------
@@ -2012,7 +2012,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
       legend.position =  "none"
     ) +
     labs(title = paste0("Media de casos por día (media 7 días) por COVID-19 en ",prov, " ", updated ),
-         subtitle = paste0("Línea de puntos:casos PCR+, media de 7 días. Últimos 50 días. Por provincia. ",period),
+         subtitle = paste0("Línea de puntos: casos PCR+, media de 7 días. Últimos 50 días. Por provincia. ",period),
          y = "casos por día (media 7 días)",
          x = "fecha",
          caption = caption_provincia)
@@ -2129,7 +2129,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
       legend.position =  "none"
     ) +
     labs(title = paste0("Media de casos por día (media 7 días) por COVID-19 en ",prov, " ", updated ),
-         subtitle = paste0("Línea de puntos:casos PCR+, media de 7 días. Últimos 50 días. Por provincia. ",period),
+         subtitle = paste0("Línea de puntos: casos PCR+, media de 7 días. Últimos 50 días. Por provincia. ",period),
          y = "casos por día (media 7 días)",
          x = "fecha",
          caption = caption_provincia)
@@ -3436,7 +3436,8 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
          subtitle = paste0("Por provincia. ",period),
          y = "fallecidos por día (media 7 días)",
          x = "fecha",
-         caption = paste0("Nota para Euskadi: a partir de 15 de mayo los fallecidos son solamente en hospitales. ", caption_provincia)
+         # caption = paste0("Nota para Euskadi: a partir de 15 de mayo los fallecidos son solamente en hospitales. ", caption_provincia)
+         caption = paste0("", caption_provincia)
          )
   
   print(the_province)

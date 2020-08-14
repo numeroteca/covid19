@@ -1,0 +1,35 @@
+---
+title: "Informe sobre Escovid19data"
+author: "@numeroteca"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    includes:
+       in_header: web_stats.html
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(formattable)
+library(DT)
+library(viridis)
+today <- as.Date("2020-08-13")
+```
+
+Un análisis automatizado de la base de datos por provincias de COVID-19 en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data
+
+El código .Rmd para generar este informe [está disponile](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/reports/data-escovid19data.Rmd).
+
+## Navega por todos los datos
+
+```{r todsolosdatos, fig.width=8, fig.height=12, echo=FALSE, warning=FALSE}
+data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
+
+as.datatable(
+formattable( data_cases_sp_provinces %>% arrange( desc(date) )),
+options = list(pageLength = 52)
+)
+```
+  
