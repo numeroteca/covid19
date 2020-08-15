@@ -13,8 +13,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <- "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-08-14)"
-filter_date <- as.Date("2020-08-14")
+period <- "(Actualizado: 2020-08-15)"
+filter_date <- as.Date("2020-08-15")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -25,7 +25,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( (date > as.Date("
 # Barcelona
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date-2 )  ) )
 # Madrid
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-2 )  ) )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-3 )  ) )
 
 
 # Set colors ---------
@@ -1653,7 +1653,7 @@ data_cases_sp_provinces %>% filter(date > filter_date - 50 ) %>%
   # geom_point(data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date)), aes(date, daily_cases_avg7, color=province), size= 1.5, alpha = 0.3 ) +
   geom_text_repel(
     # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & daily_cases_avg7 > 5), 
-    data = data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(daily_cases_PCR_avg7)  ) %>% top_n(1, date) %>% filter (daily_cases_PCR_avg7 > 10)  ,
+    data = data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(daily_cases_PCR_avg7)  ) %>% top_n(1, date) %>% filter (daily_cases_PCR_avg7 > 20)  ,
     aes(date, daily_cases_PCR_avg7, color=ccaa, label=paste(format(daily_cases_PCR_avg7, nsmall=1, big.mark=".", decimal.mark = ","),province)),
     nudge_x = 2, # adjust the starting y position of the text label
     size=5,
@@ -1771,7 +1771,7 @@ data_cases_sp_provinces %>%
   geom_line(aes(date, daily_cases_PCR,group=province, color=ccaa), size= 0.2 ) +
   geom_point(aes(date, daily_cases_PCR, color=ccaa), size= 0.5, alpha = 0.5 ) +
   geom_text_repel(
-    data = data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(daily_cases_PCR_avg7)  ) %>% top_n(1, date) %>% filter (daily_cases_PCR_avg7 > 3)  ,
+    data = data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(daily_cases_PCR_avg7)  ) %>% top_n(1, date) %>% filter (daily_cases_PCR_avg7 > 20)  ,
     aes(date, daily_cases_PCR_avg7, color=ccaa, label=paste(format(daily_cases_PCR_avg7, nsmall=1, big.mark=".", decimal.mark = ","),province)),
     nudge_x = 4, # adjust the starting y position of the text label
     size=5,
@@ -2042,7 +2042,8 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
       geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11") 
   }
   # TODO: por qué hay que quitar a Baleares tras el cambio de fuente de datos? Investigar.
-  if ( prov=="Aragón" | prov=="Andalucía" | prov=="Balears, Illes" | prov=="Asturias, Principado de"   | prov=="Cantabria" |  prov=="Ceuta"  |  prov=="Castilla - La Mancha" | prov=="Comunitat Valenciana"  | prov=="Extremadura" |
+  if ( prov=="Aragón" | prov=="Andalucía" | prov=="Balears, Illes" | prov=="Asturias, Principado de"   | prov=="Cantabria" |  
+       prov=="Ceuta"  |  prov=="Castilla - La Mancha" | prov=="Castilla y León"  | prov=="Comunitat Valenciana"  | prov=="Extremadura" |
   # if ( prov=="Aragón" | prov=="Andalucía" | prov=="Asturias, Principado de" | prov=="Canarias"| prov=="Castilla y León" | prov=="Cantabria" |  prov=="Ceuta"  |  prov=="Castilla - La Mancha" | prov=="Comunitat Valenciana"  | prov=="Extremadura" | 
        prov=="Madrid, Comunidad de" | prov=="Melilla" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="País Vasco"  | prov=="Rioja, La" ) {
     the_province  <- the_province + geom_text_repel(
@@ -2134,15 +2135,18 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
          x = "fecha",
          caption = caption_provincia)
   
-  if ( prov=="Aragón" | prov=="Andalucía" | prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Canarias" | prov=="Castilla y León" | prov=="Cataluña" | prov=="Cantabria"  |  prov=="Ceuta" |  prov=="Castilla - La Mancha" |   prov=="Melilla"  | prov=="Comunitat Valenciana"  | 
-       prov=="Extremadura" | prov=="Madrid, Comunidad de" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="Rioja, La" | prov=="País Vasco" | prov=="Galicia") {
+  if ( prov=="Aragón" | prov=="Andalucía" | prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Canarias" | prov=="Castilla y León" | 
+       prov=="Cataluña" | prov=="Cantabria"  |  prov=="Ceuta" |  prov=="Castilla - La Mancha" |   prov=="Melilla"  | prov=="Comunitat Valenciana"  | 
+       prov=="Extremadura" | prov=="Madrid, Comunidad de" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="Rioja, La" | 
+       prov=="País Vasco" | prov=="Galicia") {
     the_province  <- the_province + 
       geom_line( aes(date, daily_cases_PCR_avg7,group=province, color=province), size= 1.4, linetype = "11")  +
       geom_point(aes(date, daily_cases_PCR, color=province), size= 1.4, alpha = 0.7, shape= 21 ) +
       geom_line(aes(date, daily_cases_PCR, color=province, group=province), size= 0.3, alpha = 0.5, linetype="11" ) 
   }
   # TODO: por qué hay que quitar a Baleares tras el cambio de fuente de datos? Investigar.
-  if ( prov=="Aragón" | prov=="Andalucía" | prov=="Balears, Illes" | prov=="Asturias, Principado de"   | prov=="Cantabria" |  prov=="Ceuta"  |  prov=="Castilla - La Mancha" | prov=="Comunitat Valenciana"  | prov=="Extremadura" |
+  if ( prov=="Aragón" | prov=="Andalucía" | prov=="Balears, Illes" | prov=="Asturias, Principado de"   | prov=="Cantabria" |  prov=="Ceuta"  |  
+       prov=="Castilla - La Mancha" | prov=="Comunitat Valenciana"  | prov=="Extremadura" | prov=="Castilla y León" |
   # if ( prov=="Aragón" | prov=="Andalucía" | prov=="Asturias, Principado de"   | prov=="Canarias" | prov=="Castilla y León" | prov=="Cantabria" |  prov=="Ceuta"  |  prov=="Castilla - La Mancha" | prov=="Comunitat Valenciana"  | prov=="Extremadura" | 
        prov=="Madrid, Comunidad de" | prov=="Melilla" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="País Vasco"  | prov=="Rioja, La" ) {
     the_province  <- the_province + geom_text_repel(
@@ -2237,14 +2241,17 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
          x = "fecha",
          caption = caption_provincia)
   
-  if ( prov=="Aragón"  |prov=="Balears, Illes"  |prov=="Andalucía" | prov=="Asturias, Principado de" | prov=="Balears, Illes" | prov=="Castilla y León" | prov=="Canarias" | prov=="Cataluña" | prov=="Cantabria"  |  prov=="Ceuta" |  prov=="Castilla - La Mancha" |   prov=="Melilla"  | prov=="Comunitat Valenciana"  | 
+  if ( prov=="Aragón"  |prov=="Balears, Illes"  |prov=="Andalucía" | prov=="Asturias, Principado de" | prov=="Balears, Illes" | 
+       prov=="Castilla y León" | prov=="Canarias" | prov=="Cataluña" | prov=="Cantabria"  |  prov=="Ceuta" |  prov=="Castilla - La Mancha" |   
+       prov=="Melilla"  | prov=="Comunitat Valenciana"  | 
        prov=="Extremadura" | prov=="Madrid, Comunidad de" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="Rioja, La" | prov=="País Vasco"| prov=="Galicia") {
     print("yes, PCR data")
     the_province  <- the_province + geom_line( aes(date, daily_cases_PCR_avg7,group=province, color=province), size= 1.2, linetype = "11")  +
       geom_point(aes(date, daily_cases_PCR, color=province), size= 1.2, alpha = 0.7, shape= 21 ) +
       geom_line(aes(date, daily_cases_PCR, color=province, group=province), size= 0.3, alpha = 0.5, linetype="11" ) 
   }
-  if ( prov=="Aragón"  |prov=="Andalucía" | prov=="Asturias, Principado de" |prov=="Balears, Illes"   | prov=="Canarias" | prov=="Cantabria" |  prov=="Castilla y León" | prov=="Ceuta"  |  prov=="Castilla - La Mancha" | prov=="Comunitat Valenciana"  | prov=="Extremadura" | 
+  if ( prov=="Aragón"  |prov=="Andalucía" | prov=="Asturias, Principado de" |prov=="Balears, Illes"   | prov=="Canarias" | prov=="Cantabria" |  
+       prov=="Castilla y León" | prov=="Ceuta"  |  prov=="Castilla - La Mancha" | prov=="Comunitat Valenciana"  | prov=="Extremadura" | 
        prov=="Madrid, Comunidad de" | prov=="Melilla" | prov=="Murcia, Región de" | prov=="Navarra, Comunidad Foral de" | prov=="País Vasco"  | prov=="Rioja, La") {
     the_province  <- the_province + geom_text_repel(
       data = data_cases_sp_provinces %>% filter( ccaa == prov ) %>% group_by(province) %>% filter(!is.na(daily_cases_PCR_avg7) ) %>% top_n(1, date),
