@@ -23,9 +23,9 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( (date > as.Date("
 
 # Remove last days for unconsolidated data:
 # Barcelona
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date-3 )  ) )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date-2 )  ) )
 # Madrid
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-3 )  ) )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-2 )  ) )
 
 
 # Set colors ---------
