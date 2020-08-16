@@ -3605,7 +3605,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
 for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
 # for ( i in 1:c(7,8,11,12,18)  ) { print(i)}
   # for ( i in 3:3  ) {
-  if (i %in% c(2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18) ) {
+  if (i %in% c(1,2,3,4,6,7,8,9,10,11,12,13,14,15,16,17,18) ) {
     
   prov <- levels(data_cases_sp_provinces$ccaa)[i]
   unaprov <- data_cases_sp_provinces %>% filter (ccaa == prov ) %>% select (province) %>% first() 
@@ -4623,7 +4623,7 @@ dev.off()
 # 5. Hospitalizados ------------
 
 # Solamente deja las ccaa prevalentes
-noprevalentes <- c("Andalucía",  "Rioja, La", "Canarias")
+noprevalentes <- c("Rioja, La", "Canarias")
 
 data_cases_sp_provincesX <- data_cases_sp_provinces %>% filter( ! ccaa %in% noprevalentes ) 
 data_cases_sp_provincesX_sm  <- data_cases_sp_provinces_sm %>% filter( ! ccaa %in% noprevalentes ) 

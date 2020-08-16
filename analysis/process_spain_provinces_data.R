@@ -30,6 +30,7 @@ data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provinc
 # C. Process data ------
 # Create date variable
 data_cases_sp_provinces$date  <- as.Date(data_cases_sp_provinces$date)
+names_original <- names(data_cases_sp_provinces)
 
 # Canarias: Agreggate Canary islands -------
 # Group by province
@@ -274,6 +275,56 @@ andalucia2 <- andalucia2 %>% filter( Territorio != "Andalucía" ) %>%
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,andalucia,andalucia2) 
 
 rm(andalucia,andalucia_original)
+
+
+# Andalucia hospitalizados --------
+download.file("https://github.com/montera34/escovid19data/raw/master/data/original/andalucia-hospitalizados.csv", 
+              "data/original/spain/andalucia/andalucia-hospitalizados.csv")
+andalucia_hosp <- read.delim("data/original/spain/andalucia/andalucia-hospitalizados.csv", sep=",")
+
+andalucia_hosp <- andalucia_hosp %>% 
+  mutate(
+    date_and = as.Date(Fecha.report,"%d/%m/%Y"),
+    ccaa_and = "Andalucía"
+  ) %>% rename(
+    province_and = provincia,
+    hospitalized_and = Hospitalizados ,
+    intensive_care_and = UCI,
+  )  %>% mutate (
+    province_and = province_and %>% str_replace_all("Malaga", "Málaga"),
+    source_name_and  = "Junta de Andalucía",
+    comments_and="Usa este script para hospitalizados https://github.com/montera34/escovid19data/blob/master/analysis/descarga_andalucia.py",
+    source_and = "https://github.com/montera34/escovid19data/raw/master/data/original/andalucia-hospitalizados.csv"
+  )
+
+data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ) %>% ungroup(),
+              andalucia_hosp  %>% mutate ( dunique = paste0( date_and, province_and) ) %>% ungroup() %>% 
+                                    select(dunique, date_and, ccaa_and, province_and, hospitalized_and, intensive_care_and, source_name_and, comments_and, source_and) , 
+                                  by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique) %>% mutate(
+                                    # add hospitalized data for existing dates and provinces
+                                    hospitalized = ifelse(ccaa=="Andalucía", hospitalized_and ,hospitalized),
+                                    intensive_care = ifelse(ccaa=="Andalucía",intensive_care_and, intensive_care),
+                                    source = as.character(source),
+                                    source = ifelse( ccaa_and == "Andalucía", paste0(source,";",source_and), source),
+                                    source_name = as.character(source_name),
+                                    source_name = ifelse( ccaa_and == "Andalucía", paste0(source_name,";",source_name_and), source_name),
+                                    comments = as.character(comments),
+                                    comments = ifelse( ccaa_and == "Andalucía", 
+                                                       paste0( ifelse(is.na(comments), paste0(comments,";"),""),comments_and), 
+                                             comments),
+                                    # add hospitalized data for non existing dates and provinces (on weekends)
+                                    date= as.character(date),
+                                    date = ifelse( ccaa_and == "Andalucía" & is.na(ccaa), as.character(date_and), date ),
+                                    date = as.Date(date,"%Y-%m-%d"),
+                                    hospitalized = ifelse( ccaa_and == "Andalucía" & is.na(ccaa), hospitalized_and, hospitalized),
+                                    intensive_care = ifelse( ccaa_and == "Andalucía" & is.na(ccaa), intensive_care_and, intensive_care),
+                                    ccaa = as.character(ccaa),
+                                    ccaa = ifelse( ccaa_and == "Andalucía" & is.na(ccaa), as.character(ccaa_and), ccaa ),
+                                    ccaa = as.factor(ccaa),
+                                    province = as.character(province),
+                                    province = ifelse( ccaa_and == "Andalucía" & is.na(province), as.character(province_and), province ),
+                                    province = as.factor(province)
+                                  ) %>% select( names(read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")) )
 
 # País Vasco --------------
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=pais-vasco", 
