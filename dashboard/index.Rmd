@@ -347,14 +347,11 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   hospitalized = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
   intensive_care = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
   # hospitalized = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
-  hospitalized = ifelse( (province== "Asturias") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
-  intensive_care = ifelse( (province== "Asturias") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
   hospitalized_per_100000 = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
   hospitalized_per_100000 = ifelse( (province== "Navarra") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
   hospitalized_per_100000 = ifelse( (province== "Ceuta") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
   hospitalized_per_100000 = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
   # hospitalized_per_100000 = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
-  hospitalized_per_100000 = ifelse( (province== "Asturias") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 )
 )
 
 # Solamente deja las ccaa prevalentes

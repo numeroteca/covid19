@@ -25,7 +25,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( (date > as.Date("
 # Barcelona
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date-2 )  ) )
 # Madrid
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-4 )  ) )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-1 )  ) )
 
 # Set colors ---------
 # extends color paletter
@@ -39,7 +39,7 @@ colors_prov[1] <- "#a60000"
 colors_prov[12] <- "#84d3e7"
 
 
-# Remove not prevalent hospitalized data for Murcia and Navarra early days
+# Remove not prevalent hospitalized data for Murcia and Navarra early days ---
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   hospitalized = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
   intensive_care = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
@@ -49,15 +49,13 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   intensive_care = ifelse( (province== "Ceuta") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
   hospitalized = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
   intensive_care = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
+  intensive_care = ifelse( province== "Cantabria", NA, intensive_care ),
   # hospitalized = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
-  hospitalized = ifelse( (province== "Asturias") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
-  intensive_care = ifelse( (province== "Asturias") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
   hospitalized_per_100000 = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
   hospitalized_per_100000 = ifelse( (province== "Navarra") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
   hospitalized_per_100000 = ifelse( (province== "Ceuta") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
   hospitalized_per_100000 = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
   # hospitalized_per_100000 = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
-  hospitalized_per_100000 = ifelse( (province== "Asturias") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 )
 )
 
 # Plots --------------------
@@ -2041,6 +2039,8 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
        prov=="Rioja, La" ) {
     the_province  <- the_province + 
       geom_col(aes(date, daily_cases_PCR, fill=province), width=1, alpha = 0.3) +
+      # TODO: add numer to column
+      # geom_text(aes(date, daily_cases_PCR, label=daily_cases_PCR, color=province ), alpha = 1, vjuszt = 1, size=4, color="white" ) +
       # quito la línea de casos
       # geom_line(aes(date, daily_cases_avg7,group=province, color=province), size= 1.5, se = FALSE, span = 0.6 ) +
       geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11") 
@@ -4985,7 +4985,7 @@ data_cases_sp_provincesX %>%
   geom_point(aes(date, hospitalized, color=ccaa), size= 0.7 ) +
   geom_text_repel(
     
-    data = data_cases_sp_provincesX %>% group_by(province) %>% filter(!is.na(hospitalized) & hospitalized > 10 & date > filter_date-7 ) %>% top_n(1, date),
+    data = data_cases_sp_provincesX %>% group_by(province) %>% filter(!is.na(hospitalized) & hospitalized > 20 & date > filter_date-7 ) %>% top_n(1, date),
     
                   aes(date, hospitalized, color=ccaa, label=paste0(format(hospitalized, nsmall=0, big.mark="."), " ", province, "")),
                   nudge_x = 3, # adjust the starting y position of the text label
@@ -5076,7 +5076,7 @@ data_cases_sp_provincesX %>%
   geom_line(aes(date, hospitalized_per_100000,group=province, color=ccaa), size= 0.7 ) +
   geom_point(aes(date, hospitalized_per_100000, color=ccaa), size= 0.7 ) +
   geom_text_repel(
-    data = data_cases_sp_provincesX %>% group_by(province) %>% filter(!is.na(hospitalized_per_100000) & hospitalized_per_100000 > 2 & date > filter_date-5 ) %>% top_n(1, date),
+    data = data_cases_sp_provincesX %>% group_by(province) %>% filter(!is.na(hospitalized_per_100000) & hospitalized_per_100000 > 5 & date > filter_date-5 ) %>% top_n(1, date),
                   aes(date, hospitalized_per_100000, color=ccaa, 
                       label=paste(format(round(hospitalized_per_100000, digits = 1) , nsmall=1, big.mark=".", decimal.mark = ","),province)),
                   nudge_x = 2, # adjust the starting y position of the text label
@@ -5372,4 +5372,64 @@ data_cases_sp_provincesX %>% filter( ! ccaa %in% noprevalentes )  %>% filter( da
        x = "fecha (mes) 2020",
        color = "",
        caption = caption_provincia)
+dev.off()
+
+
+# experimentos -----------------
+data_cases_sp_provinces$weekday <- weekdays(data_cases_sp_provinces$date)
+
+data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
+                                              "sábado","domingo" ) )
+
+png(filename=paste0("img/spain/provincias/covid19_casos-por-dia-provincia-media-superpuesto-lineal-last50-media-pais.png", sep = ""),width = 1200,height = 800)
+data_cases_sp_provinces %>% filter ( (ccaa == "País Vasco" ) & (date > filter_date - 50) ) %>%
+    ggplot() +
+    geom_line(aes(date, daily_cases_avg7,group=province, color=province), size= 1.5, se = FALSE, span = 0.6 ) +
+    facet_wrap( ~province, scales = "free_y") +
+    # geom_text_repel(
+    #   data = data_cases_sp_provinces %>% filter( ccaa == prov ) %>% group_by(province) %>% filter(!is.na(daily_cases) ) %>% top_n(1, date),
+    #   aes(date, daily_cases_avg7, color=province, 
+    #       label=paste(format(daily_cases_avg7, nsmall=1, big.mark=".", decimal.mark = ","),province)),
+    #   nudge_x = 1, # adjust the starting y position of the text label
+    #   size=5,
+    #   hjust=0,
+    #   family = "Roboto Condensed",
+    #   direction="y",
+    #   segment.size = 0.1,
+    #   segment.color="#777777"
+    # ) +
+    scale_color_manual(values = colors_prov) +
+    scale_y_continuous( 
+      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+      # expand = c(0,0.2)
+    ) +
+    scale_x_date(date_breaks = "1 week", 
+                 date_labels = "%d/%m",
+                 limits=c( filter_date - 50, max(data_cases_sp_provinces$date +9)),
+                 expand = c(0,0) 
+    ) + 
+    theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+    theme(
+      panel.grid.minor.x = element_blank(),
+      panel.grid.major.x = element_blank(),
+      # panel.grid.minor.y = element_blank(),
+      axis.ticks.x = element_line(color = "#000000"),
+      legend.position =  "none"
+    ) +
+    labs(title = paste0("Media de casos por día (media 7 días) por COVID-19 en ",prov, " ", updated ),
+         subtitle = paste0("Línea de puntos: casos PCR+, media de 7 días. Últimos 50 días. Por provincia. ",period),
+         y = "casos por día (media 7 días)",
+         x = "fecha",
+         caption = caption_provincia) 
+# + 
+#       geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11")  +
+#       geom_point(aes(date, daily_cases_PCR, color=province), size= 1.4, alpha = 0.7, shape= 21 ) +
+#       geom_line(aes(date, daily_cases_PCR, color=province, group=province), size= 0.3, alpha = 0.5, linetype="11" ) + 
+#       geom_col(aes(date, daily_cases_PCR, fill=province), width=1, alpha = 0.3) +
+#       # TODO: add numer to column
+#       # geom_text(aes(date, daily_cases_PCR, label=daily_cases_PCR, color=province ), alpha = 1, vjuszt = 1, size=4, color="white" ) +
+#       # quito la línea de casos
+#       # geom_line(aes(date, daily_cases_avg7,group=province, color=province), size= 1.5, se = FALSE, span = 0.6 ) +
+#       geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11") 
+  
 dev.off()

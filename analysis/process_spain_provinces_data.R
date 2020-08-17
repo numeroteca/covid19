@@ -1720,6 +1720,38 @@ data_cases_sp_provinces <- rbind(
   asturias2 %>% filter( date > as.Date("2020-07-19") ) %>% select(names(data_cases_sp_provinces))
 )
 
+# substitute all the hospitalized and intensive care data
+data_cases_sp_provinces <- merge(
+  data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ) %>% ungroup(),
+  asturias2 %>% mutate ( dunique = paste0( date, province) ) %>% ungroup() %>% select(dunique,hospitalized, intensive_care, source, source_name, comments) %>%
+    rename(
+    hosp_ast = hospitalized,
+    uci_ast = intensive_care,
+    source_ast = source,
+    source_name_ast = source_name,
+    com_ast = comments
+  ),
+  by.x = "dunique", by.y = "dunique", all.x = TRUE
+)
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+# zzz <- data_cases_sp_provinces %>% mutate(
+  hospitalized = ifelse(province == "Asturias" & date < as.Date("2020-07-19"), hosp_ast, hospitalized ),
+  intensive_care = ifelse(province == "Asturias" & date < as.Date("2020-07-19"), uci_ast, intensive_care ),
+  source = ifelse(
+    province == "Asturias" & date < as.Date("2020-07-19"), 
+    paste0(source,";",source_ast), 
+    source ),
+  source_name = ifelse(
+    province == "Asturias" & date < as.Date("2020-07-19"),
+    paste0(source_name,";",source_name_ast), 
+    source_name ),
+  comments = ifelse(
+    province == "Asturias" & date < as.Date("2020-07-19"),
+    paste0(comments,";",com_ast), 
+    comments )
+) %>% select (-dunique, -hosp_ast, -uci_ast, -source_ast, -source_name_ast, -com_ast )
+
 # Catalunya deaths---------
 # de la web https://analisi.transparenciacatalunya.cat/es/Salut/Dades-di-ries-de-COVID-19-per-rees-de-gesti-assist/dmzh-fz47 y 
 # a su vez de https://dadescovid.cat/descarregues?drop_es_residencia=1
@@ -1755,7 +1787,8 @@ catalunya_process <- catalunya %>% group_by(date,province) %>% arrange(date) %>%
     cases_by_day = sum(CASOS_CONFIRMAT),
     ingresos_by_day = sum(INGRESSOS_TOTAL),
     ingresos_critic_by_day = sum(INGRESSOS_CRITIC),
-    ingresados_by_day = sum(INGRESSATS_CRITIC),
+    ingresados = sum(INGRESSATS_TOTAL),
+    UCI = sum(INGRESSATS_CRITIC),
     deceased_by_day = sum(EXITUS)
   )
 
@@ -1765,15 +1798,23 @@ catalunya_process <- catalunya_process %>% group_by(province) %>% mutate (
 
 data_cases_sp_provinces <- merge(
   data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ) %>% ungroup(),
-  catalunya_process %>% mutate ( dunique = paste0( date, province) ) %>% ungroup() %>% select (dunique, deceased_cum ) ,
+  catalunya_process %>% mutate ( dunique = paste0( date, province) ) %>% ungroup() %>% select (dunique, deceased_cum, ingresados, UCI ) ,
   by.x = "dunique", by.y = "dunique", all = TRUE
 )
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
  deceased = ifelse(ccaa == "Cataluña", deceased_cum, deceased ),
- source = ifelse(!is.na(deceased_cum), paste0(source,";https://analisi.transparenciacatalunya.cat/Salut/Dades-di-ries-de-COVID-19-per-rees-de-gesti-assist/dmzh-fz47"), source ),
- source_name = ifelse(!is.na(deceased_cum), paste0(source_name,"Transparencia Catalunya"), source_name )
-) %>% select (-deceased_cum, -dunique)
+ hospitalized = ifelse(ccaa == "Cataluña"  & date > as.Date("2020-04-30"), ingresados, hospitalized ), # insert data after 2020.05.01 because earlier values are 0
+ intensive_care = ifelse(ccaa == "Cataluña"  & date > as.Date("2020-04-30"), UCI, intensive_care ),
+ source = ifelse(
+   !is.na(deceased_cum) | !is.na(ingresados) | !is.na(UCI), 
+   paste0(source,";https://analisi.transparenciacatalunya.cat/Salut/Dades-di-ries-de-COVID-19-per-rees-de-gesti-assist/dmzh-fz47"), 
+   source ),
+ source_name = ifelse(
+   !is.na(deceased_cum) | !is.na(ingresados) | !is.na(UCI), 
+   paste0(source_name,";Transparencia Catalunya"), 
+   source_name )
+) %>% select (-deceased_cum, -dunique, -ingresados, -UCI)
 
 # La Rioja --------------
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Rioja", 
