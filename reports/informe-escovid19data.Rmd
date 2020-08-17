@@ -265,6 +265,37 @@ filter( !is.na(province)) %>%
   )
 ``` 
 
+### UCI
+
+```{r completnessUCI, fig.width=9, fig.height=8, echo=FALSE, warning=FALSE}
+# Using> https://github.com/edugonzaloalmorox/30diasgraficos
+
+data_cases_sp_provinces %>% mutate( reordering = paste0(ccaa," (",province, ")") ) %>% # group_by(ccaa) %>% summarise( ) %>%# filter( date> "2018-04-01" & date < "2018-04-05" )
+filter( !is.na(province)) %>%
+  ggplot() + 
+  geom_tile( aes(x = date, y = fct_rev(reordering), fill= intensive_care, na.rm = FALSE), color="#666666",size=0.06) +  
+  scale_fill_viridis(option = "plasma",na.value = 'white',
+                     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
+  theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
+  scale_x_date(
+    date_breaks = "10 day", date_labels = "%d/%m",
+    expand= c(0,0)) +
+  labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
+       subtitle = paste(""),
+       x = NULL,
+       y = "",
+       fill = "UCI",
+       caption = "" ) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    legend.position = "top"
+  )
+``` 
+
+
 ### Fallecidos por día (media con ventana de 7 días)
 
 ```{r completness5, fig.width=9, fig.height=8, echo=FALSE, warning=FALSE}

@@ -5296,3 +5296,80 @@ data_cases_sp_provincesX %>% filter( ! ccaa %in% noprevalentes ) %>% filter( dat
        caption = caption_provincia)
 dev.off()
 
+
+# UCI ------------
+png(filename=paste("img/spain/provincias/covid19_uci-provincia-lineal.png", sep = ""),width = 1200,height = 800)
+data_cases_sp_provincesX %>% filter( ! ccaa %in% noprevalentes ) %>%
+  ggplot() +
+  # geom_line(data = data_cases_sp_provincesX_sm %>% ungroup() %>% select(date,hospitalized,province_cp,-province),
+  #           aes(date,hospitalized,group=province_cp), color="#CACACA" ) +
+  # geom_line(aes(date, hospitalized,group=province, color="black"), size=0.8 ) +
+  # geom_point(aes(date, hospitalized), size= 0.2 ) +
+  geom_line(aes(date, intensive_care,group=province, color= "red"), size=0.8 ) +
+  geom_point(aes(date, intensive_care), size= 0.2, color= "red"  ) +
+  scale_color_identity(
+    guide = "legend",
+    labels = c("UCI"),
+  ) +
+  expand_limits(y = 0) +
+  facet_wrap(~province, scales = "free_y") +
+  scale_y_continuous(
+    # limits = c(0,max(data_cases_sp_provincesX$cases_accumulated) ),
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  scale_x_date(date_breaks = "1 month", 
+               date_labels = "%m",
+               limits=c( min(data_cases_sp_provincesX$date), max(data_cases_sp_provincesX$date)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "top",
+    axis.text.x = element_text(size = 10)
+  ) +
+  labs(title = paste0("UCI por COVID-19 en España ", updated ),
+       subtitle = paste0("Por provincia (escala lineal). ",period),
+       y = "UCI",
+       x = "fecha (mes) 2020",
+       color = "",
+       caption = caption_provincia)
+dev.off()
+
+png(filename=paste("img/spain/provincias/covid19_uci_last-50_provincia-lineal.png", sep = ""),width = 1200,height = 800)
+data_cases_sp_provincesX %>% filter( ! ccaa %in% noprevalentes )  %>% filter( date > filter_date - 50 ) %>%
+  ggplot() +
+  geom_line(aes(date, intensive_care,group=province, color= "red"), size=0.8 ) +
+  geom_point(aes(date, intensive_care), size= 0.2, color= "red"  ) +
+  scale_color_identity(
+    guide = "legend",
+    labels = c("UCI"),
+  ) +
+  expand_limits(y = 0) +
+  facet_wrap(~province, scales = "free_y") +
+  scale_y_continuous(
+    # limits = c(0,max(data_cases_sp_provincesX$cases_accumulated) ),
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  scale_x_date(date_breaks = "1 month", 
+               date_labels = "%m",
+               limits=c( filter_date - 50, max(data_cases_sp_provincesX$date)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "top",
+    axis.text.x = element_text(size = 10)
+  ) +
+  labs(title = paste0("UCI por COVID-19 en España ", updated ),
+       subtitle = paste0("Últimos 50 días. Por provincia (escala lineal). ",period),
+       y = "UCI",
+       x = "fecha (mes) 2020",
+       color = "",
+       caption = caption_provincia)
+dev.off()
