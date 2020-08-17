@@ -291,13 +291,14 @@ andalucia_hosp <- andalucia_hosp %>%
     hospitalized_and = Hospitalizados ,
     intensive_care_and = UCI,
   )  %>% mutate (
-    province_and = province_and %>% str_replace_all("Malaga", "Málaga"),
+    # province_and = province_and %>% str_replace_all("Malaga", "Málaga"),
     source_name_and  = "Junta de Andalucía",
     comments_and="Usa este script para hospitalizados https://github.com/montera34/escovid19data/blob/master/analysis/descarga_andalucia.py",
     source_and = "https://github.com/montera34/escovid19data/raw/master/data/original/andalucia-hospitalizados.csv"
   )
 
 data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ) %>% ungroup(),
+# zzz <- merge( data_cases_sp_provinces %>% select( names(read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")) ) %>% mutate ( dunique = paste0( date, province) ) %>% ungroup(),
               andalucia_hosp  %>% mutate ( dunique = paste0( date_and, province_and) ) %>% ungroup() %>% 
                                     select(dunique, date_and, ccaa_and, province_and, hospitalized_and, intensive_care_and, source_name_and, comments_and, source_and) , 
                                   by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique) %>% mutate(
@@ -1090,6 +1091,81 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 
 rm(euskadi_a,euskadi_original)
 
+# Euskadi UCI. Overwrite UCI  data --------------
+euskadi_original <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "04")
+
+euskadi_a <- euskadi_original %>% rename( date = ...1 ) %>% 
+  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Ingresados UCI`)  %>% melt(
+    # euskadi_a <- euskadi_original %>% rename( date = X ) %>%
+    #   mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Ingresados.en.Planta`)  %>% melt(
+    id.vars = c("date")
+  ) %>% mutate(
+    province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
+    province = ifelse(variable=="02 Cruces", "Bizkaia"  ,province),
+    province = ifelse(variable=="03 Donosti", "Gipuzkoa" ,province),
+    province = ifelse(variable=="04 Basurto", "Bizkaia"  ,province),
+    province = ifelse(variable=="05 Galdakao", "Bizkaia" ,province),
+    province = ifelse(variable=="06 Zumarraga", "Gipuzkoa" ,province),
+    province = ifelse(variable=="07 Bidasoa", "Gipuzkoa" ,province),
+    province = ifelse(variable=="08 Mendaro", "Gipuzkoa" ,province),
+    province = ifelse(variable=="09 Alto Deba", "Gipuzkoa" ,province),
+    province = ifelse(variable=="10 San Eloy", "Bizkaia" ,province),
+    province = ifelse(variable=="11 Urduliz", "Bizkaia" ,province),
+    province = ifelse(variable=="12 Eibar", "Gipuzkoa" ,province),
+    province = ifelse(variable=="13 Leza", "Araba/Álava" ,province),
+    province = ifelse(variable=="14 Sta Marina", "Bizkaia" ,province),
+    province = ifelse(variable=="15 Gorliz", "Bizkaia" ,province),
+    province = ifelse(variable=="BERMEO H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZALDIBAR H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZAMUDIO H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ÁLAVA PSIQUIÁTRICO H.", "Araba/Álava" , province)
+    # for CSV option
+    # province = ifelse(variable=="X01.Araba", "Araba/Álava" ,NA),
+    # province = ifelse(variable=="X02.Cruces", "Bizkaia"  ,province),
+    # province = ifelse(variable=="X03.Donosti", "Gipuzkoa" ,province),
+    # province = ifelse(variable=="X04.Basurto", "Bizkaia"  ,province),
+    # province = ifelse(variable=="X05.Galdakao", "Bizkaia" ,province),
+    # province = ifelse(variable=="X06.Zumarraga", "Gipuzkoa" ,province),
+    # province = ifelse(variable=="X07.Bidasoa", "Gipuzkoa" ,province),
+    # province = ifelse(variable=="X08.Mendaro", "Gipuzkoa" ,province),
+    # province = ifelse(variable=="X09.Alto.Deba", "Gipuzkoa" ,province),
+    # province = ifelse(variable=="X10.San.Eloy", "Bizkaia" ,province),
+    # province = ifelse(variable=="X11.Urduliz", "Bizkaia" ,province),
+    # province = ifelse(variable=="X12.Eibar", "Gipuzkoa" ,province),
+    # province = ifelse(variable=="X13.Leza", "Araba/Álava" ,province),
+    # province = ifelse(variable=="X14.Sta.Marina", "Bizkaia" ,province),
+    # province = ifelse(variable=="X15.Gorliz", "Bizkaia" ,province),
+    # province = ifelse(variable=="BERMEO.H.", "Bizkaia" ,province),
+    # province = ifelse(variable=="ZALDIBAR.H.", "Bizkaia" ,province),
+    # province = ifelse(variable=="ZAMUDIO.H.", "Bizkaia" ,province),
+    # province = ifelse(variable=="ALAVA.PSIQUIATRICO.H.", "Araba/Álava" , province)
+  ) %>% group_by(province,date) %>%
+  mutate(
+    value = ifelse(is.na(value),0,value)) %>%
+  summarise(
+    intensive_care = sum(value)
+  ) %>% filter( !is.na(province) )
+
+data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
+euskadi_a$dunique <- paste0(euskadi_a$date,euskadi_a$province)
+
+data_cases_sp_provinces <- merge(data_cases_sp_provinces,
+                                 euskadi_a %>% ungroup() %>% select(dunique,intensive_care) %>% 
+                                   rename(
+                                     intensive_care_eus = intensive_care
+                                   ) , 
+                                 by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique)
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+  intensive_care = ifelse( ccaa == "País Vasco", intensive_care_eus, intensive_care),
+  source_name = ifelse( ccaa == "País Vasco", paste0(as.character(source_name),";Open Data Euskadi"), as.character(source_name) ),
+  source = ifelse( ccaa == "País Vasco", 
+                   paste0(source,";https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covid_19_2020/opendata/datos-asistenciales.xlsx" ), 
+                   as.character(source) )
+) %>% select(-intensive_care_eus)
+
+rm(euskadi_a,euskadi_original)
+
 
 # Euskadi fallecidos en hospitales. -------------- 
 # TODO: no se usa porque los fallecidos notificados 
@@ -1274,6 +1350,7 @@ data_cases_sp_provinces <- merge(data_cases_sp_provinces,
                                  by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique)
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+# zzz <- data_cases_sp_provinces %>% mutate(
   # no sé por qué per ohe tenido que montar este lío para que las fechas funcionaran
   date_new = ifelse( ccaa_mad == "Madrid, Comunidad de" & !is.na(province_mad), date_mad, NA ),
   date_new = as.Date(date_mad, origin=as.Date("1970-01-01") ),
@@ -1284,7 +1361,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   
   deceased =    ifelse( ccaa == "Madrid, Comunidad de" & (date > as.Date("2020-05-20") ), deceased_mad, deceased),
   hospitalized = ifelse( ccaa == "Madrid, Comunidad de", hospitalized_mad, hospitalized),
-  intensive_care = ifelse( ccaa_mad == "Madrid, Comunidad de", intensive_care_mad, intensive_care),
+  intensive_care = ifelse( ccaa == "Madrid, Comunidad de", intensive_care_mad, intensive_care),
   source_name = ifelse( ccaa == "Madrid, Comunidad de", paste0(as.character(source_name),";Consejería de Salud de la Comunidad de Madrid"), as.character(source_name) ),
   source = ifelse( ccaa == "Madrid, Comunidad de" & !is.na(hospitalized), 
                    paste0(source,";https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-series.csv;https://www.comunidad.madrid/servicios/salud/2019-nuevo-coronavirus#situacion-epidemiologica-actual" ), 
