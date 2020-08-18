@@ -25,8 +25,8 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: esCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 # period <-   "Para CCAA uniprov. casos es la suma de PCR+ y TestAc+ desde 2020.04.15"
-period <- "(Actualizado: 2020-08-17)"
-filter_date <- as.Date("2020-08-17")
+period <- "(Actualizado: 2020-08-18)"
+filter_date <- as.Date("2020-08-18")
 
 # Warning: you need to have loaded data_cases_sp_provinces by executing process_spain_provinces_data.R 
 # or load it using:
@@ -82,7 +82,7 @@ interactive_dp  <- data_cases_sp_provinces %>% ungroup(province) %>% filter ( da
   # ) +
   scale_color_manual(values = colors_prov) +
   coord_cartesian(
-    ylim = c(1,1200)
+    ylim = c(1,1400)
   ) +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
                  # minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),

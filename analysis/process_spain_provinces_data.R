@@ -33,6 +33,9 @@ data_cases_sp_provinces$date  <- as.Date(data_cases_sp_provinces$date)
 names_original <- names(data_cases_sp_provinces)
 
 # Canarias: Agreggate Canary islands -------
+# save all the islands data
+write.csv(data_cases_sp_provinces %>% filter( ccaa == "Canarias"), file = "data/original/spain/canarias/canarias.csv", row.names = FALSE)
+
 # Group by province
 tenerife <- data_cases_sp_provinces %>% filter(province == "La Gomera" | province =="La Palma" | province == "Tenerife" | province == "El Hierro") %>% group_by(date) %>% summarise(
   province = "Santa Cruz de Tenerife",
@@ -291,7 +294,6 @@ andalucia_hosp <- andalucia_hosp %>%
     hospitalized_and = Hospitalizados ,
     intensive_care_and = UCI,
   )  %>% mutate (
-    # province_and = province_and %>% str_replace_all("Malaga", "Málaga"),
     source_name_and  = "Junta de Andalucía",
     comments_and="Usa este script para hospitalizados https://github.com/montera34/escovid19data/blob/master/analysis/descarga_andalucia.py",
     source_and = "https://github.com/montera34/escovid19data/raw/master/data/original/andalucia-hospitalizados.csv"
@@ -2130,6 +2132,15 @@ data_cases_sp_provinces$province <- factor(data_cases_sp_provinces$province)
 data_cases_sp_provinces$ccaa <- factor(data_cases_sp_provinces$ccaa)
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter(!is.na(date))
+
+# Cleans unwanted NA in source and source_name
+# TODO: averiguar por qu'e salen esos NA
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+  source = source %>% str_replace_all("NA;", ""),
+  source = source %>% str_replace_all(";NA", ""),
+  source_name = source_name %>% str_replace_all(";NA", ""),
+  source_name = source_name %>% str_replace_all("NA;", ""),
+)
 
 # F. Saves data in the other repository -------------
 write.csv(data_cases_sp_provinces, file = "../escovid19data/data/output/covid19-provincias-spain_consolidated.csv", row.names = FALSE)
