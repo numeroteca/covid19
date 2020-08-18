@@ -2204,8 +2204,8 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
   the_province  <- data_cases_sp_provinces %>% filter (ccaa == prov ) %>%
     # data_cases_sp_provinces %>% filter (ccaa == prov ) %>%
     ggplot() +
-    geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(date,daily_cases_avg7,province_cp,-province),
-              aes(date,daily_cases_avg7,group=province_cp), color="#DFDFDF", size = 0.3 ) +
+    geom_line(data =  data_cases_sp_provinces_sm %>% ungroup() %>% select(date,daily_cases_PCR_avg7,province_cp,-province),
+              aes(date,daily_cases_PCR_avg7,group=province_cp), color="#DFDFDF", size = 0.3 ) +
     geom_line(aes(date, daily_cases_avg7,group=province, color=province), size= 1.5, se = FALSE, span = 0.6 ) +
     geom_point(aes(date, daily_cases, color=province), size= 1.2, alpha = 0.5 ) +
     geom_line(aes(date, daily_cases, color=province, group=province), size= 0.2, alpha = 0.5 ) +
@@ -2229,7 +2229,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
                    expand = c(0,0.2) ) +
     scale_x_date(date_breaks = "1 week", 
                  date_labels = "%d/%m",
-                 limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +16)),
+                 limits=c( min(data_cases_sp_provinces$date)+7, max(data_cases_sp_provinces$date +23)),
                  expand = c(0,0) 
     ) + 
     theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -2261,8 +2261,22 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
     the_province  <- the_province + geom_text_repel(
       data = data_cases_sp_provinces %>% filter( ccaa == prov ) %>% group_by(province) %>% filter(!is.na(daily_cases_PCR_avg7) ) %>% top_n(1, date),
       aes(date, daily_cases_PCR_avg7, color=province,
-          label=paste(format(daily_cases_PCR_avg7, nsmall=1, big.mark=".", decimal.mark = ","), "(PCR)", substr( province,1,3))),
+          label=paste(format(daily_cases_PCR_avg7, nsmall=1, big.mark=".", decimal.mark = ","), "(PCR)", substr( province,1,6))),
       nudge_x = 4, # adjust the starting y position of the text label
+      size=5,
+      hjust=0,
+      family = "Roboto Condensed",
+      direction="y",
+      segment.size = 0.1,
+      segment.color="#777777"
+    )
+  }
+  if (  prov=="Galicia"  ) {
+    the_province  <- the_province + geom_text_repel(
+      data = data_cases_sp_provinces %>% filter( province == "Coruña, A" | province == "Lugo" |province == "Ourense" |province == "Pontevedra") %>% group_by(province) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date),
+      aes(date, daily_cases_avg7, color=province,
+          label=paste(format(daily_cases_avg7, nsmall=1, big.mark=".", decimal.mark = ","), "", substr( province,1,6))),
+      nudge_x = 2, # adjust the starting y position of the text label
       size=5,
       hjust=0,
       family = "Roboto Condensed",
