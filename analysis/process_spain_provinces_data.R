@@ -332,7 +332,7 @@ data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique =
 # País Vasco --------------
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=pais-vasco", 
               "data/original/spain/euskadi/pais-vasco.csv")
-euskadi <- read.delim("data/original/spain/euskadi/pais-vasco.csv", sep=",")
+euskadi <- read.delim("data/original/spain/euskadi/pais-vasco.csv", sep=",") %>% select(-PCR_diario_residencia_fuera_de_euskadi)
 
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,euskadi) 
 
