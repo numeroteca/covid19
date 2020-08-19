@@ -1108,3 +1108,140 @@ osi %>% # filter( name %in% municipios_top$name) %>%
        caption = caption_provincia)
 dev.off()
 
+
+# Casos de no residentes en Euskadi ----------
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=pais-vasco", 
+              "data/original/spain/euskadi/pais-vasco.csv")
+euskadi <- read.delim("data/original/spain/euskadi/pais-vasco.csv", sep=",")
+otros <- euskadi %>% filter( province == "Araba/Álava" & !is.na(PCR_diario_residencia_fuera_de_euskadi)) %>% 
+  select(date,PCR_diario_residencia_fuera_de_euskadi) %>% mutate(
+    province = "Residentes fuera de Euskadi",
+    ccaa = "País Vasco"
+  ) %>% rename(
+    PCR = PCR_diario_residencia_fuera_de_euskadi
+  ) %>% mutate(
+    new_cases = NA,
+    TestAc = NA,
+    activos = NA,
+    hospitalized = NA,
+    intensive_care = NA,
+    deceased = NA,
+    cases_accumulated = NA,
+    cases_accumulated_PCR = NA,
+    recovered = NA,
+    source_name = NA,
+    source = NA,
+    comments = NA
+    ) %>% select( names(euskadi %>% select(-PCR_diario_residencia_fuera_de_euskadi)) )
+
+euskadi <- rbind (euskadi %>% select(-PCR_diario_residencia_fuera_de_euskadi),
+                  otros)
+
+# calculateaverags
+euskadi <- euskadi %>% 
+  group_by(province) %>% arrange(date) %>% 
+  mutate( 
+    cases_14days = cases_accumulated - lag(cases_accumulated,13),
+    cases_7days = cases_accumulated - lag(cases_accumulated,6),
+    cases_PCR_14days = cases_accumulated_PCR - lag(cases_accumulated_PCR,13),
+    cases_PCR_7days = cases_accumulated_PCR - lag(cases_accumulated_PCR,6),
+    daily_cases = cases_accumulated - lag(cases_accumulated),
+    daily_cases_avg7 =  round( ( daily_cases + lag(daily_cases,1)+lag(daily_cases,2)+
+                                   lag(daily_cases,3)+lag(daily_cases,4)+lag(daily_cases,5)+lag(daily_cases,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
+    daily_cases_PCR = cases_accumulated_PCR - lag(cases_accumulated_PCR),
+    daily_cases_PCR = ifelse( is.na(daily_cases_PCR), PCR, daily_cases_PCR), # inserta datos originales de PCR diarios si la diferencia del acumulado no se puede calcular
+    daily_cases_PCR_avg7 =  round( ( daily_cases_PCR + lag(daily_cases_PCR,1)+lag(daily_cases_PCR,2)+
+                                       lag(daily_cases_PCR,3)+lag(daily_cases_PCR,4) +lag(daily_cases_PCR,5) +lag(daily_cases_PCR,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
+    # daily_deaths = deceased - lag(deceased),
+    # daily_deaths_inc = round((deceased - lag(deceased)) /lag(deceased) * 100, digits = 1),
+    # daily_deaths_avg7 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+
+    #                                 lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5)+lag(daily_deaths,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
+    # deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)
+  )
+
+# Calculates averages when no enough data available-----------
+# Code provided by @picanumeros
+# Caclulates average when no values are available. Usually when in the weekends no data are available, daily_cases_PCR_avg7 can't be calculated
+# Lo que propongo es que cuando haya un hueco de varios días sin datos, el dato del primer día en el 
+# que vuelva a haber se promedie entre los días 
+# que se ha estado sin datos. Digamos que se "reparten" los casos a lo largo de los días.
+pcr_avg7 <- euskadi %>% # filter(date >= as.Date("2020-05-11")) %>%  
+  group_by(province) %>%
+  mutate(
+    dif_casos = c(NA,diff(cases_accumulated_PCR)),
+    dif_casos = ifelse( is.na(dif_casos),daily_cases_PCR,dif_casos)
+  ) %>%
+  filter(dif_casos >= 0 | !is.na(dif_casos)) %>% # filter(dif_casos < 60) %>%
+  # filter(province == "Alicante/Alacant") %>%
+  arrange(date) %>%
+  mutate(
+    fechas_dif = c(NA, diff(date)),
+    serie = dif_casos/fechas_dif,
+    daily_cases_PCR_avg7_complete = round( zoo::rollmeanr(serie, 7, na.pad = T), digits = 1))  %>%
+  select(date, ccaa, province, daily_cases_PCR, dif_casos, daily_cases_PCR_avg7, daily_cases_PCR,fechas_dif, serie, daily_cases_PCR_avg7_complete )
+
+# Add data to the source
+euskadi <- merge(
+  euskadi %>% mutate ( dunique = paste0( date, province) ),
+  pcr_avg7 %>% mutate ( dunique = paste0( date, province) ) %>% ungroup() %>% select (dunique,daily_cases_PCR_avg7_complete),
+  by.x = "dunique", by.y = "dunique", all= TRUE
+) %>% mutate (
+  daily_cases_PCR_avg7 = daily_cases_PCR_avg7_complete
+) %>% select (-daily_cases_PCR_avg7_complete,-dunique)
+# select(date, province,daily_cases_PCR,daily_cases_PCR_avg7,daily_cases_PCR_avg7_complete)
+
+euskadi <- euskadi %>% mutate(
+  date = as.character(date),
+  date = as.Date(date, "%Y-%m-%d")
+)
+
+# Loop 50 days Lin-----------------
+prov <- levels(data_cases_sp_provinces$ccaa)[18]
+  
+png(filename=paste0("img/spain/provincias/covid19_casos-por-dia-provincia-media-superpuesto-lineal-last50-media-pais.png", sep = ""),width = 1200,height = 800)
+euskadi %>% filter ( (ccaa == prov) & (date > filter_date - 50) ) %>%
+    ggplot() +
+    geom_line(aes(date, daily_cases_avg7,group=province, color=province), size= 1.5, se = FALSE, span = 0.6 ) +
+    geom_point(aes(date, daily_cases, color=province), size= 1.2, alpha = 0.5 ) +
+    geom_line(aes(date, daily_cases, color=province, group=province), size= 0.2, alpha = 0.5 ) +
+  scale_color_manual(values = colors_prov) +
+    scale_y_continuous( 
+      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+      # expand = c(0,0.2)
+    ) +
+    scale_x_date(date_breaks = "1 week", 
+                 date_labels = "%d/%m",
+                 limits=c( filter_date - 50, max(euskadi$date +16)),
+                 expand = c(0,0) 
+    ) + 
+    theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+    theme(
+      panel.grid.minor.x = element_blank(),
+      panel.grid.major.x = element_blank(),
+      # panel.grid.minor.y = element_blank(),
+      axis.ticks.x = element_line(color = "#000000"),
+      legend.position =  "none"
+    ) +
+    labs(title = paste0("Media de casos por día (media 7 días) por COVID-19 en ",prov, " ", updated ),
+         subtitle = paste0("Línea de puntos: casos PCR+, media de 7 días. Últimos 50 días. Por provincia. ",period),
+         y = "casos por día (media 7 días)",
+         x = "fecha",
+         caption = caption_provincia) + 
+      geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11")  +
+      geom_point(aes(date, daily_cases_PCR, color=province), size= 1.4, alpha = 0.7, shape= 21 ) +
+      geom_line(aes(date, daily_cases_PCR, color=province, group=province), size= 0.3, alpha = 0.5, linetype="11" ) + 
+  geom_text_repel(
+      data = euskadi %>% filter( ccaa == prov ) %>% group_by(province) %>% filter(!is.na(daily_cases_PCR_avg7) ) %>% top_n(1, date),
+      aes(date, daily_cases_PCR_avg7, color=province,
+          label=paste(format(daily_cases_PCR_avg7, nsmall=1, big.mark=".", decimal.mark = ","), "(PCR+)", province)),
+      nudge_x = 1, # adjust the starting y position of the text label
+      size=5,
+      hjust=0,
+      family = "Roboto Condensed",
+      direction="y",
+      segment.size = 0.1,
+      segment.color="#777777"
+    )
+  dev.off()
+  
+  

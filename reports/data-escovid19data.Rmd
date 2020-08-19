@@ -15,12 +15,11 @@ library(kableExtra)
 library(formattable)
 library(DT)
 library(viridis)
-today <- as.Date("2020-08-18")
 ```
 
 Un análisis automatizado de la base de datos por provincias de COVID-19 en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data
 
-El código .Rmd para generar este informe [está disponile](https://code.montera34.com:4443/numeroteca/covid19/-/blob/master/reports/data-escovid19data.Rmd).
+El código .Rmd para generar este informe [está disponile](https://code.montera34.com/numeroteca/covid19/-/blob/master/reports/data-escovid19data.Rmd).
 
 ## Navega por todos los datos
 

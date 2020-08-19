@@ -1285,7 +1285,6 @@ aragon_b <- read.delim("data/original/spain/aragon/casos_coronavirus_hospitales.
 
 # add data
 data_cases_sp_provinces <- merge(
-# zzz <- merge(
   data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ) %>% ungroup(),
   aragon_b %>% mutate ( dunique = paste0( date_ara, provincia) ) %>% ungroup() %>% select (dunique, hosp_ara, uci_ara,provincia,date_ara ) ,
   by.x = "dunique", by.y = "dunique", all = TRUE
@@ -2159,3 +2158,40 @@ rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_pobl
    andalucia_original2, andalucia2, aragon_b, baleares, catalunya_process, ceuta, ciii_original, ciii_renave,
    euskadi, melilla,rioja,valencia )
 
+# Summarise by CCAA and Spain -------------
+
+# Summarise by CCAA
+spain_ccaa <- data_cases_sp_provinces %>% group_by(date, ccaa) %>% summarise(
+  new_cases = sum(new_cases),
+  PCR = sum(PCR),
+  TestAc = sum(TestAc),
+  activos = sum(activos),
+  hospitalized = sum(hospitalized),
+  intensive_care = sum(intensive_care),
+  deceased = sum(deceased),
+  cases_accumulated = sum(cases_accumulated),
+  cases_accumulated_PCR = sum(cases_accumulated_PCR),
+  recovered = sum(recovered)
+)
+
+spain <- data_cases_sp_provinces %>% group_by(date) %>% summarise(
+  new_cases = sum(replace_na(new_cases, 0)),
+  PCR = sum(replace_na(PCR, 0)),
+  TestAc = sum(replace_na(TestAc, 0)),
+  activos = sum(replace_na(activos, 0)),
+  hospitalized = sum(replace_na(hospitalized, 0)),
+  intensive_care = sum(replace_na(intensive_care, 0)),
+  deceased = sum(replace_na(deceased, 0)),
+  cases_accumulated = sum(replace_na(cases_accumulated, 0)),
+  cases_accumulated_PCR = sum(replace_na(cases_accumulated_PCR, 0)),
+  recovered = sum(replace_na(recovered, 0))
+)
+
+# Saves data in the other repository -------------
+write.csv(spain_ccaa, file = "../escovid19data/data/output/covid19-ccaa-spain_consolidated.csv", row.names = FALSE)
+saveRDS(spain_ccaa, file = "../escovid19data/data/output/covid19-ccaa-spain_consolidated.rds")
+write.xlsx(spain_ccaa, "../escovid19data/data/output/covid19-ccaa-spain_consolidated.xlsx", colNames = TRUE)
+
+write.csv(spain, file = "../escovid19data/data/output/covid19-spain_consolidated.csv", row.names = FALSE)
+saveRDS(spain, file = "../escovid19data/data/output/covid19-spain_consolidated.rds")
+write.xlsx(spain, "../escovid19data/data/output/covid19-spain_consolidated.xlsx", colNames = TRUE)
