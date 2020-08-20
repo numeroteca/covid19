@@ -241,8 +241,8 @@ andalucia <- andalucia_original %>% filter( Territorio != "Andalucía" ) %>%
 # Initial file
 # download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=0b200bc6-3e8a-4991-a9ad-848e31c6cc69&type=3&foto=si&ejecutaDesde=&codConsulta=39464&consTipoVisua=JP",
 # then it changed to this one:
-download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=e31f8668-049c-4c17-a879-e097e9b3dfc8&type=3&foto=si&ejecutaDesde=&codConsulta=38228&consTipoVisua=JP",
-              "data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
+# download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=e31f8668-049c-4c17-a879-e097e9b3dfc8&type=3&foto=si&ejecutaDesde=&codConsulta=38228&consTipoVisua=JP",
+#               "data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
 
 andalucia_original2 <- read.delim("data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv", sep=";") %>% select(-X) %>% filter( !(Territorio  == "") )
 andalucia2 <- spread(andalucia_original2, Medida, Valor) #from long to wide format
@@ -1753,7 +1753,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
     comments )
 ) %>% select (-dunique, -hosp_ast, -uci_ast, -source_ast, -source_name_ast, -com_ast )
 
-# Catalunya deaths---------
+# Catalunya deaths and hospitalized---------
 # de la web https://analisi.transparenciacatalunya.cat/es/Salut/Dades-di-ries-de-COVID-19-per-rees-de-gesti-assist/dmzh-fz47 y 
 # a su vez de https://dadescovid.cat/descarregues?drop_es_residencia=1
 download.file("https://analisi.transparenciacatalunya.cat/api/views/dmzh-fz47/rows.csv?accessType=DOWNLOAD&bom=true&format=true&delimiter=%3B&sorting=true", 
@@ -2097,14 +2097,12 @@ data_cases_sp_provinces <- merge(
   # select(date, province,daily_cases_PCR,daily_cases_PCR_avg7,daily_cases_PCR_avg7_complete)
 
 # calculate average 7 days deaths
-deaths_avg7 <- data_cases_sp_provinces %>% # filter(date >= as.Date("2020-05-11")) %>%  
+deaths_avg7 <- data_cases_sp_provinces %>% # filter ( province == "Madrid") %>% # filter(date >= as.Date("2020-05-11")) %>%  
   group_by(province) %>%
+  filter( !is.na(deceased)) %>%
   mutate(
     dif_deaths = c(NA,diff(deceased))
-    # dif_deaths = ifelse( is.na(dif_deaths),daily_deaths,dif_deaths)
   ) %>%  #select(date, ccaa, province, deceased, dif_deaths, daily_deaths) %>%
-  filter(dif_deaths >= 0 | !is.na(dif_deaths)) %>% # filter(dif_casos < 60) %>%
-  # filter(province == "Alicante/Alacant") %>%
   arrange(date) %>%
   mutate(
     fechas_dif = c(NA, diff(date)),
@@ -2162,16 +2160,21 @@ rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_pobl
 
 # Summarise by CCAA
 spain_ccaa <- data_cases_sp_provinces %>% group_by(date, ccaa) %>% summarise(
-  new_cases = sum(new_cases),
-  PCR = sum(PCR),
-  TestAc = sum(TestAc),
-  activos = sum(activos),
-  hospitalized = sum(hospitalized),
-  intensive_care = sum(intensive_care),
-  deceased = sum(deceased),
-  cases_accumulated = sum(cases_accumulated),
-  cases_accumulated_PCR = sum(cases_accumulated_PCR),
-  recovered = sum(recovered)
+  new_cases = sum(new_cases, 0),
+  PCR = sum(PCR, 0),
+  TestAc = sum(TestAc, 0),
+  activos = sum(activos, 0),
+  hospitalized = sum(hospitalized, 0),
+  intensive_care = sum(intensive_care, 0),
+  deceased = sum(deceased, 0),
+  cases_accumulated = sum(cases_accumulated, 0),
+  cases_accumulated_PCR = sum(cases_accumulated_PCR, 0),
+  recovered = sum(recovered, 0),
+  num_casos = sum(num_casos, 0),
+  num_casos_prueba_pcr = sum(num_casos_prueba_pcr, 0),
+  num_casos_prueba_test_ac = sum(num_casos_prueba_test_ac, 0),
+  num_casos_prueba_otras = sum(num_casos_prueba_otras, 0),
+  num_casos_prueba_desconocida = sum(num_casos_prueba_desconocida, 0)
 )
 
 spain <- data_cases_sp_provinces %>% group_by(date) %>% summarise(
