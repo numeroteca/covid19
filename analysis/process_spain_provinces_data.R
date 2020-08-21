@@ -241,8 +241,8 @@ andalucia <- andalucia_original %>% filter( Territorio != "Andalucía" ) %>%
 # Initial file
 # download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=0b200bc6-3e8a-4991-a9ad-848e31c6cc69&type=3&foto=si&ejecutaDesde=&codConsulta=39464&consTipoVisua=JP",
 # then it changed to this one:
-# download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=e31f8668-049c-4c17-a879-e097e9b3dfc8&type=3&foto=si&ejecutaDesde=&codConsulta=38228&consTipoVisua=JP",
-#               "data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
+download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=e31f8668-049c-4c17-a879-e097e9b3dfc8&type=3&foto=si&ejecutaDesde=&codConsulta=38228&consTipoVisua=JP",
+              "data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
 
 andalucia_original2 <- read.delim("data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv", sep=";") %>% select(-X) %>% filter( !(Territorio  == "") )
 andalucia2 <- spread(andalucia_original2, Medida, Valor) #from long to wide format
@@ -300,7 +300,6 @@ andalucia_hosp <- andalucia_hosp %>%
   )
 
 data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ) %>% ungroup(),
-# zzz <- merge( data_cases_sp_provinces %>% select( names(read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")) ) %>% mutate ( dunique = paste0( date, province) ) %>% ungroup(),
               andalucia_hosp  %>% mutate ( dunique = paste0( date_and, province_and) ) %>% ungroup() %>% 
                                     select(dunique, date_and, ccaa_and, province_and, hospitalized_and, intensive_care_and, source_name_and, comments_and, source_and) , 
                                   by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique) %>% mutate(
