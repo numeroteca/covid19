@@ -384,7 +384,7 @@ euskadi_total <- euskadi_total %>% group_by(hospital) %>% arrange(date) %>%  mut
 
 
 max_date  <- max(euskadi_total$date)
-period_eus <- paste("Actualizado:", max_date)
+period_eus <- paste("Última fecha:", max_date)
 
 # Plots ----------------
 png(filename=paste0("img/spain/euskadi/covid19_hosp-por-dia-hospital-media-superpuesto-lineal_media-pais-vasco.png", sep = ""),width = 1200,height = 800)
@@ -726,7 +726,7 @@ saveRDS(municipios, file = "data/output/spain/euskadi/zonas-de-salud-casos-diari
 write.csv(municipios, file = "data/output/spain/euskadi/zonas-de-salud-casos-diarios.csv", row.names = FALSE)
 
 # municipios with average more than 1 per day
-municipios_top <- municipios %>% top_n(1, date) %>% filter (daily_cases_avg7 > 1 ) %>% select (name)
+municipios_top <- municipios %>% top_n(1, date) %>% filter (daily_cases_avg7 > 2 ) %>% select (name)
 
 
 # zonas superpuestas ---------
@@ -928,7 +928,7 @@ municipios %>% filter( name %in% municipios_top$name) %>%
     legend.position =  "top"
   ) +
   labs(title = paste0("Casos PCR+ por COVID-19 por zonas de salud por día en Euskadi" ),
-       subtitle = paste0("Media: ventana de 7 días. Zonas de salud con media mayor que 1. ",period_eus),
+       subtitle = paste0("Media: ventana de 7 días. Zonas de salud con media mayor que 2. ",period_eus),
        y = "casos por día",
        x = "fecha",
        fill = "casos por dia",
@@ -963,7 +963,7 @@ municipios %>% filter( name %in% municipios_top$name) %>%
     legend.position =  "top"
   ) +
   labs(title = paste0("Casos PCR+ por COVID-19 por zonas de salud por día en Euskadi" ),
-       subtitle = paste0("Media: ventana de 7 días. Zonas de salud con media mayor que 1. ",period_eus),
+       subtitle = paste0("Media: ventana de 7 días. Zonas de salud con media mayor que 2. ",period_eus),
        y = "casos por día",
        x = "fecha",
        fill = "casos por dia",
@@ -1110,6 +1110,17 @@ dev.off()
 
 
 # Casos de no residentes en Euskadi ----------
+# Set colors ---------
+# extends color paletter
+library(RColorBrewer)
+# creates extended color palette https://www.r-bloggers.com/how-to-expand-color-palette-with-ggplot-and-rcolorbrewer/
+colourCount <- length(unique(data_cases_sp_provinces$ccaa))
+getPalette <- colorRampPalette(brewer.pal(9, "Set1"))
+colors_prov <- getPalette(colourCount )
+# Change yellow to blue
+colors_prov[1] <- "#a60000"
+colors_prov[12] <- "#84d3e7"
+
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=pais-vasco", 
               "data/original/spain/euskadi/pais-vasco.csv")
 euskadi <- read.delim("data/original/spain/euskadi/pais-vasco.csv", sep=",")
@@ -1159,7 +1170,7 @@ euskadi <- euskadi %>%
     # deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)
   )
 
-# Calculates averages when no enough data available-----------
+# Calculates averages when no enough data available -/////////////
 # Code provided by @picanumeros
 # Caclulates average when no values are available. Usually when in the weekends no data are available, daily_cases_PCR_avg7 can't be calculated
 # Lo que propongo es que cuando haya un hueco de varios días sin datos, el dato del primer día en el 
@@ -1195,7 +1206,7 @@ euskadi <- euskadi %>% mutate(
   date = as.Date(date, "%Y-%m-%d")
 )
 
-# Loop 50 days Lin-----------------
+# Loop 50 days Lin 
 prov <- levels(data_cases_sp_provinces$ccaa)[18]
   
 png(filename=paste0("img/spain/provincias/covid19_casos-por-dia-provincia-media-superpuesto-lineal-last50-media-pais.png", sep = ""),width = 1200,height = 800)
