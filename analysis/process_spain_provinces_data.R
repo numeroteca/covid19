@@ -1592,6 +1592,7 @@ data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique =
 # download.file("https://serviweb.scsalud.es:10443/ficheros/COVID19_historico.csv", 
 #               "data/original/spain/cantabria/COVID19_historico.csv")
 
+# get Cantabria data and change the name variables
 cantabria <- read.delim("data/original/spain/cantabria/COVID19_historico.csv",sep = ";") %>% mutate(
   date = as.Date(as.character(FECHA), "%d/%m/%Y"),
   cases_accumulated_PCR_can = cumsum(CASOS.NUEVOS.PCR.) # TODO: calculates cumulative value, it's not original data
@@ -1603,7 +1604,7 @@ cantabria <- read.delim("data/original/spain/cantabria/COVID19_historico.csv",se
   recovered_can = RECUPERADOS
 ) %>% select(cases_accumulated_PCR_can,everything() )
 
-# add Cantabria data
+# add Cantabria data to the existing dataset by merge
 data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0(province,date) ),
                 cantabria %>% mutate( dunique = paste0("Cantabria",date)) %>% select( dunique, cases_accumulated_can, PCR_can,
                                                                                       hospitalized_can, deceased_can, recovered_can,cases_accumulated_PCR_can),
@@ -1619,9 +1620,11 @@ data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique =
                   source =  ifelse(province == "Cantabria", paste0(source,";https://serviweb.scsalud.es:10443/ficheros/COVID19_historico.csv;https://www.scsalud.es/coronavirus"), source),
                 )
 
+# filter Cantabria data and only get the ones after 2020-07-19
 cantabria <- cantabria %>% filter (date > as.Date("2020-07-19")) %>% rename(
   PCR = PCR_can,
   cases_accumulated = cases_accumulated_can,
+  cases_accumulated_PCR = cases_accumulated_PCR_can,
   deceased = deceased_can,
   recovered = recovered_can,
   hospitalized = hospitalized_can
@@ -1631,11 +1634,11 @@ cantabria <- cantabria %>% filter (date > as.Date("2020-07-19")) %>% rename(
   new_cases = NA,
   TestAc = NA,
   activos = NA,
-  cases_accumulated_PCR = NA,
+  # cases_accumulated_PCR = NA,
   intensive_care = NA,
   recovered = NA,
   source_name = "Servicio Cántabro de Salud",
-  source = "https://github.com/lipido/galicia-covid19/blob/master/ferrol.csv;https://github.com/lipido/galicia-covid19/blob/master/ferrol.ext.csv",
+  source = "https://serviweb.scsalud.es:10443/ficheros/COVID19_historico.csv",
   comments = NA
 ) %>% select(names(data_cases_sp_provinces)  )
 
@@ -2028,6 +2031,8 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
                                    lag(daily_cases,3)+lag(daily_cases,4)+lag(daily_cases,5)+lag(daily_cases,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
     daily_cases_PCR = cases_accumulated_PCR - lag(cases_accumulated_PCR),
     daily_cases_PCR = ifelse( is.na(daily_cases_PCR), PCR, daily_cases_PCR), # inserta datos originales de PCR diarios si la diferencia del acumulado no se puede calcular
+    # convert caes to PCR in Galicia from 2020/05/25. @lipido informs
+    daily_cases_PCR = ifelse( (date > as.Date("2020-05-25")) & (ccaa=="Galicia"), daily_cases, daily_cases_PCR ),
     daily_cases_PCR_avg7 =  round( ( daily_cases_PCR + lag(daily_cases_PCR,1)+lag(daily_cases_PCR,2)+
                                        lag(daily_cases_PCR,3)+lag(daily_cases_PCR,4) +lag(daily_cases_PCR,5) +lag(daily_cases_PCR,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
     daily_deaths = deceased - lag(deceased),
@@ -2043,8 +2048,8 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
     deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)
     # hospitalized_avg7 =  round( ( hospitalized + lag(hospitalized,1)+lag(hospitalized,2)+
     #                                 lag(hospitalized,3)+lag(hospitalized,4)+lag(hospitalized,5)+lag(hospitalized,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
-    
   )
+
 
 # zzz <- data_cases_sp_provinces %>% group_by(province) %>%
 #   mutate(dif_casos = c(NA,diff(cases_accumulated_PCR))) %>%
@@ -2164,9 +2169,28 @@ to_agreggate <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date)
   deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
   deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
   deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
-  deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased)
+  deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
+  deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
+  deceased_fix = ifelse( is.na(deceased), lag(deceased, 1), deceased),
+  deceased = deceased_fix,
+  
+  cases_accumulated_PCR = ifelse( is.na(cases_accumulated_PCR), lag(cases_accumulated_PCR, 1), cases_accumulated_PCR),
+  cases_accumulated_PCR = ifelse( is.na(cases_accumulated_PCR), lag(cases_accumulated_PCR, 1), cases_accumulated_PCR),
+  cases_accumulated_PCR = ifelse( is.na(cases_accumulated_PCR), lag(cases_accumulated_PCR, 1), cases_accumulated_PCR),
+  cases_accumulated_PCR = ifelse( is.na(cases_accumulated_PCR), lag(cases_accumulated_PCR, 1), cases_accumulated_PCR),
+  cases_accumulated_PCR = ifelse( is.na(cases_accumulated_PCR), lag(cases_accumulated_PCR, 1), cases_accumulated_PCR),
+  cases_accumulated_PCR_fix = ifelse( is.na(cases_accumulated_PCR), lag(cases_accumulated_PCR, 1), cases_accumulated_PCR),
+  cases_accumulated_PCR = cases_accumulated_PCR_fix,
+  
+  hospitalized = ifelse( is.na(hospitalized), lag(hospitalized, 1), hospitalized),
+  hospitalized = ifelse( is.na(hospitalized), lag(hospitalized, 1), hospitalized),
+  hospitalized = ifelse( is.na(hospitalized), lag(hospitalized, 1), hospitalized),
+  hospitalized = ifelse( is.na(hospitalized), lag(hospitalized, 1), hospitalized),
+  hospitalized = ifelse( is.na(hospitalized), lag(hospitalized, 1), hospitalized),
+  hospitalized_fix = ifelse( is.na(hospitalized), lag(hospitalized, 1), hospitalized),
+  hospitalized = hospitalized_fix
   # deceased_lag = lag(deceased, 1)
-) # %>% select(date, province, deceased, deceased_lag)
+) # %>% select(date, province, deceased, deceased_fix)
 
 # Summarise by CCAA
 spain_ccaa <- to_agreggate %>% group_by(date, ccaa) %>% summarise(
