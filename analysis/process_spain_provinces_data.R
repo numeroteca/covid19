@@ -2155,10 +2155,21 @@ rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_pobl
    andalucia_original2, andalucia2, aragon_b, baleares, catalunya_process, ceuta, ciii_original, ciii_renave,
    euskadi, melilla,rioja,valencia )
 
+
+
 # Summarise by CCAA and Spain -------------
+# data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate (
+to_agreggate <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date) %>% mutate (
+  # deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
+  deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
+  deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
+  deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
+  deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased)
+  # deceased_lag = lag(deceased, 1)
+) # %>% select(date, province, deceased, deceased_lag)
 
 # Summarise by CCAA
-spain_ccaa <- data_cases_sp_provinces %>% group_by(date, ccaa) %>% summarise(
+spain_ccaa <- to_agreggate %>% group_by(date, ccaa) %>% summarise(
   new_cases = sum(new_cases, 0),
   PCR = sum(PCR, 0),
   TestAc = sum(TestAc, 0),
@@ -2176,24 +2187,75 @@ spain_ccaa <- data_cases_sp_provinces %>% group_by(date, ccaa) %>% summarise(
   num_casos_prueba_desconocida = sum(num_casos_prueba_desconocida, 0)
 )
 
-spain <- data_cases_sp_provinces %>% group_by(date) %>% summarise(
+spain_ccaa <- spain_ccaa %>% group_by(ccaa) %>% arrange(date) %>% 
+  mutate( 
+    cases_14days = cases_accumulated - lag(cases_accumulated,13),
+    cases_7days = cases_accumulated - lag(cases_accumulated,6),
+    cases_PCR_14days = cases_accumulated_PCR - lag(cases_accumulated_PCR,13),
+    cases_PCR_7days = cases_accumulated_PCR - lag(cases_accumulated_PCR,6),
+    daily_cases = cases_accumulated - lag(cases_accumulated),
+    daily_cases_avg7 =  round( ( daily_cases + lag(daily_cases,1)+lag(daily_cases,2)+
+                                   lag(daily_cases,3)+lag(daily_cases,4)+lag(daily_cases,5)+lag(daily_cases,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
+    daily_cases_PCR = cases_accumulated_PCR - lag(cases_accumulated_PCR),
+    daily_cases_PCR = ifelse( is.na(daily_cases_PCR), PCR, daily_cases_PCR), # inserta datos originales de PCR diarios si la diferencia del acumulado no se puede calcular
+    daily_cases_PCR_avg7 =  round( ( daily_cases_PCR + lag(daily_cases_PCR,1)+lag(daily_cases_PCR,2)+
+                                       lag(daily_cases_PCR,3)+lag(daily_cases_PCR,4) +lag(daily_cases_PCR,5) +lag(daily_cases_PCR,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
+    daily_deaths = deceased - lag(deceased),
+    daily_deaths_inc = round((deceased - lag(deceased)) /lag(deceased) * 100, digits = 1),
+    daily_deaths_avg3 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2) ) / 3, digits = 1 ), # average of daily deaths of 3 last days
+    daily_deaths_avg7 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+
+                                    lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5)+lag(daily_deaths,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
+    deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)
+  )
+
+
+# Aggregate by Spain. Max level:
+spain <- to_agreggate %>% group_by(date,province) %>% mutate (
+  deceased = ifelse( is.na(deceased), lag(deceased,1),deceased)
+  )  %>% group_by(date) %>% summarise(
   new_cases = sum(replace_na(new_cases, 0)),
   PCR = sum(replace_na(PCR, 0)),
   TestAc = sum(replace_na(TestAc, 0)),
   activos = sum(replace_na(activos, 0)),
   hospitalized = sum(replace_na(hospitalized, 0)),
   intensive_care = sum(replace_na(intensive_care, 0)),
-  deceased = sum(replace_na(deceased, 0)),
+  deceased = sum( replace_na(deceased, 0)),
   cases_accumulated = sum(replace_na(cases_accumulated, 0)),
   cases_accumulated_PCR = sum(replace_na(cases_accumulated_PCR, 0)),
   recovered = sum(replace_na(recovered, 0))
 )
 
+spain <- spain %>% arrange(date) %>% 
+  mutate( 
+    cases_14days = cases_accumulated - lag(cases_accumulated,13),
+    cases_7days = cases_accumulated - lag(cases_accumulated,6),
+    cases_PCR_14days = cases_accumulated_PCR - lag(cases_accumulated_PCR,13),
+    cases_PCR_7days = cases_accumulated_PCR - lag(cases_accumulated_PCR,6),
+    daily_cases = cases_accumulated - lag(cases_accumulated),
+    daily_cases_avg7 =  round( ( daily_cases + lag(daily_cases,1)+lag(daily_cases,2)+
+                                   lag(daily_cases,3)+lag(daily_cases,4)+lag(daily_cases,5)+lag(daily_cases,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
+    daily_cases_PCR = cases_accumulated_PCR - lag(cases_accumulated_PCR),
+    daily_cases_PCR = ifelse( is.na(daily_cases_PCR), PCR, daily_cases_PCR), # inserta datos originales de PCR diarios si la diferencia del acumulado no se puede calcular
+    daily_cases_PCR_avg7 =  round( ( daily_cases_PCR + lag(daily_cases_PCR,1)+lag(daily_cases_PCR,2)+
+                                       lag(daily_cases_PCR,3)+lag(daily_cases_PCR,4) +lag(daily_cases_PCR,5) +lag(daily_cases_PCR,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
+    daily_deaths = deceased - lag(deceased),
+    daily_deaths_inc = round((deceased - lag(deceased)) /lag(deceased) * 100, digits = 1),
+    daily_deaths_avg3 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2) ) / 3, digits = 1 ), # average of daily deaths of 3 last days
+    daily_deaths_avg7 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+
+                                    lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5)+lag(daily_deaths,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
+    deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)
+  )
+
 # Saves data in the other repository -------------
 write.csv(spain_ccaa, file = "../escovid19data/data/output/covid19-ccaa-spain_consolidated.csv", row.names = FALSE)
+write.csv(spain_ccaa, file = "data/output/spain/covid19-ccaa-spain_consolidated.csv", row.names = FALSE)
 saveRDS(spain_ccaa, file = "../escovid19data/data/output/covid19-ccaa-spain_consolidated.rds")
+saveRDS(spain_ccaa, file = "data/output/spain/covid19-ccaa-spain_consolidated.rds")
 write.xlsx(spain_ccaa, "../escovid19data/data/output/covid19-ccaa-spain_consolidated.xlsx", colNames = TRUE)
 
 write.csv(spain, file = "../escovid19data/data/output/covid19-spain_consolidated.csv", row.names = FALSE)
+write.csv(spain, file = "data/output/spain/covid19-spain_consolidated.csv", row.names = FALSE)
 saveRDS(spain, file = "../escovid19data/data/output/covid19-spain_consolidated.rds")
+saveRDS(spain, file = "data/output/spain/covid19-spain_consolidated.rds")
 write.xlsx(spain, "../escovid19data/data/output/covid19-spain_consolidated.xlsx", colNames = TRUE)
+
