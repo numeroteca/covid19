@@ -1,0 +1,242 @@
+
+
+
+# 13. Todos los datos juntos ------------
+# Calcula máximos
+maxs <- data_cases_sp_provinces %>% group_by(province) %>% 
+  filter( date > filter_date -40 ) %>%
+  # filter( date > as.Date("2020-03-01") & date < as.Date("2020-05-30") ) %>% 
+  summarise(
+    max_daily_cases_PCR_avg7 = max(replace_na(daily_cases_PCR_avg7,0)),
+    max_hospitalized = max(replace_na(hospitalized,0)),
+    max_intensive_care = max(replace_na(intensive_care,0)),
+    max_daily_deaths_avg7 = max(replace_na(daily_deaths_avg7,0)),
+  )
+
+all <- merge (data_cases_sp_provinces,
+              maxs,
+              by.x = "province", by.y = "province")
+
+
+png(filename=paste("img/spain/experiments/covid19_todo-junto-provincia-lineal.png", sep = ""),width = 1500,height = 1000)
+data_cases_sp_provinces %>% filter( ! ccaa %in% noprevalentes ) %>% filter( date > filter_date -50 ) %>%
+  ggplot() +
+  geom_line(aes(date, daily_cases_PCR_avg7,group=province, color="green"), size=0.8 ) +
+  geom_line(aes(date, hospitalized*10,group=province, color="pink"), size=0.8 ) +
+  geom_line(aes(date, intensive_care*50,group=province, color= "grey"), size=0.8 ) +
+  geom_line(aes(date, daily_deaths_avg7*100,group=province, color= "red"), size=0.8 ) +
+  scale_color_identity(
+    guide = "legend",
+    labels = c("casos","Hospitalizados","UCI","fallecidos"),
+  ) +
+  expand_limits(y = 0) +
+  facet_wrap(~province, scales = "free_y") +
+  scale_y_continuous(
+    # limits = c(0,max(data_cases_sp_provincesX$cases_accumulated) ),
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  scale_x_date(date_breaks = "1 month", 
+               date_labels = "%m",
+               limits=c( filter_date -50, max(data_cases_sp_provinces$date)),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 20) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = "top",
+    axis.text.x = element_text(size = 10)
+  ) +
+  labs(title = paste0("Hospitalizados y UCI por COVID-19 en España ", updated ),
+       subtitle = paste0("Por provincia (escala lineal). ",period),
+       y = "",
+       x = "fecha (mes) 2020",
+       color = "",
+       caption = caption_provincia)
+dev.off()
+
+for (i in 1:4) {
+  png(filename=paste("img/spain/experiments/covid19_todo-junto-provincia-lineal_norm-",i,".png", sep = ""),width = 1200,height = 800)
+  the_plot <- all %>% filter( ! ccaa %in% noprevalentes ) %>% 
+    filter( date > filter_date - 40 ) %>%
+    # filter( date > as.Date("2020-03-01") & date < as.Date("2020-05-30") ) %>% 
+    # filter( max_daily_cases_PCR_avg7 > 50) %>%
+    filter( max_daily_cases_PCR_avg7 > 40) %>%
+    # filter( max_daily_deaths_avg7 > 1) %>%
+    ggplot() 
+  if( i == 1) {
+    the_plot <- the_plot + geom_line(aes(date, daily_cases_PCR_avg7 / max_daily_cases_PCR_avg7 *100,group=province, color="#5b5bbb"), size=0.8 ) +
+      scale_color_identity(
+        guide = "legend",
+        # labels = c("z casos","Hospitalizados","UCI","fallecidos"),
+        # labels = c("Casos PCR+","fallecidos","UCI","Hospitalizados"),
+        labels = c("Casos PCR+")
+      ) 
+  }
+  if( i == 2) {
+    the_plot <- the_plot + geom_line(aes(date, daily_cases_PCR_avg7 / max_daily_cases_PCR_avg7 *100,group=province, color="#5b5bbb"), size=0.8 ) +
+      geom_line(aes(date, hospitalized / max_hospitalized *100, group=province, color="violet"), size=0.8 ) +
+      scale_color_identity(
+        guide = "legend",
+        labels = c("Casos PCR+","Hospitalizados"), )
+  }
+  if( i == 3) {
+    the_plot <- the_plot + geom_line(aes(date, daily_cases_PCR_avg7 / max_daily_cases_PCR_avg7 *100,group=province, color="#5b5bbb"), size=0.8 ) +
+      geom_line(aes(date, hospitalized / max_hospitalized *100, group=province, color="violet"), size=0.8 ) +
+      geom_line(aes(date, intensive_care / max_intensive_care *100 ,group=province, color= "red"), size=0.8 ) +
+      scale_color_identity(
+        guide = "legend",
+        labels = c("Casos PCR+","UCI","Hospitalizados"), )
+  }
+  if( i == 4) {
+    the_plot <- the_plot + geom_line(aes(date, daily_cases_PCR_avg7 / max_daily_cases_PCR_avg7 *100,group=province, color="#5b5bbb"), size=0.8 ) +
+      # geom_line(aes(date, hospitalized / max_hospitalized *100, group=province, color="violet"), size=0.8 ) +
+      # geom_line(aes(date, intensive_care / max_intensive_care *100 ,group=province, color= "red"), size=0.8 ) +
+      geom_line(aes(date, daily_deaths_avg7 / max_daily_deaths_avg7 *100, group=province, color= "black"), size=0.8 ) +
+      scale_color_identity(
+        guide = "legend",
+        labels = c("Casos PCR+","Fallecidos"), )
+  }
+  
+  the_plot <- the_plot +
+    expand_limits(y = 0) +
+    facet_wrap(~province) +
+    coord_cartesian(
+      ylim = c(0,100)
+    ) +
+    scale_y_continuous(
+      # limits = c(0,max(data_cases_sp_provincesX$cases_accumulated) ),
+      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+    scale_x_date(date_breaks = "1 week", 
+                 date_labels = "%d/%m",
+                 limits=c( filter_date -40, max(data_cases_sp_provinces$date)),
+                 # limits=c( as.Date("2020-03-01"), as.Date("2020-05-30")),
+                 expand = c(0,0) 
+    ) + 
+    theme_minimal(base_family = "Roboto Condensed",base_size = 20) +
+    theme(
+      panel.grid.minor.x = element_blank(),
+      panel.grid.major.x = element_blank(),
+      panel.grid.major.y = element_blank(),
+      panel.grid.minor.y = element_blank(),
+      axis.ticks.x = element_line(color = "#000000"),
+      legend.position = "top",
+      axis.text.x = element_text(size = 11)
+    ) +
+    labs(title = paste0("Casos PCR+, Hospitalizados, UCI, Fallecidos diaros por COVID-19 en España ", updated ),
+         subtitle = paste0("Valores normalizados de 0 a 100 en el periodo analizado. ",period),
+         y = "valores normalizados de 0 a 100",
+         x = "2020",
+         color = "",
+         caption = caption_provincia)
+  
+  print(the_plot)
+  dev.off()
+}
+
+# 14. Experimentos -----------------
+data_cases_sp_provinces$weekday <- weekdays(data_cases_sp_provinces$date)
+
+data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
+                                                                                      "sábado","domingo" ) )
+
+png(filename=paste0("tmp/euskadi-experimento.png", sep = ""),width = 1000,height = 700)
+data_cases_sp_provinces %>% filter ( (ccaa == "País Vasco" ) & (date > filter_date - 50) ) %>%
+  ggplot() +
+  geom_line(aes(date, daily_cases_PCR, group=weekday, color=weekday), size= 1) +
+  geom_point(aes(date, daily_cases_PCR, color=weekday), size= 1.5 ) +
+  facet_wrap( ~province, scales = "free_y") +
+  geom_text_repel(
+    data = data_cases_sp_provinces %>% filter( ccaa == prov ) %>% group_by(weekday) %>% filter(!is.na(daily_cases_PCR) ) %>% top_n(1, date),
+    aes(date, daily_cases_PCR, color=weekday,
+        label=paste(weekday)),
+    nudge_x = 1, # adjust the starting y position of the text label
+    size=5,
+    hjust=0,
+    family = "Roboto Condensed",
+    direction="y",
+    segment.size = 0.1,
+    segment.color="#777777"
+  ) +
+  # scale_color_manual(values = colors_prov) +
+  scale_y_continuous( 
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+    # expand = c(0,0.2)
+  ) +
+  scale_x_date(date_breaks = "2 week", 
+               date_labels = "%d/%m",
+               limits=c( filter_date - 50, max(data_cases_sp_provinces$date) + 10),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 19) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "top"
+  ) +
+  labs(title = paste0("Casos notificados por día de la semana. COVID-19 en ",prov, " ", updated ),
+       subtitle = paste0("Últimos 50 días. Por provincia. ",period),
+       y = "casos PCR+ por día",
+       x = "fecha",
+       color = "Día de la semana",
+       caption = caption_provincia) 
+# + 
+#       geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11")  +
+#       geom_point(aes(date, daily_cases_PCR, color=province), size= 1.4, alpha = 0.7, shape= 21 ) +
+#       geom_line(aes(date, daily_cases_PCR, color=province, group=province), size= 0.3, alpha = 0.5, linetype="11" ) + 
+#       geom_col(aes(date, daily_cases_PCR, fill=province), width=1, alpha = 0.3) +
+#       # TODO: add numer to column
+#       # geom_text(aes(date, daily_cases_PCR, label=daily_cases_PCR, color=province ), alpha = 1, vjuszt = 1, size=4, color="white" ) +
+#       # quito la línea de casos
+#       # geom_line(aes(date, daily_cases_avg7,group=province, color=province), size= 1.5, se = FALSE, span = 0.6 ) +
+#       geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11") 
+
+dev.off()
+
+png(filename=paste0("tmp/madrid-experimento.png", sep = ""),width = 1000,height = 700)
+data_cases_sp_provinces %>% filter ( (ccaa == "Madrid, Comunidad de" ) & (date > filter_date - 50) ) %>%
+  ggplot() +
+  geom_line(aes(date, daily_cases_PCR, group=weekday, color=weekday), size= 1) +
+  geom_point(aes(date, daily_cases_PCR, color=weekday), size= 1.5 ) +
+  facet_wrap( ~province, scales = "free_y") +
+  geom_text_repel(
+    data = data_cases_sp_provinces %>% filter( ccaa == "Madrid, Comunidad de" ) %>% group_by(weekday) %>% filter(!is.na(daily_cases_PCR) ) %>% top_n(1, date),
+    aes(date, daily_cases_PCR, color=weekday,
+        label=paste(weekday)),
+    nudge_x = 1, # adjust the starting y position of the text label
+    size=5,
+    hjust=0,
+    family = "Roboto Condensed",
+    direction="y",
+    segment.size = 0.1,
+    segment.color="#777777"
+  ) +
+  # scale_color_manual(values = colors_prov) +
+  scale_y_continuous( 
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+    # expand = c(0,0.2)
+  ) +
+  scale_x_date(date_breaks = "2 week", 
+               date_labels = "%d/%m",
+               limits=c( filter_date - 50, max(data_cases_sp_provinces$date) + 10),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 19) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "top"
+  ) +
+  labs(title = paste0("Casos notificados por día de la semana. COVID-19 en C. de Madrid", " ", updated ),
+       subtitle = paste0("Últimos 50 días. Por provincia. ",period),
+       y = "casos PCR+ por día",
+       x = "fecha",
+       color = "Día de la semana",
+       caption = caption_provincia) 
+
+dev.off()
