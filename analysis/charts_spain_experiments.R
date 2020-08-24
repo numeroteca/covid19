@@ -1,6 +1,4 @@
 
-
-
 # 13. Todos los datos juntos ------------
 # Calcula máximos
 maxs <- data_cases_sp_provinces %>% group_by(province) %>% 
@@ -141,7 +139,7 @@ data_cases_sp_provinces$weekday <- weekdays(data_cases_sp_provinces$date)
 data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
                                                                                       "sábado","domingo" ) )
 
-png(filename=paste0("tmp/euskadi-experimento.png", sep = ""),width = 1000,height = 700)
+png(filename=paste0("img/spain/experiments/euskadi-experimento.png", sep = ""),width = 1000,height = 700)
 data_cases_sp_provinces %>% filter ( (ccaa == "País Vasco" ) & (date > filter_date - 50) ) %>%
   ggplot() +
   geom_line(aes(date, daily_cases_PCR, group=weekday, color=weekday), size= 1) +
@@ -196,7 +194,7 @@ data_cases_sp_provinces %>% filter ( (ccaa == "País Vasco" ) & (date > filter_d
 
 dev.off()
 
-png(filename=paste0("tmp/madrid-experimento.png", sep = ""),width = 1000,height = 700)
+png(filename=paste0("img/spain/experiments/madrid-experimento.png", sep = ""),width = 1000,height = 700)
 data_cases_sp_provinces %>% filter ( (ccaa == "Madrid, Comunidad de" ) & (date > filter_date - 50) ) %>%
   ggplot() +
   geom_line(aes(date, daily_cases_PCR, group=weekday, color=weekday), size= 1) +
@@ -233,6 +231,50 @@ data_cases_sp_provinces %>% filter ( (ccaa == "Madrid, Comunidad de" ) & (date >
     legend.position =  "top"
   ) +
   labs(title = paste0("Casos notificados por día de la semana. COVID-19 en C. de Madrid", " ", updated ),
+       subtitle = paste0("Últimos 50 días. Por provincia. ",period),
+       y = "casos PCR+ por día",
+       x = "fecha",
+       color = "Día de la semana",
+       caption = caption_provincia) 
+dev.off()
+
+png(filename=paste0("img/spain/experiments/barcelona-experimento.png", sep = ""),width = 1000,height = 700)
+data_cases_sp_provinces %>% filter ( (province == "Barcelona" ) & (date > filter_date - 50) ) %>%
+  ggplot() +
+  geom_line(aes(date, daily_cases_PCR, group=weekday, color=weekday), size= 1) +
+  geom_point(aes(date, daily_cases_PCR, color=weekday), size= 1.5 ) +
+  facet_wrap( ~province, scales = "free_y") +
+  geom_text_repel(
+    data = data_cases_sp_provinces %>% filter( province == "Barcelona" ) %>% group_by(weekday) %>% filter(!is.na(daily_cases_PCR) ) %>% top_n(1, date),
+    aes(date, daily_cases_PCR, color=weekday,
+        label=paste(weekday)),
+    nudge_x = 1, # adjust the starting y position of the text label
+    size=5,
+    hjust=0,
+    family = "Roboto Condensed",
+    direction="y",
+    segment.size = 0.1,
+    segment.color="#777777"
+  ) +
+  # scale_color_manual(values = colors_prov) +
+  scale_y_continuous( 
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+    # expand = c(0,0.2)
+  ) +
+  scale_x_date(date_breaks = "2 week", 
+               date_labels = "%d/%m",
+               limits=c( filter_date - 50, max(data_cases_sp_provinces$date) + 10),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 19) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "top"
+  ) +
+  labs(title = paste0("Casos notificados por día de la semana. COVID-19 en ",prov, " ", updated ),
        subtitle = paste0("Últimos 50 días. Por provincia. ",period),
        y = "casos PCR+ por día",
        x = "fecha",

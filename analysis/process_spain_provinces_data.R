@@ -32,12 +32,43 @@ data_cases_sp_provinces <- read.delim("data/original/spain/covid19_spain_provinc
 data_cases_sp_provinces$date  <- as.Date(data_cases_sp_provinces$date)
 names_original <- names(data_cases_sp_provinces)
 
+# Aragón --------------
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=ARA", 
+              "data/original/spain/aragon/aragon.csv")
+aragon <- read.delim("data/original/spain/aragon/aragon.csv",sep = ",") %>% mutate (
+  date = as.Date( as.character(date))
+) %>% select(names(data_cases_sp_provinces))
+
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces, aragon)
+
+# Castilla - La Mancha --------------
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=CLM", 
+              "data/original/spain/castilla-la-mancha/castilla-la-mancha.csv")
+clm <- read.delim("data/original/spain/castilla-la-mancha/castilla-la-mancha.csv",sep = ",") %>% mutate (
+  date = as.Date( as.character(date))
+) %>% select(names(data_cases_sp_provinces))
+
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces, clm)
+
+# Extremadura --------------
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=EXT", 
+              "data/original/spain/extremadura/extremadura.csv")
+extremadura <- read.delim("data/original/spain/extremadura/extremadura.csv",sep = ",") %>% mutate (
+  date = as.Date( as.character(date))
+) %>% select(names(data_cases_sp_provinces))
+
+data_cases_sp_provinces <- rbind(data_cases_sp_provinces, extremadura)
+
+
 # Canarias: Agreggate Canary islands -------
 # save all the islands data
-write.csv(data_cases_sp_provinces %>% filter( ccaa == "Canarias"), file = "data/original/spain/canarias/canarias.csv", row.names = FALSE)
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=CANA-islas", 
+              "data/original/spain/canarias/canarias.csv")
+
+canarias_islas <- read.delim("data/original/spain/canarias/canarias.csv",sep = ",")
 
 # Group by province
-tenerife <- data_cases_sp_provinces %>% filter(province == "La Gomera" | province =="La Palma" | province == "Tenerife" | province == "El Hierro") %>% group_by(date) %>% summarise(
+tenerife <- canarias_islas %>% filter(province == "La Gomera" | province =="La Palma" | province == "Tenerife" | province == "El Hierro") %>% group_by(date) %>% summarise(
   province = "Santa Cruz de Tenerife",
   ccaa = "Canarias",
   new_cases = sum(new_cases),
@@ -54,7 +85,7 @@ tenerife <- data_cases_sp_provinces %>% filter(province == "La Gomera" | provinc
   source = paste(source, collapse = ";"), #TODO eavoir repetition
   comments = paste(comments, collapse = ";")
 )
-palmas <- data_cases_sp_provinces %>% filter(province == "Fuerteventura" | province =="Lanzarote" | province == "Gran Canaria") %>% group_by(date) %>% summarise(
+palmas <- canarias_islas %>% filter(province == "Fuerteventura" | province =="Lanzarote" | province == "Gran Canaria") %>% group_by(date) %>% summarise(
   province = "Palmas, Las",
   ccaa = "Canarias",
   new_cases = sum(new_cases),
@@ -80,7 +111,8 @@ data_cases_sp_provinces <-  data_cases_sp_provinces %>% filter( ccaa != "Canaria
 # Add Canarias
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,canarias_bind)
 
-rm(tenerife,palmas,canarias_bind)
+rm(tenerife,palmas,canarias_bind, canarias_islas)
+
 
 # Remove last -usually incomplete- day
 data_cases_sp_provinces <- filter(data_cases_sp_provinces, !is.na(date))
@@ -186,12 +218,12 @@ cyl <-  merge(cyla %>% select(-hospitalized,-intensive_care),
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces, 
                                  cyl)
 
-rm(cyl,cyla,cylb,cyla_original,cylb_original, cylc_original)
+rm(cyl,cyla,cylb,cyla_original,cylb_original, cylc_original, cyld_original)
 
 # Comunidad Valenciana ------------------
 # Download C. Valenciana  data from https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228
 # that is uploaded manually to our own spreadsheet in google spreadsheet 
-download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=cvalenciana", 
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=VAL", 
               "data/original/spain/valencia/valencia.csv")
 valencia <- read.delim("data/original/spain/valencia/valencia.csv", sep=",")
 
@@ -201,11 +233,12 @@ data_cases_sp_provinces <- rbind(
   valencia
 )
 
+rm(valencia)
 # Andalucía: Remove existing Andalucia data and add new one from new source ---------------------
 
 # Download Andalucía data from https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228
 # that is uploaded manually to our own spreadsheet in google spreadsheet 
-download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=andalucia", 
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=AND", 
               "data/original/spain/andalucia/andalucia.csv")
 andalucia_original <- read.delim("data/original/spain/andalucia/andalucia.csv", sep=",")
 
@@ -277,7 +310,7 @@ andalucia2 <- andalucia2 %>% filter( Territorio != "Andalucía" ) %>%
 # Add new Andalucía data
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,andalucia,andalucia2) 
 
-rm(andalucia,andalucia_original)
+rm(andalucia, andalucia2, andalucia_original,andalucia_original2)
 
 
 # Andalucia hospitalizados --------
@@ -329,7 +362,7 @@ data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique =
                                   ) %>% select( names(read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")) )
 
 # País Vasco --------------
-download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=pais-vasco", 
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=EUS", 
               "data/original/spain/euskadi/pais-vasco.csv")
 euskadi <- read.delim("data/original/spain/euskadi/pais-vasco.csv", sep=",") %>% select(-PCR_diario_residencia_fuera_de_euskadi)
 
@@ -942,7 +975,6 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   select(-date_cat, -PCR_cum_cat, -PCR_cat, -TestAc_cat, -TestAc_cum, -provincia_code)
 
 # Catalunya: Overwrite Catalunya provinces death data ------------------
-# This is calculated at analysis/count_catalunya.R
 # donwload provincias data from googgle spreadsheet 
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=cat_", 
               "data/original/spain/catalunya/powerbi.csv")
@@ -1264,7 +1296,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 
 rm(aragon_a,aragon_original)
 
-# Aragon 2 new hospitalized data ------
+# Aragon 2 new hospitalized data.------
 # https://transparencia.aragon.es/sites/default/files/documents/20200731_casos_confirmados_zona_basica_salud.xlsx
 # https://transparencia.aragon.es/sites/default/files/documents/20200802_casos_confirmados_zbs.xlsx
 
@@ -1272,29 +1304,29 @@ rm(aragon_a,aragon_original)
 download.file("https://www.aragon.es/documents/20127/38742837/casos_coronavirus_hospitales.csv", 
               "data/original/spain/aragon/casos_coronavirus_hospitales.csv")
 
-# aragon_original <- read.delim("data/original/spain/aragon/casos_coronavirus_hospitales.csv",sep = ";") 
-aragon_b <- read.delim("data/original/spain/aragon/casos_coronavirus_hospitales.csv",sep = ";") %>% mutate(
-  date_ara = as.Date(fecha, "%Y-%m-%d"),
-  camas_ocupadas_total = ifelse(is.na(camas_ocupadas_total),0,camas_ocupadas_total),
-  camas_uci_ocupadas = ifelse(is.na(camas_uci_ocupadas),0,camas_uci_ocupadas)
-) %>% group_by(provincia,date_ara) %>% summarise(
-  hosp_ara = sum( camas_ocupadas_total),
-  uci_ara = sum( camas_uci_ocupadas)
-)
-
-# add data
-data_cases_sp_provinces <- merge(
-  data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ) %>% ungroup(),
-  aragon_b %>% mutate ( dunique = paste0( date_ara, provincia) ) %>% ungroup() %>% select (dunique, hosp_ara, uci_ara,provincia,date_ara ) ,
-  by.x = "dunique", by.y = "dunique", all = TRUE
-) %>% mutate (
- province = ifelse( is.na(provincia), as.character(province), as.character(provincia ) ),
- ccaa = ifelse( !is.na(provincia), "Aragón", ccaa),
- date = as.Date( ifelse( is.na(date), date_ara, date), origin=as.Date("1970-01-01") ),
- # 
- hospitalized = ifelse( ccaa == "Aragón", hosp_ara, hospitalized),
- intensive_care = ifelse( ccaa == "Aragón", uci_ara, intensive_care)
-) %>% select(-dunique, -hosp_ara,- uci_ara, -provincia, -date_ara)
+# TODO: remove (for the moment I comment this section) because it does the same as the previous section. Data are the same
+# aragon_b <- read.delim("data/original/spain/aragon/casos_coronavirus_hospitales.csv",sep = ";") %>% mutate(
+#   date_ara = as.Date(fecha, "%Y-%m-%d"),
+#   camas_ocupadas_total = ifelse(is.na(camas_ocupadas_total),0,camas_ocupadas_total),
+#   camas_uci_ocupadas = ifelse(is.na(camas_uci_ocupadas),0,camas_uci_ocupadas)
+# ) %>% group_by(provincia,date_ara) %>% summarise(
+#   hosp_ara = sum( camas_ocupadas_total),
+#   uci_ara = sum( camas_uci_ocupadas)
+# )
+# 
+# # add data
+# data_cases_sp_provinces <- merge(
+#   data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ) %>% ungroup(),
+#   aragon_b %>% mutate ( dunique = paste0( date_ara, provincia) ) %>% ungroup() %>% select (dunique, hosp_ara, uci_ara,provincia,date_ara ) ,
+#   by.x = "dunique", by.y = "dunique", all = TRUE
+# ) %>% mutate (
+#  province = ifelse( is.na(provincia), as.character(province), as.character(provincia ) ),
+#  ccaa = ifelse( !is.na(provincia), "Aragón", ccaa),
+#  date = as.Date( ifelse( is.na(date), date_ara, date), origin=as.Date("1970-01-01") ),
+#  # 
+#  hospitalized = ifelse( ccaa == "Aragón", hosp_ara, hospitalized),
+#  intensive_care = ifelse( ccaa == "Aragón", uci_ara, intensive_care)
+# ) %>% select(-dunique, -hosp_ara,- uci_ara, -provincia, -date_ara)
 
 
 # Madrid hospitalizados.  Overwrite hospitalized  data -------------------
@@ -1485,7 +1517,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 rm(uniprovinciales_d)
 
 # Baleares --------------
-download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Baleares", 
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=BAL", 
               "data/original/spain/baleares/baleares.csv")
 baleares <- read.delim("data/original/spain/baleares/baleares.csv",sep = ",")
 
@@ -1589,8 +1621,8 @@ data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique =
 # web https://www.scsalud.es/coronavirus download CSV at the bottom
 # file https://www.scsalud.es/documents/2162705/9255280/2020_covid19_historico.csv 
 # TODO: to avoid problem with CA certificate I downoad manually the file
-# download.file("https://serviweb.scsalud.es:10443/ficheros/COVID19_historico.csv", 
-#               "data/original/spain/cantabria/COVID19_historico.csv")
+download.file("https://serviweb.scsalud.es:10443/ficheros/COVID19_historico.csv",
+              "data/original/spain/cantabria/COVID19_historico.csv")
 
 # get Cantabria data and change the name variables
 cantabria <- read.delim("data/original/spain/cantabria/COVID19_historico.csv",sep = ";") %>% mutate(
@@ -1650,7 +1682,7 @@ data_cases_sp_provinces <- rbind(
 
 # Murcia -------
 # donwload provincias data from googgle spreadsheet 
-download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Murcia", 
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=MUR", 
               "data/original/spain/murcia/murcia.csv")
 # load data
 murcia <- read.delim("data/original/spain/murcia/murcia.csv",sep = ",") %>% mutate(
@@ -1666,7 +1698,7 @@ data_cases_sp_provinces <- rbind(
 )
 
 # Navarra -------
-download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Navarra", 
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=NAV", 
               "data/original/spain/navarra/navarra.csv")
 
 # load data
@@ -1710,7 +1742,7 @@ data_cases_sp_provinces <- rbind(
 # )
 
 # download manual data from spreadsheet
-download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Asturias", 
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=AST", 
               "data/original/spain/asturias/asturias.csv")
 
 # load data
@@ -1738,7 +1770,6 @@ data_cases_sp_provinces <- merge(
 )
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
-# zzz <- data_cases_sp_provinces %>% mutate(
   hospitalized = ifelse(province == "Asturias" & date < as.Date("2020-07-19"), hosp_ast, hospitalized ),
   intensive_care = ifelse(province == "Asturias" & date < as.Date("2020-07-19"), uci_ast, intensive_care ),
   source = ifelse(
@@ -1760,7 +1791,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 # a su vez de https://dadescovid.cat/descarregues?drop_es_residencia=1
 download.file("https://analisi.transparenciacatalunya.cat/api/views/dmzh-fz47/rows.csv?accessType=DOWNLOAD&bom=true&format=true&delimiter=%3B&sorting=true", 
               "data/original/spain/catalunya/Dades_di_ries_de_COVID-19_per__rees_de_gesti__assistencials__AGA_.csv")
-# informaci'on de coorespondenica AGA con provincias http://www.aceba.cat/files/doc386/aga-arees-gestio-assistencial.pdf
+# informacion de coorespondenica AGA con provincias http://www.aceba.cat/files/doc386/aga-arees-gestio-assistencial.pdf
 catalunya <- read.delim("data/original/spain/catalunya/Dades_di_ries_de_COVID-19_per__rees_de_gesti__assistencials__AGA_.csv",sep = ";") 
 aga_prov <-  read.delim("data/original/spain/catalunya/aga-provincias-catalunya.csv",sep = ",") 
 
@@ -1820,7 +1851,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 ) %>% select (-deceased_cum, -dunique, -ingresados, -UCI)
 
 # La Rioja --------------
-download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Rioja", 
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=RIO", 
               "data/original/spain/rioja/rioja.csv")
 rioja <- read.delim("data/original/spain/rioja/rioja.csv",sep = ",") %>% mutate (
   # deceased_cum = cumsum(deceased),
@@ -1835,7 +1866,7 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
                                  rioja %>% filter( date > as.Date("2020-07-19") )
                                                    )
 # Melilla --------------
-download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Melilla", 
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=MEL", 
               "data/original/spain/melilla/melilla.csv")
 melilla <- read.delim("data/original/spain/melilla/melilla.csv",sep = ",") %>% mutate (
   date = as.Date( as.character(date))
@@ -1849,7 +1880,7 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
 )
 
 # Ceuta --------------
-download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=Ceuta", 
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=CEU", 
               "data/original/spain/ceuta/ceuta.csv")
 ceuta <- read.delim("data/original/spain/ceuta/ceuta.csv",sep = ",") %>% mutate (
   date = as.Date( as.character(date))
