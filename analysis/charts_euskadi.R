@@ -559,7 +559,7 @@ euskadi_total %>%
   scale_x_date(
     # date_breaks = "3 day", 
     date_labels = "%m",
-    limits=c( min(euskadi_total$date), max(euskadi_hosp$date +57)),
+    limits=c( min(euskadi_total$date), max(euskadi_hosp$date +70)),
     expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -734,9 +734,9 @@ png(filename=paste0("img/spain/euskadi/covid19_casos-municipios-pais-vasco.png",
 municipios %>% # filter( name %in% municipios_top$name) %>%
   ggplot() +
   geom_line(aes(date, daily_cases_avg7, group=name, color = name), size= 0.5) +
-  geom_point(aes(date, value, color = name), size= 1) +
+  # geom_point(aes(date, value, color = name), size= 1) +
   geom_text_repel(
-    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 4 ),
+    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 6 ),
     aes(date, daily_cases_avg7,  color = name,
         label=paste(format(daily_cases_avg7, nsmall=0, big.mark=".", decimal.mark = ","), name)),
     nudge_x = 3, # adjust the starting y position of the text label
@@ -776,9 +776,9 @@ png(filename=paste0("img/spain/euskadi/covid19_casos-municipios-pais-vasco_log.p
 municipios %>% # filter( name %in% municipios_top$name) %>%
   ggplot() +
   geom_line(aes(date, daily_cases_avg7, group=name, color = name), size= 0.5) +
-  geom_point(aes(date, value, color = name), size= 1) +
+  # geom_point(aes(date, value, color = name), size= 1) +
   geom_text_repel(
-    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 5 ),
+    data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 6 ),
     aes(date, daily_cases_avg7,  color = name,
         label=paste(format(daily_cases_avg7, nsmall=0, big.mark=".", decimal.mark = ","), name)),
     nudge_x = 3, # adjust the starting y position of the text label
@@ -818,7 +818,7 @@ png(filename=paste0("img/spain/euskadi/covid19_casos-zs-pais-vasco_rejilla-osi.p
 municipios %>% # filter( name %in% municipios_top$name) %>%
   ggplot() +
   geom_line(aes(date, daily_cases_avg7, group=name, color = name), size= 0.5) +
-  geom_point(aes(date, value, color = name), size= 1, alpha=0.4) +
+  # geom_point(aes(date, value, color = name), size= 1, alpha=0.4) +
   geom_text_repel(
     data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 2 ),
     aes(date, daily_cases_avg7,  color = name,
@@ -861,7 +861,7 @@ png(filename=paste0("img/spain/euskadi/covid19_casos-zs-pais-vasco_rejilla-osi_n
 municipios %>% # filter( name %in% municipios_top$name) %>%
   ggplot() +
   geom_line(aes(date, daily_cases_avg7, group=name, color = name), size= 0.5) +
-  geom_point(aes(date, value, color = name), size= 1) +
+  # geom_point(aes(date, value, color = name), size= 1) +
   geom_text_repel(
     data = municipios %>% group_by(name) %>% filter(!is.na(daily_cases_avg7) ) %>% top_n(1, date) %>% filter (daily_cases_avg7 > 2 ),
     aes(date, daily_cases_avg7,  color = name,
@@ -1110,7 +1110,7 @@ dev.off()
 
 
 # Casos de no residentes en Euskadi ----------
-# Set colors ---------
+# Set colors 
 # extends color paletter
 library(RColorBrewer)
 # creates extended color palette https://www.r-bloggers.com/how-to-expand-color-palette-with-ggplot-and-rcolorbrewer/
@@ -1121,7 +1121,7 @@ colors_prov <- getPalette(colourCount )
 colors_prov[1] <- "#a60000"
 colors_prov[12] <- "#84d3e7"
 
-download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=pais-vasco", 
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=EUS", 
               "data/original/spain/euskadi/pais-vasco.csv")
 euskadi <- read.delim("data/original/spain/euskadi/pais-vasco.csv", sep=",")
 otros <- euskadi %>% filter( province == "Araba/Álava" & !is.na(PCR_diario_residencia_fuera_de_euskadi)) %>% 
