@@ -1,6 +1,6 @@
 ---
 title: "Informe sobre Escovid19data"
-author: "@numeroteca"
+author: "@numerot eca"
 date: "`r Sys.Date()`"
 output: 
   html_document:
@@ -332,60 +332,61 @@ filter( !is.na(province)) %>%
 NA indica valor no conocido.
 
 ```{r fecha1, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+# Comento porque algo falla
 
-table_total <- merge(
-  fechas_caso %>% rename (casos_acum = date ) , 
-  fechas_fallecidos %>% rename ( muertes_acum = date ) %>% select(-ccaa), 
-  by.x="province", by.y="province", all = TRUE  )
-
-table_total <- merge(
-  table_total, 
-  fechas_PCR_diario %>% rename ( PCR_diario = date ) %>% select(-ccaa), 
-  by.x="province", by.y="province", all = TRUE  )
-
-table_total <- merge(
-  table_total, 
-  fechas_PCR_acum %>% rename ( PCR_acum = date ) %>% select(-ccaa), 
-  by.x="province", by.y="province", all = TRUE  )
-
-table_total <- merge(
-  table_total, 
-  fechas_hosp %>% rename ( hospitalized = date ) %>% select(-ccaa), 
-  by.x="province", by.y="province", all = TRUE  )
-
-# fort(table_total %>% select(province, ccaa, casos_acum, muertes_acum ) %>% 
+# table_total <- merge(
+#   fechas_caso %>% rename (casos_acum = date ) , 
+#   fechas_fallecidos %>% rename ( muertes_acum = date ) %>% select(-ccaa), 
+#   by.x="province", by.y="province", all = TRUE  )
+# 
+# table_total <- merge(
+#   table_total, 
+#   fechas_PCR_diario %>% rename ( PCR_diario = date ) %>% select(-ccaa), 
+#   by.x="province", by.y="province", all = TRUE  )
+# 
+# table_total <- merge(
+#   table_total, 
+#   fechas_PCR_acum %>% rename ( PCR_acum = date ) %>% select(-ccaa), 
+#   by.x="province", by.y="province", all = TRUE  )
+# 
+# table_total <- merge(
+#   table_total, 
+#   fechas_hosp %>% rename ( hospitalized = date ) %>% select(-ccaa), 
+#   by.x="province", by.y="province", all = TRUE  )
+# 
+# # fort(table_total %>% select(province, ccaa, casos_acum, muertes_acum ) %>% 
+# #         mutate(
+# #           casos = today - casos_acum,
+# #           muertes = today - muertes_acum
+# #         ) %>%
+# #         mutate(
+# #           casos = as.integer(casos),
+# #           casos = color_bar("lightgreen")(casos)
+# #         ) %>%
+# #         select( province, ccaa, casos, casos_acum,  muertes, muertes_acum ) %>%
+# #         arrange(casos_acum), caption="Última fecha disponible según variable") %>%
+# #   kable_styling(bootstrap_options = c("hover", "condensed", "responsive"), fixed_thead = T)
+# 
+# 
+# table_nice <- table_total %>% 
 #         mutate(
-#           casos = today - casos_acum,
-#           muertes = today - muertes_acum
+#           casos = as.integer( today - casos_acum ),
+#           muertes = as.integer( today - muertes_acum ),
+#           PCR =  as.integer( today - PCR_diario ),
+#           PCR_acum =  as.integer( today - PCR_acum ),
+#           hospitalized =  as.integer( today - hospitalized )
 #         ) %>%
-#         mutate(
-#           casos = as.integer(casos),
-#           casos = color_bar("lightgreen")(casos)
-#         ) %>%
-#         select( province, ccaa, casos, casos_acum,  muertes, muertes_acum ) %>%
-#         arrange(casos_acum), caption="Última fecha disponible según variable") %>%
-#   kable_styling(bootstrap_options = c("hover", "condensed", "responsive"), fixed_thead = T)
-
-
-table_nice <- table_total %>% 
-        mutate(
-          casos = as.integer( today - casos_acum ),
-          muertes = as.integer( today - muertes_acum ),
-          PCR =  as.integer( today - PCR_diario ),
-          PCR_acum =  as.integer( today - PCR_acum ),
-          hospitalized =  as.integer( today - hospitalized )
-        ) %>%
-        select( province, ccaa, casos, casos_acum,  muertes, muertes_acum, PCR , PCR_acum,hospitalized ) %>%
-        arrange(casos_acum)
-
-# formatter(style = x ~ style(..., display = ifelse(is.na(x), "none", "inline-block"))
-
-as.datatable(
-formattable(table_nice, list(
-  area(col = c(casos, muertes,PCR, PCR_acum,hospitalized )) ~ normalize_bar("pink", 0.2,na.rm = TRUE)
-)), colnames = c('Provincia', 'CCAA', 'Casos acumulado (días desde último publicado)', 'Casos (última fecha)', 'Muertes acumulado (días desde último publicado)', 'Muertes (última fecha)','PCR diario (días desde último publicado)', 'PCR acumulado (días desde último publicado)', 'Hospitalizados (días desde)'   ),
-options = list(pageLength = 52)
-)
+#         select( province, ccaa, casos, casos_acum,  muertes, muertes_acum, PCR , PCR_acum,hospitalized ) %>%
+#         arrange(casos_acum)
+# 
+# # formatter(style = x ~ style(..., display = ifelse(is.na(x), "none", "inline-block"))
+# 
+# as.datatable(
+# formattable(table_nice, list(
+#   area(col = c(casos, muertes,PCR, PCR_acum,hospitalized )) ~ normalize_bar("pink", 0.2,na.rm = TRUE)
+# )), colnames = c('Provincia', 'CCAA', 'Casos acumulado (días desde último publicado)', 'Casos (última fecha)', 'Muertes acumulado (días desde último publicado)', 'Muertes (última fecha)','PCR diario (días desde último publicado)', 'PCR acumulado (días desde último publicado)', 'Hospitalizados (días desde)'   ),
+# options = list(pageLength = 52)
+# )
 ``` 
 
 

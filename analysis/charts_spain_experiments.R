@@ -175,22 +175,12 @@ data_cases_sp_provinces %>% filter ( (ccaa == "País Vasco" ) & (date > filter_d
     axis.ticks.x = element_line(color = "#000000"),
     legend.position =  "top"
   ) +
-  labs(title = paste0("Casos notificados por día de la semana. COVID-19 en ",prov, " ", updated ),
+  labs(title = paste0("Casos notificados por día de la semana. COVID-19 en ","País Vasco", " ", updated ),
        subtitle = paste0("Últimos 50 días. Por provincia. ",period),
        y = "casos PCR+ por día",
        x = "fecha",
        color = "Día de la semana",
        caption = caption_provincia) 
-# + 
-#       geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11")  +
-#       geom_point(aes(date, daily_cases_PCR, color=province), size= 1.4, alpha = 0.7, shape= 21 ) +
-#       geom_line(aes(date, daily_cases_PCR, color=province, group=province), size= 0.3, alpha = 0.5, linetype="11" ) + 
-#       geom_col(aes(date, daily_cases_PCR, fill=province), width=1, alpha = 0.3) +
-#       # TODO: add numer to column
-#       # geom_text(aes(date, daily_cases_PCR, label=daily_cases_PCR, color=province ), alpha = 1, vjuszt = 1, size=4, color="white" ) +
-#       # quito la línea de casos
-#       # geom_line(aes(date, daily_cases_avg7,group=province, color=province), size= 1.5, se = FALSE, span = 0.6 ) +
-#       geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11") 
 
 dev.off()
 
@@ -274,7 +264,7 @@ data_cases_sp_provinces %>% filter ( (province == "Barcelona" ) & (date > filter
     axis.ticks.x = element_line(color = "#000000"),
     legend.position =  "top"
   ) +
-  labs(title = paste0("Casos notificados por día de la semana. COVID-19 en ",prov, " ", updated ),
+  labs(title = paste0("Casos notificados por día de la semana. COVID-19 en ","Barcelona", " ", updated ),
        subtitle = paste0("Últimos 50 días. Por provincia. ",period),
        y = "casos PCR+ por día",
        x = "fecha",
