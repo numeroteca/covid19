@@ -80,7 +80,8 @@ interactive_dp  <- data_cases_sp_provinces %>% ungroup(province) %>% filter ( da
   # ) +
   scale_color_manual(values = colors_prov) +
   coord_cartesian(
-    ylim = c(1,1600)
+    # ylim = c(1, max(data_cases_sp_provinces[!is.na(data_cases_sp_provinces$daily_cases_PCR_avg7) & (date > data_cases_sp_provinces$filter_date - 50),]$daily_cases_PCR_avg7) )
+    ylim = c(0, 2000 )
   ) +
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
                  # minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),

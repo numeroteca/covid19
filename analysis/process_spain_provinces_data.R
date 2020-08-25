@@ -72,7 +72,7 @@ tenerife <- canarias_islas %>% filter(province == "La Gomera" | province =="La P
   province = "Santa Cruz de Tenerife",
   ccaa = "Canarias",
   new_cases = sum(new_cases),
-  PCR = sum(PCR),
+  PCR = sum(new_cases),
   TestAc = sum(TestAc),
   activos = sum(activos),
   hospitalized = sum(hospitalized),
@@ -89,7 +89,7 @@ palmas <- canarias_islas %>% filter(province == "Fuerteventura" | province =="La
   province = "Palmas, Las",
   ccaa = "Canarias",
   new_cases = sum(new_cases),
-  PCR = sum(PCR),
+  PCR = sum(new_cases),
   TestAc = sum(TestAc),
   activos = sum(activos),
   hospitalized = sum(hospitalized),
@@ -1620,9 +1620,9 @@ data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique =
 # Cantabria --------
 # web https://www.scsalud.es/coronavirus download CSV at the bottom
 # file https://www.scsalud.es/documents/2162705/9255280/2020_covid19_historico.csv 
-# TODO: to avoid problem with CA certificate I downoad manually the file
-download.file("https://serviweb.scsalud.es:10443/ficheros/COVID19_historico.csv",
-              "data/original/spain/cantabria/COVID19_historico.csv")
+# TODO: to avoid problem with CA certificate I download manually the file
+# download.file("https://serviweb.scsalud.es:10443/ficheros/COVID19_historico.csv",
+#               "data/original/spain/cantabria/COVID19_historico.csv")
 
 # get Cantabria data and change the name variables
 cantabria <- read.delim("data/original/spain/cantabria/COVID19_historico.csv",sep = ";") %>% mutate(
@@ -1633,52 +1633,73 @@ cantabria <- read.delim("data/original/spain/cantabria/COVID19_historico.csv",se
   PCR_can = CASOS.NUEVOS.PCR.,
   hospitalized_can = TOTAL.HOSPITALIZADOS,
   deceased_can = FALLECIDOS,
-  recovered_can = RECUPERADOS
-) %>% select(cases_accumulated_PCR_can,everything() )
+  recovered_can = RECUPERADOS,
+  date_can = date
+) %>% mutate (
+  intensive_care_can = UCI.HUMV + UCI.SIERRALLANA
+  ) %>% select(cases_accumulated_PCR_can,intensive_care_can,everything() )
 
 # add Cantabria data to the existing dataset by merge
 data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0(province,date) ),
-                cantabria %>% mutate( dunique = paste0("Cantabria",date)) %>% select( dunique, cases_accumulated_can, PCR_can,
-                                                                                      hospitalized_can, deceased_can, recovered_can,cases_accumulated_PCR_can),
-                by.x = "dunique", by.y = "dunique", all.x = TRUE ) %>% mutate(
+# zzz <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0(province,date) ),
+                cantabria %>% mutate( dunique = paste0("Cantabria",date_can)) %>% 
+                select( dunique, cases_accumulated_can, PCR_can, intensive_care_can,
+                       hospitalized_can, deceased_can, recovered_can,cases_accumulated_PCR_can, date_can),
+                by.x = "dunique", by.y = "dunique", all = TRUE ) %>% mutate(
+                  date = as.character(date),
+                  date_can = as.character(date_can),
+                  date = ifelse( !is.na(date_can), date_can, date),
+                  date = as.Date(date),
+                  
                   cases_accumulated = ifelse( !is.na(cases_accumulated_can), cases_accumulated_can, cases_accumulated),
                   cases_accumulated_PCR = ifelse( !is.na(cases_accumulated_PCR_can), cases_accumulated_PCR_can, cases_accumulated_PCR),
                   PCR = ifelse( !is.na(PCR_can), PCR_can, PCR),
                   hospitalized = ifelse( !is.na(hospitalized_can), hospitalized_can, hospitalized),
                   deceased = ifelse( !is.na(deceased_can), deceased_can, deceased),
-                  recovered = ifelse( !is.na(recovered_can), recovered_can, recovered)
-                ) %>% select(-cases_accumulated_can,-cases_accumulated_PCR_can, -PCR_can, -hospitalized_can, -deceased_can, -recovered_can, -dunique) %>% mutate (
+                  recovered = ifelse( !is.na(recovered_can), recovered_can, recovered),
+                  intensive_care = ifelse( !is.na(intensive_care_can), intensive_care_can, intensive_care),
+                  
+                  province = ifelse( !is.na(date_can), "Cantabria", province),
+                  ccaa = ifelse( !is.na(date_can), "Cantabria", ccaa)
+                  
+                ) %>% select(-cases_accumulated_can,-cases_accumulated_PCR_can, -PCR_can, -hospitalized_can, 
+                             -deceased_can, -recovered_can, -intensive_care_can, -dunique, -date_can) %>% mutate (
+                  # TODO: remove existing sources if data are rewritten
                   source_name =  ifelse( province == "Cantabria", paste0(source_name,";Servicio Cántabro de Salud"), source_name),
                   source =  ifelse(province == "Cantabria", paste0(source,";https://serviweb.scsalud.es:10443/ficheros/COVID19_historico.csv;https://www.scsalud.es/coronavirus"), source),
                 )
 
+# TODO: check if this is really not need, as we-ve just inserted all the data from original CCAA source
 # filter Cantabria data and only get the ones after 2020-07-19
-cantabria <- cantabria %>% filter (date > as.Date("2020-07-19")) %>% rename(
-  PCR = PCR_can,
-  cases_accumulated = cases_accumulated_can,
-  cases_accumulated_PCR = cases_accumulated_PCR_can,
-  deceased = deceased_can,
-  recovered = recovered_can,
-  hospitalized = hospitalized_can
-) %>% mutate(
-  province = "Cantabria",
-  ccaa = "Cantabria",
-  new_cases = NA,
-  TestAc = NA,
-  activos = NA,
-  # cases_accumulated_PCR = NA,
-  intensive_care = NA,
-  recovered = NA,
-  source_name = "Servicio Cántabro de Salud",
-  source = "https://serviweb.scsalud.es:10443/ficheros/COVID19_historico.csv",
-  comments = NA
-) %>% select(names(data_cases_sp_provinces)  )
+# cantabria <- cantabria %>% 
+#   # filter (date > as.Date("2020-07-19")) %>% 
+#   rename(
+#   PCR = PCR_can,
+#   cases_accumulated = cases_accumulated_can,
+#   cases_accumulated_PCR = cases_accumulated_PCR_can,
+#   deceased = deceased_can,
+#   recovered = recovered_can,
+#   hospitalized = hospitalized_can
+# ) %>% mutate(
+#   province = "Cantabria",
+#   ccaa = "Cantabria",
+#   new_cases = NA,
+#   TestAc = NA,
+#   activos = NA,
+#   # cases_accumulated_PCR = NA,
+#   intensive_care = NA,
+#   recovered = NA,
+#   source_name = "Servicio Cántabro de Salud",
+#   source = "https://serviweb.scsalud.es:10443/ficheros/COVID19_historico.csv",
+#   comments = NA
+# ) %>% select(names(data_cases_sp_provinces)  )
 
-# Add rows that don-t have an existing previous date created for cantabria
-data_cases_sp_provinces <- rbind(
-  data_cases_sp_provinces,
-  cantabria
-)
+# TODO: check if data are being rewritten. It seems Cantabria source is better
+# Add rows that don't have an existing previous date created for cantabria
+# data_cases_sp_provinces <- rbind(
+#   data_cases_sp_provinces,
+#   cantabria
+# )
 
 # Murcia -------
 # donwload provincias data from googgle spreadsheet 
@@ -1873,7 +1894,7 @@ melilla <- read.delim("data/original/spain/melilla/melilla.csv",sep = ",") %>% m
 ) %>% select(names(data_cases_sp_provinces))
 
 # Remove melilla 
-# TODO: try to not lose data taht are not in this new data source
+# TODO: try to not lose data that are not in this new data source + include the new data like hospitalized that we are not inluding
 # Add Melilla data
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
                                  melilla %>% filter( date > as.Date("2020-07-19") )
@@ -1887,8 +1908,8 @@ ceuta <- read.delim("data/original/spain/ceuta/ceuta.csv",sep = ",") %>% mutate 
 ) %>% select(names(data_cases_sp_provinces))
 
 # Remove Ceuta 
-# TODO: try to not lose data taht are not in this new data source
-# Add Melilla data
+# TODO: try to not lose data that are not in this new data source + include the new data like hospitalized that we are not inluding
+# Add Ceuta data
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
                                  ceuta %>% filter( date > as.Date("2020-07-19") )
 )
@@ -2313,4 +2334,3 @@ write.csv(spain, file = "data/output/spain/covid19-spain_consolidated.csv", row.
 saveRDS(spain, file = "../escovid19data/data/output/covid19-spain_consolidated.rds")
 saveRDS(spain, file = "data/output/spain/covid19-spain_consolidated.rds")
 write.xlsx(spain, "../escovid19data/data/output/covid19-spain_consolidated.xlsx", colNames = TRUE)
-
