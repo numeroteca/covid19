@@ -24,8 +24,8 @@ library(reshape2)
 caption_en <- "By: lab.montera34.com/covid19 | Data: esCOVID19data. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
-period <- "(Actualizado: 2020-08-25)"
-filter_date <- as.Date("2020-08-25")
+period <- "(Actualizado: 2020-08-26)"
+filter_date <- as.Date("2020-08-26")
 
 # Load data:
 data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
@@ -72,7 +72,7 @@ interactive_dp  <- data_cases_sp_provinces %>% ungroup(province) %>% filter ( da
   geom_line(aes(date, daily_cases_PCR_avg7, group = province, color=ccaa,
                 text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(daily_cases_PCR_avg7, digits = 1),
                                                                                 big.mark=".", decimal.mark = ","), " media casos diaria (ventana 7 días)" ,"<br>",date )),
-            size= 0.7, se = FALSE, span = 0.6 ) +
+            size= 0.5, se = FALSE, span = 0.6 ) +
   # geom_point(aes(date, daily_cases_PCR, color=ccaa,
   #                text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(daily_cases_PCR, digits = 1),
   #                                                                                big.mark=".", decimal.mark = ","), " casos el día " ,"<br>",date )),
@@ -133,7 +133,7 @@ interactive_dp  <- data_cases_sp_provinces %>% ungroup(province) %>%
   geom_line(aes(date, daily_cases_PCR_avg7, group = province, color=ccaa,
                 text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(daily_cases_PCR_avg7, digits = 1),
                                                                                 big.mark=".", decimal.mark = ","), " media casos diaria (ventana 7 días)" ,"<br>",date )),
-            size= 0.7, se = FALSE, span = 0.6 ) +
+            size= 0.5, se = FALSE, span = 0.6 ) +
   # geom_point(aes(date, daily_cases_PCR, color=ccaa,
   #                text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(daily_cases_PCR, digits = 1),
   #                                                                                big.mark=".", decimal.mark = ","), " casos el día " ,"<br>",date )),
@@ -197,7 +197,7 @@ p <- data_cases_sp_provinces %>%  ungroup(province) %>%
   ggplot() +
   # geom_line(aes(date, daily_cases,group=province, color=ccaa), size= 0.8 ) +
   geom_line( aes(date, cases_PCR_14days/poblacion*100000,group=province, color=ccaa, text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(cases_PCR_14days/poblacion*100000, digits = 1),
-                                                                                big.mark=".", decimal.mark = ","), "" ,"<br>",date )), size= 0.8
+                                                                                big.mark=".", decimal.mark = ","), "" ,"<br>",date )), size= 0.6
              
 ) +
   # geom_point(aes(date, daily_cases, color=ccaa), size= 1 ) +
@@ -270,7 +270,7 @@ p
 p2  <- data_cases_sp_provinces %>%  ungroup(province) %>%
   ggplot() +
   geom_line(aes(date, cases_PCR_14days,group=province, color=ccaa, text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(cases_PCR_14days, digits = 1),
-                                                                                big.mark=".", decimal.mark = ","), " casos en 14 días" ,"<br>",date )), size= 0.8 ) +
+                                                                                big.mark=".", decimal.mark = ","), " casos en 14 días" ,"<br>",date )), size= 0.6 ) +
   # geom_point(aes(date, cases_PCR_14days, color=ccaa), size= 1 ) +
   # geom_text_repel( data = data_cases_sp_provinces %>% group_by(province) %>% filter( !is.na(cases_PCR_14days) ) %>% top_n(1, date) %>% 
   #                    filter ( cases_PCR_14days > 100 & date > filter_date-7),

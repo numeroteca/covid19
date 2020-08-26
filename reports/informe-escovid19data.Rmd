@@ -15,7 +15,7 @@ library(kableExtra)
 library(formattable)
 library(DT)
 library(viridis)
-today <- as.Date("2020-08-24")
+today <- as.Date("2020-08-25")
 ```
 
 Un análisis automatizado de la base de datos por provincias de #COVID19 en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data
@@ -60,7 +60,7 @@ filter( !is.na(province)) %>%
                      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
   theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
   scale_x_date(
-    date_breaks = "10 day", date_labels = "%d/%m",
+    date_breaks = "2 week", date_labels = "%d/%m",
     expand= c(0,0)) +
   labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
        subtitle = paste(""),
@@ -90,7 +90,7 @@ filter( !is.na(province)) %>%
                      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
   theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
   scale_x_date(
-    date_breaks = "10 day", date_labels = "%d/%m",
+    date_breaks = "2 week", date_labels = "%d/%m",
     expand= c(0,0)) +
   labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
        subtitle = paste(""),
@@ -120,7 +120,7 @@ filter( !is.na(province)) %>%
                      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
   theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
   scale_x_date(
-    date_breaks = "10 day", date_labels = "%d/%m",
+    date_breaks = "2 week", date_labels = "%d/%m",
     expand= c(0,0)) +
   labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
        subtitle = paste(""),
@@ -158,7 +158,7 @@ filter( !is.na(province)) %>%
   #                    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
   theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
   scale_x_date(
-    date_breaks = "10 day", date_labels = "%d/%m",
+    date_breaks = "2 week", date_labels = "%d/%m",
     expand= c(0,0)) +
   labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
        subtitle = paste(""),
@@ -188,7 +188,7 @@ filter( !is.na(province)) %>%
                      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
   theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
   scale_x_date(
-    date_breaks = "10 day", date_labels = "%d/%m",
+    date_breaks = "2 week", date_labels = "%d/%m",
     expand= c(0,0)) +
   labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
        subtitle = paste(""),
@@ -218,7 +218,7 @@ filter( !is.na(province)) %>%
                      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
   theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
   scale_x_date(
-    date_breaks = "10 day", date_labels = "%d/%m",
+    date_breaks = "2 week", date_labels = "%d/%m",
     expand= c(0,0)) +
   labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
        subtitle = paste(""),
@@ -249,7 +249,7 @@ filter( !is.na(province)) %>%
 #                      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
 #   theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
 #   scale_x_date(
-#     date_breaks = "10 day", date_labels = "%d/%m",
+#     date_breaks = "2 week", date_labels = "%d/%m",
 #     expand= c(0,0)) +
 #   labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
 #        subtitle = paste(""),
@@ -279,7 +279,7 @@ filter( !is.na(province)) %>%
                      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
   theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
   scale_x_date(
-    date_breaks = "10 day", date_labels = "%d/%m",
+    date_breaks = "2 week", date_labels = "%d/%m",
     expand= c(0,0)) +
   labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
        subtitle = paste(""),
@@ -310,7 +310,7 @@ filter( !is.na(province)) %>%
                      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
   theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
   scale_x_date(
-    date_breaks = "10 day", date_labels = "%d/%m",
+    date_breaks = "2 week", date_labels = "%d/%m",
     expand= c(0,0)) +
   labs(title = paste("Datos disponibles de Escovid19data ",sep = ""),
        subtitle = paste(""),
