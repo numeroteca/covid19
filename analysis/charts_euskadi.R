@@ -804,9 +804,9 @@ zonassalud <- merge(zonassalud,
                       OSI_NOM_eu = ifelse( is.na(OSI_NOM_eu), "Otros", as.character(OSI_NOM_eu) ),
                       OSI_NOM_eu = as.factor(OSI_NOM_eu),
                       value = ifelse(is.na(value), 0 ,value )
-                    ) %>% filter( #parece que hay un error en el archivo, quito todos los que no tienen OSI asignada
-                      ! (OSI_NOM_eu == "Otros")
-                    )
+                    ) %>% # filter( #parece que hay un error en el archivo, quito todos los que no tienen OSI asignada
+                      # ! (OSI_NOM_eu == "Otros")
+                  #  )
 
 osi <- zonassalud %>% group_by(OSI_NOM_eu,date)  %>% summarise(
   value = sum(value),

@@ -5,13 +5,12 @@
 library(tidyverse)
 library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
-
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
-period <- "(Actualizado: 2020-08-21)"
-filter_date <- as.Date("2020-08-17")
+period <- "(Actualizado: 2020-08-24)"
+filter_date <- as.Date("2020-08-19")
 
 # Warning: you need to have loaded spain by executing process_spain_provinces_data.R 
 # or load it using:
@@ -21,7 +20,76 @@ spain_ccaa <- readRDS(file ="data/output/spain/covid19-ccaa-spain_consolidated.r
 # create temp dataframes to be able to plot all the values in small multiples
 spain <- spain %>% filter( date < filter_date)
 
-png(filename=paste("img/spain/country/covid19_fallecimientos-lineal.png", sep = ""),width = 900,height = 600)
+png(filename=paste("img/spain/country/covid19_spain_casos-dia-lineal.png", sep = ""),width = 900,height = 600)
+spain %>% filter( date > filter_date - 80 & date < filter_date - 0) %>%
+  ggplot() +
+  geom_col(aes(date, daily_cases_PCR), width= 1, fill="#DDDDDD" ) +
+  geom_text(aes(date, daily_cases_PCR+1, label=daily_cases_PCR), color="#888888", vjust = 0.2 ) +
+  geom_line(aes(date, daily_cases_PCR_avg7), size= 1 ) +
+  # geom_point(aes(date, deceased, color=ccaa), size= 1 ) +
+  # scale_color_manual(values = colors_prov) +
+  scale_x_date(date_breaks = "1 week", 
+               date_labels = "%d/%m",
+               limits=c( filter_date - 50, max(spain$date)),
+               expand = c(0,0)
+  ) + 
+  scale_y_continuous(
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+    # limits = c( 0, max(spain$daily_deaths_avg7))
+    # limits = c( 0, 50)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = c(0.1,0.6)
+  ) +
+  labs(title = paste0("Casos PCR+ por día (media ventana 7 días) por COVID-19 en España ", updated ),
+       subtitle = paste0("(escala lineal). ",period),
+       y = "casos",
+       x = "fecha",
+       # color = "Comunidad autónoma",
+       caption = caption_provincia)
+dev.off()
+
+png(filename=paste("img/spain/country/covid19_spain_hosp-lineal.png", sep = ""),width = 900,height = 600)
+spain %>% filter( date > filter_date - 80 & date < filter_date - 0) %>%
+  ggplot() +
+  geom_col(aes(date, hospitalized), width= 1, fill="#DDDDDD" ) +
+  geom_text(aes(date, hospitalized+20, label=hospitalized), color="#888888", vjust = 0.2, size = 3 ) +
+  # geom_line(aes(date, daily_cases_PCR_avg7), size= 1 ) +
+  # geom_point(aes(date, deceased, color=ccaa), size= 1 ) +
+  # scale_color_manual(values = colors_prov) +
+  scale_x_date(date_breaks = "1 week", 
+               date_labels = "%d/%m",
+               limits=c( filter_date - 50, max(spain$date)),
+               expand = c(0,0)
+  ) + 
+  scale_y_continuous(
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+    # limits = c( 0, max(spain$daily_deaths_avg7))
+    # limits = c( 0, 50)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = c(0.1,0.6)
+  ) +
+  labs(title = paste0("Hospitalizados por día (media ventana 7 días) por COVID-19 en España ", updated ),
+       subtitle = paste0("(escala lineal). ",period),
+       y = "casos",
+       x = "fecha",
+       # color = "Comunidad autónoma",
+       caption = caption_provincia)
+dev.off()
+
+
+png(filename=paste("img/spain/country/covid19_spain_fallecimientos-lineal.png", sep = ""),width = 900,height = 600)
 spain %>%
   ggplot() +
   geom_line(aes(date, deceased), size= 1 ) +
@@ -37,12 +105,15 @@ spain %>%
     segment.size = 0.1,
     segment.color="#777777"
   ) +
-  scale_color_manual(values = colors_prov) +
+  # scale_color_manual(values = colors_prov) +
   scale_x_date(date_breaks = "2 week", 
                date_labels = "%d/%m",
                limits=c( min(spain$date)+7, max(spain$date + 46)),
                expand = c(0,0)
   ) + 
+  scale_y_continuous(
+    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
     panel.grid.minor.x = element_blank(),
@@ -51,21 +122,21 @@ spain %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = c(0.1,0.6)
   ) +
-  labs(title = paste0("Número de fallecimientos acumulados por COVID-19 registrados en España ", updated ),
-       subtitle = paste0("Por provincia (escala lineal). ",period),
+  labs(title = paste0("Fallecimientos acumulados por COVID-19 registrados en España ", updated ),
+       subtitle = paste0("Agregado de datos por CCAA (escala lineal). ",period),
        y = "fallecidos",
        x = "fecha",
        color = "Comunidad autónoma",
        caption = caption_provincia)
 dev.off()
 
-png(filename=paste("img/spain/country/covid19_muertes-dia-lineal.png", sep = ""),width = 900,height = 600)
-spain %>% filter( date > filter_date - 80) %>%
+png(filename=paste("img/spain/country/covid19_spain_muertes-dia-lineal.png", sep = ""),width = 900,height = 600)
+spain %>% filter( date > filter_date - 50) %>%
   ggplot() +
-  geom_line(aes(date, daily_deaths), size= 1 ) +
+  geom_col(aes(date, daily_deaths), size= 1 ) +
   # geom_point(aes(date, deceased, color=ccaa), size= 1 ) +
   # scale_color_manual(values = colors_prov) +
-  scale_x_date(date_breaks = "2 week", 
+  scale_x_date(date_breaks = "1 month", 
                date_labels = "%d/%m",
                limits=c( filter_date - 50, max(spain$date)),
                expand = c(0,0)
@@ -89,25 +160,28 @@ theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
        caption = caption_provincia)
 dev.off()
 
-png(filename=paste("img/spain/country/covid19_muertes-dia-media-lineal.png", sep = ""),width = 900,height = 600)
+png(filename=paste("img/spain/country/covid19_spain_muertes-dia-media-lineal.png", sep = ""),width = 900,height = 600)
 spain %>% filter( date > filter_date - 80) %>%
   ggplot() +
+  geom_col(aes(date, daily_deaths), width= 1, fill="#DDDDDD" ) +
+  geom_text(aes(date, daily_deaths+1, label=daily_deaths), color="#888888", vjust = 0.2 ) +
   geom_line(aes(date, daily_deaths_avg7), size= 1 ) +
   # geom_point(aes(date, deceased, color=ccaa), size= 1 ) +
   # scale_color_manual(values = colors_prov) +
-  scale_x_date(date_breaks = "2 week", 
+  scale_x_date(date_breaks = "1 week", 
                date_labels = "%d/%m",
                limits=c( filter_date - 50, max(spain$date)),
                expand = c(0,0)
   ) + 
   scale_y_continuous(
-    limits = c( 0, max(spain$daily_deaths_avg7))
+  # limits = c( 0, max(spain$daily_deaths_avg7))
+  limits = c( 0, 50)
   ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = c(0.1,0.6)
   ) +
@@ -119,26 +193,14 @@ spain %>% filter( date > filter_date - 80) %>%
        caption = caption_provincia)
 dev.off()
 
-to_agreggate <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date) %>% mutate (
-  # deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
-  deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
-  deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
-  deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
-  deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
-  deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
-  deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
-  deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased)
-  # deceased_lag = lag(deceased, 1)
-) # %>% select(date, province, deceased, deceased_lag)
-
-
-spain_ccaa %>%
+png(filename=paste("img/spain/country/covid19_muertes-dia-ccaa.png", sep = ""),width = 900,height = 600)
+spain_ccaa %>% filter( date > filter_date - 50) %>%
   ggplot() +
-  geom_line(aes(date, deceased), size= 1 ) +
+  geom_col(aes(date, daily_deaths), size= 1 ) +
   # scale_color_manual(values = colors_prov) +
   scale_x_date(date_breaks = "1 month", 
                date_labels = "%m",
-               limits=c( min(spain$date)+7, max(spain$date + 46)),
+               limits=c( filter_date - 50, max(spain$date)),
                expand = c(0,0)
   ) + 
   facet_wrap(~ccaa, scales = "free") +
@@ -150,13 +212,95 @@ spain_ccaa %>%
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = c(0.1,0.6)
   ) +
-  labs(title = paste0("Número de fallecimientos acumulados por COVID-19 registrados en España ", updated ),
+  labs(title = paste0(" COVID-19 registrados en España ", updated ),
        subtitle = paste0("Por provincia (escala lineal). ",period),
        y = "fallecidos",
        x = "fecha",
        color = "Comunidad autónoma",
        caption = caption_provincia)
+dev.off()
 
+png(filename=paste("img/spain/country/covid19_casos-dia-ccaa.png", sep = ""),width = 900,height = 600)
+spain_ccaa %>% filter( date > filter_date - 50) %>%
+  ggplot() +
+  geom_col(aes(date, daily_cases_PCR), size= 1 ) +
+  # scale_color_manual(values = colors_prov) +
+  scale_x_date(date_breaks = "1 month", 
+               date_labels = "%m",
+               limits=c( filter_date - 50, max(spain$date)),
+               expand = c(0,0)
+  ) + 
+  facet_wrap(~ccaa, scales = "free") +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = c(0.1,0.6)
+  ) +
+  labs(title = paste0("Casos PCR+ por día COVID-19 en España ", updated ),
+       subtitle = paste0("Por provincia (escala lineal). ",period),
+       y = "fallecidos",
+       x = "fecha",
+       color = "Comunidad autónoma",
+       caption = caption_provincia)
+dev.off()
+
+png(filename=paste("img/spain/country/covid19_casos-acumulados-ccaa.png", sep = ""),width = 900,height = 600)
+spain_ccaa %>% filter( date > filter_date - 50) %>%
+  ggplot() +
+  geom_col(aes(date, cases_accumulated_PCR), size= 1 ) +
+  # scale_color_manual(values = colors_prov) +
+  scale_x_date(date_breaks = "1 month", 
+               date_labels = "%m",
+               limits=c( filter_date - 50, max(spain$date)),
+               expand = c(0,0)
+  ) + 
+  facet_wrap(~ccaa, scales = "free") +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = c(0.1,0.6)
+  ) +
+  labs(title = paste0("Casos COVID-19 por PCR+ en España ", updated ),
+       subtitle = paste0("Por provincia (escala lineal). ",period),
+       y = "fallecidos",
+       x = "fecha",
+       color = "Comunidad autónoma",
+       caption = caption_provincia)
+dev.off()
+
+# -------------------------------------------
+png(filename=paste("img/spain/country/covid19_muertes-acumuladas-ccaa.png", sep = ""),width = 900,height = 600)
+spain_ccaa %>% filter( date > filter_date - 50) %>%
+  ggplot() +
+  geom_line(aes(date, deceased), size= 1 ) +
+  # scale_color_manual(values = colors_prov) +
+  scale_x_date(date_breaks = "1 month", 
+               date_labels = "%m",
+               limits=c( filter_date - 50, max(spain$date)),
+               expand = c(0,0)
+  ) + 
+  facet_wrap(~ccaa, scales = "free") +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = c(0.1,0.6)
+  ) +
+  labs(title = paste0(" COVID-19 registrados en España ", updated ),
+       subtitle = paste0("Por provincia (escala lineal). ",period),
+       y = "fallecidos",
+       x = "fecha",
+       color = "Comunidad autónoma",
+       caption = caption_provincia)
+dev.off()
 
 to_agreggate %>%  filter (ccaa=="Castilla - La Mancha") %>%
   ggplot() +
@@ -172,7 +316,7 @@ to_agreggate %>%  filter (ccaa=="Castilla - La Mancha") %>%
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
-    # panel.grid.minor.y = element_blank(),
+    panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
     legend.position = c(0.1,0.6)
   ) +
@@ -182,3 +326,4 @@ to_agreggate %>%  filter (ccaa=="Castilla - La Mancha") %>%
        x = "fecha",
        color = "Comunidad autónoma",
        caption = caption_provincia)
+
