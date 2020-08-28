@@ -707,7 +707,7 @@ euskadi_total %>%
   facet_wrap( ~hospital, scales = "free_y") + #, scales = "free_x"
   scale_y_continuous( 
     # limits = c(0,100),
-    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+    labels=function(x) format(round(x, digits = 1), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(
     # date_breaks = "3 day", 
@@ -798,15 +798,13 @@ zonassalud <- read_excel("data/original/spain/euskadi/situacion-epidemiologica.x
 
 
 zonassalud <- merge(zonassalud,
-                    zs_osi %>% select (ZONA_Nom1, OSI_NOM_eu, OSI_NOM_es),
+                    zs_osi %>% select (ZONA_Nom1, OSI_NOM_eu),
                     by.x = "name", by.y = "ZONA_Nom1", all.x = TRUE) %>% mutate (
                       OSI_NOM_eu = as.character(OSI_NOM_eu),
                       OSI_NOM_eu = ifelse( is.na(OSI_NOM_eu), "Otros", as.character(OSI_NOM_eu) ),
                       OSI_NOM_eu = as.factor(OSI_NOM_eu),
                       value = ifelse(is.na(value), 0 ,value )
-                    ) %>% # filter( #parece que hay un error en el archivo, quito todos los que no tienen OSI asignada
-                      # ! (OSI_NOM_eu == "Otros")
-                  #  )
+                    )
 
 osi <- zonassalud %>% group_by(OSI_NOM_eu,date)  %>% summarise(
   value = sum(value),
@@ -1240,7 +1238,7 @@ municipios %>% filter( name %in% municipios_top$name) %>%
   geom_line(aes(date, daily_cases_avg7, group=name, color= ""), size= 1.1 ) +
   scale_color_manual(values=c("#565656")  )+
   facet_wrap( ~name, scales = "free_y") + #, scales = "free_x"
-  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  scale_y_continuous( labels=function(x) format(round(x, digits = 1), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(
     date_breaks = "15 days",
