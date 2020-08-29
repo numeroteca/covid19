@@ -25,11 +25,17 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: esCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 period <- "(Actualizado: 2020-08-29)"
-filter_date <- as.Date("2020-08-29")
+filter_date <- as.Date("2020-08-30")
 
 # Load data:
 data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( (date > as.Date("2020-02-25") ) & ( date < filter_date ) )
+
+# Remove last days for unconsolidated data (cases) ----------
+# Barcelona
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date-4 )  ) )
+# Madrid
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-6 )  ) )
 
 # Set colors ---------
 # extends color paletter
@@ -44,9 +50,24 @@ colors_prov[12] <- "#84d3e7"
 
 
 # Remove not prevalent hospitalized data for Murcia
+# Remove not prevalent hospitalized data for Murcia and Navarra early days ---
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   hospitalized = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
-  hospitalized_per_100000 = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 )
+  intensive_care = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
+  hospitalized = ifelse( (province== "Navarra") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
+  intensive_care = ifelse( (province== "Navarra") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
+  hospitalized = ifelse( (province== "Ceuta") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
+  intensive_care = ifelse( (province== "Ceuta") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
+  hospitalized = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
+  intensive_care = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
+  hospitalized = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
+  intensive_care = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
+  hospitalized = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
+  hospitalized_per_100000 = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
+  hospitalized_per_100000 = ifelse( (province== "Navarra") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
+  hospitalized_per_100000 = ifelse( (province== "Ceuta") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
+  hospitalized_per_100000 = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
+  hospitalized_per_100000 = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 )
 )
 
 # create temp dataframes to be able to plot all the values in small multiples
@@ -112,13 +133,14 @@ interactive_dp_p <- ggplotly(interactive_dp, tooltip = "text") %>%
                                     '<br>',
                                     '<sup>',
                                     ' Últimos 50 días. Por provincia. Escala lineal',
-                                    '</sup>'))
-         # , annotations =
-         #   list(x = 1, y = -0.11, text = "<a style='color:grey;' href='https://lab.montera34.com/covid19'>lab.montera34.com/covid19</a> | Data: <a  style='color:grey;'href='https://github.com/montera34/escovid19data9'>esCOVID19data</a>",
-         #        showarrow = F, xref='paper', yref='paper',
-         #        xanchor='right', yanchor='auto', xshift=0, yshift=0,
-         #        font=list(size=15, color="grey")
-         #   )
+                                    '</sup>')),
+         legend = list(font = list(size = 10))
+         , annotations =
+           list(x = 1, y = -0.11, text = "<a style='color:grey;' href='https://lab.montera34.com/covid19'>lab.montera34.com/covid19</a> | Data: <a  style='color:grey;'href='https://github.com/montera34/escovid19data9'>esCOVID19data</a>",
+                showarrow = F, xref='paper', yref='paper',
+                xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                font=list(size=15, color="grey")
+           )
   )
 
 interactive_dp_p 
@@ -178,7 +200,8 @@ interactive_dp_p <- ggplotly(interactive_dp, tooltip = "text") %>%
                 showarrow = F, xref='paper', yref='paper',
                 xanchor='right', yanchor='auto', xshift=0, yshift=0,
                 font=list(size=15, color="grey")
-           )
+           ),
+         legend = list(font = list(size = 10))
   )
 
 interactive_dp_p 
@@ -197,7 +220,7 @@ p <- data_cases_sp_provinces %>%  ungroup(province) %>%
   ggplot() +
   # geom_line(aes(date, daily_cases,group=province, color=ccaa), size= 0.8 ) +
   geom_line( aes(date, cases_PCR_14days/poblacion*100000,group=province, color=ccaa, text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(cases_PCR_14days/poblacion*100000, digits = 1),
-                                                                                big.mark=".", decimal.mark = ","), "" ,"<br>",date )), size= 0.6
+                                                                                big.mark=".", decimal.mark = ","), "" ,"<br>",date )), size= 0.5
              
 ) +
   # geom_point(aes(date, daily_cases, color=ccaa), size= 1 ) +
@@ -258,7 +281,8 @@ p <- ggplotly( p, tooltip = "text") %>%
                 showarrow = F, xref='paper', yref='paper',
                 xanchor='right', yanchor='auto', xshift=0, yshift=0,
                 font=list(size=15, color="grey")
-           )
+           ),
+         legend = list(font = list(size = 10))
   )
 
 p
@@ -270,7 +294,7 @@ p
 p2  <- data_cases_sp_provinces %>%  ungroup(province) %>%
   ggplot() +
   geom_line(aes(date, cases_PCR_14days,group=province, color=ccaa, text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(cases_PCR_14days, digits = 1),
-                                                                                big.mark=".", decimal.mark = ","), " casos en 14 días" ,"<br>",date )), size= 0.6 ) +
+                                                                                big.mark=".", decimal.mark = ","), " casos en 14 días" ,"<br>",date )), size= 0.5 ) +
   # geom_point(aes(date, cases_PCR_14days, color=ccaa), size= 1 ) +
   # geom_text_repel( data = data_cases_sp_provinces %>% group_by(province) %>% filter( !is.na(cases_PCR_14days) ) %>% top_n(1, date) %>% 
   #                    filter ( cases_PCR_14days > 100 & date > filter_date-7),
@@ -319,7 +343,8 @@ p2 <- ggplotly(p2, tooltip = "text") %>%
                 showarrow = F, xref='paper', yref='paper',
                 xanchor='right', yanchor='auto', xshift=0, yshift=0,
                 font=list(size=15, color="grey")
-           )
+           ),
+         legend = list(font = list(size = 10))
   )
 
 p2
@@ -331,8 +356,6 @@ Hospitalizados y UCI
 
 Row {.tabset .tabset-fade}
 -----------------------------------------------------------------------
-
-### Periodo completo
 
 ```{r}
 # Remove not prevalent hospitalized data for Murcia and Navarra early days
@@ -354,7 +377,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 )
 
 # Solamente deja las ccaa prevalentes
-noprevalentes <- c("Rioja, La", "Canarias")
+noprevalentes <- c("")
 
 data_cases_sp_provincesX <- data_cases_sp_provinces %>% filter( ! ccaa %in% noprevalentes ) 
 data_cases_sp_provincesX_sm  <- data_cases_sp_provinces_sm %>% filter( ! ccaa %in% noprevalentes ) 
@@ -366,7 +389,114 @@ colors_provX <- getPalette(colourCount )
 # Change yellow to blue
 colors_provX[1] <- "#a60000"
 colors_provX[12] <- "#84d3e7"
+```
 
+### Hospitalizados
+
+```{r}
+p2  <- data_cases_sp_provincesX %>%
+  ggplot() +
+  geom_line(aes(date, hospitalized,group=province, color=ccaa, text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(hospitalized, digits = 1),
+                                                                                big.mark=".", decimal.mark = ","), " hospitalizados" ,"<br>",date )), size= 0.5) +
+  # geom_line(aes(date, intensive_care,group=province, text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(intensive_care, digits = 1),
+  #                                                                               big.mark=".", decimal.mark = ","), " UCI" ,"<br>",date )), size= 0.7, color = "grey") +
+  scale_color_manual(values = colors_provX) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+                 minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+                 expand = c(0,0.1) ) +
+  scale_x_date(date_breaks = "2 week", 
+               date_labels = "%d/%m",
+               limits=c( min(data_cases_sp_provincesX$date)+7, max(data_cases_sp_provincesX$date )),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = c(0.07,0.7)
+  ) +
+  labs(title = paste0("Hospitalizados prevalentes por COVID-19 en España ", updated ),
+       subtitle = paste0("Por provincia (escala logarítmica). ",period),
+       y = "hospitalizados",
+       x = "fecha",
+       caption = caption_provincia)
+
+
+# save interactvive
+p2 <- ggplotly(p2, tooltip = "text") %>%
+  layout(title = list(text = paste0('Hospitalizados prevalentes por COVID-19 en España',
+                                    '<br>',
+                                    '<sup>',
+                                    'Por provincia (escala logarítmica)',
+                                    '</sup>'))
+         , annotations =
+           list(x = 1, y = -0.11, text = "<a style='color:grey;' href='https://lab.montera34.com/covid19'>lab.montera34.com/covid19</a> | Data: <a  style='color:grey;'href='https://github.com/montera34/escovid19data9'>esCOVID19data</a>",
+                showarrow = F, xref='paper', yref='paper',
+                xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                font=list(size=15, color="grey")
+           ),
+         legend = list(font = list(size = 10))
+  )
+
+p2
+```
+
+
+### UCI
+
+```{r}
+p2  <- data_cases_sp_provincesX %>%
+  ggplot() +
+  geom_line(aes(date, intensive_care,group=province, color=ccaa, text = paste0("<b>", province, " (", ccaa, ")</b><br>", format( round(intensive_care, digits = 1),
+                                                                                big.mark=".", decimal.mark = ","), " UCI" ,"<br>",date )), size= 0.5) +
+  scale_color_manual(values = colors_provX) +
+  scale_y_log10( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE),
+                 minor_breaks = c(seq(1 , 10, 1),seq(10 , 100, 10), seq(100 , 1000, 100), seq(1000 , 10000, 1000)),
+                 expand = c(0,0.1) ) +
+  scale_x_date(date_breaks = "2 week", 
+               date_labels = "%d/%m",
+               limits=c( min(data_cases_sp_provincesX$date)+7, max(data_cases_sp_provincesX$date )),
+               expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position = c(0.07,0.7)
+  ) +
+  labs(title = paste0("UCI (hospitalizados) por COVID-19 en España ", updated ),
+       subtitle = paste0("Por provincia (escala logarítmica). ",period),
+       y = "hospitalizados",
+       x = "fecha",
+       caption = caption_provincia)
+
+
+# save interactvive
+p2 <- ggplotly(p2, tooltip = "text") %>%
+  layout(title = list(text = paste0('UCI (hospitalizados) por COVID-19 en España',
+                                    '<br>',
+                                    '<sup>',
+                                    'Por provincia (escala logarítmica)',
+                                    '</sup>'))
+         , annotations =
+           list(x = 1, y = -0.11, text = "<a style='color:grey;' href='https://lab.montera34.com/covid19'>lab.montera34.com/covid19</a> | Data: <a  style='color:grey;'href='https://github.com/montera34/escovid19data9'>esCOVID19data</a>",
+                showarrow = F, xref='paper', yref='paper',
+                xanchor='right', yanchor='auto', xshift=0, yshift=0,
+                font=list(size=15, color="grey")
+           ),
+         legend = list(font = list(size = 10))
+  )
+
+p2
+```
+
+### Periodo completo (rejilla)
+
+```{r}
 p2  <- data_cases_sp_provincesX %>% filter( ! ccaa %in% noprevalentes ) %>%
   ggplot() +
   geom_line(aes(date, hospitalized,group=province, color="black",
@@ -427,7 +557,7 @@ p2
 
 ```
 
-### Últimos 50 días
+### Últimos 50 días  (rejilla)
 
 ```{r}
 p2  <- data_cases_sp_provincesX %>% filter( ! ccaa %in% noprevalentes ) %>% filter( date > filter_date - 50 ) %>%
@@ -489,6 +619,7 @@ p2 <- ggplotly(p2, tooltip = "text") %>%
 p2
 
 ```
+
 
 
 Datos

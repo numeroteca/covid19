@@ -53,6 +53,8 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces, clm)
 # Extremadura --------------
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=EXT", 
               "data/original/spain/extremadura/extremadura.csv")
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=EXT_as", 
+              "data/original/spain/extremadura/extremadura_zona-salud.csv")
 extremadura <- read.delim("data/original/spain/extremadura/extremadura.csv",sep = ",") %>% mutate (
   date = as.Date( as.character(date))
 ) %>% select(names(data_cases_sp_provinces))
@@ -116,6 +118,41 @@ rm(tenerife,palmas,canarias_bind, canarias_islas)
 
 # Remove last -usually incomplete- day
 data_cases_sp_provinces <- filter(data_cases_sp_provinces, !is.na(date))
+
+# Canarias hospitalizados ----------------
+# save all the islands data
+download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=CANA-hospit", 
+              "data/original/spain/canarias/canaria-hospitalizados.csv")
+
+canarias_hosp <- read.delim("data/original/spain/canarias/canaria-hospitalizados.csv",sep = ",") %>% mutate(
+  date = as.Date(as.character(Fecha),"%d/%m/%y")
+) %>% select( date, everything()) %>% mutate(
+  Provincia = as.character(Provincia),
+  Provincia =  Provincia %>% str_replace_all("Las Palmas", "Palmas, Las"),
+)
+
+canarias_hosp <- canarias_hosp %>% group_by(Provincia,date) %>% arrange(date) %>% summarise(
+  hospitalized_cana = sum(Hospitalizados),
+  intensive_care_1 = sum(UCI...Críticas.con.respirador),
+  intensive_care_2 = sum(UCI...Críticas.sin.respirador),
+  intensive_care_cana = intensive_care_1 + intensive_care_2,
+  source_cana = "https://grafcan1.maps.arcgis.com/apps/opsdashboard/index.html#/6c18fb18eae64df2a5ecca8c4bd846c3",
+  source_name_cana = "Gobierno de Canarias"
+  
+)
+
+data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ) %>% ungroup(),
+                                  canarias_hosp  %>% mutate ( dunique = paste0( date, Provincia) ) %>% ungroup() %>% 
+                                    select(dunique, hospitalized_cana, intensive_care_cana, source_cana, source_name_cana) , 
+                                  by.x="dunique", by.y="dunique", all.x = TRUE) %>% select(-dunique) %>% mutate(
+                                    # add hospitalized data for existing dates and provinces
+                                    hospitalized = ifelse(ccaa=="Canarias", hospitalized_cana ,hospitalized),
+                                    intensive_care = ifelse(ccaa=="Canarias",intensive_care_cana, intensive_care),
+                                    source = as.character(source),
+                                    source = ifelse( ccaa == "Canarias", paste0(source,";",source_cana), source),
+                                    source_name = as.character(source_name),
+                                    source_name = ifelse( ccaa == "Canarias", paste0(source_name,";",source_name_cana), source_name),
+                                  ) %>% select( names(read.delim("data/original/spain/covid19_spain_provincias.csv",sep = ",")) )
 
 # Castilla y León: Remove existing Castilla y León data and add new one from new source ---------------------
 download.file("https://analisis.datosabiertos.jcyl.es/explore/dataset/situacion-epidemiologica-coronavirus-en-castilla-y-leon/download/?format=csv&timezone=Europe/Madrid&lang=en&use_labels_for_header=true&csv_separator=%3B", 
