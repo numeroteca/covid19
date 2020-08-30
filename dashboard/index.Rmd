@@ -24,8 +24,8 @@ library(reshape2)
 caption_en <- "By: lab.montera34.com/covid19 | Data: esCOVID19data. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
-period <- "(Actualizado: 2020-08-29)"
-filter_date <- as.Date("2020-08-30")
+period <- "(Actualizado: 2020-08-30)"
+filter_date <- as.Date("2020-08-31")
 
 # Load data:
 data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
@@ -35,7 +35,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( (date > as.Date("
 # Barcelona
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date-4 )  ) )
 # Madrid
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-6 )  ) )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-7 )  ) )
 
 # Set colors ---------
 # extends color paletter
@@ -48,27 +48,6 @@ colors_prov <- getPalette(colourCount )
 colors_prov[1] <- "#a60000"
 colors_prov[12] <- "#84d3e7"
 
-
-# Remove not prevalent hospitalized data for Murcia
-# Remove not prevalent hospitalized data for Murcia and Navarra early days ---
-data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
-  hospitalized = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
-  intensive_care = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
-  hospitalized = ifelse( (province== "Navarra") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
-  intensive_care = ifelse( (province== "Navarra") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
-  hospitalized = ifelse( (province== "Ceuta") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
-  intensive_care = ifelse( (province== "Ceuta") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
-  hospitalized = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
-  intensive_care = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
-  hospitalized = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
-  intensive_care = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
-  hospitalized = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
-  hospitalized_per_100000 = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
-  hospitalized_per_100000 = ifelse( (province== "Navarra") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
-  hospitalized_per_100000 = ifelse( (province== "Ceuta") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
-  hospitalized_per_100000 = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
-  hospitalized_per_100000 = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 )
-)
 
 # create temp dataframes to be able to plot all the values in small multiples
 data_cases_sp_provinces_sm <- data_cases_sp_provinces %>% filter( date < filter_date)
@@ -359,6 +338,10 @@ Row {.tabset .tabset-fade}
 
 ```{r}
 # Remove not prevalent hospitalized data for Murcia and Navarra early days
+data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( (date > as.Date("2020-02-25") ) & ( date < filter_date ) )
+
+# Remove not prevalent hospitalized data early days ---
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   hospitalized = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
   intensive_care = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
@@ -368,12 +351,14 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   intensive_care = ifelse( (province== "Ceuta") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
   hospitalized = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
   intensive_care = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
-  # hospitalized = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
+  hospitalized = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
+  intensive_care = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
+  hospitalized = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
   hospitalized_per_100000 = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
   hospitalized_per_100000 = ifelse( (province== "Navarra") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
   hospitalized_per_100000 = ifelse( (province== "Ceuta") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
   hospitalized_per_100000 = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
-  # hospitalized_per_100000 = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
+  hospitalized_per_100000 = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 )
 )
 
 # Solamente deja las ccaa prevalentes

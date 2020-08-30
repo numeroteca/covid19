@@ -311,8 +311,9 @@ andalucia <- andalucia_original %>% filter( Territorio != "Andalucía" ) %>%
 # Initial file
 # download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=0b200bc6-3e8a-4991-a9ad-848e31c6cc69&type=3&foto=si&ejecutaDesde=&codConsulta=39464&consTipoVisua=JP",
 # then it changed to this one:
-download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=e31f8668-049c-4c17-a879-e097e9b3dfc8&type=3&foto=si&ejecutaDesde=&codConsulta=38228&consTipoVisua=JP",
-              "data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
+# TODO> a veces no funciona esta descarga por certificados y hay que hacerla a mano
+# download.file("https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/stpivot/stpivot/Print?cube=e31f8668-049c-4c17-a879-e097e9b3dfc8&type=3&foto=si&ejecutaDesde=&codConsulta=38228&consTipoVisua=JP",
+#               "data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv")
 
 andalucia_original2 <- read.delim("data/original/spain/andalucia/andalucia-instituto-estadistica-cartografia.csv", sep=";") %>% select(-X) %>% filter( !(Territorio  == "") )
 andalucia2 <- spread(andalucia_original2, Medida, Valor) #from long to wide format
@@ -933,7 +934,7 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,uniprovinciales)
 
 
 # Catalunya: Overwrite Catalunya provinces cases  data ------------------
-  # Download data from: https://analisi.transparenciacatalunya.cat/Salut/Registre-de-casos-de-COVID-19-realitzats-a-Catalun/jj6z-iyrp/data
+# Download data from: https://analisi.transparenciacatalunya.cat/Salut/Registre-de-casos-de-COVID-19-realitzats-a-Catalun/jj6z-iyrp/data
 download.file("https://analisi.transparenciacatalunya.cat/api/views/jj6z-iyrp/rows.csv?accessType=DOWNLOAD&sorting=true", 
               "data/original/spain/catalunya/Registre_de_casos_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv")
 catalunya <-  read.delim("data/original/spain/catalunya/Registre_de_casos_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
