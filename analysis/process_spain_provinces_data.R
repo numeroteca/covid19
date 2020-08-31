@@ -719,7 +719,7 @@ santiago <- merge( santiago_a %>% select(-Fecha),
                        activos = NA,
                        cases_accumulated_PCR = NA,
                        recovered = NA,
-                       source_name = "Área sanitaria Ourense via @lipido",
+                       source_name = "Área sanitaria Santiago via @lipido",
                        source = "https://github.com/lipido/galicia-covid19/blob/master/santiago.csv;https://github.com/lipido/galicia-covid19/blob/master/santiago.ext.csv",
                        comments = NA
                      ) %>% filter ( date > as.Date("2020-06-03") ) %>% # TODO, change date when more data are gathered
@@ -765,7 +765,7 @@ ferrol <- merge( ferrol_a %>% select(-Fecha),
                      activos = NA,
                      cases_accumulated_PCR = NA,
                      recovered = NA,
-                     source_name = "Área sanitaria Ourense via @lipido",
+                     source_name = "Área sanitaria El Ferrol via @lipido",
                      source = "https://github.com/lipido/galicia-covid19/blob/master/ferrol.csv;https://github.com/lipido/galicia-covid19/blob/master/ferrol.ext.csv",
                      comments = NA
                    ) %>% filter ( date > as.Date("2020-06-03") ) %>% # TODO, change date when more data are gathered
@@ -811,7 +811,7 @@ coruna <- merge( coruna_a %>% select(-Fecha),
                    activos = NA,
                    cases_accumulated_PCR = NA,
                    recovered = NA,
-                   source_name = "Área sanitarias Ourense via @lipido",
+                   source_name = "Área sanitarias A Coruña via @lipido",
                    source = "https://github.com/lipido/galicia-covid19/blob/master/coruna.csv;https://github.com/lipido/galicia-covid19/blob/master/coruna.ext.csv",
                    comments = NA
                  ) %>% filter ( date > as.Date("2020-06-03") ) %>% # TODO, change date when more data are gathered
@@ -835,9 +835,7 @@ coruna_prov <- rbind(santiago, ferrol, coruna) %>%  group_by(date) %>% summarise
   cases_accumulated_PCR = NA,
   recovered = NA,
   source_name = "Áreas sanitarias Santiago, El Ferrol y A Coruña via @lipido",
-  source = "https://github.com/lipido/galicia-covid19/blob/master/santiago.csv;https://github.com/lipido/galicia-covid19/blob/master/santiago.ext.csv;
-  https://github.com/lipido/galicia-covid19/blob/master/ferrol.csv;https://github.com/lipido/galicia-covid19/blob/master/ferrol.ext.csv;
-  https://github.com/lipido/galicia-covid19/blob/master/coruna.csv;https://github.com/lipido/galicia-covid19/blob/master/coruna.ext.csv",
+  source = "https://github.com/lipido/galicia-covid19/blob/master/santiago.csv;https://github.com/lipido/galicia-covid19/blob/master/santiago.ext.csv;https://github.com/lipido/galicia-covid19/blob/master/ferrol.csv;https://github.com/lipido/galicia-covid19/blob/master/ferrol.ext.csv;https://github.com/lipido/galicia-covid19/blob/master/coruna.csv;https://github.com/lipido/galicia-covid19/blob/master/coruna.ext.csv",
   comments = NA
 ) %>% select( date, province, ccaa, new_cases,   PCR, TestAc,              
               activos, hospitalized,intensive_care,  deceased, cases_accumulated, cases_accumulated_PCR, recovered, source_name, source, comments )
