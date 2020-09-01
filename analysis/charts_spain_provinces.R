@@ -21,10 +21,17 @@ data_cases_sp_provinces <- readRDS(file = "data/output/spain/covid19-provincias-
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( (date > as.Date("2020-02-25") ) & ( date < filter_date ) )
 
 # Remove last days for unconsolidated data (cases) ----------
+thres_bcn <- 5
+thres_mad <- 7
+
 # Barcelona
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date-5 )  ) )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date - thres_bcn )  ) )
 # Madrid
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-7 )  ) )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date - thres_mad )  ) )
+
+# non consolidated data
+non_consolidated <- readRDS(file = "data/output/spain/covid19-provincias-spain_consolidated.rds") %>% 
+  filter( ( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date - thres_mad )  ) | ( ( ccaa == "Cataluña" ) & ( date > filter_date - thres_bcn )  ) )
 
 # Set colors ---------
 # extends color paletter
@@ -103,7 +110,10 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
       legend.position =  "none"
     ) +
     labs(title = paste0("Media de casos por día (media 7 días) por COVID-19 en ",prov, " ", updated ),
-         subtitle = paste0("Línea de puntos:  casos PCR+ notificados, media de 7 días. Por provincia. ",period),
+         subtitle = paste0("Línea de puntos:  casos PCR+ notificados, media de 7 días. Por provincia. ",
+                           ifelse( prov=="Madrid, Comunidad de", "En gris dato no consolidado. ",""),
+                           ifelse( prov=="Cataluña", "En gris dato no consolidado. ",""),
+                           period),
          y = "casos por día (media 7 días)",
          x = "fecha",
          caption = caption_provincia)
@@ -116,7 +126,12 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
     the_province  <- the_province + 
       geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11")  +
       geom_point(aes(date, daily_cases_PCR, color=province), size= 1.4, alpha = 0.7, shape= 21 ) +
-      geom_line(aes(date, daily_cases_PCR, color=province, group=province), size= 0.3, alpha = 0.5, linetype="11" ) 
+      geom_line(aes(date, daily_cases_PCR, color=province, group=province), size= 0.3, alpha = 0.5, linetype="11" ) +
+      # Non consolidated data
+      geom_point(data = non_consolidated  %>% filter (ccaa == prov ), 
+                 aes(date, daily_cases_PCR), size= 1.4, alpha = 0.7, shape= 21, color="#999999" ) +
+      geom_line(data = non_consolidated  %>% filter (ccaa == prov ), 
+                aes(date, daily_cases_PCR, group=province ), size= 0.4, alpha = 0.7, linetype="11", color="#999999")
     # extra line for places with gaps in the data.
     # geom_line(data = pcr_avg7 %>% filter (ccaa == prov ), aes(x = date, y = daily_cases_PCR_avg7_complete, group = province, color=province), 
     # size= 1.4, linetype = "11")
@@ -128,6 +143,8 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
        prov=="Rioja, La" ) {
     the_province  <- the_province + 
       geom_col(aes(date, daily_cases_PCR, fill=province), width=1, alpha = 0.3) +
+      # non consolidated
+      geom_col(data = non_consolidated  %>% filter (ccaa == prov ), aes(date, daily_cases_PCR, fill=province), width=1, alpha = 0.1, fill="#999999") +
       # quito la línea de casos
       # geom_line(aes(date, daily_cases_avg7,group=province, color=province), size= 1.5, se = FALSE, span = 0.6 ) +
       geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11") 
@@ -222,7 +239,10 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
       legend.position =  "none"
     ) +
     labs(title = paste0("Media de casos por día (media 7 días) por COVID-19 en ",prov, " ", updated ),
-         subtitle = paste0("Línea de puntos: casos PCR+, media de 7 días. Últimos 50 días. Por provincia. ",period),
+         subtitle = paste0("Línea de puntos: casos PCR+, media de 7 días. Últimos 50 días. Por provincia. ", 
+                           ifelse( prov=="Madrid, Comunidad de", "En gris dato no consolidado. ",""),
+                           ifelse( prov=="Cataluña", "En gris dato no consolidado. ",""),
+                           period),
          y = "casos por día (media 7 días)",
          x = "fecha",
          caption = caption_provincia)
@@ -235,7 +255,12 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
     the_province  <- the_province + 
       geom_line( aes(date, daily_cases_PCR_avg7, group=province, color=province), size= 1.4, linetype = "11")  +
       geom_point(aes(date, daily_cases_PCR, color=province), size= 1.4, alpha = 0.7, shape= 21 ) +
-      geom_line(aes(date, daily_cases_PCR, color=province, group=province), size= 0.3, alpha = 0.5, linetype="11" ) 
+      geom_line(aes(date, daily_cases_PCR, color=province, group=province), size= 0.3, alpha = 0.5, linetype="11" ) +
+      # Non consolidated data
+      geom_point(data = non_consolidated  %>% filter (ccaa == prov ), 
+                 aes(date, daily_cases_PCR), size= 1.4, alpha = 0.7, shape= 21, color="#999999" ) +
+      geom_line(data = non_consolidated  %>% filter (ccaa == prov ), 
+                aes(date, daily_cases_PCR, group=province ), size= 0.4, alpha = 0.7, linetype="11", color="#999999")
     # extra line for places with gaps in the data.
     # geom_line(data = pcr_avg7 %>% filter (ccaa == prov ), aes(x = date, y = daily_cases_PCR_avg7_complete, group = province, color=province), 
     # size= 1.4, linetype = "11")
@@ -247,6 +272,8 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
        prov=="Rioja, La" ) {
     the_province  <- the_province + 
       geom_col(aes(date, daily_cases_PCR, fill=province), width=1, alpha = 0.3) +
+      # non consolidated
+      geom_col(data = non_consolidated  %>% filter (ccaa == prov ), aes(date, daily_cases_PCR, fill=province), width=1, alpha = 0.1, fill="#999999") +
       # TODO: add numer to column
       # geom_text(aes(date, daily_cases_PCR, label=daily_cases_PCR, color=province ), alpha = 1, vjuszt = 1, size=4, color="white" ) +
       # quito la línea de casos
