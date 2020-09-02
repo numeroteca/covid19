@@ -32,10 +32,14 @@ data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provinci
 data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( (date > as.Date("2020-02-25") ) & ( date < filter_date ) )
 
 # Remove last days for unconsolidated data (cases) ----------
+thres_bcn <- 2
+thres_mad <- 5
+
 # Barcelona
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date-3 )  ) )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Cataluña" ) & ( date > filter_date - thres_bcn )  ) )
 # Madrid
-data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date-6 )  ) )
+data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( !( ( ccaa == "Madrid, Comunidad de" ) & ( date > filter_date - thres_mad )  ) )
+
 
 # Set colors ---------
 # extends color paletter

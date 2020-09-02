@@ -4,7 +4,7 @@ data_cases_sp_provinces <- readRDS(file = "data/output/spain/covid19-provincias-
 
 noprevalentes <- c("")
 updated <- ""
-period <- "(Actualizado: 2020-08-31)"
+period <- "(Actualizado: 2020-09-01)"
 
 # 13. Todos los datos juntos ------------
 # Calcula máximos
@@ -278,4 +278,43 @@ data_cases_sp_provinces %>% filter ( (province == "Barcelona" ) & (date > filter
        color = "Día de la semana",
        caption = caption_provincia) 
 
+dev.off()
+
+
+
+
+png(filename=paste0("img/spain/experiments/covid19_casos-dia-ccaa.png", sep = ""),width = 1000,height = 600)
+spain_ccaa %>% mutate (
+  daily_cases_PCR_avg7 = ifelse(ccaa =="Galicia", daily_cases_avg7, daily_cases_PCR_avg7)
+  ) %>% filter ((date > filter_date - 60) &  date < filter_date - 0  ) %>%
+  ggplot(aes(x = date, y = daily_cases_PCR_avg7 , fill = ccaa)) +
+  geom_area(col = "black", lwd=0.1 ) +
+  scale_fill_manual(values = colors_prov ) +
+  # scale_fill_viridis_d() +
+  annotate("text", x = as.Date("2020-08-15"), y = 3000,
+           label = "Cataluña", size = 6, alpha = .7, angle = 15)  +
+  annotate("text", x = as.Date("2020-08-21"), y = 1500,
+           label = "C. de Madrid", size = 6, alpha = .7, angle = 10)  +
+  scale_y_continuous( labels=function(x) format(round(x, digits = 1), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(
+    date_breaks = "1 week",
+    date_labels = "%d/%m",
+    # limits=c( min(municipios$date)+0, max(municipios$date)+1),
+    expand = c(0,0)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "right"
+  ) +
+  labs(title = paste0("Media de casos por día (media 7 días) por COVID-19 en España", updated ),
+       subtitle = paste0("Últimos 50 días. Por comunidades autónomas. ", 
+                         period),
+       y = "casos por día (media 7 días)",
+       x = "fecha",
+       caption = caption_provincia)
 dev.off()

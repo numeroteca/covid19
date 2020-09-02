@@ -288,7 +288,7 @@ for ( i in 1:length(levels(data_cases_sp_provinces$ccaa))  ) {
     the_province  <- the_province + geom_text_repel(
       data = data_cases_sp_provinces %>% filter( ccaa == prov ) %>% group_by(province) %>% filter(!is.na(daily_cases_PCR_avg7) ) %>% top_n(1, date),
       aes(date, daily_cases_PCR_avg7, color=province,
-          label=paste(format(daily_cases_PCR_avg7, nsmall=1, big.mark=".", decimal.mark = ","), "(PCR+)", substr( province,1,10))),
+          label=paste(format(daily_cases_PCR_avg7, nsmall=1, big.mark=".", decimal.mark = ","), "(PCR+)", substr( province,1,12))),
       nudge_x = 1, # adjust the starting y position of the text label
       size=5,
       hjust=0,
@@ -4220,7 +4220,7 @@ data_cases_sp_provinces %>%
   geom_line(aes(date, cases_PCR_14days,group=province, color=ccaa), size= 0.8 ) +
   geom_point(aes(date, cases_PCR_14days, color=ccaa), size= 1 ) +
   geom_text_repel( data = data_cases_sp_provinces %>% group_by(province) %>% filter( !is.na(cases_PCR_14days) ) %>% top_n(1, date) %>% 
-                     filter ( cases_PCR_14days > 500 & date > filter_date-7),
+                     filter ( cases_PCR_14days > 600 & date > filter_date-7),
                    aes(date, cases_PCR_14days, color=ccaa, label=paste(format(cases_PCR_14days, nsmall=0, big.mark=".", decimal.mark = ","),province)),
                    nudge_x = 4, # adjust the starting y position of the text label
                    size=5,
@@ -4405,7 +4405,7 @@ data_cases_sp_provinces %>%
   # geom_point(aes(date, cases_PCR_14days/poblacion*100000, color=ccaa), size= 1 ) +
   geom_text_repel(
     data = data_cases_sp_provinces %>% group_by(province) %>% filter( !is.na(cases_PCR_14days) ) %>% top_n(1, date) %>% 
-      filter ( cases_PCR_14days/poblacion*100000 > 200 & date > filter_date-4),
+      filter ( cases_PCR_14days/poblacion*100000 > 220 & date > filter_date-4),
     # data=filter( data_cases_sp_provinces, date==max(data_cases_sp_provinces$date) & cases_14days/poblacion*100000 > 40),
     aes(date, cases_PCR_14days/poblacion*100000, color=ccaa, 
         label=paste(format( round(cases_PCR_14days/poblacion*100000, digits = 1), nsmall=1, big.mark=".", decimal.mark = ","),province)),
@@ -5074,7 +5074,7 @@ data_cases_sp_provincesX %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = c(0.5,0.7)
+    legend.position = c(0.5,0.8)
   ) +
   labs(title = paste0("Hospitalizados prevalentes por COVID-19 en España ", updated ),
        subtitle = paste0("Por provincia (escala logarítmica). ",period),
