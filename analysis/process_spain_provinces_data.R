@@ -1380,18 +1380,20 @@ madrid_a <- madrid_original %>%
     date = as.Date(as.character(Fecha)),
     province = "Madrid",
     ccaa = "Madrid, Comunidad de",
-    ine_code = 28
+    ine_code = 28,
+    #se resta un día porque la fecha corresponde con los datos del día anterior al informe
+    date = date - 1
   ) %>% rename(
     hospitalized = hospitalizados_dia,
     intensive_care = uci_dia,
     deceased = Fallecidos,
-    # TODO terminarinsertar los casos
-    cases_accumulated_PCR = CASOS_PCR
+    # TODO terminar insertar los casos
+    cases_accumulated_PCR = CASOS_PCR,
   )
 
 madrid_b <- madrid_original2 %>%
   mutate(
-    date = as.Date(as.character(FECHA)),
+    date = as.Date(as.character(FECHA)), 
     province = "Madrid",
     ccaa = "Madrid, Comunidad de",
     ine_code = 28
