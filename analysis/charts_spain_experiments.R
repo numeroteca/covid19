@@ -27,11 +27,15 @@ all <- merge (data_cases_sp_provinces,
 
 png(filename=paste("img/spain/experiments/covid19_todo-junto-provincia-lineal.png", sep = ""),width = 1500,height = 1000)
 data_cases_sp_provinces %>% filter( ! ccaa %in% noprevalentes ) %>% filter( date > filter_date -50 ) %>%
+  filter( province == "Madrid") %>%
   ggplot() +
   geom_line(aes(date, daily_cases_PCR_avg7,group=province, color="#5b5bbb"), size=0.8 ) +
-  geom_line(aes(date, hospitalized,group=province, color="violet"), size=0.8 ) +
-  geom_line(aes(date, intensive_care*10,group=province, color= "red"), size=0.8 ) +
-  geom_line(aes(date, daily_deaths_avg7*100,group=province, color= "black"), size=0.8 ) +
+  # geom_line(aes(date, hospitalized,group=province, color="violet"), size=0.8 ) +
+  # geom_line(aes(date, intensive_care*10,group=province, color= "red"), size=0.8 ) +
+  # geom_line(aes(date, daily_deaths_avg7*100,group=province, color= "black"), size=0.8 ) +
+  geom_line(aes(date-3, hospitalized *1,group=province, color="violet"), size=0.8 ) +
+  geom_line(aes(date-3, intensive_care*10.5,group=province, color= "red"), size=0.8 ) +
+  geom_line(aes(date-12, daily_deaths_avg7*105,group=province, color= "black"), size=0.8 ) +
   scale_color_identity(
     guide = "legend",
     labels = c("Casos PCR+","Fallecidos x100","UCI x10","Hospitalizados x1"),

@@ -2,7 +2,7 @@ download.file("https://analisi.transparenciacatalunya.cat/api/views/jj6z-iyrp/ro
               "data/original/spain/catalunya/Registre_de_casos_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv")
 catalunya <-  read.delim("data/original/spain/catalunya/Registre_de_casos_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
 
-period_cat <- "Actualizado: 2020-08-29"
+period_cat <- "Actualizado: 2020-09-03"
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19/cat.html) | Datos: Transparencia Catalunya"
 
 # creates date variable

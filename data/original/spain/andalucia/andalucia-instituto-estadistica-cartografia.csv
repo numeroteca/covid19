@@ -1,4 +1,220 @@
 Fecha;Territorio;Medida;Valor;
+03/09/2020;Andalucía;Confirmados PCR;32689;
+03/09/2020;Andalucía;Confirmados PCR 14 días;9710;
+03/09/2020;Andalucía;Confirmados PCR 7 días;4856;
+03/09/2020;Andalucía;Total confirmados ;37586;
+03/09/2020;Andalucía;Hospitalizados;7460;
+03/09/2020;Andalucía;Total UCI;877;
+03/09/2020;Andalucía;Fallecidos;1524;
+03/09/2020;Andalucía;Curados;18285;
+03/09/2020;Almería;Confirmados PCR;5147;
+03/09/2020;Almería;Confirmados PCR 14 días;1811;
+03/09/2020;Almería;Confirmados PCR 7 días;885;
+03/09/2020;Almería;Total confirmados ;5425;
+03/09/2020;Almería;Hospitalizados;576;
+03/09/2020;Almería;Total UCI;84;
+03/09/2020;Almería;Fallecidos;82;
+03/09/2020;Almería;Curados;1669;
+03/09/2020;Cádiz;Confirmados PCR;3391;
+03/09/2020;Cádiz;Confirmados PCR 14 días;1160;
+03/09/2020;Cádiz;Confirmados PCR 7 días;595;
+03/09/2020;Cádiz;Total confirmados ;3719;
+03/09/2020;Cádiz;Hospitalizados;711;
+03/09/2020;Cádiz;Total UCI;93;
+03/09/2020;Cádiz;Fallecidos;182;
+03/09/2020;Cádiz;Curados;1795;
+03/09/2020;Córdoba;Confirmados PCR;3202;
+03/09/2020;Córdoba;Confirmados PCR 14 días;982;
+03/09/2020;Córdoba;Confirmados PCR 7 días;473;
+03/09/2020;Córdoba;Total confirmados ;3607;
+03/09/2020;Córdoba;Hospitalizados;658;
+03/09/2020;Córdoba;Total UCI;85;
+03/09/2020;Córdoba;Fallecidos;121;
+03/09/2020;Córdoba;Curados;1847;
+03/09/2020;Granada;Confirmados PCR;4471;
+03/09/2020;Granada;Confirmados PCR 14 días;923;
+03/09/2020;Granada;Confirmados PCR 7 días;449;
+03/09/2020;Granada;Total confirmados ;5276;
+03/09/2020;Granada;Hospitalizados;1334;
+03/09/2020;Granada;Total UCI;142;
+03/09/2020;Granada;Fallecidos;298;
+03/09/2020;Granada;Curados;3044;
+03/09/2020;Huelva;Confirmados PCR;724;
+03/09/2020;Huelva;Confirmados PCR 14 días;166;
+03/09/2020;Huelva;Confirmados PCR 7 días;98;
+03/09/2020;Huelva;Total confirmados ;851;
+03/09/2020;Huelva;Hospitalizados;233;
+03/09/2020;Huelva;Total UCI;32;
+03/09/2020;Huelva;Fallecidos;51;
+03/09/2020;Huelva;Curados;504;
+03/09/2020;Jaén;Confirmados PCR;2372;
+03/09/2020;Jaén;Confirmados PCR 14 días;534;
+03/09/2020;Jaén;Confirmados PCR 7 días;297;
+03/09/2020;Jaén;Total confirmados ;2870;
+03/09/2020;Jaén;Hospitalizados;827;
+03/09/2020;Jaén;Total UCI;96;
+03/09/2020;Jaén;Fallecidos;194;
+03/09/2020;Jaén;Curados;1953;
+03/09/2020;Málaga;Confirmados PCR;8451;
+03/09/2020;Málaga;Confirmados PCR 14 días;2832;
+03/09/2020;Málaga;Confirmados PCR 7 días;1406;
+03/09/2020;Málaga;Total confirmados ;10233;
+03/09/2020;Málaga;Hospitalizados;1787;
+03/09/2020;Málaga;Total UCI;178;
+03/09/2020;Málaga;Fallecidos;299;
+03/09/2020;Málaga;Curados;4300;
+03/09/2020;Sevilla;Confirmados PCR;4931;
+03/09/2020;Sevilla;Confirmados PCR 14 días;1302;
+03/09/2020;Sevilla;Confirmados PCR 7 días;653;
+03/09/2020;Sevilla;Total confirmados ;5605;
+03/09/2020;Sevilla;Hospitalizados;1334;
+03/09/2020;Sevilla;Total UCI;167;
+03/09/2020;Sevilla;Fallecidos;297;
+03/09/2020;Sevilla;Curados;3173;
+02/09/2020;Andalucía;Confirmados PCR;31651;
+02/09/2020;Andalucía;Confirmados PCR 14 días;9367;
+02/09/2020;Andalucía;Confirmados PCR 7 días;4795;
+02/09/2020;Andalucía;Total confirmados ;36548;
+02/09/2020;Andalucía;Hospitalizados;7403;
+02/09/2020;Andalucía;Total UCI;871;
+02/09/2020;Andalucía;Fallecidos;1521;
+02/09/2020;Andalucía;Curados;18181;
+02/09/2020;Almería;Confirmados PCR;5013;
+02/09/2020;Almería;Confirmados PCR 14 días;1814;
+02/09/2020;Almería;Confirmados PCR 7 días;916;
+02/09/2020;Almería;Total confirmados ;5291;
+02/09/2020;Almería;Hospitalizados;573;
+02/09/2020;Almería;Total UCI;84;
+02/09/2020;Almería;Fallecidos;81;
+02/09/2020;Almería;Curados;1646;
+02/09/2020;Cádiz;Confirmados PCR;3257;
+02/09/2020;Cádiz;Confirmados PCR 14 días;1112;
+02/09/2020;Cádiz;Confirmados PCR 7 días;566;
+02/09/2020;Cádiz;Total confirmados ;3585;
+02/09/2020;Cádiz;Hospitalizados;699;
+02/09/2020;Cádiz;Total UCI;92;
+02/09/2020;Cádiz;Fallecidos;182;
+02/09/2020;Cádiz;Curados;1795;
+02/09/2020;Córdoba;Confirmados PCR;3127;
+02/09/2020;Córdoba;Confirmados PCR 14 días;1002;
+02/09/2020;Córdoba;Confirmados PCR 7 días;496;
+02/09/2020;Córdoba;Total confirmados ;3532;
+02/09/2020;Córdoba;Hospitalizados;645;
+02/09/2020;Córdoba;Total UCI;83;
+02/09/2020;Córdoba;Fallecidos;121;
+02/09/2020;Córdoba;Curados;1845;
+02/09/2020;Granada;Confirmados PCR;4394;
+02/09/2020;Granada;Confirmados PCR 14 días;908;
+02/09/2020;Granada;Confirmados PCR 7 días;471;
+02/09/2020;Granada;Total confirmados ;5199;
+02/09/2020;Granada;Hospitalizados;1328;
+02/09/2020;Granada;Total UCI;142;
+02/09/2020;Granada;Fallecidos;298;
+02/09/2020;Granada;Curados;3043;
+02/09/2020;Huelva;Confirmados PCR;711;
+02/09/2020;Huelva;Confirmados PCR 14 días;158;
+02/09/2020;Huelva;Confirmados PCR 7 días;91;
+02/09/2020;Huelva;Total confirmados ;838;
+02/09/2020;Huelva;Hospitalizados;233;
+02/09/2020;Huelva;Total UCI;32;
+02/09/2020;Huelva;Fallecidos;51;
+02/09/2020;Huelva;Curados;504;
+02/09/2020;Jaén;Confirmados PCR;2302;
+02/09/2020;Jaén;Confirmados PCR 14 días;480;
+02/09/2020;Jaén;Confirmados PCR 7 días;268;
+02/09/2020;Jaén;Total confirmados ;2800;
+02/09/2020;Jaén;Hospitalizados;824;
+02/09/2020;Jaén;Total UCI;96;
+02/09/2020;Jaén;Fallecidos;194;
+02/09/2020;Jaén;Curados;1917;
+02/09/2020;Málaga;Confirmados PCR;8041;
+02/09/2020;Málaga;Confirmados PCR 14 días;2592;
+02/09/2020;Málaga;Confirmados PCR 7 días;1314;
+02/09/2020;Málaga;Total confirmados ;9823;
+02/09/2020;Málaga;Hospitalizados;1778;
+02/09/2020;Málaga;Total UCI;178;
+02/09/2020;Málaga;Fallecidos;298;
+02/09/2020;Málaga;Curados;4300;
+02/09/2020;Sevilla;Confirmados PCR;4806;
+02/09/2020;Sevilla;Confirmados PCR 14 días;1301;
+02/09/2020;Sevilla;Confirmados PCR 7 días;673;
+02/09/2020;Sevilla;Total confirmados ;5480;
+02/09/2020;Sevilla;Hospitalizados;1323;
+02/09/2020;Sevilla;Total UCI;164;
+02/09/2020;Sevilla;Fallecidos;296;
+02/09/2020;Sevilla;Curados;3131;
+01/09/2020;Andalucía;Confirmados PCR;30767;
+01/09/2020;Andalucía;Confirmados PCR 14 días;9048;
+01/09/2020;Andalucía;Confirmados PCR 7 días;4676;
+01/09/2020;Andalucía;Total confirmados ;35664;
+01/09/2020;Andalucía;Hospitalizados;7333;
+01/09/2020;Andalucía;Total UCI;867;
+01/09/2020;Andalucía;Fallecidos;1515;
+01/09/2020;Andalucía;Curados;18056;
+01/09/2020;Almería;Confirmados PCR;4851;
+01/09/2020;Almería;Confirmados PCR 14 días;1768;
+01/09/2020;Almería;Confirmados PCR 7 días;875;
+01/09/2020;Almería;Total confirmados ;5129;
+01/09/2020;Almería;Hospitalizados;556;
+01/09/2020;Almería;Total UCI;81;
+01/09/2020;Almería;Fallecidos;78;
+01/09/2020;Almería;Curados;1602;
+01/09/2020;Cádiz;Confirmados PCR;3186;
+01/09/2020;Cádiz;Confirmados PCR 14 días;1123;
+01/09/2020;Cádiz;Confirmados PCR 7 días;586;
+01/09/2020;Cádiz;Total confirmados ;3514;
+01/09/2020;Cádiz;Hospitalizados;692;
+01/09/2020;Cádiz;Total UCI;92;
+01/09/2020;Cádiz;Fallecidos;181;
+01/09/2020;Cádiz;Curados;1790;
+01/09/2020;Córdoba;Confirmados PCR;3040;
+01/09/2020;Córdoba;Confirmados PCR 14 días;965;
+01/09/2020;Córdoba;Confirmados PCR 7 días;476;
+01/09/2020;Córdoba;Total confirmados ;3445;
+01/09/2020;Córdoba;Hospitalizados;635;
+01/09/2020;Córdoba;Total UCI;83;
+01/09/2020;Córdoba;Fallecidos;121;
+01/09/2020;Córdoba;Curados;1826;
+01/09/2020;Granada;Confirmados PCR;4321;
+01/09/2020;Granada;Confirmados PCR 14 días;897;
+01/09/2020;Granada;Confirmados PCR 7 días;473;
+01/09/2020;Granada;Total confirmados ;5126;
+01/09/2020;Granada;Hospitalizados;1320;
+01/09/2020;Granada;Total UCI;142;
+01/09/2020;Granada;Fallecidos;298;
+01/09/2020;Granada;Curados;3040;
+01/09/2020;Huelva;Confirmados PCR;696;
+01/09/2020;Huelva;Confirmados PCR 14 días;157;
+01/09/2020;Huelva;Confirmados PCR 7 días;92;
+01/09/2020;Huelva;Total confirmados ;823;
+01/09/2020;Huelva;Hospitalizados;233;
+01/09/2020;Huelva;Total UCI;32;
+01/09/2020;Huelva;Fallecidos;51;
+01/09/2020;Huelva;Curados;504;
+01/09/2020;Jaén;Confirmados PCR;2271;
+01/09/2020;Jaén;Confirmados PCR 14 días;468;
+01/09/2020;Jaén;Confirmados PCR 7 días;277;
+01/09/2020;Jaén;Total confirmados ;2769;
+01/09/2020;Jaén;Hospitalizados;825;
+01/09/2020;Jaén;Total UCI;96;
+01/09/2020;Jaén;Fallecidos;195;
+01/09/2020;Jaén;Curados;1914;
+01/09/2020;Málaga;Confirmados PCR;7715;
+01/09/2020;Málaga;Confirmados PCR 14 días;2420;
+01/09/2020;Málaga;Confirmados PCR 7 días;1244;
+01/09/2020;Málaga;Total confirmados ;9497;
+01/09/2020;Málaga;Hospitalizados;1759;
+01/09/2020;Málaga;Total UCI;178;
+01/09/2020;Málaga;Fallecidos;298;
+01/09/2020;Málaga;Curados;4284;
+01/09/2020;Sevilla;Confirmados PCR;4687;
+01/09/2020;Sevilla;Confirmados PCR 14 días;1250;
+01/09/2020;Sevilla;Confirmados PCR 7 días;653;
+01/09/2020;Sevilla;Total confirmados ;5361;
+01/09/2020;Sevilla;Hospitalizados;1313;
+01/09/2020;Sevilla;Total UCI;163;
+01/09/2020;Sevilla;Fallecidos;293;
+01/09/2020;Sevilla;Curados;3096;
 31/08/2020;Andalucía;Confirmados PCR;29812;
 31/08/2020;Andalucía;Confirmados PCR 14 días;8629;
 31/08/2020;Andalucía;Confirmados PCR 7 días;4320;
@@ -13536,6 +13752,366 @@ Fecha;Territorio;Medida;Valor;
 26/02/2020;Sevilla;Fallecidos;0;
 26/02/2020;Sevilla;Curados;;
 
+          
+               
+                    
+               
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
+          
+               
+                    
+               
+               
+               
+               
+               
+               
+               
+               
+               
+          
           
                
                     
