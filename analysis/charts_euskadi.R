@@ -478,7 +478,7 @@ euskadi_total %>% #filter( hospital == "14 Sta Marina") %>%
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(
-                # date_breaks = "3 day", 
+                date_breaks = "1 month", 
                date_labels = "%m",
                # limits=c( min(euskadi_hosp$date), max(euskadi_hosp$date +20)),
                expand = c(0,0) 
@@ -515,7 +515,7 @@ euskadi_total %>%
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(
-    # date_breaks = "3 day", 
+    date_breaks = "1 month", 
     date_labels = "%m",
     # limits=c( min(euskadi_hosp$date), max(euskadi_hosp$date +20)),
     expand = c(0,0) 
@@ -578,7 +578,7 @@ euskadi_total %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(
-    # date_breaks = "3 day", 
+    date_breaks = "1 month", 
     date_labels = "%m",
     limits=c( min(euskadi_total$date), max(euskadi_hosp$date +70)),
     expand = c(0,0)
@@ -611,7 +611,7 @@ euskadi_total %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(
-    # date_breaks = "3 day", 
+    date_breaks = "1 month",
     date_labels = "%m",
     limits=c( min(euskadi_total$date), max(euskadi_hosp$date +30)),
     expand = c(0,0)
@@ -644,7 +644,7 @@ euskadi_total %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(
-    # date_breaks = "3 day", 
+    date_breaks = "1 month", 
     date_labels = "%m",
     limits=c( min(euskadi_total$date), max(euskadi_hosp$date +30)),
     expand = c(0,0)
@@ -678,7 +678,7 @@ euskadi_total %>%
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(
-    # date_breaks = "3 day", 
+    date_breaks = "1 month", 
     date_labels = "%m",
     limits=c( min(euskadi_total$date), max(euskadi_hosp$date)),
     expand = c(0,0)
@@ -1151,7 +1151,7 @@ osi %>% # filter( name %in% municipios_top$name) %>%
   scale_x_date(
     date_breaks = "15 days",
     date_labels = "%d/%m",
-    limits=c( min(municipios$date)+70, max(municipios$date)+1),
+    limits=c( min(municipios$date)+70, max(municipios$date)+2),
     expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
@@ -1184,7 +1184,7 @@ osi %>% # filter( name %in% municipios_top$name) %>%
   scale_x_date(
     date_breaks = "15 days",
     date_labels = "%d/%m",
-    limits=c( min(municipios$date)+70, max(municipios$date) +1),
+    limits=c( min(municipios$date)+70, max(municipios$date) +2),
     expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
@@ -1243,7 +1243,7 @@ municipios %>% filter( name %in% municipios_top$name) %>%
   scale_x_date(
     date_breaks = "15 days",
     date_labels = "%d/%m",
-    limits=c( min(municipios$date)+70, max(municipios$date)+1),
+    limits=c( min(municipios$date)+70, max(municipios$date)+2),
     expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
@@ -1276,7 +1276,7 @@ municipios %>% filter( name %in% municipios_top$name) %>%
   scale_x_date(
     date_breaks = "15 days",
     date_labels = "%d/%m",
-    limits=c( min(municipios$date)+70, max(municipios$date)+1),
+    limits=c( min(municipios$date)+70, max(municipios$date)+2),
     expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
