@@ -1395,7 +1395,9 @@ colors_prov[12] <- "#84d3e7"
 
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=EUS", 
               "data/original/spain/euskadi/pais-vasco.csv")
-euskadi <- read.delim("data/original/spain/euskadi/pais-vasco.csv", sep=",")
+euskadi <- read.delim("data/original/spain/euskadi/pais-vasco.csv", sep=",") %>% filter(
+  province != "Euskadi"
+)
 otros <- euskadi %>% filter( province == "Araba/Álava" & !is.na(PCR_diario_residencia_fuera_de_euskadi)) %>% 
   select(date,PCR_diario_residencia_fuera_de_euskadi) %>% mutate(
     province = "Residentes fuera de Euskadi",

@@ -402,7 +402,9 @@ data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique =
 # País Vasco --------------
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=EUS", 
               "data/original/spain/euskadi/pais-vasco.csv")
-euskadi <- read.delim("data/original/spain/euskadi/pais-vasco.csv", sep=",") %>% select(-PCR_diario_residencia_fuera_de_euskadi)
+euskadi <- read.delim("data/original/spain/euskadi/pais-vasco.csv", sep=",") %>% select(-PCR_diario_residencia_fuera_de_euskadi) %>% filter(
+  province != "Euskadi"
+) %>% select( -hospitalizados_ese_dia)
 
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,euskadi) 
 
@@ -1606,8 +1608,8 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 ) %>% select(-dunique,-deceassed_datadista)
 
 # Madrid substitute list of PCR+ by Comunidad de Madrid data --------
-download.file("https://raw.githubusercontent.com/alfonsotwr/snippets/master/covidia-cam/madrid-pcr.csv", 
-              "data/original/spain/madrid/madrid-pcr.csv")
+# download.file("https://raw.githubusercontent.com/alfonsotwr/snippets/master/covidia-cam/madrid-pcr.csv", 
+#               "data/original/spain/madrid/madrid-pcr.csv")
 madrid_pcr <- read.delim("data/original/spain/madrid/madrid-pcr.csv",sep = ",") %>% mutate(
   date = as.Date(as.character(Fecha), "%Y-%m-%d")
 )
@@ -2112,10 +2114,10 @@ data_cases_sp_provinces$hospitalized_per_100000 <- round( data_cases_sp_province
 data_cases_sp_provinces <- data_cases_sp_provinces %>% 
     group_by(province) %>% arrange(date) %>% 
   mutate( 
-    cases_14days = cases_accumulated - lag(cases_accumulated,13),
-    cases_7days = cases_accumulated - lag(cases_accumulated,6),
-    cases_PCR_14days = cases_accumulated_PCR - lag(cases_accumulated_PCR,13),
-    cases_PCR_7days = cases_accumulated_PCR - lag(cases_accumulated_PCR,6),
+    cases_14days = cases_accumulated - lag(cases_accumulated,14),
+    cases_7days = cases_accumulated - lag(cases_accumulated,7),
+    cases_PCR_14days = cases_accumulated_PCR - lag(cases_accumulated_PCR,14),
+    cases_PCR_7days = cases_accumulated_PCR - lag(cases_accumulated_PCR,7),
     daily_cases = cases_accumulated - lag(cases_accumulated),
     daily_cases_avg7 =  round( ( daily_cases + lag(daily_cases,1)+lag(daily_cases,2)+
                                    lag(daily_cases,3)+lag(daily_cases,4)+lag(daily_cases,5)+lag(daily_cases,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
@@ -2298,15 +2300,16 @@ spain_ccaa <- to_agreggate %>% group_by(date, ccaa) %>% summarise(
   num_casos_prueba_pcr = sum(num_casos_prueba_pcr, 0),
   num_casos_prueba_test_ac = sum(num_casos_prueba_test_ac, 0),
   num_casos_prueba_otras = sum(num_casos_prueba_otras, 0),
-  num_casos_prueba_desconocida = sum(num_casos_prueba_desconocida, 0)
+  num_casos_prueba_desconocida = sum(num_casos_prueba_desconocida, 0),
+  poblacion = sum(poblacion)
 )
 
 spain_ccaa <- spain_ccaa %>% group_by(ccaa) %>% arrange(date) %>% 
   mutate( 
-    cases_14days = cases_accumulated - lag(cases_accumulated,13),
-    cases_7days = cases_accumulated - lag(cases_accumulated,6),
-    cases_PCR_14days = cases_accumulated_PCR - lag(cases_accumulated_PCR,13),
-    cases_PCR_7days = cases_accumulated_PCR - lag(cases_accumulated_PCR,6),
+    cases_14days = cases_accumulated - lag(cases_accumulated,14),
+    cases_7days = cases_accumulated - lag(cases_accumulated,7),
+    cases_PCR_14days = cases_accumulated_PCR - lag(cases_accumulated_PCR,14),
+    cases_PCR_7days = cases_accumulated_PCR - lag(cases_accumulated_PCR,7),
     daily_cases = cases_accumulated - lag(cases_accumulated),
     daily_cases_avg7 =  round( ( daily_cases + lag(daily_cases,1)+lag(daily_cases,2)+
                                    lag(daily_cases,3)+lag(daily_cases,4)+lag(daily_cases,5)+lag(daily_cases,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
@@ -2321,7 +2324,6 @@ spain_ccaa <- spain_ccaa %>% group_by(ccaa) %>% arrange(date) %>%
                                     lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5)+lag(daily_deaths,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
     deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)
   )
-
 
 # Aggregate by Spain. Max level:
 spain <- to_agreggate %>% group_by(date,province) %>% mutate (
@@ -2341,10 +2343,10 @@ spain <- to_agreggate %>% group_by(date,province) %>% mutate (
 
 spain <- spain %>% arrange(date) %>% 
   mutate( 
-    cases_14days = cases_accumulated - lag(cases_accumulated,13),
-    cases_7days = cases_accumulated - lag(cases_accumulated,6),
-    cases_PCR_14days = cases_accumulated_PCR - lag(cases_accumulated_PCR,13),
-    cases_PCR_7days = cases_accumulated_PCR - lag(cases_accumulated_PCR,6),
+    cases_14days = cases_accumulated - lag(cases_accumulated,14),
+    cases_7days = cases_accumulated - lag(cases_accumulated,7),
+    cases_PCR_14days = cases_accumulated_PCR - lag(cases_accumulated_PCR,14),
+    cases_PCR_7days = cases_accumulated_PCR - lag(cases_accumulated_PCR,7),
     daily_cases = cases_accumulated - lag(cases_accumulated),
     daily_cases_avg7 =  round( ( daily_cases + lag(daily_cases,1)+lag(daily_cases,2)+
                                    lag(daily_cases,3)+lag(daily_cases,4)+lag(daily_cases,5)+lag(daily_cases,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
@@ -2372,3 +2374,4 @@ write.csv(spain, file = "data/output/spain/covid19-spain_consolidated.csv", row.
 saveRDS(spain, file = "../escovid19data/data/output/covid19-spain_consolidated.rds")
 saveRDS(spain, file = "data/output/spain/covid19-spain_consolidated.rds")
 write.xlsx(spain, "../escovid19data/data/output/covid19-spain_consolidated.xlsx", colNames = TRUE)
+

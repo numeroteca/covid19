@@ -15,7 +15,7 @@ library(kableExtra)
 library(formattable)
 library(DT)
 library(viridis)
-today <- as.Date("2020-09-03")
+today <- as.Date("2020-09-04")
 ```
 
 Un análisis automatizado de la base de datos por provincias de #COVID19 en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data
@@ -27,9 +27,105 @@ El código .Rmd para generar este informe [está disponile](https://code.montera
 * [Clasificación de fuentes de información](#según-fuentes-de-información)
 * [Navega por todos los datos](#todos-los-datos)
 
-## Última fecha publicada 
+
+
+## IA7 por provincia
+
+Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+.
+
+```{r ia7prov, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+data_cases_sp_provinces <- data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>%
+  filter( date > as.Date("2020-08-23") & date < as.Date("2020-09-04") ) 
+
+ia7data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_7days,poblacion) %>%
+  mutate(
+  ia7 =  round( cases_PCR_7days / poblacion * 100000, digits = 1)
+) %>% select( -poblacion, -cases_PCR_7days) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" )
+) %>% select(-date)
+
+ia7data <- ia7data %>% spread(date_header,ia7) # >% mutate(
+#   CCAA = ccaa
+# )
+
+# as.datatable(
+formattable( ia7data, 
+             list(
+  # ia14 = color_tile("white", "orange"),
+  area(col = 2:11) ~ color_tile("white", "orange") 
+))
+# ,options = list(pageLength = 19)
+# )
+``` 
+
+
+
+## IA7 por CCAA
+
+Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+.
+
+```{r ia7, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+spain_ccaa <- readRDS(file ="../data/output/spain/covid19-ccaa-spain_consolidated.rds")  %>% 
+  filter( date > as.Date("2020-08-22") & date < as.Date("2020-09-04") ) 
+
+ia7data <- spain_ccaa %>% select(ccaa,date,cases_PCR_7days,poblacion) %>%
+  mutate(
+  ia7 =  round( cases_PCR_7days / poblacion * 100000, digits = 1)
+) %>% select( -poblacion, -cases_PCR_7days) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" )
+) %>% select(-date)
+
+ia7data <- ia7data %>% spread(date_header,ia7) # >% mutate(
+#   CCAA = ccaa
+# )
+
+# as.datatable(
+formattable( ia7data, 
+             list(
+  # ia14 = color_tile("white", "orange"),
+  area(col = 2:10) ~ color_tile("white", "orange") 
+))
+# ,options = list(pageLength = 19)
+# )
+``` 
+
+## IA14 por CCAA
+
+Incidencia acumulada 14 días por 100.000 habitantes. Casos PCR+.
+
+```{r ia14, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+ia14data <- spain_ccaa %>% select(ccaa,date,cases_PCR_14days,poblacion) %>% 
+  mutate(
+  ia14 =  round( cases_PCR_14days / poblacion * 100000, digits = 1)
+) %>% select( -poblacion, -cases_PCR_14days) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" )
+) %>% select(-date)
+
+# ia14data %>%   pivot_wider(names_from = date, values_from = ia14)
+
+ia14data <- ia14data %>% spread(date_header,ia14) #%>% mutate(
+#   CCAA = ccaa
+# )
+
+# as.datatable(
+formattable( ia14data, 
+             list(
+  # ia14 = color_tile("white", "orange"),
+  area(col = 2:11) ~ color_tile("white", "orange") 
+))
+# ,options = list(pageLength = 19)
+# )
+``` 
 
 ```{r fecha0, fig.width=7, fig.height=4, echo=FALSE, warning=FALSE}
+## Última fecha publicada 
+
 data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")
 
 fechas_caso <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(cases_accumulated) ) %>% top_n(1, date) %>% select(date, province,ccaa)
@@ -43,6 +139,7 @@ fechas_hosp <- data_cases_sp_provinces %>% group_by(province) %>% filter(!is.na(
 # kable(fechas_PCR_diario  %>% select(date, province,ccaa) %>% arrange(date), caption="Última fecha disponible de PCR positivo diario")
 
 ``` 
+
 
 
 ## ¿Cómo de completos están los datos?
@@ -387,8 +484,7 @@ NA indica valor no conocido.
 # )), colnames = c('Provincia', 'CCAA', 'Casos acumulado (días desde último publicado)', 'Casos (última fecha)', 'Muertes acumulado (días desde último publicado)', 'Muertes (última fecha)','PCR diario (días desde último publicado)', 'PCR acumulado (días desde último publicado)', 'Hospitalizados (días desde)'   ),
 # options = list(pageLength = 52)
 # )
-``` 
-
+```
 
 ## Según fuentes de información
 

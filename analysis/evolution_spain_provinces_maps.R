@@ -265,7 +265,160 @@ for (i in 86:length( unique(data_cases_sp_provinces$date) )) {
   
 }
 
+
+
+
+# PCR+ Generate one map per day  -----
+
+colores <- c("#ededed", "#0cb2ff")
+breaks.n <- c(seq(0,2400,by = 200))
+
+data_cases_sp_provinces <- readRDS(file = "data/output/spain/covid19-provincias-spain_consolidated.rds")
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date) %>% mutate (
+  
+  # Para Galicia meter los casos como casos PCR+
+  cases_PCR_14days = ifelse (ccaa=="Galicia", cases_accumulated - lag(cases_accumulated ,14), cases_PCR_14days),
+  cases_PCR_7days =  ifelse (ccaa=="Galicia", cases_accumulated - lag(cases_accumulated,7), cases_PCR_14days),
+  
+  # test0 = cases_accumulated,
+  # test1 = lag(cases_accumulated,1),
+  # test2 = lag(cases_accumulated,2),
+  # test3 = lag(cases_accumulated,3),
+  
+  cases_PCR_7days  = ifelse( is.na(cases_PCR_7days ), lag(cases_PCR_7days , 1), cases_PCR_7days ),
+  cases_PCR_7days  = ifelse( is.na(cases_PCR_7days ), lag(cases_PCR_7days , 1), cases_PCR_7days ),
+  cases_PCR_7days  = ifelse( is.na(cases_PCR_7days ), lag(cases_PCR_7days , 1), cases_PCR_7days ),
+  cases_PCR_7days  = ifelse( is.na(cases_PCR_7days ), lag(cases_PCR_7days , 1), cases_PCR_7days ),
+  cases_PCR_7days  = ifelse( is.na(cases_PCR_7days ), lag(cases_PCR_7days , 1), cases_PCR_7days ),
+  cases_PCR_7days_fix = ifelse( is.na(cases_PCR_7days ), lag(cases_PCR_7days , 1), cases_PCR_7days ),
+  cases_PCR_7days  = cases_PCR_7days_fix,
+  
+  cases_PCR_14days  = ifelse( is.na(cases_PCR_14days ), lag(cases_PCR_14days , 1), cases_PCR_14days ),
+  cases_PCR_14days  = ifelse( is.na(cases_PCR_14days ), lag(cases_PCR_14days , 1), cases_PCR_14days ),
+  cases_PCR_14days  = ifelse( is.na(cases_PCR_14days ), lag(cases_PCR_14days , 1), cases_PCR_14days ),
+  cases_PCR_14days  = ifelse( is.na(cases_PCR_14days ), lag(cases_PCR_14days , 1), cases_PCR_14days ),
+  cases_PCR_14days  = ifelse( is.na(cases_PCR_14days ), lag(cases_PCR_14days , 1), cases_PCR_14days ),
+  cases_PCR_14days_fix = ifelse( is.na(cases_PCR_14days ), lag(cases_PCR_14days , 1), cases_PCR_14days ),
+  cases_PCR_14days  = cases_PCR_14days_fix
+) # %>% select(date, province, deceased, deceased_fix)
+
+
+
+for (i in 115:length( unique(data_cases_sp_provinces$date) )) {
+# for (i in 120:199 ) {
+  print(unique(data_cases_sp_provinces$date)[i])
+  print(i)
+  provincias <- readOGR("data/original/spain/shapes/recintos_provinciales_inspire_peninbal_etrs89.json")
+  canarias <- readOGR("data/original/spain/shapes/recintos_provinciales_inspire_canarias_etrs89_simply.json")
+  
+  provincias@data$ine_code <- substr(provincias@data$NATCODE,5,6) 
+  provincias@data$ine_code <- as.integer(provincias@data$ine_code)
+  
+  canarias@data$ine_code <- substr(canarias@data$NATCODE,5,6)
+  canarias@data$ine_code <- as.integer(canarias@data$ine_code)
+  
+  provincias@data <- left_join(provincias@data, 
+                               data_cases_sp_provinces %>% filter(date == unique(data_cases_sp_provinces$date)[i] ) %>% 
+                                 select(ine_code, cases_PCR_7days ,date,province,poblacion), 
+                               by= c("ine_code" = "ine_code")) %>% 
+                                mutate(
+                                   dp1 =  round(cases_PCR_7days/poblacion * 100000, digits = 0),
+                                   # label = paste(substr(province,1,1), dp1)
+                                   label = paste( dp1)
+                                 )
+  canarias@data <- left_join(canarias@data, data_cases_sp_provinces %>% filter(date == unique(data_cases_sp_provinces$date)[i] ) %>% 
+                               select(ine_code,cases_PCR_7days,date,province,poblacion)  , by= c("ine_code" = "ine_code"))  %>% 
+                                mutate(
+                                  dp1 =  round(cases_PCR_7days/poblacion * 100000, digits = 0),
+                                  # label = paste(substr(province,1,1), dp1)
+                                  label = paste(  dp1)
+                                )
+  
+  # provincias@data$dp1 <- round(provincias@data$daily_cases_PCR_avg7,digits = 0)
+  # provincias@data$label <- paste(provincias@data$dp1, substr(provincias@data$province,1,1))
+  # 
+  # canarias@data$dp1 <- round(canarias@data$daily_cases_PCR_avg7,digits = 0)
+  # canarias@data$label <- paste(canarias@data$dp1, substr(canarias@data$province,1,1))
+  
+  provincias@data <- provincias@data %>% mutate( label = ifelse(is.na(province),"",label),
+                                                 label = ifelse(is.na(cases_PCR_7days),"",label),
+  )
+  
+  canarias@data <- canarias@data %>% mutate( label = ifelse(is.na(province),"",label),
+                                             label = ifelse(is.na(cases_PCR_7days),"",label),
+  )
+  
+  png(filename= paste0("img/spain/maps/pcr/incidencia7d/mapa-coropletas-incidencia-pcr-7dias_", unique(data_cases_sp_provinces$date)[i] ,".png"),width = 1000,height = 400)
+  mapprint <- tm_shape(provincias) +
+  # tm_shape(provincias) +
+    tm_polygons(col="dp1",
+                palette = colores,
+                breaks = c(seq(0,400, by = 40)),
+                # style = "cont",
+                title = "PCR+ 7 días/100.000hab (Datos: escovid19data)",
+                border.alpha = 1, lwd = 0.4, legend.show = T, legend.outside = T,
+                textNA="no data",
+                colorNA = "#FFEEEE",
+                legend.hist = TRUE
+    ) +
+    tm_text("label",
+            size= 1, alpha = 0.8) +
+    tm_layout(between.margin = 1, frame = FALSE,
+              fontfamily = "Roboto Condensed", 
+              # title = "Data: Providencialdata19. By: @numeroteca. lab.montera34.com/covid19" ,
+              title = paste(as.character( provincias@data$date[10] ), "IA7" ),
+              title.fontface = "bold",
+              title.size = 2,
+              # legend.title.size = 1.9,
+              legend.format = list(text.separator = "-" ),
+              # legend.text.size = 1,
+              # legend.width = 0.9,
+              # title.position = "TOP",
+              legend.outside = TRUE,
+              legend.outside.position = c("left","bottom")
+    ) +
+    tm_legend(legend.text.size = 1.3, 
+              legend.title.size = 1.4) 
+  
+  
+  canarias_map <- tm_shape(canarias) +
+    tm_polygons(col="dp1",
+                palette = colores,
+                breaks = breaks.n,
+                # style = "cont",
+                border.alpha = 1, lwd = 0.4, legend.show = T, legend.outside = T,
+                textNA="no data",
+                colorNA = "#FFEEEE",
+                legend.hist = TRUE
+    ) +
+    tm_text("label",
+            size= 1, alpha = 0.8) +
+    tm_layout(between.margin = 1, frame = TRUE,
+              fontfamily = "Roboto Condensed",
+              legend.show = FALSE
+    ) +
+    tm_legend(legend.text.size = 1.3, 
+              legend.title.size = 1.4
+    ) 
+  
+  print(mapprint)
+  print(canarias_map, vp = grid::viewport(0.35, 0.12, width = 0.25, height = 0.18))
+  dev.off()
+  
+}
+
 # convert -delay 55 -loop 0 mapa-coropletas-muertos-per-100000_2*.png animated-map-by-million-cumulative-deaths.gif
+# convert -delay 85 -loop 0 covid19_muertes-vs-casos-provincia-relativo.png */covid19_muertes-vs-casos-provincia-relativo.png ../../../tmp/covid19_muertes-vs-casos-provincia-relativo_animated.png
+# convert -delay 85 -loop 0 covid19_casos-por-dia-provincia-media-lineal-per-cienmil_ccaa.png */covid19_casos-por-dia-provincia-media-lineal-per-cienmil_ccaa.png ../../../tmp/covid19_casos-por-dia-provincia-media-lineal-per-cienmil_ccaa.gif
+# convert -delay 120 -loop 0 covid19_casos-por-dia-provincia-media-lineal_ccaa.png */covid19_casos-por-dia-provincia-media-lineal_ccaa.png ../../../tmp/covid19_casos-por-dia-provincia-media-lineal_ccaa.gif
+# convert -delay 120 -loop 0 */covid19_casos-por-dia-provincia-media-superpuesto-lineal_media-arag.png covid19_casos-por-dia-provincia-media-superpuesto-lineal_media-arag*.png ../../../tmp/covid19_casos-por-dia-provincia-media-superpuesto-lineal_media-arag.gif
+# convert -delay 120 -loop 0 */covid19_casos-por-dia-provincia-media-superpuesto-lineal_media-cata.png covid19_casos-por-dia-provincia-media-superpuesto-lineal_media-cata*.png ../../../tmp/covid19_casos-por-dia-provincia-media-superpuesto-lineal_media-cata.gif
+# convert -delay 100 -loop 0 */covid19_casos-por-dia-provincia-media-superpuesto-log_media-cata.png covid19_casos-por-dia-provincia-media-superpuesto-log_media-cata.png ../../../tmp/covid19_casos-por-dia-provincia-media-superpuesto-log_media-cata.gif
+# convert -delay 100 -loop 0 */covid19_casos-por-dia-provincia-media-lineal_last-days.png  covid19_casos-por-dia-provincia-media-lineal_last-days.png covid19_casos-por-dia-provincia-media-lineal_last-days*.png ../../../tmp/covid19_casos-por-dia-provincia-media-lineal_last-days.gif
+# convert -delay 100 -loop 0 */covid19_casos-por-dia-provincia-media-lineal_last-50-days.png  covid19_casos-por-dia-provincia-media-lineal_last-50-days.png covid19_casos-por-dia-provincia-media-lineal_last-50-days_copy.png ../../../tmp/covid19_casos-por-dia-provincia-media-lineal_last-50-days.gif
+# convert -delay 120 -loop 0 */covid19_casos-por-dia-provincia-media-superpuesto-lineal-last50-media-cata.png covid19_casos-por-dia-provincia-media-superpuesto-lineal-last50-media-cata.png ../../../tmp/covid19_casos-por-dia-provincia-media-superpuesto-lineal-last50-media-cata.gif
+# convert -delay 120 -loop 0 */covid19_casos-por-dia-provincia-media-superpuesto-lineal_media-cata.png ccovid19_casos-por-dia-provincia-media-superpuesto-lineal_media-cata.png ../../../tmp/covid19_casos-por-dia-provincia-media-superpuesto-lineal_media-cata.gif
 
 # Contagios en los últimos 14 días -----
 
@@ -299,7 +452,7 @@ for (i in 8:length( unique(data_cases_sp_provinces$date) )) {
   mapprint <- tm_shape(provincias) +
     tm_polygons(col="incidencia14",
                 palette = colores,
-                # breaks = breaks.n,
+                breaks = breaks.n,
                 style = "cont",
                 title = "Nuevos casos por millón (14 días) (escovid19data)",
                 border.alpha = 1, lwd = 0.2, legend.show = T, legend.outside = T,
@@ -369,14 +522,46 @@ library(gganimate)
 library(gifski)
 
   
-zszs <- data_cases_sp_provinces %>% # filter(date == maxdate-2 ) %>%
-ggplot( aes(poblacion,deceassed_per_100000) ) +
+# zszs <- data_cases_sp_provinces %>% # filter(date == maxdate-2 ) %>%
+# ggplot( aes(poblacion,deceassed_per_100000) ) +
+#   # geom_point() +
+#   # geom_text_repel( aes(label= substr(province,1,3))  ) +
+#   geom_text( aes(label= substr(province,1,3))  ) +
+#   scale_x_continuous(
+#     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) 
+#     )+
+#   transition_time(date) +
+#   ease_aes('linear') +
+#   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+#   theme(
+#     # panel.grid.minor.x = element_blank(),
+#     # panel.grid.major.x = element_blank(),
+#     # panel.grid.minor.y = element_blank(),
+#     # axis.ticks.x = element_line(color = "#000000"),
+#     # axis.text.x = element_text(size = 9)
+#     # legend.position = "bottom"
+#   ) +
+#   labs(title = "Muertes COVID-19 / 100.000 hab VS Población",
+#        subtitle = paste0("por provincias en España. {frame_time}"),
+#        y = "Fallecimientos por 100.000 habitantes",
+#        x = "población",
+#        caption = "@numeroteca | Datos: esCOVID19data")
+# 
+# print(zszs)
+# anim_save(filename = "animation-03.gif", animation = zszs, path = "tmp",width = 900,height = 500)
+
+
+# PCR+ daily average ------------
+maxdate <-  max(data_cases_sp_provinces$date)
+
+plot_PCR <- data_cases_sp_provinces %>% filter(date == maxdate-1 ) %>%
+  ggplot( aes(poblacion,daily_cases_PCR_avg7) ) +
   # geom_point() +
   # geom_text_repel( aes(label= substr(province,1,3))  ) +
   geom_text( aes(label= substr(province,1,3))  ) +
   scale_x_continuous(
     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) 
-    )+
+  )+
   transition_time(date) +
   ease_aes('linear') +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -394,6 +579,6 @@ ggplot( aes(poblacion,deceassed_per_100000) ) +
        x = "población",
        caption = "@numeroteca | Datos: esCOVID19data")
 
-print(zszs)
-anim_save(filename = "animation-03.gif", animation = zszs, path = "tmp",width = 900,height = 500)
+print(plot_PCR)
+anim_save(filename = "animation-04.gif", animation = plot_PCR, path = "tmp",width = 900,height = 500)
 
