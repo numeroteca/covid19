@@ -1,5 +1,5 @@
 ---
-title: "Informe sobre Escovid19data"
+title: "Informe sobre los datos de Escovid19data"
 author: "@numerot eca"
 date: "`r Sys.Date()`"
 output: 
@@ -18,7 +18,9 @@ library(viridis)
 today <- as.Date("2020-09-04")
 ```
 
-Un análisis automatizado de la base de datos por provincias de #COVID19 en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data
+Un análisis automatizado de la base de datos por provincias de esCOVID19data en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data
+
+Puedes ver más visualizaciones en esta web https://lab.montera34.com/covid19/provincias.html
 
 El código .Rmd para generar este informe [está disponile](https://code.montera34.com/numeroteca/covid19/-/blob/master/reports/informe-escovid19data.Rmd).
 
@@ -59,8 +61,6 @@ formattable( ia7data,
 # ,options = list(pageLength = 19)
 # )
 ``` 
-
-
 
 ## IA7 por CCAA
 

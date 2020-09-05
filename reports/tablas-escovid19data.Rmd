@@ -1,0 +1,263 @@
+---
+title: "Tablas de Escovid19data"
+author: "@numeroteca"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    includes:
+       in_header: web_stats.html
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(formattable)
+library(DT)
+library(viridis)
+today <- as.Date("2020-09-05")
+from <- as.Date("2020-08-22")
+days <- as.numeric(today - from )
+threashold <- 3
+
+
+```
+
+Un análisis automatizado de la base de datos por provincias de esCOVID19data en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data
+
+Puedes ver más visualizaciones en esta web https://lab.montera34.com/covid19/provincias.html
+
+El código .Rmd para generar este informe [está disponile](https://code.montera34.com/numeroteca/covid19/-/blob/master/reports/tablas-escovid19data.Rmd).
+
+* [Casos. incidencia a cumulada](#casos-incidencia-acumulada)
+* [Hostpitalizados](#hospitalizados)
+* [UCI](#uci)
+* [Fallecidos](#fallecidos)
+
+# Casos. incidencia acumulada
+
+## IA7 por provincia
+
+Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+.
+
+```{r ia7prov, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+data_cases_sp_provinces <- data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>%
+  filter( date > from & date < today ) 
+
+data_cases_sp_provinces$weekday <- weekdays(data_cases_sp_provinces$date)
+data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
+                                                                                      "sábado","domingo" ) )
+
+ia7data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_7days,poblacion) %>%
+  mutate(
+  ia7 =  round( cases_PCR_7days / poblacion * 100000, digits = 1)
+) %>% select( -poblacion, -cases_PCR_7days) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" )
+) %>% select(-date)
+
+ia7data <- ia7data %>% spread(date_header,ia7) # >% mutate(
+#   CCAA = ccaa
+# )
+
+# as.datatable(
+formattable( ia7data, 
+             list(
+  # ia14 = color_tile("white", "orange"),
+  area(col = 2:(days - threashold)) ~ color_tile("white", "orange") 
+))
+# ,options = list(pageLength = 19)
+# )
+``` 
+
+## IA7 por provincia, periodo completo (marzo - hoy)
+
+Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+. Datos de los miércoles.
+
+```{r ia7provtotal, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+data_cases_sp_provinces <- data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")  %>%
+  filter( date > as.Date("2020-03-10") & date < today ) 
+
+data_cases_sp_provinces$weekday <- weekdays(data_cases_sp_provinces$date)
+data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
+                                                                                      "sábado","domingo" ) )
+
+ia7data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_7days,poblacion,weekday) %>% filter ( weekday== "miércoles") %>%
+  mutate(
+  ia7 =  round( cases_PCR_7days / poblacion * 100000, digits = 1)
+) %>% select( -poblacion, -cases_PCR_7days, -weekday) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" )
+) %>% select(-date)
+
+ia7data <- ia7data %>% spread(date_header,ia7)  %>% mutate(
+   provincia = province
+)
+
+# as.datatable(
+formattable( ia7data, 
+             list(
+  # ia14 = color_tile("white", "orange"),
+  area(col = 2:26) ~ color_tile("white", "orange") 
+))
+# ,options = list(pageLength = 19)
+# )
+``` 
+
+## IA7 por CCAA
+
+Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+.
+
+```{r ia7, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+spain_ccaa <- readRDS(file ="../data/output/spain/covid19-ccaa-spain_consolidated.rds")  %>%
+  filter( date > from & date < today ) 
+
+ia7data <- spain_ccaa %>% select(ccaa,date,cases_PCR_7days,poblacion) %>%
+  mutate(
+  ia7 =  round( cases_PCR_7days / poblacion * 100000, digits = 1)
+) %>% select( -poblacion, -cases_PCR_7days) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" )
+) %>% select(-date)
+
+ia7data <- ia7data %>% spread(date_header,ia7) # >% mutate(
+#   CCAA = ccaa
+# )
+
+# as.datatable(
+formattable( ia7data, 
+             list(
+  # ia14 = color_tile("white", "orange"),
+  area(col = 2:10) ~ color_tile("white", "orange") 
+))
+# ,options = list(pageLength = 19)
+# )
+``` 
+
+## IA14 por CCAA
+
+Incidencia acumulada 14 días por 100.000 habitantes. Casos PCR+.
+
+```{r ia14, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+ia14data <- spain_ccaa %>% select(ccaa,date,cases_PCR_14days,poblacion) %>% 
+  mutate(
+  ia14 =  round( cases_PCR_14days / poblacion * 100000, digits = 1)
+) %>% select( -poblacion, -cases_PCR_14days) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" )
+) %>% select(-date)
+
+# ia14data %>%   pivot_wider(names_from = date, values_from = ia14)
+
+ia14data <- ia14data %>% spread(date_header,ia14) #%>% mutate(
+#   CCAA = ccaa
+# )
+
+# as.datatable(
+formattable( ia14data, 
+             list(
+  # ia14 = color_tile("white", "orange"),
+  area(col = 2:11) ~ color_tile("white", "orange") 
+))
+# ,options = list(pageLength = 19)
+# )
+``` 
+
+
+
+# Hospitalizados
+
+## Por provincia
+
+Personas hospitalizadas en planta (prevalentes).
+
+```{r hospprov, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+data_cases_sp_provinces <- data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>%
+  filter( date > from & date < today ) 
+
+data <- data_cases_sp_provinces %>% select(province, date, hospitalized) %>% rename(
+  variable = hospitalized
+) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" )
+) %>% select(-date)
+
+data <- data %>% spread(date_header,variable) %>% mutate(
+   Provincia = province
+)
+
+# as.datatable(
+formattable( data, 
+             list(
+  # ia14 = color_tile("white", "orange"),
+  area(col = 2:(days - threashold + 2)) ~ color_tile("white", "orange") 
+))
+# ,options = list(pageLength = 19)
+# )
+``` 
+
+# UCI
+
+## Por provincia
+
+Personas hospitalizadas en unidad de cuidad intensivos (prevalentes).
+
+```{r ucipprov, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+data <- data_cases_sp_provinces %>% select(province, date, intensive_care) %>% rename(
+  variable = intensive_care
+) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" )
+) %>% select(-date)
+
+data <- data %>% spread(date_header,variable) %>% mutate(
+   Provincia = province
+)
+
+# as.datatable(
+formattable( data, 
+             list(
+  # ia14 = color_tile("white", "orange"),
+  area(col = 2:(days - threashold)) ~ color_tile("white", "orange") 
+))
+# ,options = list(pageLength = 19)
+# )
+``` 
+
+# Fallecidos
+
+## Por provincia
+
+Personas fallecidas diarias.
+
+```{r deathprov, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+data_cases_sp_provinces <- data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>%
+  filter( date > from & date < today ) 
+
+data <- data_cases_sp_provinces %>% select(province, date, daily_deaths) %>% rename(
+  variable = daily_deaths
+) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" )
+) %>% select(-date)
+
+data <- data %>% spread(date_header,variable) %>% mutate(
+   Provincia = province
+)
+
+# as.datatable(
+formattable( data, 
+             list(
+  # ia14 = color_tile("white", "orange"),
+  area(col = 2:(days - threashold)) ~ color_tile("white", "orange") 
+))
+# ,options = list(pageLength = 19)
+# )
+``` 
