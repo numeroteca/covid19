@@ -404,7 +404,7 @@ download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIX
               "data/original/spain/euskadi/pais-vasco.csv")
 euskadi <- read.delim("data/original/spain/euskadi/pais-vasco.csv", sep=",") %>% select(-PCR_diario_residencia_fuera_de_euskadi) %>% filter(
   province != "Euskadi"
-) %>% select( -hospitalizados_ese_dia)
+) %>% select( -hospitalizados_ese_dia, -pruebas_pcr_realizadas)
 
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,euskadi) 
 
@@ -2137,10 +2137,13 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
     daily_deaths_avg7 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+
                                     lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5)+lag(daily_deaths,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
     # deaths_cum_last_week = deceased - lag(deceased,6),
-    deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)
+    deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6),
     # hospitalized_avg7 =  round( ( hospitalized + lag(hospitalized,1)+lag(hospitalized,2)+
     #                                 lag(hospitalized,3)+lag(hospitalized,4)+lag(hospitalized,5)+lag(hospitalized,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
-  )
+    num_casos_prueba_pcr_avg7 = round( ( num_casos_prueba_pcr + lag(num_casos_prueba_pcr,1)+lag(num_casos_prueba_pcr,2)+
+                                          lag(num_casos_prueba_pcr,3)+lag(num_casos_prueba_pcr,4) +lag(num_casos_prueba_pcr,5) +lag(num_casos_prueba_pcr,6) ) / 7, digits = 1 ),
+    
+    )
 
 
 # zzz <- data_cases_sp_provinces %>% group_by(province) %>%

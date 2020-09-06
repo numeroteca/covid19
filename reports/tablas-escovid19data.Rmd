@@ -15,8 +15,8 @@ library(kableExtra)
 library(formattable)
 library(DT)
 library(viridis)
-today <- as.Date("2020-09-05")
-from <- as.Date("2020-08-22")
+today <- as.Date("2020-09-06")
+from <- as.Date("2020-08-21")
 days <- as.numeric(today - from )
 threashold <- 3
 
@@ -29,14 +29,14 @@ Puedes ver más visualizaciones en esta web https://lab.montera34.com/covid19/pr
 
 El código .Rmd para generar este informe [está disponile](https://code.montera34.com/numeroteca/covid19/-/blob/master/reports/tablas-escovid19data.Rmd).
 
-* [Casos. incidencia a cumulada](#casos-incidencia-acumulada)
+* [Casos. incidencia acumulada](#casos-incidencia-acumulada)
 * [Hostpitalizados](#hospitalizados)
 * [UCI](#uci)
 * [Fallecidos](#fallecidos)
 
 # Casos. incidencia acumulada
 
-## IA7 por provincia
+## IA7 por provincia (últimos días)
 
 Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+.
 
@@ -51,10 +51,19 @@ data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, level
 
 ia7data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_7days,poblacion) %>%
   mutate(
-  ia7 =  round( cases_PCR_7days / poblacion * 100000, digits = 1)
+  ia7 =  round( cases_PCR_7days / poblacion * 100000, digits = 0)
 ) %>% select( -poblacion, -cases_PCR_7days) %>% mutate(
   date_header = as.character(date),
-  date_header = date_header %>% str_replace( "2020-","" )
+  date_header = date_header %>% str_replace( "2020-","" ),
+  date_header = date_header %>% str_replace( "01","1" ),
+  date_header = date_header %>% str_replace( "02","2" ),
+  date_header = date_header %>% str_replace( "03","3" ),
+  date_header = date_header %>% str_replace( "04","4" ),
+  date_header = date_header %>% str_replace( "05","5" ),
+  date_header = date_header %>% str_replace( "06","6" ),
+  date_header = date_header %>% str_replace( "07","7" ),
+  date_header = date_header %>% str_replace( "08","8" ),
+  date_header = date_header %>% str_replace( "09","9" )
 ) %>% select(-date)
 
 ia7data <- ia7data %>% spread(date_header,ia7) # >% mutate(
@@ -62,12 +71,15 @@ ia7data <- ia7data %>% spread(date_header,ia7) # >% mutate(
 # )
 
 # as.datatable(
-formattable( ia7data, 
-             list(
-  # ia14 = color_tile("white", "orange"),
-  area(col = 2:(days - threashold)) ~ color_tile("white", "orange") 
-))
-# ,options = list(pageLength = 19)
+  formattable( ia7data, 
+               align = c("r", rep("r", NCOL(ia7data) - 1)),
+               list(
+                  # ia14 = color_tile("white", "orange"),
+                  area(col = 2:(days - threashold)) ~ color_tile("white", "orange")
+               )
+  )
+# ,options = list(pageLength = 54)
+# ,rownames= FALSE
 # )
 ``` 
 
@@ -86,10 +98,19 @@ data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, level
 
 ia7data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_7days,poblacion,weekday) %>% filter ( weekday== "miércoles") %>%
   mutate(
-  ia7 =  round( cases_PCR_7days / poblacion * 100000, digits = 1)
+  ia7 =  round( cases_PCR_7days / poblacion * 100000, digits = 0)
 ) %>% select( -poblacion, -cases_PCR_7days, -weekday) %>% mutate(
   date_header = as.character(date),
-  date_header = date_header %>% str_replace( "2020-","" )
+  date_header = date_header %>% str_replace( "2020-","" ),
+  date_header = date_header %>% str_replace( "01","1" ),
+  date_header = date_header %>% str_replace( "02","2" ),
+  date_header = date_header %>% str_replace( "03","3" ),
+  date_header = date_header %>% str_replace( "04","4" ),
+  date_header = date_header %>% str_replace( "05","5" ),
+  date_header = date_header %>% str_replace( "06","6" ),
+  date_header = date_header %>% str_replace( "07","7" ),
+  date_header = date_header %>% str_replace( "08","8" ),
+  date_header = date_header %>% str_replace( "09","9" )
 ) %>% select(-date)
 
 ia7data <- ia7data %>% spread(date_header,ia7)  %>% mutate(
@@ -98,6 +119,7 @@ ia7data <- ia7data %>% spread(date_header,ia7)  %>% mutate(
 
 # as.datatable(
 formattable( ia7data, 
+             align = c("r", rep("r", NCOL(ia7data) - 2),"l"),
              list(
   # ia14 = color_tile("white", "orange"),
   area(col = 2:26) ~ color_tile("white", "orange") 
