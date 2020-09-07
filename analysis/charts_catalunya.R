@@ -2,8 +2,11 @@ download.file("https://analisi.transparenciacatalunya.cat/api/views/jj6z-iyrp/ro
               "data/original/spain/catalunya/Registre_de_casos_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv")
 catalunya <-  read.delim("data/original/spain/catalunya/Registre_de_casos_de_COVID-19_realitzats_a_Catalunya._Segregaci__per_sexe_i_municipi.csv",sep = ",")
 
-period_cat <- "Actualizado: 2020-09-06"
+period_cat <- "Actualizado: 2020-09-07"
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19/cat.html) | Datos: Transparencia Catalunya"
+
+# Set filter date
+filter_date <- as.Date("2020-09-07")
 
 # creates date variable
 catalunya$date <- as.Date(catalunya$TipusCasData, "%d/%m/%Y")
@@ -63,12 +66,10 @@ municipios <- merge(
 ) %>% select (-daily_cases_PCR_avg7_complete,-dunique)
 
 
-# Set filter date
-filter_date <- as.Date("2020-08-31")
 municipios  <- municipios %>% filter( !( date > filter_date-5 ) )
 
 # set number of days
-limite <- 6
+limite <- 7
 municipios_top <- municipios %>% top_n(1, date) %>% filter (daily_cases_PCR_avg7 > limite ) %>% select (MunicipiDescripcio)
 
 
@@ -86,7 +87,7 @@ municipios %>%
   scale_y_continuous( labels=function(x) format(round(x, digits = 1), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(
-    date_breaks = "20 days",
+    date_breaks = "1 month",
     date_labels = "%d/%m",
     limits=c( min(municipios$date)+80, max(municipios$date)+1),
     expand = c(0,0) 
@@ -122,7 +123,7 @@ municipios %>%
   scale_y_continuous( labels=function(x) format(round(x, digits = 1), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(
-    date_breaks = "20 days",
+    date_breaks = "1 month",
     date_labels = "%d/%m",
     limits=c( min(municipios$date)+80, max(municipios$date)+1),
     expand = c(0,0)
@@ -145,7 +146,7 @@ municipios %>%
        caption = caption_provincia)
 dev.off()
 
-png(filename=paste0("img/spain/catalunya/covid19_municipios-catalunya_rejilla_periodo-completo.png", sep = ""),width = 1200,height = 800)
+  png(filename=paste0("img/spain/catalunya/covid19_municipios-catalunya_rejilla_periodo-completo.png", sep = ""),width = 1200,height = 800)
 municipios %>%
   filter( MunicipiDescripcio %in% municipios_top$MunicipiDescripcio) %>%
   # filter( MunicipiDescripcio == "Barcelona") %>%
