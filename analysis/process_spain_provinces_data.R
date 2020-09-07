@@ -1422,7 +1422,6 @@ data_cases_sp_provinces <- merge(data_cases_sp_provinces,
                                  by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique)
 
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
-# zzz <- data_cases_sp_provinces %>% mutate(
   # no sé por qué per ohe tenido que montar este lío para que las fechas funcionaran
   date_new = ifelse( ccaa_mad == "Madrid, Comunidad de" & !is.na(province_mad), date_mad, NA ),
   date_new = as.Date(date_mad, origin=as.Date("1970-01-01") ),
@@ -1608,8 +1607,8 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 ) %>% select(-dunique,-deceassed_datadista)
 
 # Madrid substitute list of PCR+ by Comunidad de Madrid data --------
-# download.file("https://raw.githubusercontent.com/alfonsotwr/snippets/master/covidia-cam/madrid-pcr.csv", 
-#               "data/original/spain/madrid/madrid-pcr.csv")
+download.file("https://raw.githubusercontent.com/alfonsotwr/snippets/master/covidia-cam/madrid-pcr.csv",
+              "data/original/spain/madrid/madrid-pcr.csv")
 madrid_pcr <- read.delim("data/original/spain/madrid/madrid-pcr.csv",sep = ",") %>% mutate(
   date = as.Date(as.character(Fecha), "%Y-%m-%d")
 )
@@ -1630,9 +1629,6 @@ data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique =
                                     source_name =  ifelse( province == "Madrid", paste0(source_name,";Comunidad de Madrid"), source_name),
                                     source =  ifelse(province == "Madrid", paste0(source,";https://github.com/alfonsotwr/snippets/blob/master/covidia-cam/madrid-pcr.csv"), source),
                                   ) %>% select( -date_mad, -dunique) %>% filter ( !is.na(date))
-
-# test <- madrid_pcr %>% mutate( dunique = paste0("Madrid",date)) %>% select(-date, -Fecha)
-
 
 # Add manually the day that do not exist, therefore merge does not work TODO
 # data_cases_sp_provinces <- rbind(
@@ -1681,7 +1677,6 @@ cantabria <- read.delim("data/original/spain/cantabria/COVID19_historico.csv",se
 
 # add Cantabria data to the existing dataset by merge
 data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0(province,date) ),
-# zzz <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0(province,date) ),
                 cantabria %>% mutate( dunique = paste0("Cantabria",date_can)) %>% 
                 select( dunique, cases_accumulated_can, PCR_can, intensive_care_can,
                        hospitalized_can, deceased_can, recovered_can,cases_accumulated_PCR_can, date_can),
@@ -2123,11 +2118,21 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
                                    lag(daily_cases,3)+lag(daily_cases,4)+lag(daily_cases,5)+lag(daily_cases,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
     daily_cases_PCR = cases_accumulated_PCR - lag(cases_accumulated_PCR),
     daily_cases_PCR = ifelse( is.na(daily_cases_PCR), PCR, daily_cases_PCR), # inserta datos originales de PCR diarios si la diferencia del acumulado no se puede calcular
-    # convert caes to PCR in Galicia from 2020/05/25. @lipido informs
+    # convert cases to PCR in Galicia from 2020/05/25. @lipido informs. en las últimas fechas (prácticamente todos )desde mayo) todos son PCR+ si se miran los datos de RENAVE ISCIII
     daily_cases_PCR = ifelse( (date > as.Date("2020-05-25")) & (ccaa=="Galicia"), daily_cases, daily_cases_PCR ),
     daily_cases_PCR_avg7 =  round( ( daily_cases_PCR + lag(daily_cases_PCR,1)+lag(daily_cases_PCR,2)+
                                        lag(daily_cases_PCR,3)+lag(daily_cases_PCR,4) +lag(daily_cases_PCR,5) +lag(daily_cases_PCR,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
-    daily_deaths = deceased - lag(deceased),
+    # calcula las muertes diarias si el día o días anterioriores no están disponibles
+    daily_deaths = ifelse( is.na( lag(deceased,1)),
+                      ifelse( is.na( lag(deceased,2)), 
+                          ifelse( is.na( lag(deceased,3)),
+                               deceased - lag(deceased,4),
+                               deceased - lag(deceased,3)
+                          ),
+                        deceased - lag(deceased,2)
+                        ),
+                       deceased - lag(deceased,1)
+                      ),
     daily_deaths_inc = round((deceased - lag(deceased)) /lag(deceased) * 100, digits = 1),
 
     daily_deaths_avg3 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2) ) / 3, digits = 1 ), # average of daily deaths of 3 last days
@@ -2144,16 +2149,6 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>%
                                           lag(num_casos_prueba_pcr,3)+lag(num_casos_prueba_pcr,4) +lag(num_casos_prueba_pcr,5) +lag(num_casos_prueba_pcr,6) ) / 7, digits = 1 ),
     
     )
-
-
-# zzz <- data_cases_sp_provinces %>% group_by(province) %>%
-#   mutate(dif_casos = c(NA,diff(cases_accumulated_PCR))) %>%
-#   filter(dif_casos >= 0 | is.na(dif_casos)) %>% arrange(date) %>%
-#   mutate(
-#     daily_cases_PCR_avg7_zoo = round( zoo::rollmeanr(dif_casos,7,na.pad=T), digits = 1 ),
-#     fechas_dif = c(NA, diff(date))
-#     ) %>%
-#    select(date, province, daily_cases_PCR, dif_casos, daily_cases_PCR_avg7, daily_cases_PCR_avg7_zoo, daily_cases_PCR,fechas_dif )
 
 # Calculates averages when no enough data available-----------
 # Code provided by @picanumeros
@@ -2209,7 +2204,7 @@ deaths_avg7 <- data_cases_sp_provinces %>% # filter ( province == "Madrid") %>% 
     daily_deaths_avg7_complete = round( zoo::rollmeanr(serie, 7, na.pad = T), digits = 1))  %>%
   select(date, ccaa, province, deceased, serie, fechas_dif, dif_deaths, daily_deaths, daily_deaths_avg7_complete, daily_deaths_avg7 )
 
-# Add data to the source
+# Add death  data to the source
 data_cases_sp_provinces <- merge(
   data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ),
   deaths_avg7 %>% mutate ( dunique = paste0( date, province) ) %>% ungroup() %>% select (dunique,daily_deaths_avg7_complete,),

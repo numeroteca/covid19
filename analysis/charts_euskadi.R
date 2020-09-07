@@ -1397,9 +1397,11 @@ download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIX
               "data/original/spain/euskadi/pais-vasco.csv")
 euskadi <- read.delim("data/original/spain/euskadi/pais-vasco.csv", sep=",") %>% filter(
   province != "Euskadi"
-)
+) %>% select( -hospitalizados_ese_dia, -pruebas_pcr_realizadas)
+  
 otros <- euskadi %>% filter( province == "Araba/Álava" & !is.na(PCR_diario_residencia_fuera_de_euskadi)) %>% 
-  select(date,PCR_diario_residencia_fuera_de_euskadi) %>% mutate(
+  select(date,PCR_diario_residencia_fuera_de_euskadi) %>% 
+  mutate(
     province = "Residentes fuera de Euskadi",
     ccaa = "País Vasco"
   ) %>% rename(

@@ -15,7 +15,9 @@ library(kableExtra)
 library(formattable)
 library(DT)
 library(viridis)
-today <- as.Date("2020-09-06")
+library(sparkline)
+
+today <- as.Date("2020-09-07")
 from <- as.Date("2020-08-21")
 days <- as.numeric(today - from )
 threashold <- 3
@@ -38,16 +40,21 @@ El código .Rmd para generar este informe [está disponile](https://code.montera
 
 ## IA7 por provincia (últimos días)
 
-Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+.
+Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+. 
 
 ```{r ia7prov, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
 
-data_cases_sp_provinces <- data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>%
-  filter( date > from & date < today ) 
+data_cases_sp_provinces <- data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>% mutate(
+  # aproximación para Galicia: considera que todos los casos son casos PCR+. Ver wiki
+  cases_PCR_7days = ifelse( (ccaa=="Galicia") & (date > as.Date("2020-05-20") ), 
+                            cases_accumulated - lag(cases_accumulated,7), 
+                            cases_PCR_7days)
+) %>% filter( date > from & date < today ) 
 
 data_cases_sp_provinces$weekday <- weekdays(data_cases_sp_provinces$date)
 data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
-                                                                                      "sábado","domingo" ) )
+                                                                                      "sábado","domingo" ) ) 
+data_cases_sp_provinces <- data_cases_sp_provinces 
 
 ia7data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_7days,poblacion) %>%
   mutate(
@@ -74,8 +81,8 @@ ia7data <- ia7data %>% spread(date_header,ia7) # >% mutate(
   formattable( ia7data, 
                align = c("r", rep("r", NCOL(ia7data) - 1)),
                list(
-                  # ia14 = color_tile("white", "orange"),
-                  area(col = 2:(days - threashold)) ~ color_tile("white", "orange")
+                  # ia14 = color_tile("#fff7ec", "#ffa01e"),
+                  area(col = 2:(days - threashold)) ~ color_tile("#fff7ec", "#ffa01e") 
                )
   )
 # ,options = list(pageLength = 54)
@@ -83,34 +90,41 @@ ia7data <- ia7data %>% spread(date_header,ia7) # >% mutate(
 # )
 ``` 
 
+Nota: Galicia incluye algunos casos que son por anticuerpos en su serie, pero al no disponer de una serie con solo casos PCR+ se usa la de casos acumulados. Ver wiki https://github.com/montera34/escovid19data/wiki#informaci%C3%B3n-obtenida-a-partir-del-4-de-junio
+
 ## IA7 por provincia, periodo completo (marzo - hoy)
 
 Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+. Datos de los miércoles.
 
 ```{r ia7provtotal, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
 
-data_cases_sp_provinces <- data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds")  %>%
+data_cases_sp_provinces <- data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>% mutate(
+  # aproximación para Galicia: considera que todos los casos son casos PCR+. Ver wiki
+  cases_PCR_7days = ifelse( (ccaa=="Galicia") & (date > as.Date("2020-05-20") ), 
+                            cases_accumulated - lag(cases_accumulated,7), 
+                            cases_PCR_7days)
+)  %>%
   filter( date > as.Date("2020-03-10") & date < today ) 
 
 data_cases_sp_provinces$weekday <- weekdays(data_cases_sp_provinces$date)
 data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
                                                                                       "sábado","domingo" ) )
 
-ia7data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_7days,poblacion,weekday) %>% filter ( weekday== "miércoles") %>%
+ia7data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_7days,poblacion,weekday) %>% filter ( weekday== "martes") %>%
   mutate(
   ia7 =  round( cases_PCR_7days / poblacion * 100000, digits = 0)
 ) %>% select( -poblacion, -cases_PCR_7days, -weekday) %>% mutate(
   date_header = as.character(date),
-  date_header = date_header %>% str_replace( "2020-","" ),
-  date_header = date_header %>% str_replace( "01","1" ),
-  date_header = date_header %>% str_replace( "02","2" ),
-  date_header = date_header %>% str_replace( "03","3" ),
-  date_header = date_header %>% str_replace( "04","4" ),
-  date_header = date_header %>% str_replace( "05","5" ),
-  date_header = date_header %>% str_replace( "06","6" ),
-  date_header = date_header %>% str_replace( "07","7" ),
-  date_header = date_header %>% str_replace( "08","8" ),
-  date_header = date_header %>% str_replace( "09","9" )
+  date_header = date_header %>% str_replace( "2020-","" )
+  # date_header = date_header %>% str_replace( "01","1" ),
+  # date_header = date_header %>% str_replace( "02","2" ),
+  # date_header = date_header %>% str_replace( "03","3" ),
+  # date_header = date_header %>% str_replace( "04","4" ),
+  # date_header = date_header %>% str_replace( "05","5" ),
+  # date_header = date_header %>% str_replace( "06","6" ),
+  # date_header = date_header %>% str_replace( "07","7" ),
+  # date_header = date_header %>% str_replace( "08","8" ),
+  # date_header = date_header %>% str_replace( "09","9" )
 ) %>% select(-date)
 
 ia7data <- ia7data %>% spread(date_header,ia7)  %>% mutate(
@@ -121,12 +135,14 @@ ia7data <- ia7data %>% spread(date_header,ia7)  %>% mutate(
 formattable( ia7data, 
              align = c("r", rep("r", NCOL(ia7data) - 2),"l"),
              list(
-  # ia14 = color_tile("white", "orange"),
-  area(col = 2:26) ~ color_tile("white", "orange") 
+  # ia14 = color_tile("#fff7ec", "#ffa01e"),
+  area(col = 2:26) ~ color_tile("#fff7ec", "#ffa01e") 
 ))
-# ,options = list(pageLength = 19)
+# , caption = 'Incidencia acumulada casos PCR+ en 7 días por 100.000 habitantes.'
+# , options = list(pageLength = 54)
 # )
 ``` 
+Nota: Galicia incluye algunos casos que son por anticuerpos en su serie, pero al no disponer de una serie con solo casos PCR+ se usa la de casos acumulados. Ver wiki https://github.com/montera34/escovid19data/wiki#informaci%C3%B3n-obtenida-a-partir-del-4-de-junio
 
 ## IA7 por CCAA
 
@@ -152,8 +168,8 @@ ia7data <- ia7data %>% spread(date_header,ia7) # >% mutate(
 # as.datatable(
 formattable( ia7data, 
              list(
-  # ia14 = color_tile("white", "orange"),
-  area(col = 2:10) ~ color_tile("white", "orange") 
+  # ia14 = color_tile("#fff7ec", "#ffa01e"),
+  area(col = 2:10) ~ color_tile("#fff7ec", "#ffa01e") 
 ))
 # ,options = list(pageLength = 19)
 # )
@@ -182,8 +198,8 @@ ia14data <- ia14data %>% spread(date_header,ia14) #%>% mutate(
 # as.datatable(
 formattable( ia14data, 
              list(
-  # ia14 = color_tile("white", "orange"),
-  area(col = 2:11) ~ color_tile("white", "orange") 
+  # ia14 = color_tile("#fff7ec", "#ffa01e"),
+  area(col = 2:11) ~ color_tile("#fff7ec", "#ffa01e") 
 ))
 # ,options = list(pageLength = 19)
 # )
@@ -216,8 +232,8 @@ data <- data %>% spread(date_header,variable) %>% mutate(
 # as.datatable(
 formattable( data, 
              list(
-  # ia14 = color_tile("white", "orange"),
-  area(col = 2:(days - threashold + 2)) ~ color_tile("white", "orange") 
+  # ia14 = color_tile("#fff7ec", "#ffa01e"),
+  area(col = 2:(days - threashold + 2)) ~ color_tile("#f3f3f3", "#6ba5c6") 
 ))
 # ,options = list(pageLength = 19)
 # )
@@ -245,8 +261,8 @@ data <- data %>% spread(date_header,variable) %>% mutate(
 # as.datatable(
 formattable( data, 
              list(
-  # ia14 = color_tile("white", "orange"),
-  area(col = 2:(days - threashold)) ~ color_tile("white", "orange") 
+  # ia14 = color_tile("#fff7ec", "#ffa01e"),
+  area(col = 2:(days - threashold)) ~ color_tile("#fCfAfA", "#e14f4f") 
 ))
 # ,options = list(pageLength = 19)
 # )
@@ -277,8 +293,8 @@ data <- data %>% spread(date_header,variable) %>% mutate(
 # as.datatable(
 formattable( data, 
              list(
-  # ia14 = color_tile("white", "orange"),
-  area(col = 2:(days - threashold)) ~ color_tile("white", "orange") 
+  # ia14 = color_tile("#fff7ec", "#ffa01e"),
+  area(col = 2:(days - 0)) ~ color_tile("#FBFBFB", "#aaaaaa") 
 ))
 # ,options = list(pageLength = 19)
 # )

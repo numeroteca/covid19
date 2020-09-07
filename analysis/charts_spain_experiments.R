@@ -4,7 +4,7 @@ data_cases_sp_provinces <- readRDS(file = "data/output/spain/covid19-provincias-
 
 noprevalentes <- c("")
 updated <- ""
-period <- "(Actualizado: 2020-09-06)"
+period <- "(Actualizado: 2020-09-07)"
 
 # 13. Todos los datos juntos ------------
 # Calcula máximos
@@ -27,7 +27,7 @@ all <- merge (data_cases_sp_provinces,
 
 png(filename=paste("img/spain/experiments/covid19_todo-junto-provincia-lineal.png", sep = ""),width = 1500,height = 1000)
 data_cases_sp_provinces %>% filter( ! ccaa %in% noprevalentes ) %>% filter( date > filter_date -50 ) %>%
-  filter( province == "Madrid") %>%
+  # filter( province == "Madrid") %>%
   ggplot() +
   geom_line(aes(date, daily_cases_PCR_avg7,group=province, color="#5b5bbb"), size=0.8 ) +
   # geom_line(aes(date, hospitalized,group=province, color="violet"), size=0.8 ) +
@@ -290,7 +290,7 @@ dev.off()
 png(filename=paste0("img/spain/experiments/covid19_casos-dia-ccaa.png", sep = ""),width = 1000,height = 600)
 spain_ccaa %>% mutate (
   daily_cases_PCR_avg7 = ifelse(ccaa =="Galicia", daily_cases_avg7, daily_cases_PCR_avg7)
-  ) %>% filter ((date > filter_date - 60) &  date < filter_date - 0  ) %>%
+  ) %>% filter ((date > filter_date - 60) &  date < filter_date - 7  ) %>%
   ggplot(aes(x = date, y = daily_cases_PCR_avg7 , fill = ccaa)) +
   geom_area(col = "black", lwd=0.1 ) +
   scale_fill_manual(values = colors_prov ) +
@@ -315,7 +315,7 @@ spain_ccaa %>% mutate (
     axis.ticks.x = element_line(color = "#000000"),
     legend.position =  "right"
   ) +
-  labs(title = paste0("Media de casos por día (media 7 días) por COVID-19 en España", updated ),
+  labs(title = paste0("Media de casos por día (ventana de 7 días) por COVID-19 en España", updated ),
        subtitle = paste0("Últimos 50 días. Por comunidades autónomas. ", 
                          period),
        y = "casos por día (media 7 días)",
