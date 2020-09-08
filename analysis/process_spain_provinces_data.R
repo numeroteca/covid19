@@ -2282,7 +2282,7 @@ to_agreggate <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date)
   # deceased_lag = lag(deceased, 1)
 ) # %>% select(date, province, deceased, deceased_fix)
 
-# Summarise by CCAA
+## Summarise by CCAA ---
 spain_ccaa <- to_agreggate %>% group_by(date, ccaa) %>% summarise(
   new_cases = sum(new_cases, 0),
   PCR = sum(PCR, 0),
@@ -2322,6 +2322,28 @@ spain_ccaa <- spain_ccaa %>% group_by(ccaa) %>% arrange(date) %>%
                                     lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5)+lag(daily_deaths,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
     deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)
   )
+
+ccaa_poblacion <-  read.delim("data/original/spain/ccaa-poblacion.csv",sep = ";")
+
+# levels(ccaa_poblacion$ccaa)
+# levels(spain_ccaa$ccaa)
+# Add INE code to CCAA
+spain_ccaa <- merge( spain_ccaa,
+              ccaa_poblacion %>% select(ccaa,id) %>% rename(
+                 ine_code = id
+                )%>% mutate(
+                ccaa = ccaa %>% str_replace("C. Valenciana","Comunitat Valenciana"),
+                ccaa = ccaa %>% str_replace("Asturias","Asturias, Principado de"),
+                ccaa = ccaa %>% str_replace("Baleares","Balears, Illes"),
+                ccaa = ccaa %>% str_replace("Castilla-La Mancha","Castilla - La Mancha"),
+                ccaa = ccaa %>% str_replace("La Rioja","Rioja, La"),
+                ccaa = ccaa %>% str_replace("Madrid","Madrid, Comunidad de"),
+                ccaa = ccaa %>% str_replace("Navarra","Navarra, Comunidad Foral de")
+              ), 
+              by.x = "ccaa", by.y = "ccaa"   ) %>% select(
+                ccaa,ine_code,everything()
+              )
+
 
 # Aggregate by Spain. Max level:
 spain <- to_agreggate %>% group_by(date,province) %>% mutate (
