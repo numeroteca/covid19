@@ -10,7 +10,7 @@ caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.m
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
 period <- "(Actualizado: 2020-09-07)"
-filter_date <- as.Date("2020-08-31")
+filter_date <- as.Date("2020-09-03")
 
 # Warning: you need to have loaded spain by executing process_spain_provinces_data.R 
 # or load it using:
@@ -219,10 +219,10 @@ spain %>% filter( date > filter_date - 80) %>%
                limits=c( filter_date - 50, max(spain$date)),
                expand = c(0,0)
   ) + 
-  scale_y_continuous(
+  # scale_y_continuous(
   # limits = c( 0, max(spain$daily_deaths_avg7))
-  limits = c( 0, 50)
-  ) +
+  # limits = c( 0, 50)
+  # ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
     panel.grid.minor.x = element_blank(),

@@ -17,12 +17,10 @@ library(DT)
 library(viridis)
 library(sparkline)
 
-today <- as.Date("2020-09-07")
-from <- as.Date("2020-08-21")
+today <- as.Date("2020-09-08")
+from <- as.Date("2020-08-14")
 days <- as.numeric(today - from )
-threashold <- 3
-
-
+threshold <- 4
 ```
 
 Un análisis automatizado de la base de datos por provincias de esCOVID19data en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data
@@ -31,20 +29,26 @@ Puedes ver más visualizaciones en esta web https://lab.montera34.com/covid19/pr
 
 El código .Rmd para generar este informe [está disponile](https://code.montera34.com/numeroteca/covid19/-/blob/master/reports/tablas-escovid19data.Rmd).
 
-* [Casos. incidencia acumulada](#casos-incidencia-acumulada)
+* [Casos. Incidencia acumulada](#casos-incidencia-acumulada)
+  * [IA7 por provincia (últimos días)](#ia7-por-provincia-últimos-días)
+  * [IA7 por provincia (periodo completo)](#ia7-por-provincia-periodo-completo)
+  * [IA14 por provincia (periodo completo)](#ia14-por-provincia-últimos-días)
+  * [IA7 por CCAA](#ia7-por-ccaa)
+  * [IA14 por CCAA](#ia14-por-ccaa)
 * [Hostpitalizados](#hospitalizados)
 * [UCI](#uci)
 * [Fallecidos](#fallecidos)
 
-# Casos. incidencia acumulada
+Para ver más tablas de este tipo puedes ver la cuenta de [@ngbpadel2](https://twitter.com/ngbpadel2/) que publica cada día.
+
+# Casos. Incidencia acumulada
 
 ## IA7 por provincia (últimos días)
 
 Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+. 
 
 ```{r ia7prov, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
-
-data_cases_sp_provinces <- data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>% mutate(
+data_cases_sp_provinces <- readRDS( file="../data/output/spain/covid19-provincias-spain_consolidated.rds") %>% mutate(
   # aproximación para Galicia: considera que todos los casos son casos PCR+. Ver wiki
   cases_PCR_7days = ifelse( (ccaa=="Galicia") & (date > as.Date("2020-05-20") ), 
                             cases_accumulated - lag(cases_accumulated,7), 
@@ -82,7 +86,7 @@ ia7data <- ia7data %>% spread(date_header,ia7) # >% mutate(
                align = c("r", rep("r", NCOL(ia7data) - 1)),
                list(
                   # ia14 = color_tile("#fff7ec", "#ffa01e"),
-                  area(col = 2:(days - threashold)) ~ color_tile("#fff7ec", "#ffa01e") 
+                  area(col = 2:(days - threshold)) ~ color_tile("#fff7ec", "#ffa01e") 
                )
   )
 # ,options = list(pageLength = 54)
@@ -92,13 +96,13 @@ ia7data <- ia7data %>% spread(date_header,ia7) # >% mutate(
 
 Nota: Galicia incluye algunos casos que son por anticuerpos en su serie, pero al no disponer de una serie con solo casos PCR+ se usa la de casos acumulados. Ver wiki https://github.com/montera34/escovid19data/wiki#informaci%C3%B3n-obtenida-a-partir-del-4-de-junio
 
-## IA7 por provincia, periodo completo (marzo - hoy)
+## IA7 por provincia, periodo completo 
 
 Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+. Datos de los miércoles.
 
 ```{r ia7provtotal, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
 
-data_cases_sp_provinces <- data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>% mutate(
+data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>% mutate(
   # aproximación para Galicia: considera que todos los casos son casos PCR+. Ver wiki
   cases_PCR_7days = ifelse( (ccaa=="Galicia") & (date > as.Date("2020-05-20") ), 
                             cases_accumulated - lag(cases_accumulated,7), 
@@ -110,9 +114,10 @@ data_cases_sp_provinces$weekday <- weekdays(data_cases_sp_provinces$date)
 data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
                                                                                       "sábado","domingo" ) )
 
-ia7data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_7days,poblacion,weekday) %>% filter ( weekday== "martes") %>%
+ia7data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_7days,poblacion,weekday) %>% filter ( weekday== "miércoles") %>%
   mutate(
-  ia7 =  round( cases_PCR_7days / poblacion * 100000, digits = 0)
+  variable =  round( cases_PCR_7days / poblacion * 100000, digits = 0)
+   # variable = ifelse(is.na(variable), "",variable )
 ) %>% select( -poblacion, -cases_PCR_7days, -weekday) %>% mutate(
   date_header = as.character(date),
   date_header = date_header %>% str_replace( "2020-","" )
@@ -127,22 +132,87 @@ ia7data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_7days,pobl
   # date_header = date_header %>% str_replace( "09","9" )
 ) %>% select(-date)
 
-ia7data <- ia7data %>% spread(date_header,ia7)  %>% mutate(
+# myreplace <- function(observed) {
+#   result <- ifelse( ( is.na(observed) ) & (class(observed) == "numeric"), "",observed)
+# }
+
+# ia7data <- ia7data %>% mutate(
+#   variable =  ifelse( is.na(variable) , "", variable)
+# )
+
+data <- ia7data %>% spread(date_header,variable) %>% mutate(
+  province = province %>% str_replace( "Santa Cruz de Tenerife", "S.C. Tenerife"),
    provincia = province
-)
+) # %>% mutate_all(list(~ myreplace(.)))
 
 # as.datatable(
-formattable( ia7data, 
-             align = c("r", rep("r", NCOL(ia7data) - 2),"l"),
+formattable( data, 
+             # align = c("r", rep("r", NCOL(ia7data) - 2),"l"),
              list(
   # ia14 = color_tile("#fff7ec", "#ffa01e"),
-  area(col = 2:26) ~ color_tile("#fff7ec", "#ffa01e") 
+  area(col = 2:27) ~ color_tile("#fff7ec", "#ffa01e") 
 ))
 # , caption = 'Incidencia acumulada casos PCR+ en 7 días por 100.000 habitantes.'
 # , options = list(pageLength = 54)
 # )
 ``` 
 Nota: Galicia incluye algunos casos que son por anticuerpos en su serie, pero al no disponer de una serie con solo casos PCR+ se usa la de casos acumulados. Ver wiki https://github.com/montera34/escovid19data/wiki#informaci%C3%B3n-obtenida-a-partir-del-4-de-junio
+
+## IA14 por provincia, periodo completo
+
+Incidencia acumulada 14 días por 100.000 habitantes. Casos PCR+. Datos de los miércoles.
+
+```{r ia14provtotal, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>% mutate(
+  # aproximación para Galicia: considera que todos los casos son casos PCR+. Ver wiki
+  cases_PCR_14days = ifelse( (ccaa=="Galicia") & (date > as.Date("2020-05-20") ), 
+                            cases_accumulated - lag(cases_accumulated,14), 
+                            cases_PCR_14days)
+)  %>% filter( date > as.Date("2020-03-10") & date < today ) 
+
+data_cases_sp_provinces$weekday <- weekdays(data_cases_sp_provinces$date)
+data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
+                                                                                      "sábado","domingo" ) )
+
+ia14data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_14days,poblacion,weekday) %>% filter ( weekday== "miércoles") %>%
+  mutate(
+  ia14 =  round( cases_PCR_14days / poblacion * 100000, digits = 0)
+) %>% select( -poblacion, -cases_PCR_14days, -weekday) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" )
+  # date_header = date_header %>% str_replace( "01","1" ),
+  # date_header = date_header %>% str_replace( "02","2" ),
+  # date_header = date_header %>% str_replace( "03","3" ),
+  # date_header = date_header %>% str_replace( "04","4" ),
+  # date_header = date_header %>% str_replace( "05","5" ),
+  # date_header = date_header %>% str_replace( "06","6" ),
+  # date_header = date_header %>% str_replace( "07","7" ),
+  # date_header = date_header %>% str_replace( "08","8" ),
+  # date_header = date_header %>% str_replace( "09","9" )
+) %>% select(-date)
+
+ia14data <- ia14data %>% spread(date_header,ia14) %>% mutate(
+  province = province %>% str_replace( "Santa Cruz de Tenerife", "S.C. Tenerife"),
+   provincia = province
+)
+
+# as.datatable(
+formattable( ia14data, 
+             align = c("r", rep("r", NCOL(ia14data) - 2),"l"),
+             list(
+  # ia14 = color_tile("#fff7ec", "#ffa01e"),
+  area(col = 2:27) ~ color_tile("#fff7ec", "#ffa01e") 
+))
+# , caption = 'Incidencia acumulada casos PCR+ en 7 días por 100.000 habitantes.'
+# , options = list(pageLength = 54)
+# )
+``` 
+Nota: Galicia incluye algunos casos que son por anticuerpos en su serie, pero al no disponer de una serie con solo casos PCR+ se usa la de casos acumulados. Ver wiki https://github.com/montera34/escovid19data/wiki#informaci%C3%B3n-obtenida-a-partir-del-4-de-junio
+
+En formato gráfico:
+
+![Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+. Datos de los miércoles](https://lab.montera34.com/covid19-r/img/spain/provincias/covid19_incidencia-PCR-14dias-provincia-superpuesto-log-per-cienmil.png)
 
 ## IA7 por CCAA
 
@@ -155,21 +225,22 @@ spain_ccaa <- readRDS(file ="../data/output/spain/covid19-ccaa-spain_consolidate
 
 ia7data <- spain_ccaa %>% select(ccaa,date,cases_PCR_7days,poblacion) %>%
   mutate(
-  ia7 =  round( cases_PCR_7days / poblacion * 100000, digits = 1)
+  ia7 =  round( cases_PCR_7days / poblacion * 100000, digits = 0)
 ) %>% select( -poblacion, -cases_PCR_7days) %>% mutate(
   date_header = as.character(date),
   date_header = date_header %>% str_replace( "2020-","" )
 ) %>% select(-date)
 
-ia7data <- ia7data %>% spread(date_header,ia7) # >% mutate(
-#   CCAA = ccaa
+ia7data <- ia7data %>% spread(date_header,ia7) # %>% mutate(
+  # CCAA = ccaa
 # )
 
 # as.datatable(
 formattable( ia7data, 
              list(
   # ia14 = color_tile("#fff7ec", "#ffa01e"),
-  area(col = 2:10) ~ color_tile("#fff7ec", "#ffa01e") 
+   align = c("r", rep("r", NCOL(ia7data) - 1), "l"),
+  area(col = 2:(days - threshold)) ~ color_tile("#fff7ec", "#ffa01e") 
 ))
 # ,options = list(pageLength = 19)
 # )
@@ -183,15 +254,16 @@ Incidencia acumulada 14 días por 100.000 habitantes. Casos PCR+.
 
 ia14data <- spain_ccaa %>% select(ccaa,date,cases_PCR_14days,poblacion) %>% 
   mutate(
-  ia14 =  round( cases_PCR_14days / poblacion * 100000, digits = 1)
+  variable =  round( cases_PCR_14days / poblacion * 100000, digits = 0)
 ) %>% select( -poblacion, -cases_PCR_14days) %>% mutate(
   date_header = as.character(date),
   date_header = date_header %>% str_replace( "2020-","" )
+  # variable = ifelse(is.na(variable), "",variable )
 ) %>% select(-date)
 
 # ia14data %>%   pivot_wider(names_from = date, values_from = ia14)
 
-ia14data <- ia14data %>% spread(date_header,ia14) #%>% mutate(
+ia14data <- ia14data %>% spread(date_header,variable) #%>% mutate(
 #   CCAA = ccaa
 # )
 
@@ -199,7 +271,7 @@ ia14data <- ia14data %>% spread(date_header,ia14) #%>% mutate(
 formattable( ia14data, 
              list(
   # ia14 = color_tile("#fff7ec", "#ffa01e"),
-  area(col = 2:11) ~ color_tile("#fff7ec", "#ffa01e") 
+  area(col = 2:(days - threshold)) ~ color_tile("#fff7ec", "#ffa01e") 
 ))
 # ,options = list(pageLength = 19)
 # )
@@ -215,14 +287,15 @@ Personas hospitalizadas en planta (prevalentes).
 
 ```{r hospprov, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
 
-data_cases_sp_provinces <- data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>%
+data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>%
   filter( date > from & date < today ) 
 
 data <- data_cases_sp_provinces %>% select(province, date, hospitalized) %>% rename(
   variable = hospitalized
 ) %>% mutate(
   date_header = as.character(date),
-  date_header = date_header %>% str_replace( "2020-","" )
+  date_header = date_header %>% str_replace( "2020-","" ),
+  variable = ifelse(is.na(variable), "",variable ) 
 ) %>% select(-date)
 
 data <- data %>% spread(date_header,variable) %>% mutate(
@@ -233,7 +306,7 @@ data <- data %>% spread(date_header,variable) %>% mutate(
 formattable( data, 
              list(
   # ia14 = color_tile("#fff7ec", "#ffa01e"),
-  area(col = 2:(days - threashold + 2)) ~ color_tile("#f3f3f3", "#6ba5c6") 
+  area(col = 2:(days - 0)) ~ color_tile("#fCfEfC", "#6ba5c6") 
 ))
 # ,options = list(pageLength = 19)
 # )
@@ -251,7 +324,8 @@ data <- data_cases_sp_provinces %>% select(province, date, intensive_care) %>% r
   variable = intensive_care
 ) %>% mutate(
   date_header = as.character(date),
-  date_header = date_header %>% str_replace( "2020-","" )
+  date_header = date_header %>% str_replace( "2020-","" ),
+  variable = ifelse(is.na(variable), "",variable ) 
 ) %>% select(-date)
 
 data <- data %>% spread(date_header,variable) %>% mutate(
@@ -262,7 +336,7 @@ data <- data %>% spread(date_header,variable) %>% mutate(
 formattable( data, 
              list(
   # ia14 = color_tile("#fff7ec", "#ffa01e"),
-  area(col = 2:(days - threashold)) ~ color_tile("#fCfAfA", "#e14f4f") 
+  area(col = 2:(days - 0)) ~ color_tile("#fDfCfC", "#e14f4f") 
 ))
 # ,options = list(pageLength = 19)
 # )
@@ -276,14 +350,15 @@ Personas fallecidas diarias.
 
 ```{r deathprov, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
 
-data_cases_sp_provinces <- data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>%
+data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>%
   filter( date > from & date < today ) 
 
 data <- data_cases_sp_provinces %>% select(province, date, daily_deaths) %>% rename(
   variable = daily_deaths
 ) %>% mutate(
   date_header = as.character(date),
-  date_header = date_header %>% str_replace( "2020-","" )
+  date_header = date_header %>% str_replace( "2020-","" ),
+  variable = ifelse(is.na(variable), "",variable ) 
 ) %>% select(-date)
 
 data <- data %>% spread(date_header,variable) %>% mutate(
