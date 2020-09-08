@@ -441,11 +441,11 @@ data_cases_sp_provinces <- merge(data_cases_sp_provinces %>% mutate( dunique = p
   ) %>% select(-dunique,-cases_accumulated_gal)
 
 # Galicia: Ourense data --------
-download.file("https://github.com/lipido/galicia-covid19/raw/master/ourense.csv",
-              "data/original/spain/galicia/ourense.csv")
+# download.file("https://github.com/lipido/galicia-covid19/raw/master/ourense.csv",
+#               "data/original/spain/galicia/ourense.csv")
 ourense_original <- read.delim("data/original/spain/galicia/ourense.csv", sep=",")
-download.file("https://github.com/lipido/galicia-covid19/raw/master/ourense.ext.csv",
-              "data/original/spain/galicia/ourense.ext.csv")
+# download.file("https://github.com/lipido/galicia-covid19/raw/master/ourense.ext.csv",
+#               "data/original/spain/galicia/ourense.ext.csv")
 ourense_hosp <- read.delim("data/original/spain/galicia/ourense.ext.csv", sep=",")
 
 ourense_a <- ourense_original %>%
@@ -517,11 +517,11 @@ rm(ourense, ourense_a, ourense_b, ourense_hosp, ourense_original)
 # Vigo + Pontevedra = Pontevedra; 
 
 # / Lugo ------
-download.file("https://github.com/lipido/galicia-covid19/raw/master/lugo.csv",
-              "data/original/spain/galicia/lugo.csv")
+# download.file("https://github.com/lipido/galicia-covid19/raw/master/lugo.csv",
+#               "data/original/spain/galicia/lugo.csv")
 lugo_original <- read.delim("data/original/spain/galicia/lugo.csv", sep=",")
-download.file("https://github.com/lipido/galicia-covid19/raw/master/lugo.ext.csv",
-              "data/original/spain/galicia/lugo.ext.csv")
+# download.file("https://github.com/lipido/galicia-covid19/raw/master/lugo.ext.csv",
+#               "data/original/spain/galicia/lugo.ext.csv")
 lugo_hosp <- read.delim("data/original/spain/galicia/lugo.ext.csv", sep=",")
 
 lugo_a <- lugo_original %>%
@@ -568,11 +568,11 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces, lugo)
 # / Pontevedra = Vigo + Pontevedra  ---------
 
 # Vigo
-download.file("https://github.com/lipido/galicia-covid19/raw/master/vigo.csv",
-              "data/original/spain/galicia/vigo.csv")
+# download.file("https://github.com/lipido/galicia-covid19/raw/master/vigo.csv",
+#               "data/original/spain/galicia/vigo.csv")
 vigo_original <- read.delim("data/original/spain/galicia/vigo.csv", sep=",")
-download.file("https://github.com/lipido/galicia-covid19/raw/master/vigo.ext.csv",
-              "data/original/spain/galicia/vigo.ext.csv")
+# download.file("https://github.com/lipido/galicia-covid19/raw/master/vigo.ext.csv",
+#               "data/original/spain/galicia/vigo.ext.csv")
 vigo_hosp <- read.delim("data/original/spain/galicia/vigo.ext.csv", sep=",")
 
 vigo_a <- vigo_original %>%
@@ -614,11 +614,11 @@ vigo <- merge( vigo_a %>% select(-Fecha),
 write.csv( vigo, file = "data/output/spain/galicia/vigo_area.csv", row.names = FALSE)
 
 # Pontevedra
-download.file("https://github.com/lipido/galicia-covid19/raw/master/pontevedra.csv",
-              "data/original/spain/galicia/pontevedra.csv")
+# download.file("https://github.com/lipido/galicia-covid19/raw/master/pontevedra.csv",
+#               "data/original/spain/galicia/pontevedra.csv")
 pontevedra_original <- read.delim("data/original/spain/galicia/pontevedra.csv", sep=",")
-download.file("https://github.com/lipido/galicia-covid19/raw/master/pontevedra.ext.csv",
-              "data/original/spain/galicia/pontevedra.ext.csv")
+# download.file("https://github.com/lipido/galicia-covid19/raw/master/pontevedra.ext.csv",
+#               "data/original/spain/galicia/pontevedra.ext.csv")
 pontevedra_hosp <- read.delim("data/original/spain/galicia/pontevedra.ext.csv", sep=",")
 
 pontevedra_a <- pontevedra_original %>%
@@ -685,11 +685,11 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces, pontevedra_prov)
 
 # / A Coruña = Santiago + Ferrol + Coruña -------------
 # // Santiago -----
-download.file("https://github.com/lipido/galicia-covid19/raw/master/santiago.csv",
-              "data/original/spain/galicia/santiago.csv")
+# download.file("https://github.com/lipido/galicia-covid19/raw/master/santiago.csv",
+#               "data/original/spain/galicia/santiago.csv")
 santiago_original <- read.delim("data/original/spain/galicia/santiago.csv", sep=",")
-download.file("https://github.com/lipido/galicia-covid19/raw/master/santiago.ext.csv",
-              "data/original/spain/galicia/santiago.ext.csv")
+# download.file("https://github.com/lipido/galicia-covid19/raw/master/santiago.ext.csv",
+#               "data/original/spain/galicia/santiago.ext.csv")
 santiago_hosp <- read.delim("data/original/spain/galicia/santiago.ext.csv", sep=",")
 
 santiago_a <- santiago_original %>%
@@ -731,11 +731,11 @@ santiago <- merge( santiago_a %>% select(-Fecha),
 write.csv( santiago, file = "data/output/spain/galicia/santiago_area.csv", row.names = FALSE)
 
 # // Ferrol  -----
-download.file("https://github.com/lipido/galicia-covid19/raw/master/ferrol.csv",
-              "data/original/spain/galicia/ferrol.csv")
+# download.file("https://github.com/lipido/galicia-covid19/raw/master/ferrol.csv",
+#               "data/original/spain/galicia/ferrol.csv")
 ferrol_original <- read.delim("data/original/spain/galicia/ferrol.csv", sep=",")
-download.file("https://github.com/lipido/galicia-covid19/raw/master/ferrol.ext.csv",
-              "data/original/spain/galicia/ferrol.ext.csv")
+# download.file("https://github.com/lipido/galicia-covid19/raw/master/ferrol.ext.csv",
+#               "data/original/spain/galicia/ferrol.ext.csv")
 ferrol_hosp <- read.delim("data/original/spain/galicia/ferrol.ext.csv", sep=",")
 
 ferrol_a <- ferrol_original %>%
@@ -777,11 +777,11 @@ ferrol <- merge( ferrol_a %>% select(-Fecha),
 write.csv( ferrol, file = "data/output/spain/galicia/ferrol_area.csv", row.names = FALSE)
 
 # // Coruña  -----
-download.file("https://github.com/lipido/galicia-covid19/raw/master/coruna.csv",
-              "data/original/spain/galicia/coruna.csv")
+# download.file("https://github.com/lipido/galicia-covid19/raw/master/coruna.csv",
+#               "data/original/spain/galicia/coruna.csv")
 coruna_original <- read.delim("data/original/spain/galicia/coruna.csv", sep=",")
-download.file("https://github.com/lipido/galicia-covid19/raw/master/coruna.ext.csv",
-              "data/original/spain/galicia/coruna.ext.csv")
+# download.file("https://github.com/lipido/galicia-covid19/raw/master/coruna.ext.csv",
+#               "data/original/spain/galicia/coruna.ext.csv")
 coruna_hosp <- read.delim("data/original/spain/galicia/coruna.ext.csv", sep=",")
 
 coruna_a <- coruna_original %>%
