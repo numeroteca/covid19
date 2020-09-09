@@ -1007,7 +1007,7 @@ zonassalud %>% filter( name %in% zonassalud_top$name) %>%
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(
-    date_breaks = "15 days",
+    date_breaks = "20 days",
     date_labels = "%d/%m",
     limits=c( min(zonassalud$date)+70, max(zonassalud$date)+1),
     expand = c(0,0) 
@@ -1042,7 +1042,7 @@ zonassalud %>% filter( name %in% zonassalud_top$name) %>%
   scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(
-    date_breaks = "15 days",
+    date_breaks = "20 days",
     date_labels = "%d/%m",
     limits=c( min(zonassalud$date)+70, max(zonassalud$date)+1),
     expand = c(0,0) 
@@ -1124,7 +1124,7 @@ zonassalud %>% filter( OSI_NOM_eu == "Bilbao - Basurto" ) %>%
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    axis.text.x = element_text(size = 11),
+    axis.text.x = element_text(size = 9),
     axis.text.y = element_text(size = 11),
     legend.position =  "top"
   ) +

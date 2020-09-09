@@ -6,10 +6,9 @@ library(tidyverse)
 library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
-caption_en <- "By: lab.montera34.com/covid19 | Data: EsCOVID19data. Check code.montera34.com/covid19"
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
-period <- "(Actualizado: 2020-09-07)"
+period <- "(Actualizado: 2020-09-09)"
 filter_date <- as.Date("2020-09-03")
 
 # Warning: you need to have loaded spain by executing process_spain_provinces_data.R 
@@ -242,7 +241,10 @@ dev.off()
 png(filename=paste("img/spain/country/covid19_muertes-dia-ccaa.png", sep = ""),width = 900,height = 600)
 spain_ccaa %>% filter( date > filter_date - 50) %>%
   ggplot() +
-  geom_col(aes(date, daily_deaths), size= 1 ) +
+  geom_col(aes(date, daily_deaths, fill = "" ), size= 1, ) +
+  scale_fill_manual(values=c("#AAAAAA")  )+
+  geom_line(aes(date, daily_deaths_avg7, group=ccaa, color=""), size= 1 ) +
+  scale_color_manual(values=c("#565656")  )+
   # scale_color_manual(values = colors_prov) +
   scale_x_date(date_breaks = "1 month", 
                date_labels = "%m",
@@ -256,10 +258,10 @@ spain_ccaa %>% filter( date > filter_date - 50) %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = c(0.1,0.6)
+    legend.position = "top"
   ) +
-  labs(title = paste0(" COVID-19 registrados en España ", updated ),
-       subtitle = paste0("Por provincia (escala lineal). ",period),
+  labs(title = paste0("Fallecidos por día por COVID-19 en España ", updated ),
+       subtitle = paste0("Por comunidad autónoma (escala lineal). ",period),
        y = "fallecidos",
        x = "fecha",
        color = "Comunidad autónoma",
@@ -269,7 +271,10 @@ dev.off()
 png(filename=paste("img/spain/country/covid19_casos-dia-ccaa.png", sep = ""),width = 900,height = 600)
 spain_ccaa %>% filter( date > filter_date - 50) %>%
   ggplot() +
-  geom_col(aes(date, daily_cases_PCR), size= 1 ) +
+  geom_col(aes(date, daily_cases_PCR, fill = "" ), size= 1, ) +
+  scale_fill_manual(values=c("#AAAAAA")  )+
+  geom_line(aes(date, daily_cases_PCR_avg7, group=ccaa, color=""), size= 1 ) +
+  scale_color_manual(values=c("#565656")  )+
   # scale_color_manual(values = colors_prov) +
   scale_x_date(date_breaks = "1 month", 
                date_labels = "%m",
@@ -283,13 +288,14 @@ spain_ccaa %>% filter( date > filter_date - 50) %>%
     panel.grid.major.x = element_blank(),
     # panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    legend.position = c(0.1,0.6)
+    legend.position =  "top"
   ) +
   labs(title = paste0("Casos PCR+ por día COVID-19 en España ", updated ),
        subtitle = paste0("Por provincia (escala lineal). ",period),
        y = "fallecidos",
        x = "fecha",
-       color = "Comunidad autónoma",
+       fill = "casos por día",
+       colour = "media",
        caption = caption_provincia)
 dev.off()
 
