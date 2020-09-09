@@ -1160,6 +1160,7 @@ osi %>% # filter( name %in% municipios_top$name) %>%
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 11),
     legend.position =  "top"
   ) +
   labs(title = paste0("Casos PCR+ por COVID-19 por OSI por día en Euskadi" ),
@@ -1193,6 +1194,7 @@ osi %>% # filter( name %in% municipios_top$name) %>%
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 11),
     legend.position =  "top"
   ) +
   labs(title = paste0("Casos PCR+ por COVID-19 por OSI por día en Euskadi" ),
@@ -1285,6 +1287,7 @@ municipios %>% filter( name %in% municipios_top$name) %>%
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 11),
     legend.position =  "top"
   ) +
   labs(title = paste0("Casos PCR+ por COVID-19 por municipio por día en Euskadi" ),
