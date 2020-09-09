@@ -2253,7 +2253,7 @@ rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_pobl
 
 
 
-# Summarise by CCAA and Spain -------------
+# G. Summarise by CCAA and Spain -------------
 # data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate (
 to_agreggate <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date) %>% mutate (
   # deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
@@ -2322,6 +2322,11 @@ spain_ccaa <- spain_ccaa %>% group_by(ccaa) %>% arrange(date) %>%
     daily_deaths_avg7 =  round( ( daily_deaths + lag(daily_deaths,1)+lag(daily_deaths,2)+
                                     lag(daily_deaths,3)+lag(daily_deaths,4)+lag(daily_deaths,5)+lag(daily_deaths,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
     deaths_last_week =  daily_deaths + lag(daily_deaths,1) + lag(daily_deaths,2) + lag(daily_deaths,3) + lag(daily_deaths,4) + lag(daily_deaths,5) + lag(daily_deaths,6)
+  ) %>% mutate(
+    cases_per_cienmil = round( cases_accumulated / poblacion * 100000, digits = 2),
+    intensive_care_per_1000000 = round( intensive_care / poblacion * 100000, digits = 2),
+    deceassed_per_100000 = round( deceased / poblacion * 100000, digits = 2),
+    hospitalized_per_100000 = round( hospitalized / poblacion * 100000, digits = 2)
   )
 
 ccaa_poblacion <-  read.delim("data/original/spain/ccaa-poblacion.csv",sep = ";")
