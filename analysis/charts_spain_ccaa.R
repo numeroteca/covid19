@@ -3729,7 +3729,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% filter( (date > as.Date("
 # Remove not prevalent hospitalized data for Murcia and Navarra early days ---
 data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   hospitalized = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
-  intensive_care = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
+  intensive_care = ifelse( (province== "Murcia, Región de") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
   hospitalized = ifelse( (province== "Navarra, Comunidad Foral de") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
   intensive_care = ifelse( (province== "Navarra") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
   hospitalized = ifelse( (province== "Ceuta") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
@@ -3742,7 +3742,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
   # intensive_care = ifelse( (province== "Cantabria") & ( date < as.Date("2020-07-16" ) ), NA, intensive_care ),
   # intensive_care = ifelse( province== "Cantabria", NA, intensive_care ),
   hospitalized = ifelse( (province== "Rioja, La") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized ),
-  hospitalized_per_100000 = ifelse( (province== "Murcia") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
+  hospitalized_per_100000 = ifelse( (province== "Murcia, Región de") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
   hospitalized_per_100000 = ifelse( (province== "Navarra, Comunidad Foral de") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
   hospitalized_per_100000 = ifelse( (province== "Ceuta") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),
   hospitalized_per_100000 = ifelse( (province== "Melilla") & ( date < as.Date("2020-07-16" ) ), NA, hospitalized_per_100000 ),

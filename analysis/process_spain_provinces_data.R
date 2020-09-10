@@ -2344,6 +2344,7 @@ spain_ccaa <- merge( spain_ccaa,
                 ccaa = ccaa %>% str_replace("Castilla-La Mancha","Castilla - La Mancha"),
                 ccaa = ccaa %>% str_replace("La Rioja","Rioja, La"),
                 ccaa = ccaa %>% str_replace("Madrid","Madrid, Comunidad de"),
+                ccaa = ccaa %>% str_replace("Murcia","Murcia, Región de"),
                 ccaa = ccaa %>% str_replace("Navarra","Navarra, Comunidad Foral de")
               ), 
               by.x = "ccaa", by.y = "ccaa"   ) %>% select(
