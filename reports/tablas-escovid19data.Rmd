@@ -17,7 +17,7 @@ library(DT)
 library(viridis)
 library(sparkline)
 
-today <- as.Date("2020-09-09")
+today <- as.Date("2020-09-10")
 from <- as.Date("2020-08-14")
 days <- as.numeric(today - from )
 threshold <- 4
@@ -29,10 +29,10 @@ Puedes ver más visualizaciones en esta web https://lab.montera34.com/covid19/pr
 
 El código .Rmd para generar este informe [está disponile](https://code.montera34.com/numeroteca/covid19/-/blob/master/reports/tablas-escovid19data.Rmd).
 
-* [Casos. Incidencia acumulada](#casos-incidencia-acumulada)
+* [Casos. Incidencia acumulada](#casos.-incidencia-acumulada)
   * [IA7 por provincia (últimos días)](#ia7-por-provincia-últimos-días)
   * [IA7 por provincia (periodo completo)](#ia7-por-provincia-periodo-completo)
-  * [IA14 por provincia (periodo completo)](#ia14-por-provincia-últimos-días)
+  * [IA14 por provincia (periodo completo)](#ia14-por-provincia-periodo-completo)
   * [IA7 por CCAA](#ia7-por-ccaa)
   * [IA14 por CCAA](#ia14-por-ccaa)
 * [Hostpitalizados](#hospitalizados)
@@ -45,7 +45,7 @@ Para ver más tablas de este tipo puedes ver la cuenta de [@ngbpadel2](https://t
 
 ## IA7 por provincia (últimos días)
 
-Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+. 
+Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+. Datos de Escovid19data recopilados de las CCAA.
 
 ```{r ia7prov, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
 data_cases_sp_provinces <- readRDS( file="../data/output/spain/covid19-provincias-spain_consolidated.rds") %>% mutate(
@@ -58,8 +58,6 @@ data_cases_sp_provinces <- readRDS( file="../data/output/spain/covid19-provincia
 data_cases_sp_provinces$weekday <- weekdays(data_cases_sp_provinces$date)
 data_cases_sp_provinces$weekday <- factor(data_cases_sp_provinces$weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
                                                                                       "sábado","domingo" ) ) 
-data_cases_sp_provinces <- data_cases_sp_provinces 
-
 ia7data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_7days,poblacion) %>%
   mutate(
   ia7 =  round( cases_PCR_7days / poblacion * 100000, digits = 0)
@@ -74,31 +72,46 @@ ia7data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_7days,pobl
   date_header = date_header %>% str_replace( "06","6" ),
   date_header = date_header %>% str_replace( "07","7" ),
   date_header = date_header %>% str_replace( "08","8" ),
+  date_header = date_header %>% str_replace( "09","9" ),
   date_header = date_header %>% str_replace( "09","9" )
 ) %>% select(-date)
 
-ia7data <- ia7data %>% spread(date_header,ia7) # >% mutate(
+data <- ia7data %>% spread(date_header,ia7) # >% mutate(
 #   CCAA = ccaa
 # )
 
-# as.datatable(
-  formattable( ia7data, 
-               align = c("r", rep("r", NCOL(ia7data) - 1)),
-               list(
-                  # ia14 = color_tile("#fff7ec", "#ffa01e"),
-                  area(col = 2:(days - threshold)) ~ color_tile("#fff7ec", "#ffa01e") 
-               )
-  )
-# ,options = list(pageLength = 54)
-# ,rownames= FALSE
+# formattable( data, 
+#              align = c("r", rep("r", NCOL(ia7data) - 1)),
+#              list(
+#                 # ia14 = color_tile("#fff7ec", "#ffa01e"),
+#                 area(col = 2:(days - threshold)) ~ color_tile("#fff7ec", "#ffa01e")
+#                 # area(col = 2:(days - threshold)) ~ color_tile("#009933", "#cc0000") 
+#              )
 # )
+```
+
+
+```{r ia7prov2, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+# brks <- quantile(data %>% select(-province), probs = seq(.05, .95, .05), na.rm = TRUE)
+brks <- quantile(data %>% select(-province), probs = seq(.05, .95, .15), na.rm = TRUE)
+# clrs <- round(seq(255, 40, length.out = length(brks) + 1), 0) %>%
+clrs <- round(seq(255, 40, length.out = length(brks) + 1), 0) %>%
+  {paste0("rgb(255,", ., ",", ., ")")}
+
+clrs <- c("#ffffcc","#ffeda0","#fed976","#feb24c" ,"#fd8d3c" ,"#fc4e2a" ,"#e31a1c" ,"#bd0026" )
+
+datatable(data,
+options = list(pageLength = 54),
+rownames= FALSE
+          ) %>% formatStyle( names( data[,2:(ncol(data)-threshold)]), backgroundColor = styleInterval(brks, clrs))
+
 ``` 
 
 Nota: Galicia incluye algunos casos que son por anticuerpos en su serie, pero al no disponer de una serie con solo casos PCR+ se usa la de casos acumulados. Ver wiki https://github.com/montera34/escovid19data/wiki#informaci%C3%B3n-obtenida-a-partir-del-4-de-junio
 
 ## IA7 por provincia, periodo completo 
 
-Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+. Datos de los miércoles.
+Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+. Datos de los miércoles. Datos de Escovid19data recopilados de las CCAA.
 
 ```{r ia7provtotal, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
 
@@ -145,22 +158,30 @@ data <- ia7data %>% spread(date_header,variable) %>% mutate(
    provincia = province
 ) # %>% mutate_all(list(~ myreplace(.)))
 
-# as.datatable(
-formattable( data, 
-             # align = c("r", rep("r", NCOL(ia7data) - 2),"l"),
-             list(
-  # ia14 = color_tile("#fff7ec", "#ffa01e"),
-  area(col = 2:27) ~ color_tile("#fff7ec", "#ffa01e") 
-))
-# , caption = 'Incidencia acumulada casos PCR+ en 7 días por 100.000 habitantes.'
-# , options = list(pageLength = 54)
-# )
+# formattable( data, 
+#              # align = c("r", rep("r", NCOL(ia7data) - 2),"l"),
+#              list(
+#   # ia14 = color_tile("#fff7ec", "#ffa01e"),
+#   area(col = 2:27) ~ color_tile("#fff7ec", "#ffa01e") 
+# ))
+``` 
+
+```{r ia7prov2completo, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+brks <- quantile( data %>% select(-province, -provincia), probs = seq(.05, .95, .15), na.rm = TRUE)
+
+clrs <- c("#ffffcc","#ffeda0","#fed976","#feb24c" ,"#fd8d3c" ,"#fc4e2a" ,"#e31a1c" ,"#bd0026" )
+
+datatable(data,
+options = list(pageLength = 54),
+rownames= FALSE
+          ) %>% formatStyle(names(data), backgroundColor = styleInterval(brks, clrs))
+
 ``` 
 Nota: Galicia incluye algunos casos que son por anticuerpos en su serie, pero al no disponer de una serie con solo casos PCR+ se usa la de casos acumulados. Ver wiki https://github.com/montera34/escovid19data/wiki#informaci%C3%B3n-obtenida-a-partir-del-4-de-junio
 
 ## IA14 por provincia, periodo completo
 
-Incidencia acumulada 14 días por 100.000 habitantes. Casos PCR+. Datos de los miércoles.
+Incidencia acumulada 14 días por 100.000 habitantes. Casos PCR+. Datos de los miércoles. Datos de Escovid19data recopilados de las CCAA.
 
 ```{r ia14provtotal, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
 
@@ -192,21 +213,25 @@ ia14data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_14days,po
   # date_header = date_header %>% str_replace( "09","9" )
 ) %>% select(-date)
 
-ia14data <- ia14data %>% spread(date_header,ia14) %>% mutate(
+data <- ia14data %>% spread(date_header,ia14) %>% mutate(
   province = province %>% str_replace( "Santa Cruz de Tenerife", "S.C. Tenerife"),
    provincia = province
 )
 
-# as.datatable(
-formattable( ia14data, 
-             align = c("r", rep("r", NCOL(ia14data) - 2),"l"),
-             list(
-  # ia14 = color_tile("#fff7ec", "#ffa01e"),
-  area(col = 2:27) ~ color_tile("#fff7ec", "#ffa01e") 
-))
-# , caption = 'Incidencia acumulada casos PCR+ en 7 días por 100.000 habitantes.'
-# , options = list(pageLength = 54)
-# )
+# formattable( data, 
+#              align = c("r", rep("r", NCOL(ia14data) - 2),"l"),
+#              list(
+#   # ia14 = color_tile("#fff7ec", "#ffa01e"),
+#   area(col = 2:27) ~ color_tile("#fff7ec", "#ffa01e") 
+# ))
+
+brks <- quantile( data %>% select(-province, -provincia), probs = seq(.05, .95, .15), na.rm = TRUE)
+clrs <- c("#ffffcc","#ffeda0","#fed976","#feb24c" ,"#fd8d3c" ,"#fc4e2a" ,"#e31a1c" ,"#bd0026" )
+
+datatable(data,
+options = list(pageLength = 54),
+rownames= FALSE
+          ) %>% formatStyle(names(data), backgroundColor = styleInterval(brks, clrs))
 ``` 
 Nota: Galicia incluye algunos casos que son por anticuerpos en su serie, pero al no disponer de una serie con solo casos PCR+ se usa la de casos acumulados. Ver wiki https://github.com/montera34/escovid19data/wiki#informaci%C3%B3n-obtenida-a-partir-del-4-de-junio
 
@@ -216,12 +241,24 @@ En formato gráfico:
 
 ## IA7 por CCAA
 
-Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+.
+Incidencia acumulada 7 días por 100.000 habitantes. Casos PCR+. Datos de Escovid19data recopilados de las CCAA.
 
 ```{r ia7, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
 
-spain_ccaa <- readRDS(file ="../data/output/spain/covid19-ccaa-spain_consolidated.rds")  %>%
-  filter( date > from & date < today ) 
+spain_ccaa <- readRDS(file ="../data/output/spain/covid19-ccaa-spain_consolidated.rds") %>% mutate(
+  # aproximación para Galicia: considera que todos los casos son casos PCR+. Ver wiki
+  cases_PCR_7days = ifelse( (ccaa=="Galicia") & (date > as.Date("2020-05-20") ), 
+                            cases_accumulated - lag(cases_accumulated,7), 
+                            cases_PCR_7days)
+)   %>%
+  filter( date > from & date < today ) %>% mutate (
+    ccaa = ccaa %>% str_replace( "Asturias, Principado de","Asturias"),
+    ccaa = ccaa %>% str_replace( "Navarra, Comunidad Foral de","Navarra"),
+    ccaa = ccaa %>% str_replace( "Castilla - La Mancha","C.-La Mancha"),
+    ccaa = ccaa %>% str_replace( "Murcia, Región de","Murcia"),
+    ccaa = ccaa %>% str_replace( "Madrid, Comunidad de","Madrid"),
+    ccaa = ccaa %>% str_replace( "Comunitat Valenciana","C. Valenciana"),
+  )
 
 ia7data <- spain_ccaa %>% select(ccaa,date,cases_PCR_7days,poblacion) %>%
   mutate(
@@ -231,31 +268,43 @@ ia7data <- spain_ccaa %>% select(ccaa,date,cases_PCR_7days,poblacion) %>%
   date_header = date_header %>% str_replace( "2020-","" )
 ) %>% select(-date)
 
-ia7data <- ia7data %>% spread(date_header,ia7) # %>% mutate(
+data <- ia7data %>% spread(date_header,ia7) # %>% mutate(
   # CCAA = ccaa
 # )
 
-# as.datatable(
-formattable( ia7data, 
-             list(
-  # ia14 = color_tile("#fff7ec", "#ffa01e"),
-   align = c("r", rep("r", NCOL(ia7data) - 1), "l"),
-  area(col = 2:(days - threshold)) ~ color_tile("#fff7ec", "#ffa01e") 
-))
-# ,options = list(pageLength = 19)
-# )
+# formattable( data, 
+#              list(
+#   # ia14 = color_tile("#fff7ec", "#ffa01e"),
+#    align = c("r", rep("r", NCOL(ia7data) - 1), "l"),
+#   area(col = 2:(days - threshold)) ~ color_tile("#fff7ec", "#ffa01e") 
+# ))
+
+brks <- quantile( data %>% select(-ccaa), probs = seq(.05, .95, .15), na.rm = TRUE)
+clrs <- c("#ffffcc","#ffeda0","#fed976","#feb24c" ,"#fd8d3c" ,"#fc4e2a" ,"#e31a1c" ,"#bd0026" )
+
+datatable(data,
+options = list(pageLength = 19),
+rownames= FALSE
+          ) %>% formatStyle(names(data), backgroundColor = styleInterval(brks, clrs))
+
 ``` 
+Nota: Galicia incluye algunos casos que son por anticuerpos en su serie, pero al no disponer de una serie con solo casos PCR+ se usa la de casos acumulados. Ver wiki https://github.com/montera34/escovid19data/wiki#informaci%C3%B3n-obtenida-a-partir-del-4-de-junio
 
 ## IA14 por CCAA
 
-Incidencia acumulada 14 días por 100.000 habitantes. Casos PCR+.
+Incidencia acumulada 14 días por 100.000 habitantes. Casos PCR+. Datos de Escovid19data recopilados de las CCAA.
 
 ```{r ia14, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
 
-ia14data <- spain_ccaa %>% select(ccaa,date,cases_PCR_14days,poblacion) %>% 
+ia14data <- spain_ccaa %>% select(ccaa,date,cases_PCR_14days,cases_accumulated,poblacion) %>% mutate(
+  # aproximación para Galicia: considera que todos los casos son casos PCR+. Ver wiki
+  cases_PCR_14days = ifelse( (ccaa=="Galicia") & (date > as.Date("2020-05-20") ), 
+                            cases_accumulated - lag(cases_accumulated,14), 
+                            cases_PCR_14days)
+)  %>% 
   mutate(
   variable =  round( cases_PCR_14days / poblacion * 100000, digits = 0)
-) %>% select( -poblacion, -cases_PCR_14days) %>% mutate(
+) %>% select( -poblacion, -cases_PCR_14days,-cases_accumulated) %>% mutate(
   date_header = as.character(date),
   date_header = date_header %>% str_replace( "2020-","" )
   # variable = ifelse(is.na(variable), "",variable )
@@ -263,27 +312,32 @@ ia14data <- spain_ccaa %>% select(ccaa,date,cases_PCR_14days,poblacion) %>%
 
 # ia14data %>%   pivot_wider(names_from = date, values_from = ia14)
 
-ia14data <- ia14data %>% spread(date_header,variable) #%>% mutate(
+data <- ia14data %>% spread(date_header,variable) #%>% mutate(
 #   CCAA = ccaa
 # )
 
-# as.datatable(
-formattable( ia14data, 
-             list(
-  # ia14 = color_tile("#fff7ec", "#ffa01e"),
-  area(col = 2:(days - threshold)) ~ color_tile("#fff7ec", "#ffa01e") 
-))
-# ,options = list(pageLength = 19)
-# )
+# formattable( data,
+#              list(
+#   # ia14 = color_tile("#fff7ec", "#ffa01e"),
+#   area(col = 2:(days - threshold)) ~ color_tile("#fff7ec", "#ffa01e")
+# ))
+
+brks <- quantile( data %>% select(-ccaa), probs = seq(.05, .95, .15), na.rm = TRUE)
+clrs <- c("#ffffcc","#ffeda0","#fed976","#feb24c" ,"#fd8d3c" ,"#fc4e2a" ,"#e31a1c" ,"#bd0026" )
+
+datatable(data,
+options = list(pageLength = 19),
+rownames= FALSE
+          ) %>% formatStyle(names(data), backgroundColor = styleInterval(brks, clrs))
+
 ``` 
-
-
+Nota: Galicia incluye algunos casos que son por anticuerpos en su serie, pero al no disponer de una serie con solo casos PCR+ se usa la de casos acumulados. Ver wiki https://github.com/montera34/escovid19data/wiki#informaci%C3%B3n-obtenida-a-partir-del-4-de-junio
 
 # Hospitalizados
 
-## Por provincia
+## Hospitalizados por provincia
 
-Personas hospitalizadas en planta (prevalentes).
+Personas hospitalizadas en planta (prevalentes). Datos de Escovid19data recopilados de las CCAA.
 
 ```{r hospprov, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
 
@@ -294,29 +348,34 @@ data <- data_cases_sp_provinces %>% select(province, date, hospitalized) %>% ren
   variable = hospitalized
 ) %>% mutate(
   date_header = as.character(date),
-  date_header = date_header %>% str_replace( "2020-","" ),
-  variable = ifelse(is.na(variable), "",variable ) 
+  date_header = date_header %>% str_replace( "2020-","" )
+  # variable = ifelse(is.na(variable), "",variable )
 ) %>% select(-date)
 
 data <- data %>% spread(date_header,variable) %>% mutate(
    Provincia = province
 )
 
-# as.datatable(
-formattable( data, 
-             list(
-  # ia14 = color_tile("#fff7ec", "#ffa01e"),
-  area(col = 2:(days - 0)) ~ color_tile("#fCfEfC", "#6ba5c6") 
-))
-# ,options = list(pageLength = 19)
-# )
+# formattable( data, 
+#              list(
+#   # ia14 = color_tile("#fff7ec", "#ffa01e"),
+#   area(col = 2:(days - 0)) ~ color_tile("#fCfEfC", "#6ba5c6") 
+# ))
+
+brks <- quantile( data %>% select(-province, -Provincia), probs = seq(.05, .95, .15), na.rm = TRUE)
+clrs <- c("#ffffd9","#edf8b1","#c7e9b4","#7fcdbb" ,"#41b6c4" ,"#1d91c0" ,"#225ea8" ,"#253494" )
+
+datatable(data,
+options = list(pageLength = 54),
+rownames= FALSE
+          ) %>% formatStyle(names(data), backgroundColor = styleInterval(brks, clrs))
 ``` 
 
-# UCI
+# UCI 
 
 ## Por provincia
 
-Personas hospitalizadas en unidad de cuidad intensivos (prevalentes).
+Personas hospitalizadas en unidad de cuidad intensivos (prevalentes). Datos de Escovid19data recopilados de las CCAA.
 
 ```{r ucipprov, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
 
@@ -324,29 +383,111 @@ data <- data_cases_sp_provinces %>% select(province, date, intensive_care) %>% r
   variable = intensive_care
 ) %>% mutate(
   date_header = as.character(date),
-  date_header = date_header %>% str_replace( "2020-","" ),
-  variable = ifelse(is.na(variable), "",variable ) 
+  date_header = date_header %>% str_replace( "2020-","" )
+  # variable = ifelse(is.na(variable), "",variable ) 
 ) %>% select(-date)
 
 data <- data %>% spread(date_header,variable) %>% mutate(
    Provincia = province
 )
 
-# as.datatable(
-formattable( data, 
-             list(
-  # ia14 = color_tile("#fff7ec", "#ffa01e"),
-  area(col = 2:(days - 0)) ~ color_tile("#fDfCfC", "#e14f4f") 
-))
-# ,options = list(pageLength = 19)
-# )
+# formattable( data, 
+#              list(
+#   # ia14 = color_tile("#fff7ec", "#ffa01e"),
+#   area(col = 2:(days - 0)) ~ color_tile("#fDfCfC", "#e14f4f") 
+# ))
+
+brks <- quantile( data %>% select(-province, -Provincia), probs = seq(.05, .95, .15), na.rm = TRUE)
+# scale build with https://hihayk.github.io/scale/#4/8/50/94/-51/-34/-19/14/bd1e1e/189/30/30/white
+clrs <- c("#FAF7F2","#F1E5D9","#E8D1C0","#E0BBA6" ,"#D8A18C" ,"#D18571" ,"#CA6656" ,"#C3443A" )
+
+datatable(data,
+options = list(pageLength = 54),
+rownames= FALSE
+          ) %>% formatStyle(names(data), backgroundColor = styleInterval(brks, clrs))
 ``` 
 
 # Fallecidos
 
+## Por comunidades autónomas
+
+Personas fallecidas diarias. Datos de Escovid19data recopilados de las CCAA. Datos de Escovid19data recopilados de las CCAA.
+
+```{r muertesccaa, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+data <- spain_ccaa %>% select(ccaa,date,daily_deaths,poblacion) %>% 
+  mutate(
+  variable =  daily_deaths
+) %>% select( -poblacion, -daily_deaths) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" ),
+  variable = ifelse(is.na(variable), "",variable )
+) %>% select(-date)
+
+# ia14data %>%   pivot_wider(names_from = date, values_from = ia14)
+
+data <- data %>% spread(date_header,variable) #%>% mutate(
+#   CCAA = ccaa
+# )
+
+formattable( data,
+             list(
+  # ia14 = color_tile("#fff7ec", "#ffa01e"),
+  area(col = 2:(days - 0)) ~ color_tile("#FBFBFB", "#aaaaaa")
+))
+
+# brks <- quantile( data %>% select(-ccaa), probs = seq(.05, .95, .15), na.rm = TRUE)
+# # scale build with https://hihayk.github.io/scale/#4/7/50/91/-51/-34/-19/14/999999/153/153/153/white
+# clrs <- c("#F6F6F6","#E9E9E9","#DBDBDB","#CECECE" ,"#C1C1C1" ,"#B4B4B4" ,"#B4B4B4" ,"#B4B4B4" )
+# 
+# datatable(data,
+# options = list(pageLength = 19),
+# rownames= FALSE
+#           ) %>% formatStyle(names(data), backgroundColor = styleInterval(brks, clrs))
+
+``` 
+
+## Por comunidades autónomas (media diaria)
+
+Media de personas fallecidas diarias (ventana de 7 días). Datos de Escovid19data recopilados de las CCAA.
+
+```{r muertesccaa2, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+data <- spain_ccaa %>% select(ccaa,date,daily_deaths_avg7,poblacion) %>% 
+  mutate(
+  variable =  daily_deaths_avg7
+) %>% select( -poblacion, -daily_deaths_avg7) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" ),
+  variable = ifelse(is.na(variable), "",variable )
+) %>% select(-date)
+
+# ia14data %>%   pivot_wider(names_from = date, values_from = ia14)
+
+data <- data %>% spread(date_header,variable) #%>% mutate(
+#   CCAA = ccaa
+# )
+
+formattable( data,
+             list(
+  # ia14 = color_tile("#fff7ec", "#ffa01e"),
+  area(col = 2:(days - 0)) ~ color_tile("#FBFBFB", "#aaaaaa")
+))
+
+# brks <- quantile( data %>% select(-ccaa), probs = seq(.05, .95, .15), na.rm = TRUE)
+# # scale build with https://hihayk.github.io/scale/#4/7/50/91/-51/-34/-19/14/999999/153/153/153/white
+# clrs <- c("#F6F6F6","#E9E9E9","#DBDBDB","#CECECE" ,"#C1C1C1" ,"#B4B4B4" ,"#B4B4B4" ,"#B4B4B4" )
+# 
+# datatable(data,
+# options = list(pageLength = 19),
+# rownames= FALSE
+#           ) %>% formatStyle(names(data), backgroundColor = styleInterval(brks, clrs))
+``` 
+Últimas fechas con datos no consolidados.
+
 ## Por provincia
 
-Personas fallecidas diarias.
+Personas fallecidas diarias. Datos de Escovid19data recopilados de las CCAA.
 
 ```{r deathprov, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
 
@@ -358,19 +499,25 @@ data <- data_cases_sp_provinces %>% select(province, date, daily_deaths) %>% ren
 ) %>% mutate(
   date_header = as.character(date),
   date_header = date_header %>% str_replace( "2020-","" ),
-  variable = ifelse(is.na(variable), "",variable ) 
+  variable = ifelse(is.na(variable), "",variable )
 ) %>% select(-date)
 
 data <- data %>% spread(date_header,variable) %>% mutate(
    Provincia = province
 )
 
-# as.datatable(
-formattable( data, 
+formattable( data,
              list(
   # ia14 = color_tile("#fff7ec", "#ffa01e"),
-  area(col = 2:(days - 0)) ~ color_tile("#FBFBFB", "#aaaaaa") 
+  area(col = 2:(days - 0)) ~ color_tile("#FBFBFB", "#aaaaaa")
 ))
-# ,options = list(pageLength = 19)
-# )
+
+# brks <- quantile( data %>% select(-province, -Provincia), probs = seq(.05, .95, .15), na.rm = TRUE)
+# # scale build with https://hihayk.github.io/scale/#4/7/50/91/-51/-34/-19/14/999999/153/153/153/white
+# clrs <- c("#F6F6F6","#E9E9E9","#DBDBDB","#CECECE" ,"#C1C1C1" ,"#B4B4B4" ,"#B4B4B4" ,"#B4B4B4" )
+# 
+# datatable(data,
+# options = list(pageLength = 54),
+# rownames= FALSE
+#           ) %>% formatStyle(names(data), backgroundColor = styleInterval(brks, clrs))
 ``` 
