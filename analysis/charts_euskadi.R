@@ -1486,7 +1486,7 @@ euskadi <- euskadi %>% mutate(
 )
 
 # Loop 50 days Lin 
-prov <- levels(data_cases_sp_provinces$ccaa)[18]
+prov <- "País Vasco"
   
 png(filename=paste0("img/spain/provincias/covid19_casos-por-dia-provincia-media-superpuesto-lineal-last50-media-pais.png", sep = ""),width = 1200,height = 800)
 euskadi %>% filter ( (ccaa == prov) & (date > filter_date - 50) ) %>%
