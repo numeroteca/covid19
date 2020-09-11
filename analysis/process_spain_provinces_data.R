@@ -1954,11 +1954,20 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
 # D. Add province ISCIII RENAVE data -----
 download.file("https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv", 
               "data/original/spain/iscii_casos_renave.csv")
+ciii_renave_init <- read.delim("data/original/spain/iscii_casos_renave_inicial.csv",sep = ",") %>% 
+  mutate ( 
+    date = as.Date(as.character(fecha)),
+    provincia_iso = ifelse ( is.na(provincia_iso), "NA", as.character(provincia_iso) )
+  )
+
 ciii_renave <- read.delim("data/original/spain/iscii_casos_renave.csv",sep = ",") %>% 
   mutate ( 
     date = as.Date(as.character(fecha)),
     provincia_iso = ifelse ( is.na(provincia_iso), "NA", as.character(provincia_iso) )
   )
+
+ciii_renave <-rbind(ciii_renave_init %>% filter( date < as.Date("2020-05-08") ),
+                    ciii_renave)
 
 ciii_renave <- ciii_renave %>%
   mutate(

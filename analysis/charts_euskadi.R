@@ -1384,7 +1384,23 @@ municipios %>% # filter( name %in% municipios_top$name) %>%
        caption = caption_provincia)
 dev.off()
 
-# 4. Casos de no residentes en Euskadi ----------
+# 4. Por edades
+# process data -------
+poredades <- read_excel("data/original/spain/euskadi/situacion-epidemiologica.xlsx", skip = 0, col_names = TRUE, sheet = "03") %>%  rename(
+ "Kasu positiboak / Positivos" = casos
+  ) 
+
+  # %>% rename(
+#   name = "OSASUN-EREMUAK/ZONAS DE SALUD"
+# ) %>% melt(  id.vars = c("name")) %>% rename ( date = variable) %>% 
+#   group_by(name) %>% arrange(date) %>% 
+#   mutate(
+#     date =  as.Date( paste0(date,"/2020"), "%d/%m/%y"),
+#     daily_cases_avg7 =  round( ( value + lag(value,1)+lag(value,2)+
+#                                    lag(value,3)+lag(value,4)+lag(value,5)+lag(value,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
+#   ) %>% filter( !is.na(date))
+
+# 5. Casos de no residentes en Euskadi ----------
 # Set colors 
 # extends color paletter
 library(RColorBrewer)
@@ -1401,7 +1417,10 @@ download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIX
 euskadi <- read.delim("data/original/spain/euskadi/pais-vasco.csv", sep=",") %>% filter(
   province != "Euskadi"
 ) %>% select( -hospitalizados_ese_dia, -pruebas_pcr_realizadas)
-  
+
+max_date  <- max(euskadi$date)
+period_eus <- paste("Última fecha:", max_date)
+
 otros <- euskadi %>% filter( province == "Araba/Álava" & !is.na(PCR_diario_residencia_fuera_de_euskadi)) %>% 
   select(date,PCR_diario_residencia_fuera_de_euskadi) %>% 
   mutate(
@@ -1513,7 +1532,7 @@ euskadi %>% filter ( (ccaa == prov) & (date > filter_date - 50) ) %>%
       legend.position =  "none"
     ) +
     labs(title = paste0("Media de casos por día (media 7 días) por COVID-19 en ",prov, " ", updated ),
-         subtitle = paste0("Línea de puntos: casos PCR+, media de 7 días. Últimos 50 días. Por provincia. ",period),
+         subtitle = paste0("Línea de puntos: casos PCR+, media de 7 días. Últimos 50 días. Por provincia. ", period_eus),
          y = "casos por día (media 7 días)",
          x = "fecha",
          caption = caption_provincia) + 
