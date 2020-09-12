@@ -655,6 +655,7 @@ ggplot() +
   )
 dev.off()
 
+
 png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_renave-iscii_vs_escovid19data_media.png", sep = ""), width = 2700, height = 1650)
 data_cases_sp_provinces %>% # filter( ccaa=="Galicia") %>%
   ggplot() +
@@ -683,11 +684,89 @@ data_cases_sp_provinces %>% # filter( ccaa=="Galicia") %>%
     legend.position = "top"
   ) +
   labs(title = "Comparativa de bases de datos RENAVE y esCOVID19data. Casos diarios por PCR+",
-       subtitle = paste0("Media de ventana 7 día.  COVID-19 por provincias. España"),
+       subtitle = paste0("Media de ventana 7 días.  COVID-19 por provincias. España"),
        y = "casos diarios PCR+ media",
        x = "fecha",
        colour ="bases de datos",
        caption = paste0( "@numeroteca. lab.montera34.com/covid19" )
   )
 dev.off()
-  
+
+
+
+png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_renave-iscii_vs_escovid19data_media_lastdays.png", sep = ""), width = 2700, height = 1650)
+data_cases_sp_provinces %>% filter ( date > as.Date("2020-07-15") ) %>% # filter( ccaa=="Galicia") %>%
+  ggplot() +
+  # geom_line( aes( date, cases_accumulated, group=province, color = "#66a61e"), size = 2.0 ) +
+  geom_line( aes( date, daily_cases_PCR_avg7, group=province, color = "#ff4d94"), size = 1.2 ) +
+  geom_line( aes( date, num_casos_prueba_pcr_avg7, group=province, color = "#000000"), size = 0.7 ) +
+  # scale_y_log10(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)) +
+  scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  facet_wrap( ~province, scales = "free_y") + #, scales = "free"
+  scale_color_identity(
+    guide = "legend",
+    labels = c("RENAVE","esCOVID19data"),
+  ) +
+  expand_limits(y = 0) +
+  scale_x_date(date_breaks = "10 days",
+               date_labels = "%d/%m"
+               # expand = c(0,0)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 33) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text = element_text(size =16 ),
+    panel.grid = element_line(size=0.4, color="#aaaaaa"),
+    legend.position = "top"
+  ) +
+  labs(title = "Comparativa de bases de datos RENAVE y esCOVID19data. Casos diarios por PCR+",
+       subtitle = paste0("Media de ventana 7 días para la serie de esCOVID19data (datos de las CCAA). Por provincias. España"),
+       y = "casos diarios PCR+ media",
+       x = "fecha",
+       colour ="bases de datos",
+       caption = paste0( "@numeroteca. lab.montera34.com/covid19" )
+  )
+dev.off()
+
+png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_renave-iscii_vs_escovid19data_media-diff.png", sep = ""), width = 2700, height = 1650)
+data_cases_sp_provinces %>%
+  filter( date > as.Date( ) ) %>%
+  # filter( ccaa=="Galicia") %>% filter)
+  ggplot() +
+  # geom_line( aes( date, cases_accumulated, group=province, color = "#66a61e"), size = 2.0 ) +
+  # geom_line( aes( date, daily_cases_PCR_avg7, group=province, color = "#ff4d94"), size = 1.2 ) +
+  geom_line( aes( date, num_casos_prueba_pcr_avg7 - daily_cases_PCR_avg7, group=province), size = 1, color = "777777" ) +
+  # scale_y_log10(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)) +
+  scale_y_continuous(labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) +
+  facet_wrap( ~province, scales = "free") + #, scales = "free"
+  # scale_color_identity(
+    # guide = "legend",
+    # labels = c("RENAVE - esCOVID19data"),
+  # ) +
+  scale_x_date(date_breaks = "1 month",
+               date_labels = "%m"
+               # expand = c(0,0)
+  ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 33) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    # panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text = element_text(size =15 ),
+    panel.grid = element_line(size=0.4, color="#aaaaaa"),
+    legend.position = "top"
+  ) +
+  labs(title = "Diferencia de media de casos diarios por PCR+: RENAVE menos esCOVID19data",
+       subtitle = paste0("Media calculada con ventana de 7 días.  COVID-19 por provincias. España"),
+       y = "casos diarios PCR+ media",
+       x = "fecha",
+       # colour ="base de datos",
+       caption = paste0( "@numeroteca. lab.montera34.com/covid19" )
+  )
+dev.off()
+
+

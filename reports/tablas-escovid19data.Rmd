@@ -17,8 +17,8 @@ library(DT)
 library(viridis)
 library(sparkline)
 
-today <- as.Date("2020-09-11")
-from <- as.Date("2020-08-15")
+today <- as.Date("2020-09-12")
+from <- as.Date("2020-08-18")
 days <- as.numeric(today - from )
 threshold <- 4
 ```
@@ -415,14 +415,24 @@ rownames= FALSE
 Personas fallecidas diarias. Datos de Escovid19data recopilados de las CCAA. Datos de Escovid19data recopilados de las CCAA.
 
 ```{r muertesccaa, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+spain_ccaa <- readRDS(file ="../data/output/spain/covid19-ccaa-spain_consolidated.rds") %>% mutate(
+)   %>%
+  filter( date > from & date < today ) %>% mutate (
+    ccaa = ccaa %>% str_replace( "Asturias, Principado de","Asturias"),
+    ccaa = ccaa %>% str_replace( "Navarra, Comunidad Foral de","Navarra"),
+    ccaa = ccaa %>% str_replace( "Castilla - La Mancha","C.-La Mancha"),
+    ccaa = ccaa %>% str_replace( "Murcia, Región de","Murcia"),
+    ccaa = ccaa %>% str_replace( "Madrid, Comunidad de","Madrid"),
+    ccaa = ccaa %>% str_replace( "Comunitat Valenciana","C. Valenciana"),
+  )
 
 data <- spain_ccaa %>% select(ccaa,date,daily_deaths,poblacion) %>% 
   mutate(
   variable =  daily_deaths
 ) %>% select( -poblacion, -daily_deaths) %>% mutate(
   date_header = as.character(date),
-  date_header = date_header %>% str_replace( "2020-","" ),
-  variable = ifelse(is.na(variable), "",variable )
+  date_header = date_header %>% str_replace( "2020-","" )
+  # variable = ifelse(is.na(variable), "",variable )
 ) %>% select(-date)
 
 # ia14data %>%   pivot_wider(names_from = date, values_from = ia14)
@@ -434,7 +444,7 @@ data <- data %>% spread(date_header,variable) #%>% mutate(
 formattable( data,
              list(
   # ia14 = color_tile("#fff7ec", "#ffa01e"),
-  area(col = 2:(days - 0)) ~ color_tile("#FBFBFB", "#aaaaaa")
+  area(col = 2:(days - 0)) ~ color_tile("#FFFBFB", "#aaaaaa")
 ))
 
 # brks <- quantile( data %>% select(-ccaa), probs = seq(.05, .95, .15), na.rm = TRUE)
@@ -459,8 +469,46 @@ data <- spain_ccaa %>% select(ccaa,date,daily_deaths_avg7,poblacion) %>%
   variable =  daily_deaths_avg7
 ) %>% select( -poblacion, -daily_deaths_avg7) %>% mutate(
   date_header = as.character(date),
-  date_header = date_header %>% str_replace( "2020-","" ),
-  variable = ifelse(is.na(variable), "",variable )
+  date_header = date_header %>% str_replace( "2020-","" )
+  # variable = ifelse(is.na(variable), "",variable )
+) %>% select(-date)
+
+# ia14data %>%   pivot_wider(names_from = date, values_from = ia14)
+
+data <- data %>% spread(date_header,variable) #%>% mutate(
+#   CCAA = ccaa
+# )
+
+formattable( data,
+             list(
+  # ia14 = color_tile("#fff7ec", "#ffa01e"),
+  area(col = 2:(days - 0)) ~ color_tile("#FBFBFB", "#aaaaaa")
+))
+
+# brks <- quantile( data %>% select(-ccaa), probs = seq(.05, .95, .15), na.rm = TRUE)
+# # scale build with https://hihayk.github.io/scale/#4/7/50/91/-51/-34/-19/14/999999/153/153/153/white
+# clrs <- c("#F6F6F6","#E9E9E9","#DBDBDB","#CECECE" ,"#C1C1C1" ,"#B4B4B4" ,"#B4B4B4" ,"#B4B4B4" )
+# 
+# datatable(data,
+# options = list(pageLength = 19),
+# rownames= FALSE
+#           ) %>% formatStyle(names(data), backgroundColor = styleInterval(brks, clrs))
+``` 
+Últimas fechas con datos no consolidados.
+
+## Por comunidades autónomas (media diaria) por 100.000 habitantes
+
+Media de personas fallecidas diarias (ventana de 7 días). Datos de Escovid19data recopilados de las CCAA.
+
+```{r muertesccaa3, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+data <- spain_ccaa %>% select(ccaa,date,daily_deaths_avg7,poblacion) %>% 
+  mutate(
+  variable =  round ( (daily_deaths_avg7 / poblacion) * 100000, digits = 2 )
+) %>% select( -poblacion, -daily_deaths_avg7) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" )
+  # variable = ifelse(is.na(variable), "",variable )
 ) %>% select(-date)
 
 # ia14data %>%   pivot_wider(names_from = date, values_from = ia14)
@@ -502,6 +550,43 @@ data <- data_cases_sp_provinces %>% select(province, date, daily_deaths) %>% ren
   date_header = date_header %>% str_replace( "2020-","" ),
   variable = ifelse(is.na(variable), "",variable )
 ) %>% select(-date)
+
+data <- data %>% spread(date_header,variable) %>% mutate(
+   Provincia = province
+)
+
+formattable( data,
+             list(
+  # ia14 = color_tile("#fff7ec", "#ffa01e"),
+  area(col = 2:(days - 0)) ~ color_tile("#FBFBFB", "#aaaaaa")
+))
+
+# brks <- quantile( data %>% select(-province, -Provincia), probs = seq(.05, .95, .15), na.rm = TRUE)
+# # scale build with https://hihayk.github.io/scale/#4/7/50/91/-51/-34/-19/14/999999/153/153/153/white
+# clrs <- c("#F6F6F6","#E9E9E9","#DBDBDB","#CECECE" ,"#C1C1C1" ,"#B4B4B4" ,"#B4B4B4" ,"#B4B4B4" )
+# 
+# datatable(data,
+# options = list(pageLength = 54),
+# rownames= FALSE
+#           ) %>% formatStyle(names(data), backgroundColor = styleInterval(brks, clrs))
+``` 
+
+## Por provincia por 100.000 habitantes
+
+Personas fallecidas diarias. Datos de Escovid19data recopilados de las CCAA.
+
+```{r deathprovperhab, fig.width=7, fig.height=15, echo=FALSE, warning=FALSE, error=FALSE }
+
+data_cases_sp_provinces <- readRDS(file = "../data/output/spain/covid19-provincias-spain_consolidated.rds") %>%
+  filter( date > from & date < today ) 
+
+data <- data_cases_sp_provinces %>% select(province, date, daily_deaths_avg7, poblacion) %>% mutate(
+  variable =  round ( (daily_deaths_avg7 / poblacion) * 100000, digits = 2 )
+) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" ),
+  variable = ifelse(is.na(variable), "",variable )
+) %>% select(-date,-poblacion, -daily_deaths_avg7 )
 
 data <- data %>% spread(date_header,variable) %>% mutate(
    Provincia = province
