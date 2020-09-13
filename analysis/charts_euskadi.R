@@ -1384,13 +1384,23 @@ municipios %>% # filter( name %in% municipios_top$name) %>%
        caption = caption_provincia)
 dev.off()
 
-# 4. Por edades
-# process data -------
-poredades <- read_excel("data/original/spain/euskadi/situacion-epidemiologica.xlsx", skip = 0, col_names = TRUE, sheet = "03") %>%  rename(
- "Kasu positiboak / Positivos" = casos
-  ) 
+# 4. Por edades -------------------
+actualizacion <- as.character( read_excel("data/original/spain/euskadi/situacion-epidemiologica.xlsx", 
+                        skip = 0, col_names = FALSE, sheet = "03", range ="A19" )  ) %>% mutate(
+                          
+                        )
 
-  # %>% rename(
+poredades <- read_excel("data/original/spain/euskadi/situacion-epidemiologica.xlsx", 
+                        skip = 0, col_names = TRUE, sheet = "03", range ="A1:Q13" ) # %>% select(-...18)
+names(poredades)
+poredades <- poredades %>% rename(
+  edad = `Adina / Edad`,
+  casos = "Kasu positiboak / Positivos"
+) %>% select( edad, casos)
+
+data <- poredades %>% spread(edad,casos) 
+
+    # %>% rename(
 #   name = "OSASUN-EREMUAK/ZONAS DE SALUD"
 # ) %>% melt(  id.vars = c("name")) %>% rename ( date = variable) %>% 
 #   group_by(name) %>% arrange(date) %>% 
