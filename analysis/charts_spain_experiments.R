@@ -4,8 +4,8 @@ data_cases_sp_provinces <- readRDS(file = "data/output/spain/covid19-provincias-
 
 noprevalentes <- c("")
 updated <- ""
-period <- "(Actualizado: 2020-09-13)"
-filter_date <- as.Date("2020-09-07")
+period <- "(Actualizado: 2020-09-14)"
+filter_date <- as.Date("2020-09-15")
 
 # 13. Todos los datos juntos ------------
 # Calcula máximos
@@ -196,7 +196,7 @@ data_cases_sp_provinces %>% filter ( (ccaa == "País Vasco" ) & (date > filter_d
 
 dev.off()
 
-png(filename=paste0("img/spain/experiments/madrid-experimento.png", sep = ""),width = 1000,height = 700)
+  png(filename=paste0("img/spain/experiments/madrid-experimento.png", sep = ""),width = 1000,height = 700)
 data_cases_sp_provinces %>% filter ( (ccaa == "Madrid, Comunidad de" ) & (date > filter_date - 50) ) %>%
   ggplot() +
   geom_line(aes(date, daily_cases_PCR, group=weekday, color=weekday), size= 1) +

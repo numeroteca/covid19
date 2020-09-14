@@ -5,6 +5,7 @@ library(tidyverse)
 library(reshape2)
 library(ggrepel) # for geom_text_repel to prevent overlapping
 library(readxl)
+library(viridis)
 
 # Load data 
 download.file("https://opendata.euskadi.eus/contenidos/ds_informes_estudios/covid_19_2020/opendata/datos-asistenciales.xlsx", 
@@ -613,7 +614,7 @@ euskadi_total %>%
   scale_x_date(
     date_breaks = "1 month",
     date_labels = "%m",
-    limits=c( min(euskadi_total$date), max(euskadi_hosp$date +30)),
+    limits=c( min(euskadi_total$date), max(euskadi_hosp$date)),
     expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -646,7 +647,7 @@ euskadi_total %>%
   scale_x_date(
     date_breaks = "1 month", 
     date_labels = "%m",
-    limits=c( min(euskadi_total$date), max(euskadi_hosp$date +30)),
+    limits=c( min(euskadi_total$date), max(euskadi_hosp$date)),
     expand = c(0,0)
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
@@ -675,7 +676,7 @@ euskadi_total %>%
   facet_wrap( ~hospital) + #, scales = "free_x"
   scale_y_continuous( 
     # limits = c(0,100),
-    labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+    labels=function(x) format(round(x, digits = 1), big.mark = ".", scientific = FALSE)
   ) +
   scale_x_date(
     date_breaks = "1 month", 
@@ -1384,33 +1385,283 @@ municipios %>% # filter( name %in% municipios_top$name) %>%
        caption = caption_provincia)
 dev.off()
 
+
+# municipios with average more than n per day
+limite <- 2
+municipios_top <- municipios %>% top_n(1, date) %>% filter (daily_cases_avg7 > limite ) %>% select (name)
+
+# rejilla municpios B ------
+png(filename=paste0("img/spain/euskadi/covid19_municipios-b-pais-vasco_rejilla.png", sep = ""),width = 1200,height = 800)
+municipios %>% filter( name %in% municipios_top$name) %>%
+  ggplot() +
+  geom_col(aes(date, value, fill = ""), width= 1 ) +
+  scale_fill_manual(values=c("#AAAAAA")  )+
+  geom_line(aes(date, daily_cases_avg7, group=name, color= ""), size= 1.1 ) +
+  scale_color_manual(values=c("#565656")  )+
+  facet_wrap( ~name, scales = "free_y") + #, scales = "free_x"
+  scale_y_continuous( labels=function(x) format(round(x, digits = 1), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(
+    date_breaks = "15 days",
+    date_labels = "%d/%m",
+    limits=c( min(municipios$date)+70, max(municipios$date)+2),
+    expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 17) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.text.x = element_text(size = 11),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "top"
+  ) +
+  labs(title = paste0("Casos PCR+ por COVID-19 por municipio por día en Euskadi" ),
+       subtitle = paste0("Con más de ", limite, " de media casos el último dia. Media: ventana de 7 días. ",period_eus),
+       y = "casos por día",
+       x = "fecha 2020",
+       fill = "casos por día",
+       colour = "media",
+       caption = caption_provincia)
+dev.off()
+
+png(filename=paste0("img/spain/euskadi/covid19_municipios-b-pais-vasco_rejilla_not-free.png", sep = ""),width = 1200,height = 800)
+municipios %>% filter( name %in% municipios_top$name) %>%
+  ggplot() +
+  geom_col(aes(date, value, fill = ""), width= 1 ) +
+  scale_fill_manual(values=c("#AAAAAA")  )+
+  geom_line(aes(date, daily_cases_avg7, group=name, color= ""), size= 1.1 ) +
+  scale_color_manual(values=c("#565656")  )+
+  facet_wrap( ~name) + #, scales = "free_x"
+  scale_y_continuous( labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(
+    date_breaks = "15 days",
+    date_labels = "%d/%m",
+    limits=c( min(municipios$date)+70, max(municipios$date)+2),
+    expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 17) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 11),
+    legend.position =  "top"
+  ) +
+  labs(title = paste0("Casos PCR+ por COVID-19 por municipio por día en Euskadi" ),
+       subtitle = paste0("Con más de ", limite, " de media casos el último dia. Media: ventana de 7 días. ",period_eus),
+       y = "casos por día",
+       x = "fecha 2020",
+       fill = "casos por día",
+       colour = "media",
+       caption = caption_provincia)
+dev.off()
+
+
+# Bilbao
+png(filename=paste0("img/spain/euskadi/covid19_casos-bilbao_per-hab.png", sep = ""),width = 600,height = 300)
+
+city <- "Bilbao"
+population <- 345141
+
+municipios %>% filter( name == "BILBAO") %>%
+  ggplot( ) +
+  geom_col(aes(date, value / population*100000, fill = ""), width= 1 ) +
+  scale_fill_manual(values=c("#AAAAAA")  )+
+  geom_line(aes(date, daily_cases_avg7 / population*100000, group=name, color= ""), size= 1.1 ) +
+  scale_color_manual(values=c("#565656")  )+
+  scale_y_continuous( labels=function(x) format(round(x, digits = 4), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(
+    date_breaks = "15 days",
+    date_labels = "%d/%m",
+    limits=c( min(municipios$date)+70, max(municipios$date)+2),
+    expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 11),
+    legend.position =  "top"
+  ) +
+  labs(title = paste0("Casos PCR+ por COVID-19 por día y por 100.000 habitantes en ", city),
+       subtitle = paste0("Media: ventana de 7 días. ",period_eus),
+       y = "casos por día",
+       x = "2020",
+       fill = "casos por día por 100.000 hab.",
+       colour = "media",
+       caption = caption_provincia)
+dev.off()
+
 # 4. Por edades -------------------
+library(stringr)
+library(gsubfn) # select text in the parenthesis with regex
+
 actualizacion <- as.character( read_excel("data/original/spain/euskadi/situacion-epidemiologica.xlsx", 
-                        skip = 0, col_names = FALSE, sheet = "03", range ="A19" )  ) %>% mutate(
-                          
-                        )
+                        skip = 0, col_names = FALSE, sheet = "03", range ="A19" )  )
+
+
+actualizacion <- actualizacion[1] %>% 
+  str_replace("Ultima actualización / Azken eguneratzea","") %>% 
+  str_replace( "[*]","" ) %>%
+  str_replace( "[(]","" ) %>%
+  str_replace( "[(]","" ) %>%
+  str_replace( "[)]","" ) %>%
+  str_replace( "[)]","" ) %>%
+  str_replace( "[ ]","" ) %>%
+  str_replace( "[ ]","" ) 
 
 poredades <- read_excel("data/original/spain/euskadi/situacion-epidemiologica.xlsx", 
                         skip = 0, col_names = TRUE, sheet = "03", range ="A1:Q13" ) # %>% select(-...18)
 names(poredades)
+
+# For 1 file
 poredades <- poredades %>% rename(
   edad = `Adina / Edad`,
   casos = "Kasu positiboak / Positivos"
 ) %>% select( edad, casos)
 
 data <- poredades %>% spread(edad,casos) 
+namesdata <- names(data)
+data$update <- actualizacion
+data$file <- ""
 
-    # %>% rename(
-#   name = "OSASUN-EREMUAK/ZONAS DE SALUD"
-# ) %>% melt(  id.vars = c("name")) %>% rename ( date = variable) %>% 
-#   group_by(name) %>% arrange(date) %>% 
-#   mutate(
-#     date =  as.Date( paste0(date,"/2020"), "%d/%m/%y"),
-#     daily_cases_avg7 =  round( ( value + lag(value,1)+lag(value,2)+
-#                                    lag(value,3)+lag(value,4)+lag(value,5)+lag(value,6) ) / 7, digits = 1 ),  # average of dayly deaths of 7 last days
-#   ) %>% filter( !is.na(date))
+# For all the files
+files <-  read.delim("data/original/spain/euskadi/por-edades/por-edades-files.csv",sep = ";")
+
+results <- ""
+results <- data.frame(matrix(ncol = 13,nrow = 0 ))
+names(results)  <- names(data)
+
+for( i in 1:nrow(files)) {
+  file <- files[i,1] %>% str_replace("./","")
+  actualizacion <- as.character( read_excel( paste0("data/original/spain/euskadi/por-edades/", file), 
+                                            skip = 0, col_names = FALSE, sheet = "03", range ="A19" )  )
+  actualizacion <- actualizacion[1] %>% 
+    str_replace("Ultima actualización / Azken eguneratzea","") %>% 
+    str_replace( "[*]","" ) %>%
+    str_replace( "[(]","" ) %>%
+    str_replace( "[(]","" ) %>%
+    str_replace( "[)]","" ) %>%
+    str_replace( "[)]","" ) %>%
+    str_replace( "[ ]","" ) %>%
+    str_replace( "[ ]","" ) 
+  
+  print(actualizacion)
+  
+  poredades <- read_excel(paste0("data/original/spain/euskadi/por-edades/", file),
+                          skip = 0, col_names = TRUE, sheet = "03", range ="A1:Q13" ) # %>% select(-...18)
+  # For 1 file
+  poredades <- poredades %>% rename(
+    edad = `Adina / Edad`,
+    casos = "Kasu positiboak / Positivos"
+  ) %>% select( edad, casos)
+  
+  data <- poredades %>% spread(edad,casos) 
+  data$update <- actualizacion
+  data$file <- file
+ 
+  results <- rbind(results,data)
+}
+
+results <- distinct(results)
+
+
+results <-  read.delim("data/output/spain/euskadi/casos-por-edades.csv",sep = ",") %>% arrange(-X) %>% select(-file)
+results <- distinct(results)
+
+# names(results) <- names(data)
+
+names(results)
+
+results2 <- results %>% arrange(-X) %>% mutate(
+  X0...9 = X0...9 - lag(X0...9),
+  X10.19 = X10.19 - lag(X10.19),
+  X20...29 = X20...29 - lag(X20...29),
+  X30...39 = X30...39 - lag(X30...39),
+  X40...49 = X40...49 - lag(X40...49),
+  X50...59 = X50...59 - lag(X50...59),
+  X60...69 = X60...69 - lag(X60...69),
+  X70...79 = X70...79 - lag(X70...79),
+  X80...89 = X80...89 - lag(X80...89),
+  Mas.de.90.edo.gehiago = Mas.de.90.edo.gehiago - lag(Mas.de.90.edo.gehiago),
+  sum = X0...9 + X10.19 + X20...29 + X30...39 + X40...49 + X50...59 + X60...69 + X70...79 + X80...89 + Mas.de.90.edo.gehiago,
+  
+  edad0.9 = round ( X0...9 / sum * 100, digits = 0 ),
+  edad10.19 = round ( X10.19 / sum * 100, digits = 0 ),
+  edad20.29 = round ( X20...29 / sum * 100, digits = 0 ),
+  edad30.39 = round ( X30...39 / sum * 100, digits = 0 ),
+  edad40.49 = round ( X40...49 / sum * 100, digits = 0 ),
+  edad50.59 = round ( X50...59 / sum * 100, digits = 0 ),
+  edad60.69 = round ( X60...69 / sum * 100, digits = 0 ),
+  edad70.79 = round ( X70...79 / sum * 100, digits = 0 ),
+  edad80.89 = round ( X80...89 / sum * 100, digits = 0 ),
+  mas.de.90 = round ( Mas.de.90.edo.gehiago  / sum * 100, digits = 0 ),
+  update = as.Date( as.character(update ), "%Y/%m/%d" )
+) %>% filter( !(X20...29 == 0 & X30...39 == 0)) %>% select(-GUZTIRA...TOTAL, -No.consta, -X, -sum)
+
+
+
+resultsmelt <- results2 %>% select(-edad0.9, -edad10.19, -edad20.29, -edad30.39, -edad40.49, -edad50.59, -edad60.69,
+                                   -edad70.79, -edad80.89, -mas.de.90) %>%  melt(id.vars = c("update"))
+
+resultsmelt_percent <- results2 %>% select(-X0...9, -X10.19, -X20...29, -X30...39, -X40...49, -X50...59, -X60...69,
+                                   -X70...79, -X80...89, -Mas.de.90.edo.gehiago) %>% melt(id.vars = c("update"))
+
+resultsmelt %>% 
+  ggplot() + 
+  geom_tile( aes(x = update, y = variable, fill= value, na.rm = FALSE), color="#666666",size=0.06) +  
+  scale_fill_viridis(option = "plasma",na.value = 'white',
+                     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
+  theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
+  scale_x_date(
+    date_breaks = "1 week", date_labels = "%d/%m",
+    expand= c(0,0)) +
+  labs(title = paste("PCR+ por edades ",sep = ""),
+       subtitle = paste(""),
+       x = NULL,
+       y = "",
+       fill = "Casos por día PCR+ por franja de edad",
+       caption = "" ) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    legend.position = "top"
+  )
+
+resultsmelt_percent %>% 
+  ggplot() + 
+  geom_tile( aes(x = update, y = variable, fill= value, na.rm = FALSE), color="#666666",size=0.06) +  
+  scale_fill_viridis(option = "plasma",na.value = 'white',
+                     labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
+  theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
+  scale_x_date(
+    date_breaks = "1 week", date_labels = "%d/%m",
+    expand= c(0,0)) +
+  labs(title = paste("PCR+ por edades ",sep = ""),
+       subtitle = paste(""),
+       x = NULL,
+       y = "",
+       fill = "Porcentaje por día PCR+ por franja de edad sobre el total de es periodo",
+       caption = "" ) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.major.y = element_blank(),
+    legend.position = "top"
+  )
 
 # 5. Casos de no residentes en Euskadi ----------
+
+period_eus <- "Actualizado 2020-09-13"
 # Set colors 
 # extends color paletter
 library(RColorBrewer)

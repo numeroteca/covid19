@@ -1559,7 +1559,9 @@ rm(uniprovinciales_d)
 # Baleares --------------
 download.file("https://docs.google.com/spreadsheets/d/1qxbKnU39yn6yYcNkBqQ0mKnIXmKfPQ4lgpNglpJ9frE/gviz/tq?tqx=out:csv&sheet=BAL", 
               "data/original/spain/baleares/baleares.csv")
-baleares <- read.delim("data/original/spain/baleares/baleares.csv",sep = ",")
+baleares <- read.delim("data/original/spain/baleares/baleares.csv",sep = ",") %>% select(
+  -altas_hospital, -altas_AP, -activos_atendidos
+)
 
 # Remove Balerares  
 data_cases_sp_provinces <-  data_cases_sp_provinces %>% filter( ccaa != "Balears, Illes")
@@ -1954,11 +1956,11 @@ data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
 # D. Add province ISCIII RENAVE data -----
 download.file("https://cnecovid.isciii.es/covid19/resources/datos_provincias.csv", 
               "data/original/spain/iscii_casos_renave.csv")
-ciii_renave_init <- read.delim("data/original/spain/iscii_casos_renave_inicial.csv",sep = ",") %>% 
-  mutate ( 
-    date = as.Date(as.character(fecha)),
-    provincia_iso = ifelse ( is.na(provincia_iso), "NA", as.character(provincia_iso) )
-  )
+# ciii_renave_init <- read.delim("data/original/spain/iscii_casos_renave_inicial.csv",sep = ",") %>% 
+#   mutate ( 
+#     date = as.Date(as.character(fecha)),
+#     provincia_iso = ifelse ( is.na(provincia_iso), "NA", as.character(provincia_iso) )
+#   )
 
 ciii_renave <- read.delim("data/original/spain/iscii_casos_renave.csv",sep = ",") %>% 
   mutate ( 
@@ -1966,13 +1968,13 @@ ciii_renave <- read.delim("data/original/spain/iscii_casos_renave.csv",sep = ","
     provincia_iso = ifelse ( is.na(provincia_iso), "NA", as.character(provincia_iso) )
   )
 
-ciii_renave <-rbind(ciii_renave_init %>% filter( date < as.Date("2020-05-08") ),
-                    ciii_renave)
+# ciii_renave <-rbind(ciii_renave_init %>% filter( date < as.Date("2020-05-08") ),
+#                     ciii_renave)
 
-ciii_renave <- ciii_renave %>%
+ciii_renave <- ciii_renave %>% 
   mutate(
     province =  "",
-    province = ifelse( provincia_iso =="C", "Coruña, A", province ),
+    province = ifelse( provincia_iso == "C", "Coruña, A", province ),
     province = ifelse( provincia_iso =="VI", "Araba/Álava", province ),
     province = ifelse( provincia_iso =="AB", "Albacete", province ),
     province = ifelse( provincia_iso =="A", "Alicante/Alacant", province ),
