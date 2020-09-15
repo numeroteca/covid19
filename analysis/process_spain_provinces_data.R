@@ -1568,7 +1568,7 @@ data_cases_sp_provinces <-  data_cases_sp_provinces %>% filter( ccaa != "Balears
 
 # Add Baleares data
 data_cases_sp_provinces <- rbind(data_cases_sp_provinces,
-                                 baleares)
+                                 baleares %>% select(names(data_cases_sp_provinces)))
 
 # Add missing data deaths previous 2020.03.08 --------------
 
