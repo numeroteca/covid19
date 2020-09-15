@@ -4,8 +4,8 @@ data_cases_sp_provinces <- readRDS(file = "data/output/spain/covid19-provincias-
 
 noprevalentes <- c("")
 updated <- ""
-period <- "(Actualizado: 2020-09-14)"
-filter_date <- as.Date("2020-09-15")
+period <- "(Actualizado: 2020-09-15)"
+filter_date <- as.Date("2020-09-16")
 
 # 13. Todos los datos juntos ------------
 # Calcula máximos

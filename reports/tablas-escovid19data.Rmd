@@ -17,8 +17,8 @@ library(DT)
 library(viridis)
 library(sparkline)
 
-today <- as.Date("2020-09-14")
-from <- as.Date("2020-08-18")
+today <- as.Date("2020-09-15")
+from <- as.Date("2020-08-15")
 days <- as.numeric(today - from )
 threshold <- 4
 ```
@@ -65,16 +65,16 @@ ia7data <- data_cases_sp_provinces %>% select(province,date,cases_PCR_7days,pobl
 ) %>% select( -poblacion, -cases_PCR_7days) %>% mutate(
   date_header = as.character(date),
   date_header = date_header %>% str_replace( "2020-","" ),
-  date_header = date_header %>% str_replace( "01","1" ),
-  date_header = date_header %>% str_replace( "02","2" ),
-  date_header = date_header %>% str_replace( "03","3" ),
-  date_header = date_header %>% str_replace( "04","4" ),
-  date_header = date_header %>% str_replace( "05","5" ),
-  date_header = date_header %>% str_replace( "06","6" ),
-  date_header = date_header %>% str_replace( "07","7" ),
-  date_header = date_header %>% str_replace( "08","8" ),
-  date_header = date_header %>% str_replace( "09","9" ),
-  date_header = date_header %>% str_replace( "09","9" )
+  # date_header = date_header %>% str_replace( "01","1" ),
+  # date_header = date_header %>% str_replace( "02","2" ),
+  # date_header = date_header %>% str_replace( "03","3" ),
+  # date_header = date_header %>% str_replace( "04","4" ),
+  # date_header = date_header %>% str_replace( "05","5" ),
+  # date_header = date_header %>% str_replace( "06","6" ),
+  # date_header = date_header %>% str_replace( "07","7" ),
+  # date_header = date_header %>% str_replace( "08","8" ),
+  # date_header = date_header %>% str_replace( "09","9" ),
+  # date_header = date_header %>% str_replace( "09","9" )
 ) %>% select(-date)
 
 data <- ia7data %>% spread(date_header,ia7) # >% mutate(
@@ -423,28 +423,41 @@ spain_ccaa <- readRDS(file ="../data/output/spain/covid19-ccaa-spain_consolidate
     ccaa = ccaa %>% str_replace( "Castilla - La Mancha","C.-La Mancha"),
     ccaa = ccaa %>% str_replace( "Murcia, Región de","Murcia"),
     ccaa = ccaa %>% str_replace( "Madrid, Comunidad de","Madrid"),
-    ccaa = ccaa %>% str_replace( "Comunitat Valenciana","C. Valenciana"),
-  )
+    ccaa = ccaa %>% str_replace( "Comunitat Valenciana","C. Valenciana")
+  ) 
 
 data <- spain_ccaa %>% select(ccaa,date,daily_deaths,poblacion) %>% 
   mutate(
   variable =  daily_deaths
 ) %>% select( -poblacion, -daily_deaths) %>% mutate(
   date_header = as.character(date),
-  date_header = date_header %>% str_replace( "2020-","" )
+  date_header = date_header %>% str_replace( "2020-","" ) ) %>% 
   # variable = ifelse(is.na(variable), "",variable )
-) %>% select(-date)
-
-# ia14data %>%   pivot_wider(names_from = date, values_from = ia14)
+  select(-date)
 
 data <- data %>% spread(date_header,variable) #%>% mutate(
 #   CCAA = ccaa
 # )
 
+# data <- rbind ( data, spain)
+
+# Spain total
+spain  <- spain_ccaa %>%  group_by( date ) %>% summarise (
+    ccaa = "España",
+    variable = sum(daily_deaths, na.rm = TRUE)
+  ) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" ) ) %>% 
+  select(-date)
+
+spain <- spain %>% spread(date_header,variable) #%>% mutate(
+
+data <- rbind ( data, spain)
+
 formattable( data,
              list(
   # ia14 = color_tile("#fff7ec", "#ffa01e"),
-  area(col = 2:(days - 0)) ~ color_tile("#FFFBFB", "#aaaaaa")
+  area( col = 2:(days - 0)) ~ color_tile("#FFFBFB", "#aaaaaa")
 ))
 
 # brks <- quantile( data %>% select(-ccaa), probs = seq(.05, .95, .15), na.rm = TRUE)

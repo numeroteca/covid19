@@ -8,8 +8,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
-period <- "(Actualizado: 2020-09-14)"
-filter_date <- as.Date("2020-09-07")
+period <- "(Actualizado: 2020-09-15)"
+filter_date <- as.Date("2020-09-08")
 
 # Warning: you need to have loaded spain by executing process_spain_provinces_data.R 
 # or load it using:

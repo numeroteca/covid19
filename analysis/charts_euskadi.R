@@ -850,7 +850,7 @@ zonassalud %>% # filter( name %in% zonassalud_top$name) %>%
   scale_x_date(
     date_breaks = "1 week",
     date_labels = "%d/%m",
-    limits=c( min(zonassalud$date)+70, max(zonassalud$date +15)),
+    limits=c( min(zonassalud$date)+70, max(zonassalud$date +25)),
     expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
