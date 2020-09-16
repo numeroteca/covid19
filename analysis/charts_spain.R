@@ -8,8 +8,8 @@ library(ggrepel) # for geom_text_repel to prevent overlapping
 # Cambia el pie del gráfico pero conserva la fuente de los datos
 caption_provincia <- "Gráfico: @numeroteca (lab.montera34.com/covid19) | Datos: esCOVID19data (github.com/montera34/escovid19data)"
 updated <- ""
-period <- "(Actualizado: 2020-09-15)"
-filter_date <- as.Date("2020-09-08")
+period <- "(Actualizado: 2020-09-16)"
+filter_date <- as.Date("2020-09-13")
 
 # Warning: you need to have loaded spain by executing process_spain_provinces_data.R 
 # or load it using:
@@ -176,19 +176,23 @@ theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
 dev.off()
 
 png(filename=paste("img/spain/country/covid19_spain_muertes-semana-lineal.png", sep = ""),width = 900,height = 600)
-spain_week %>% filter( week_n < 35 & week_n > 25) %>%
+spain_week %>% filter( week_n < 38 & week_n > 25) %>%
   ggplot() +
   geom_col(aes(week_n, deaths), size= 1 ) +
-  geom_text(aes(week_n, deaths+20, label=deaths), color="#888888", vjust = 0.2, size = 3 ) +
+  geom_text(aes(week_n, deaths+20, label=deaths), color="#888888", vjust = 0.2, size = 5 ) +
   # scale_color_manual(values = colors_prov) +
-  # scale_x_date(date_breaks = "1 week", 
-  #              date_labels = "%d/%m",
-  #              limits=c( filter_date - 50, max(spain$date)),
-  #              expand = c(0,0)
-  # ) + 
-  # scale_y_continuous(
-  #   limits = c( 0, max(spain$daily_deaths))
+  # scale_x_continuous(
+              # breaks = "1",
+               # date_labels = "%d/%m",
+               # limits=c( filter_date - 50, max(spain$date)),
+               # expand = c(0,0)
   # ) +
+  scale_x_discrete(name ="Semana", 
+                   limits=seq(26,37,1)
+                   ) +
+  scale_y_continuous(
+    limits = c( 0, max(spain$daily_deaths))
+  ) +
   theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
     panel.grid.minor.x = element_blank(),
@@ -198,7 +202,7 @@ spain_week %>% filter( week_n < 35 & week_n > 25) %>%
     legend.position = c(0.1,0.6)
   ) +
   labs(title = paste0("Muertes por semana por COVID-19 en España ", updated ),
-       subtitle = paste0("(escala lineal). ",period),
+       subtitle = paste0("",period),
        y = "fallecidos",
        x = "fecha",
        # color = "Comunidad autónoma",

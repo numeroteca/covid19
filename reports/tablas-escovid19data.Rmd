@@ -17,8 +17,8 @@ library(DT)
 library(viridis)
 library(sparkline)
 
-today <- as.Date("2020-09-15")
-from <- as.Date("2020-08-15")
+today <- as.Date("2020-09-16")
+from <- as.Date("2020-08-16")
 days <- as.numeric(today - from )
 threshold <- 4
 ```
@@ -439,8 +439,6 @@ data <- data %>% spread(date_header,variable) #%>% mutate(
 #   CCAA = ccaa
 # )
 
-# data <- rbind ( data, spain)
-
 # Spain total
 spain  <- spain_ccaa %>%  group_by( date ) %>% summarise (
     ccaa = "España",
@@ -491,6 +489,19 @@ data <- spain_ccaa %>% select(ccaa,date,daily_deaths_avg7,poblacion) %>%
 data <- data %>% spread(date_header,variable) #%>% mutate(
 #   CCAA = ccaa
 # )
+
+# Spain total
+spain  <- spain_ccaa %>%  group_by( date ) %>% summarise (
+    ccaa = "España",
+    variable = sum(daily_deaths_avg7, na.rm = TRUE)
+  ) %>% mutate(
+  date_header = as.character(date),
+  date_header = date_header %>% str_replace( "2020-","" ) ) %>% 
+  select(-date)
+
+spain <- spain %>% spread(date_header,variable) #%>% mutate(
+
+data <- rbind ( data, spain)
 
 formattable( data,
              list(

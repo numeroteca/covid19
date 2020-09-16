@@ -1516,15 +1516,19 @@ actualizacion <- actualizacion[1] %>%
   str_replace( "[ ]","" ) %>%
   str_replace( "[ ]","" ) 
 
-poredades <- read_excel("data/original/spain/euskadi/situacion-epidemiologica.xlsx", 
+poredades_original <- read_excel("data/original/spain/euskadi/situacion-epidemiologica.xlsx", 
                         skip = 0, col_names = TRUE, sheet = "03", range ="A1:Q13" ) # %>% select(-...18)
-names(poredades)
+names(poredades_original)
 
 # For 1 file
-poredades <- poredades %>% rename(
+poredades <- poredades_original %>% rename(
   edad = `Adina / Edad`,
-  casos = "Kasu positiboak / Positivos"
+  casos = "Kasu positiboak / Positivos",
+  # casos = "100.000 biztanleko tasa  / Tasa por 100.000 habitantes" 
+  # tasa_per_hab = "100.000 biztanleko tasa  / Tasa por 100.000 habitantes" 
+# ) %>% select( edad, casos, tasa_per_hab)
 ) %>% select( edad, casos)
+
 
 data <- poredades %>% spread(edad,casos) 
 namesdata <- names(data)
@@ -1535,7 +1539,7 @@ data$file <- ""
 files <-  read.delim("data/original/spain/euskadi/por-edades/por-edades-files.csv",sep = ";")
 
 results <- ""
-results <- data.frame(matrix(ncol = 13,nrow = 0 ))
+results <- data.frame(matrix(ncol = 14,nrow = 0 ))
 names(results)  <- names(data)
 
 for( i in 1:nrow(files)) {
@@ -1559,8 +1563,9 @@ for( i in 1:nrow(files)) {
   # For 1 file
   poredades <- poredades %>% rename(
     edad = `Adina / Edad`,
-    casos = "Kasu positiboak / Positivos"
-  ) %>% select( edad, casos)
+    # casos = "Kasu positiboak / Positivos",
+    casos = "100.000 biztanleko tasa  / Tasa por 100.000 habitantes" 
+  ) %>% select( edad, casos) 
   
   data <- poredades %>% spread(edad,casos) 
   data$update <- actualizacion
@@ -1571,20 +1576,55 @@ for( i in 1:nrow(files)) {
 
 results <- distinct(results)
 
-
-results <-  read.delim("data/output/spain/euskadi/casos-por-edades.csv",sep = ",") %>% arrange(-X) %>% select(-file)
+# carga datos limpios
+results_clean <-  read.delim("data/output/spain/euskadi/casos-por-edades.csv",sep = ",") %>% arrange(-X) %>% select(-file)
 results <- distinct(results)
+
+results <- results %>% select(-file)
+names(results) <- names(results_clean %>% select(-X))
 
 # names(results) <- names(data)
 
 names(results)
 
-results2 <- results %>% arrange(-X) %>% mutate(
+results2 <- results %>% 
+  # arrange(-X) %>% 
+  mutate(
   update = as.Date( as.character(update ), "%Y/%m/%d" ),
   weekday = weekdays(update),
   weekday = factor(weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
                                                                "sábado","domingo" ) )
-) %>% filter( weekday == "lunes" ) %>% mutate(
+) %>% filter (!is.na(weekday)) %>% mutate(
+  X0...9 = X0...9 %>% str_replace(",","."),
+  X10.19 = X10.19 %>% str_replace(",","."),
+  X20...29 = X20...29 %>% str_replace(",","."),
+  X30...39 = X30...39 %>% str_replace(",","."),
+  X40...49 = X40...49 %>% str_replace(",","."),
+  X50...59 = X50...59 %>% str_replace(",","."),
+  X60...69 = X60...69 %>% str_replace(",","."),
+  X70...79 = X70...79 %>% str_replace(",","."),
+  X80...89 = X80...89 %>% str_replace(",","."),
+  Mas.de.90.edo.gehiago = Mas.de.90.edo.gehiago %>% str_replace(",","."),
+  GUZTIRA...TOTAL = GUZTIRA...TOTAL %>% str_replace(",","."),
+  
+  X0...9 = as.numeric(X0...9),
+  X10.19 = as.numeric(X10.19),
+  X20...29 = as.numeric(X20...29),
+  X30...39 = as.numeric(X30...39),
+  X40...49 = as.numeric(X40...49),
+  X50...59 = as.numeric(X50...59),
+  X60...69 = as.numeric(X60...69),
+  X70...79 = as.numeric(X70...79),
+  X80...89 = as.numeric(X80...89),
+  Mas.de.90.edo.gehiago = as.numeric(Mas.de.90.edo.gehiago),
+  GUZTIRA...TOTAL = as.numeric(GUZTIRA...TOTAL)
+)
+
+results2 <- distinct(results2) %>% filter(!is.na(X20...29))
+
+results2 <- results2 %>% 
+  arrange(update) %>% 
+  filter( weekday == "lunes" ) %>% mutate(
   X0...9 = X0...9 - lag(X0...9),
   X10.19 = X10.19 - lag(X10.19),
   X20...29 = X20...29 - lag(X20...29),
@@ -1608,15 +1648,19 @@ results2 <- results %>% arrange(-X) %>% mutate(
   edad80.89 = round ( X80...89 / sum * 100, digits = 0 ),
   mas.de.90 = round ( Mas.de.90.edo.gehiago  / sum * 100, digits = 0 )
   
-) %>% filter( !(X20...29 == 0 & X30...39 == 0)) %>% select(-GUZTIRA...TOTAL, -No.consta, -X, -sum,-weekday)
+) %>% filter( !(X20...29 == 0 & X30...39 == 0)) %>% select(-GUZTIRA...TOTAL, -No.consta, -sum,-weekday)
 
 
 
 resultsmelt <- results2 %>% select(-edad0.9, -edad10.19, -edad20.29, -edad30.39, -edad40.49, -edad50.59, -edad60.69,
-                                   -edad70.79, -edad80.89, -mas.de.90) %>%  melt(id.vars = c("update")) 
+                                   -edad70.79, -edad80.89, -mas.de.90) %>%  melt(id.vars = c("update")) %>% mutate(
+                                     value = round(value, digits = 1)
+                                   )
 
 resultsmelt_percent <- results2 %>% select(-X0...9, -X10.19, -X20...29, -X30...39, -X40...49, -X50...59, -X60...69,
-                                   -X70...79, -X80...89, -Mas.de.90.edo.gehiago) %>% melt(id.vars = c("update"))
+                                   -X70...79, -X80...89, -Mas.de.90.edo.gehiago) %>% melt(id.vars = c("update")) %>% mutate(
+                                     value = round(value, digits = 1)
+                                   )
 
 # por edad plots -----------
 resultsmelt %>% 
