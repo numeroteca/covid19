@@ -1580,6 +1580,11 @@ results <- distinct(results)
 names(results)
 
 results2 <- results %>% arrange(-X) %>% mutate(
+  update = as.Date( as.character(update ), "%Y/%m/%d" ),
+  weekday = weekdays(update),
+  weekday = factor(weekday, levels = c("lunes","martes", "miércoles", "jueves", "viernes",
+                                                               "sábado","domingo" ) )
+) %>% filter( weekday == "lunes" ) %>% mutate(
   X0...9 = X0...9 - lag(X0...9),
   X10.19 = X10.19 - lag(X10.19),
   X20...29 = X20...29 - lag(X20...29),
@@ -1601,33 +1606,35 @@ results2 <- results %>% arrange(-X) %>% mutate(
   edad60.69 = round ( X60...69 / sum * 100, digits = 0 ),
   edad70.79 = round ( X70...79 / sum * 100, digits = 0 ),
   edad80.89 = round ( X80...89 / sum * 100, digits = 0 ),
-  mas.de.90 = round ( Mas.de.90.edo.gehiago  / sum * 100, digits = 0 ),
-  update = as.Date( as.character(update ), "%Y/%m/%d" )
-) %>% filter( !(X20...29 == 0 & X30...39 == 0)) %>% select(-GUZTIRA...TOTAL, -No.consta, -X, -sum)
+  mas.de.90 = round ( Mas.de.90.edo.gehiago  / sum * 100, digits = 0 )
+  
+) %>% filter( !(X20...29 == 0 & X30...39 == 0)) %>% select(-GUZTIRA...TOTAL, -No.consta, -X, -sum,-weekday)
 
 
 
 resultsmelt <- results2 %>% select(-edad0.9, -edad10.19, -edad20.29, -edad30.39, -edad40.49, -edad50.59, -edad60.69,
-                                   -edad70.79, -edad80.89, -mas.de.90) %>%  melt(id.vars = c("update"))
+                                   -edad70.79, -edad80.89, -mas.de.90) %>%  melt(id.vars = c("update")) 
 
 resultsmelt_percent <- results2 %>% select(-X0...9, -X10.19, -X20...29, -X30...39, -X40...49, -X50...59, -X60...69,
                                    -X70...79, -X80...89, -Mas.de.90.edo.gehiago) %>% melt(id.vars = c("update"))
 
+# por edad plots -----------
 resultsmelt %>% 
   ggplot() + 
-  geom_tile( aes(x = update, y = variable, fill= value, na.rm = FALSE), color="#666666",size=0.06) +  
+  geom_tile( aes(x = update, y = variable, fill= value, na.rm = FALSE), color="#666666",size=0.06) +
+  geom_text(aes(x = update, y = variable, label=value)) +
   scale_fill_viridis(option = "plasma",na.value = 'white',
                      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
   theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
   scale_x_date(
     date_breaks = "1 week", date_labels = "%d/%m",
     expand= c(0,0)) +
-  labs(title = paste("PCR+ por edades ",sep = ""),
-       subtitle = paste(""),
+  labs(title = paste("Casos por semana PCR+ por franja de edad",sep = ""),
+       subtitle = paste("En Euskadi"),
        x = NULL,
        y = "",
-       fill = "Casos por día PCR+ por franja de edad",
-       caption = "" ) +
+       fill = "",
+       caption = "Datos: Irekia. Gráfico: @numeroteca. Más gráficos en lab.montera34.com/covid19" ) +
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.minor.y = element_blank(),
@@ -1636,21 +1643,22 @@ resultsmelt %>%
     legend.position = "top"
   )
 
-resultsmelt_percent %>% 
+resultsmelt_percent %>% filter( update > as.Date("2020-06-29")) %>%
   ggplot() + 
-  geom_tile( aes(x = update, y = variable, fill= value, na.rm = FALSE), color="#666666",size=0.06) +  
+  geom_tile( aes(x = update, y = variable, fill= value, na.rm = FALSE), color="#666666",size=0.06) +
+  geom_text(aes(x = update, y = variable, label= value)) +
   scale_fill_viridis(option = "plasma",na.value = 'white',
                      labels=function(x) format(round(x, digits = 0), big.mark = ".", scientific = FALSE) ) + #make NA values be white
   theme_minimal(base_family = "Roboto Condensed", base_size = 11) +
   scale_x_date(
     date_breaks = "1 week", date_labels = "%d/%m",
     expand= c(0,0)) +
-  labs(title = paste("PCR+ por edades ",sep = ""),
-       subtitle = paste(""),
+  labs(title = paste("Porcentaje de PCR+ nuevos casos por edades cada semana",sep = ""),
+       subtitle = paste("En Euskadi"),
        x = NULL,
        y = "",
-       fill = "Porcentaje por día PCR+ por franja de edad sobre el total de es periodo",
-       caption = "" ) +
+       fill = "%",
+       caption = "Datos: Irekia. Gráfico: @numeroteca. Más gráficos en lab.montera34.com/covid19" ) +
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.minor.y = element_blank(),
@@ -1658,6 +1666,53 @@ resultsmelt_percent %>%
     panel.grid.major.y = element_blank(),
     legend.position = "top"
   )
+
+resultsmelt_percent %>% filter( update > as.Date( "2020-07-01") ) %>%
+  ggplot(aes(x = update, y = value,  fill=variable)) +
+  geom_area(col = "black", lwd=0.1 ) +
+  # scale_x_date(
+  #   date_breaks = "1 week",
+  #   date_labels = "%d/%m",
+  #   # limits=c( min(municipios$date)+0, max(municipios$date)+1),
+  #   expand = c(0,0)
+  # ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "right"
+  ) +
+  labs(title = paste0("Porcentaje por semana PCR+ por franja de edad sobre el total de la semana" ),
+       subtitle = paste0("Datos por semana en Euskadi"),
+       y = "%",
+       x = "2020",
+       caption = "Datos: Irekia. Gráfico: @numeroteca. Más gráficos en lab.montera34.com/covid19" ) 
+
+
+resultsmelt %>% filter( update > as.Date( "2020-07-01") ) %>%
+  ggplot(aes(x = update, y = value,  fill=variable)) +
+  geom_area(col = "black", lwd=0.1 ) +
+  # scale_x_date(
+  #   date_breaks = "1 week",
+  #   date_labels = "%d/%m",
+  #   # limits=c( min(municipios$date)+0, max(municipios$date)+1),
+  #   expand = c(0,0)
+  # ) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    # panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "right"
+  ) +
+  labs(title = paste0("Porcentaje por semana PCR+ por franja de edad sobre el total de la semana" ),
+       subtitle = paste0("Datos por semana en Euskadi"),
+       y = "%",
+       x = "2020",
+       caption = "Datos: Irekia. Gráfico: @numeroteca. Más gráficos en lab.montera34.com/covid19" ) 
 
 # 5. Casos de no residentes en Euskadi ----------
 
