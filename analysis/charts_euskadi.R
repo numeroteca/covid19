@@ -1502,9 +1502,9 @@ dev.off()
 library(stringr)
 library(gsubfn) # select text in the parenthesis with regex
 
+# Prueba con un solo archivo a coger la fecha de actualización
 actualizacion <- as.character( read_excel("data/original/spain/euskadi/situacion-epidemiologica.xlsx", 
                         skip = 0, col_names = FALSE, sheet = "03", range ="A19" )  )
-
 
 actualizacion <- actualizacion[1] %>% 
   str_replace("Ultima actualización / Azken eguneratzea","") %>% 
@@ -1516,6 +1516,7 @@ actualizacion <- actualizacion[1] %>%
   str_replace( "[ ]","" ) %>%
   str_replace( "[ ]","" ) 
 
+# Coge de un solo archivo todo el periodo
 poredades_original <- read_excel("data/original/spain/euskadi/situacion-epidemiologica.xlsx", 
                         skip = 0, col_names = TRUE, sheet = "03", range ="A1:Q13" ) # %>% select(-...18)
 names(poredades_original)
@@ -1535,13 +1536,15 @@ namesdata <- names(data)
 data$update <- actualizacion
 data$file <- ""
 
-# For all the files
-files <-  read.delim("data/original/spain/euskadi/por-edades/por-edades-files.csv",sep = ";")
+# Carga el archivo que lista todos los archivos
+files <-read.delim("data/original/spain/euskadi/por-edades/por-edades-files.csv",sep = ";")
 
+# crea el dataframe para alojar todos lso datos
 results <- ""
 results <- data.frame(matrix(ncol = 14,nrow = 0 ))
 names(results)  <- names(data)
 
+# itera por todos los archivos
 for( i in 1:nrow(files)) {
   file <- files[i,1] %>% str_replace("./","")
   actualizacion <- as.character( read_excel( paste0("data/original/spain/euskadi/por-edades/", file), 
@@ -1758,7 +1761,127 @@ resultsmelt %>% filter( update > as.Date( "2020-07-01") ) %>%
        x = "2020",
        caption = "Datos: Irekia. Gráfico: @numeroteca. Más gráficos en lab.montera34.com/covid19" ) 
 
-# 5. Casos de no residentes en Euskadi ----------
+# 5. Municipios deaths ------------
+library(stringr)
+library(gsubfn) # select text in the parenthesis with regex
+
+# Prueba con un solo archivo a coger la fecha de actualización
+actualizacion <- as.character( read_excel("data/original/spain/euskadi/situacion-epidemiologica.xlsx", 
+                                          skip = 0, col_names = FALSE, sheet = "06", range ="B01" )  )
+
+actualizacion <- actualizacion[1] %>% substr(1,10)
+
+# Coge de un solo archivo 
+original <- read_excel("data/original/spain/euskadi/situacion-epidemiologica.xlsx", 
+                                 skip = 1, col_names = TRUE, sheet = "06" ) %>% select(-...8, -...9,-...10,-...11,-...12) #, range ="A1:Q13"
+names(original)
+
+# For 1 file
+munip <- original %>% rename(
+  code = "Udalerria kodea / Código municipio",
+  municipio = "Udalerria / Municipio" ,
+  positivo = "Positiboak/Positivos" ,
+  poblacion = "Biztanleak/Población" ,
+  ia = "Tasa 100.000 biztanleko/Tasa por 100.000 habitantes" ,
+  fallecidos = "Hildakoak/Fallecidos",
+  fatalidad = "Hilkortasuna/Fatalidad",
+  # ) %>% select( edad, casos, tasa_per_hab)
+)
+
+# Carga el archivo que lista todos los archivos
+files <-read.delim("data/original/spain/euskadi/situacion-epidemiologica/files.csv",sep = ";")
+
+# crea el dataframe para alojar todos lso datos
+results <- ""
+results <- data.frame(matrix(ncol = ncol(munip),nrow = 0 ))
+names(results)  <- names(munip)
+
+
+# itera por todos los archivos
+for( i in 1:nrow(files)) {
+# for( i in 1:3) {
+  file <- files[i,1] %>% str_replace("./","")
+  actualizacion <- as.character( read_excel( paste0("data/original/spain/euskadi/situacion-epidemiologica/", file),
+                                            skip = 0, col_names = FALSE, sheet = "06", range ="B01" )  )
+  actualizacion <- actualizacion[1] %>% substr(1,10)
+  
+  print(actualizacion)
+  
+  original <- read_excel( paste0("data/original/spain/euskadi/situacion-epidemiologica/", file),
+                         skip = 1, col_names = TRUE, sheet = "06" ) %>% select(-...8, -...9,-...10,-...11,-...12)
+  munip <- original %>% rename(
+    code = "Udalerria kodea / Código municipio",
+    municipio = "Udalerria / Municipio" ,
+    positivo = "Positiboak/Positivos" ,
+    poblacion = "Biztanleak/Población" ,
+    ia = "Tasa 100.000 biztanleko/Tasa por 100.000 habitantes" ,
+    fallecidos = "Hildakoak/Fallecidos",
+    fatalidad = "Hilkortasuna/Fatalidad",
+    ) %>% mutate (
+      positivo = as.numeric(positivo),
+      poblacion = as.numeric(positivo),
+      ia = ia %>% str_replace(",",".") %>% as.numeric(ia),
+      fallecidos = as.numeric(fallecidos),
+      fatalidad = fatalidad %>% str_replace(",",".") %>% as.numeric(ia),
+      date = as.Date(actualizacion[1])
+    )
+    
+  if (i == 1 ) {
+    munipdeath <- munip
+  } else {
+    munipdeath <- rbind(munipdeath, munip)
+  }
+  
+  
+}
+
+munipdeath <- distinct( munipdeath )  %>% arrange(date) %>% group_by(municipio) %>% mutate(
+  daily_deaths = fallecidos - lag(fallecidos)
+)
+
+
+# municipios with average more than n per day
+limite <- 1
+municipios_top <- munipdeath %>% top_n(1, date) %>% filter (daily_deaths > limite ) %>% select (municipio)
+
+
+# rejilla municpios ------
+png(filename=paste0("img/spain/euskadi/covid19_municipios-pais-vasco-muertes_rejilla.png", sep = ""),width = 1200,height = 800)
+munipdeath %>% filter( municipio %in% municipios_top$municipio) %>%
+  ggplot() +
+  geom_col(aes(date, daily_deaths), width= 8) +
+  # scale_fill_manual(values=c("#AAAAAA")  )+
+  # geom_line(aes(date, daily_cases_avg7, group=name, color= ""), size= 1.1 ) +
+  # scale_color_manual(values=c("#565656")  )+
+  facet_wrap( ~municipio) + #, scales = "free_x" , scales = "free_y"
+  scale_y_continuous( labels=function(x) format(round(x, digits = 1), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(
+    date_breaks = "1 week",
+    date_labels = "%d/%m",
+    limits=c( min(municipios$date)+140, max(municipios$date)+2),
+    expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "top"
+  ) +
+  labs(title = paste0("Fallecidos de COVID-19 por municipio a la semana en Euskadi" ),
+       subtitle = paste0("Con más de ", limite, " muerte en la última semana. ",period_eus),
+       y = "casos por día",
+       x = "fecha 2020",
+       fill = "muertes por semana",
+       colour = "media",
+       caption = caption_provincia)
+dev.off()
+
+
+
+# 6. Casos de no residentes en Euskadi ----------
 
 period_eus <- "Actualizado 2020-09-13"
 # Set colors 

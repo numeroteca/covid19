@@ -733,6 +733,7 @@ dev.off()
 png(filename=paste("img/spain/provincias/comparativa/covid19_comparativa_renave-iscii_vs_escovid19data_media_lastdays.png", sep = ""), width = 2700, height = 1650)
 data_cases_sp_provinces %>% filter ( date > as.Date("2020-07-15") ) %>% # filter( ccaa=="Galicia") %>%
   ggplot() +
+  geom_vline(xintercept = as.Date("2020-09-13"), color = "3333AA") +
   # geom_line( aes( date, cases_accumulated, group=province, color = "#66a61e"), size = 2.0 ) +
   geom_line( aes( date, daily_cases_PCR_avg7, group=province, color = "#ff4d94"), size = 1.2 ) +
   geom_line( aes( date, num_casos_prueba_pcr_avg7, group=province, color = "#000000"), size = 0.7 ) +
@@ -754,7 +755,7 @@ data_cases_sp_provinces %>% filter ( date > as.Date("2020-07-15") ) %>% # filter
     # panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
-    axis.text = element_text(size =16 ),
+    axis.text = element_text(size =15 ),
     panel.grid = element_line(size=0.4, color="#aaaaaa"),
     legend.position = "top"
   ) +

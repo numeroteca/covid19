@@ -17,8 +17,8 @@ library(DT)
 library(viridis)
 library(sparkline)
 
-today <- as.Date("2020-09-16")
-from <- as.Date("2020-08-16")
+today <- as.Date("2020-09-17")
+from <- as.Date("2020-08-17")
 days <- as.numeric(today - from )
 threshold <- 4
 ```
