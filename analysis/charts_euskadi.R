@@ -1789,13 +1789,8 @@ munip <- original %>% rename(
 )
 
 # Carga el archivo que lista todos los archivos
-files <-read.delim("data/original/spain/euskadi/situacion-epidemiologica/files.csv",sep = ";")
-
-# crea el dataframe para alojar todos lso datos
-results <- ""
-results <- data.frame(matrix(ncol = ncol(munip),nrow = 0 ))
-names(results)  <- names(munip)
-
+# TODO add header tfalse in edades
+files <-read.delim("data/original/spain/euskadi/situacion-epidemiologica/files.csv",sep = ";",header = FALSE)
 
 # itera por todos los archivos
 for( i in 1:nrow(files)) {
@@ -1808,8 +1803,9 @@ for( i in 1:nrow(files)) {
   print(actualizacion)
   
   original <- read_excel( paste0("data/original/spain/euskadi/situacion-epidemiologica/", file),
-                         skip = 1, col_names = TRUE, sheet = "06" ) %>% select(-...8, -...9,-...10,-...11,-...12)
-  munip <- original %>% rename(
+                         skip = 1, col_names = TRUE, sheet = "06" ) # %>% select(-...8, -...9,-...10,-...11,-...12)
+  print("vamos con munip")
+   munip <- original %>% rename(
     code = "Udalerria kodea / Código municipio",
     municipio = "Udalerria / Municipio" ,
     positivo = "Positiboak/Positivos" ,
@@ -1849,7 +1845,7 @@ municipios_top <- munipdeath %>% top_n(1, date) %>% filter (daily_deaths > limit
 png(filename=paste0("img/spain/euskadi/covid19_municipios-pais-vasco-muertes_rejilla.png", sep = ""),width = 1200,height = 800)
 munipdeath %>% filter( municipio %in% municipios_top$municipio) %>%
   ggplot() +
-  geom_col(aes(date, daily_deaths), width= 8) +
+  geom_col(aes(date, daily_deaths), width= 6) +
   # scale_fill_manual(values=c("#AAAAAA")  )+
   # geom_line(aes(date, daily_cases_avg7, group=name, color= ""), size= 1.1 ) +
   # scale_color_manual(values=c("#565656")  )+
@@ -1859,7 +1855,7 @@ munipdeath %>% filter( municipio %in% municipios_top$municipio) %>%
   scale_x_date(
     date_breaks = "1 week",
     date_labels = "%d/%m",
-    limits=c( min(municipios$date)+140, max(municipios$date)+2),
+    limits=c( min(municipios$date)+140, max(municipios$date)+7),
     expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
