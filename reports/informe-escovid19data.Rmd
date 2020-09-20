@@ -15,7 +15,7 @@ library(kableExtra)
 library(formattable)
 library(DT)
 library(viridis)
-today <- as.Date("2020-09-19")
+today <- as.Date("2020-09-20")
 ```
 
 Un análisis automatizado de la base de datos por provincias de esCOVID19data en España. Puedes acceder a todos los datos en el repositorio https://github.com/montera34/escovid19data

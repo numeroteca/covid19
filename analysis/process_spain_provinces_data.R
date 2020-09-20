@@ -352,7 +352,7 @@ rm(andalucia, andalucia2, andalucia_original,andalucia_original2)
 
 
 # Andalucia hospitalizados --------
-download.file("https://github.com/montera34/escovid19data/raw/master/data/original/andalucia-hospitalizados.csv", 
+download.file("https://github.com/montera34/escovid19data/raw/master/data/original/andalucia-hospitalizados.csv",
               "data/original/spain/andalucia/andalucia-hospitalizados.csv")
 andalucia_hosp <- read.delim("data/original/spain/andalucia/andalucia-hospitalizados.csv", sep=",")
 
