@@ -1239,7 +1239,7 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 rm(euskadi_a,euskadi_original)
 
 
-# Euskadi fallecidos en hospitales. -------------- 
+  # Euskadi fallecidos en hospitales. -------------- 
 # TODO: no se usa porque los fallecidos notificados 
 # son solamente los de hospitales desde el 15 de mayo 2020
 # euskadi_original <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "07")

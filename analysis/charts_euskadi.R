@@ -1934,7 +1934,7 @@ dev.off()
 
 # 6. Casos de no residentes en Euskadi ----------
 
-period_eus <- "Actualizado 2020-09-17"
+period_eus <- "Actualizado 2020-09-21"
 # Set colors 
 # extends color paletter
 library(RColorBrewer)
