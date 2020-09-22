@@ -371,6 +371,7 @@ andalucia_hosp <- andalucia_hosp %>%
   )
 
 data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ) %>% ungroup(),
+# zzz <- merge( data_cases_sp_provinces %>% mutate ( dunique = paste0( date, province) ) %>% ungroup(),
               andalucia_hosp  %>% mutate ( dunique = paste0( date_and, province_and) ) %>% ungroup() %>% 
                                     select(dunique, date_and, ccaa_and, province_and, hospitalized_and, intensive_care_and, source_name_and, comments_and, source_and) , 
                                   by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique) %>% mutate(
@@ -378,11 +379,11 @@ data_cases_sp_provinces <- merge( data_cases_sp_provinces %>% mutate ( dunique =
                                     hospitalized = ifelse(ccaa=="Andalucía", hospitalized_and ,hospitalized),
                                     intensive_care = ifelse(ccaa=="Andalucía",intensive_care_and, intensive_care),
                                     source = as.character(source),
-                                    source = ifelse( ccaa_and == "Andalucía", paste0(source,";",source_and), source),
+                                    source = ifelse( ccaa == "Andalucía", paste0(source,";",source_and), source),
                                     source_name = as.character(source_name),
-                                    source_name = ifelse( ccaa_and == "Andalucía", paste0(source_name,";",source_name_and), source_name),
+                                    source_name = ifelse( ccaa == "Andalucía", paste0(source_name,";",source_name_and), source_name),
                                     comments = as.character(comments),
-                                    comments = ifelse( ccaa_and == "Andalucía", 
+                                    comments = ifelse( ccaa == "Andalucía", 
                                                        paste0( ifelse(is.na(comments), paste0(comments,";"),""),comments_and), 
                                              comments),
                                     # add hospitalized data for non existing dates and provinces (on weekends)
