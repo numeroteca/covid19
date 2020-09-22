@@ -1498,7 +1498,7 @@ municipios %>% filter( name == "BILBAO") %>%
        caption = caption_provincia)
 dev.off()
 
-# 4. Por edades -------------------
+# 4. Por edades git -------------------
 library(stringr)
 library(gsubfn) # select text in the parenthesis with regex
 
@@ -1761,7 +1761,7 @@ resultsmelt %>% filter( update > as.Date( "2020-07-01") ) %>%
        x = "2020",
        caption = "Datos: Irekia. Gráfico: @numeroteca. Más gráficos en lab.montera34.com/covid19" ) 
 
-# 5. Municipios deaths ------------
+# 5. Municipios deaths git ------------
 library(stringr)
 library(gsubfn) # select text in the parenthesis with regex
 
@@ -1934,7 +1934,7 @@ dev.off()
 
 # 6. Casos de no residentes en Euskadi ----------
 
-period_eus <- "Actualizado 2020-09-21"
+period_eus <- "Actualizado 2020-09-22"
 # Set colors 
 # extends color paletter
 library(RColorBrewer)
