@@ -1240,62 +1240,67 @@ data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
 rm(euskadi_a,euskadi_original)
 
 
-  # Euskadi fallecidos en hospitales. -------------- 
+# Euskadi fallecidos en hospitales. -------------- 
 # TODO: no se usa porque los fallecidos notificados 
 # son solamente los de hospitales desde el 15 de mayo 2020
-# euskadi_original <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "07")
-# 
-# euskadi_b <- euskadi_original %>% rename( date = ...1 ) %>% filter( date != "Suma Total" ) %>%
-#   mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Exitus`) %>% melt(
-#     id.vars = c("date")
-#   ) %>% mutate(
-#     province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
-#     province = ifelse(variable=="02 Cruces", "Bizkaia"  ,province),
-#     province = ifelse(variable=="03 Donosti", "Gipuzkoa" ,province),
-#     province = ifelse(variable=="04 Basurto", "Bizkaia"  ,province),
-#     province = ifelse(variable=="05 Galdakao", "Bizkaia" ,province),
-#     province = ifelse(variable=="06 Zumarraga", "Gipuzkoa" ,province),
-#     province = ifelse(variable=="07 Bidasoa", "Gipuzkoa" ,province),
-#     province = ifelse(variable=="08 Mendaro", "Gipuzkoa" ,province),
-#     province = ifelse(variable=="09 Alto Deba", "Gipuzkoa" ,province),
-#     province = ifelse(variable=="10 San Eloy", "Bizkaia" ,province),
-#     province = ifelse(variable=="11 Urduliz", "Bizkaia" ,province),
-#     province = ifelse(variable=="12 Eibar", "Gipuzkoa" ,province),
-#     province = ifelse(variable=="13 Leza", "Araba/Álava" ,province),
-#     province = ifelse(variable=="14 Sta Marina", "Bizkaia" ,province),
-#     province = ifelse(variable=="15 Gorliz", "Bizkaia" ,province),
-#     province = ifelse(variable=="BERMEO H.", "Bizkaia" ,province),
-#     province = ifelse(variable=="ZALDIBAR H.", "Bizkaia" ,province),
-#     province = ifelse(variable=="ZAMUDIO H.", "Bizkaia" ,province),
-#     province = ifelse(variable=="ÁLAVA PSIQUIÁTRICO H.", "Araba/Álava" , province)
-#   ) %>% group_by(province,date) %>%
-#   mutate(
-#     value = ifelse(is.na(value),0,value)) %>%
-#   summarise(
-#     deceased_per_day = sum(value)
-#   ) %>% filter ( !is.na(province) ) %>% group_by(province) %>% arrange(date) %>% mutate(
-#     deceased = cumsum(deceased_per_day)
-#   )
-# 
-# data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
-# euskadi_b$dunique <- paste0(euskadi_b$date,euskadi_b$province)
-# 
-# data_cases_sp_provinces <- merge(data_cases_sp_provinces,
-#                                  euskadi_b %>% ungroup() %>% select(dunique,deceased_per_day, deceased) %>%
-#                                    rename(
-#                                      deceased_per_day_eus = deceased_per_day,
-#                                      deceased_eus = deceased
-#                                    ) ,
-#                                  by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique)
-# 
-# data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
-#   deceased = ifelse( (ccaa == "País Vasco") & (date > as.Date("2020-05-20")), deceased_eus, deceased)
-# ) # %>% select(-deceased_eus,deceased_per_day_eus)
-# 
-# 
-# data_cases_sp_provinces <- deceased_per_day_eus %>% select(-deceased_per_day_eus ,-deceased_eus )
-# 
-# rm(euskadi_b,euskadi_original)
+euskadi_original <- read_excel("data/original/spain/euskadi/datos-asistenciales.xlsx", skip = 2, col_names = TRUE, sheet = "07")
+
+euskadi_b <- euskadi_original %>% rename( date = ...1 ) %>% filter( date != "Suma Total" ) %>%
+  mutate( date = as.Date(date,"%d/%m/%Y")) %>% select( -`Exitus`) %>% melt(
+    id.vars = c("date")
+  ) %>% mutate(
+    province = ifelse(variable=="01 Araba", "Araba/Álava" ,NA),
+    province = ifelse(variable=="02 Cruces", "Bizkaia"  ,province),
+    province = ifelse(variable=="03 Donosti", "Gipuzkoa" ,province),
+    province = ifelse(variable=="04 Basurto", "Bizkaia"  ,province),
+    province = ifelse(variable=="05 Galdakao", "Bizkaia" ,province),
+    province = ifelse(variable=="06 Zumarraga", "Gipuzkoa" ,province),
+    province = ifelse(variable=="07 Bidasoa", "Gipuzkoa" ,province),
+    province = ifelse(variable=="08 Mendaro", "Gipuzkoa" ,province),
+    province = ifelse(variable=="09 Alto Deba", "Gipuzkoa" ,province),
+    province = ifelse(variable=="10 San Eloy", "Bizkaia" ,province),
+    province = ifelse(variable=="11 Urduliz", "Bizkaia" ,province),
+    province = ifelse(variable=="12 Eibar", "Gipuzkoa" ,province),
+    province = ifelse(variable=="13 Leza", "Araba/Álava" ,province),
+    province = ifelse(variable=="14 Sta Marina", "Bizkaia" ,province),
+    province = ifelse(variable=="15 Gorliz", "Bizkaia" ,province),
+    province = ifelse(variable=="BERMEO H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZALDIBAR H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ZAMUDIO H.", "Bizkaia" ,province),
+    province = ifelse(variable=="ÁLAVA PSIQUIÁTRICO H.", "Araba/Álava" , province)
+  ) %>% group_by(province,date) %>%
+  mutate(
+    value = ifelse(is.na(value),0,value)) %>%
+  summarise(
+    deceased_per_day = sum(value)
+  ) %>% filter ( !is.na(province) ) %>% group_by(province) %>% arrange(date) %>% mutate(
+    deceased = cumsum(deceased_per_day)
+  )
+
+data_cases_sp_provinces$dunique <- paste0(data_cases_sp_provinces$date,data_cases_sp_provinces$province)
+euskadi_b$dunique <- paste0(euskadi_b$date,euskadi_b$province)
+
+data_cases_sp_provinces <- merge(data_cases_sp_provinces,
+                                 euskadi_b %>% ungroup() %>% select(dunique,deceased_per_day, deceased) %>%
+                                   rename(
+                                     deceased_per_day_eus = deceased_per_day,
+                                     deceased_eus = deceased
+                                   ) ,
+                                 by.x="dunique", by.y="dunique", all = TRUE) %>% select(-dunique)
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate(
+  deceased = ifelse( (ccaa == "País Vasco") & (date > as.Date("2020-05-20")), deceased_eus, deceased)
+) # %>% select(-deceased_eus,deceased_per_day_eus)
+
+
+data_cases_sp_provinces <- data_cases_sp_provinces %>% select(-deceased_per_day_eus ,-deceased_eus )
+
+rm(euskadi_b,euskadi_original)
+
+# para muertes semanales
+# euskadi <- read.delim("data/output/spain/euskadi/euskadi_por-provincia_semanales.csv",sep = ",") %>% group_by(date) %>% summarise(
+#   deceased_eus = sum(fallecidos)
+# )
 
 # Aragón hospitalizados.  Overwrite hospitalized  data -------------- -----
 download.file("https://www.aragon.es/documents/20127/38742837/casos_coronavirus_hospitales.xlsx", # TODO, ya no da datos por provincia
@@ -2266,6 +2271,7 @@ rm(uniprovinciales, powerbi, catalunya, catalunya_new, cattotal, provincias_pobl
 
 
 # G. Summarise by CCAA and Spain -------------
+
 # data_cases_sp_provinces <- data_cases_sp_provinces %>% mutate (
 to_agreggate <- data_cases_sp_provinces %>% group_by(province) %>% arrange(date) %>% mutate (
   # deceased = ifelse( is.na(deceased), lag(deceased, 1), deceased),
@@ -2364,7 +2370,7 @@ spain_ccaa <- merge( spain_ccaa,
               )
 
 
-# Aggregate by Spain. Max level:
+# Aggregate by Spain. Max level: ---------------
 spain <- to_agreggate %>% group_by(date,province) %>% mutate (
   deceased = ifelse( is.na(deceased), lag(deceased,1),deceased)
   )  %>% group_by(date) %>% summarise(

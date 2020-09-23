@@ -1789,9 +1789,17 @@ munip <- original %>% rename(
 )
 
 # Carga el archivo que lista todos los archivos
-# TODO add header tfalse in edades
-files <-read.delim("data/original/spain/euskadi/situacion-epidemiologica/files.csv",sep = ";",header = FALSE)
 
+# bash git_export_all_file_versions data/original/spain/euskadi/situacion-epidemiologica.xlsx
+# mv /tmp/all_versions_exported/* .
+# for f in ./*.xlsx; do echo "$f" >> files.csv; done
+
+
+# TODO add header tfalse in edades
+files <-read.delim("data/original/spain/euskadi/situacion-epidemiologica/files.csv",sep = ";",header = FALSE) %>% mutate(
+  V1 = V1 %>% str_replace("./", "")
+)
+  
 # itera por todos los archivos
 for( i in 1:nrow(files)) {
 # for( i in 1:3) {
@@ -1823,32 +1831,133 @@ for( i in 1:nrow(files)) {
     )
     
   if (i == 1 ) {
-    munipdeath <- munip
+    munipdata <- munip
   } else {
-    munipdeath <- rbind(munipdeath, munip)
+    munipdata <- rbind(munipdata, munip)
   }
-  
-  
 }
 
+# only
+munipdata <- distinct( munipdata )
+munipdata <- munipdata %>% group_by(municipio) %>% distinct(date, .keep_all= TRUE)
+
 # Plot cases -------
-munipdeath <- distinct( munipdeath ) %>% arrange(date) %>% group_by(municipio) %>% mutate(
+munipdeath <- distinct( munipdata ) %>% arrange(date) %>% group_by(municipio) %>% mutate(
   weekly_deaths = fallecidos - lag(fallecidos),
   weekly_cases = positivo - lag(positivo),
   ia7 = ia- lag(ia,1),
-  ia14 = ia- lag(ia,2)
-)
+  ia14 = ia- lag(ia,2),
+  weekly_deaths = fallecidos - lag(fallecidos),
+  provin_code = substring(code,1,2),
+  province = ifelse( is.na(provin_code), "00", provin_code)
+) %>% select(-...8, -...9,-...10,-...11,-...12)
+
+munipdeath$province <- as.factor(munipdeath$province)
+
+levels(munipdeath$province) <- c("Otros", "Araba/Álava","Bizkaia","Gipuzkoa")
+
+write.csv(munipdeath, file = "data/output/spain/euskadi/euskadi_por-municipios_semanales.csv", row.names = FALSE)
+
+
+# Agrega por provincia
+by_province <- munipdeath %>% 
+  filter( !is.na(province)) %>%
+  group_by(date,province) %>% summarise(
+    positivo = sum(positivo),
+    fallecidos = sum(fallecidos)
+  ) %>% group_by(province) %>% mutate(
+    weekly_cases = positivo - lag(positivo),
+    weekly_deaths = fallecidos - lag(fallecidos)
+  )
+
+write.csv(by_province, file = "data/output/spain/euskadi/euskadi_por-provincia_semanales.csv", row.names = FALSE)
 
 
 # municipios with average more than n per day
-limite <- 400
+limite <- 0
+poblacion_min <- 10000
+# excluidos <- c("IKAZTEGIETA", "HERNIALDE","LOIU",
+#                "NABARNIZ", "MUTILOA","KORTEZUBI","ITSASONDO","LEGUTIO","LARRABETZU")
+excluidos <- c("")
 municipios_top <- munipdeath %>% top_n(1, date) %>% 
-  filter (ia14 > limite & !(municipio %in% c("IKAZTEGIETA", "HERNIALDE","LOIU", 
-                                             "NABARNIZ", "MUTILOA","KORTEZUBI","ITSASONDO") ) ) %>% 
+  filter (ia14 > limite & !(municipio %in% excluidos ) ) %>%
+  filter( poblacion > poblacion_min ) %>%
   select (municipio)
 
 
-# rejilla municpios ------
+# IA7 rejilla municpios ------
+png(filename=paste0("img/spain/euskadi/covid19_municipios-pais-vasco-ia7_rejilla.png", sep = ""),width = 1200,height = 800)
+munipdeath %>% filter( municipio %in% municipios_top$municipio) %>%
+  ggplot() +
+  geom_col(aes(date, ia7), width= 6) +
+  # scale_fill_manual(values=c("#AAAAAA")  )+
+  # geom_line(aes(date, daily_cases_avg7, group=name, color= ""), size= 1.1 ) +
+  # scale_color_manual(values=c("#565656")  )+
+  facet_wrap( ~municipio,scales = "free_y") + #, scales = "free_x" , scales = "free_y"
+  scale_y_continuous( labels=function(x) format(round(x, digits = 1), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(
+    date_breaks = "1 week",
+    date_labels = "%d/%m",
+    limits=c( min(municipios$date)+140, max(municipios$date)+7),
+    expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.text.x = element_text(size = 9, angle = 90),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "top"
+  ) +
+  labs(title = paste0("IA7  por 1000.000 hab. de COVID-19 por municipio a la semana en Euskadi" ),
+       subtitle = paste0("Municipios ", 
+                         "con más de ", limite, " IA7 y más de ", format(poblacion_min, big.mark = ".", scientific = FALSE), " habitantes. ", period_eus),
+       y = "IA7",
+       x = "fecha 2020",
+       fill = "por semana",
+       colour = "media",
+       caption = caption_provincia)
+dev.off()
+
+png(filename=paste0("img/spain/euskadi/covid19_municipios-pais-vasco-ia7_rejilla_not-free.png", sep = ""),width = 1200,height = 800)
+munipdeath %>% filter( municipio %in% municipios_top$municipio) %>%
+  ggplot() +
+  geom_col(aes(date, ia7), width= 6) +
+  # scale_fill_manual(values=c("#AAAAAA")  )+
+  # geom_line(aes(date, daily_cases_avg7, group=name, color= ""), size= 1.1 ) +
+  # scale_color_manual(values=c("#565656")  )+
+  facet_wrap( ~municipio) + #, scales = "free_x" , scales = "free_y"
+  scale_y_continuous( labels=function(x) format(round(x, digits = 1), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(
+    date_breaks = "1 week",
+    date_labels = "%d/%m",
+    limits=c( min(municipios$date)+140, max(municipios$date)+7),
+    expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.text.x = element_text(size = 9, angle = 90),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "top"
+  ) +
+  labs(title = paste0("IA7  por 1000.000 hab. de COVID-19 por municipio a la semana en Euskadi" ),
+       subtitle = paste0("Municipios ", 
+                         "con más de ", limite, " IA7 y más de ", format(poblacion_min, big.mark = ".", scientific = FALSE), " habitantes. ", period_eus),
+       y = "IA7",
+       x = "fecha 2020",
+       fill = "por semana",
+       colour = "media",
+       caption = caption_provincia)
+dev.off()
+
+
+# IA14 rejilla municpios ------
 png(filename=paste0("img/spain/euskadi/covid19_municipios-pais-vasco-ia14_rejilla.png", sep = ""),width = 1200,height = 800)
 munipdeath %>% filter( municipio %in% municipios_top$municipio) %>%
   ggplot() +
@@ -1865,16 +1974,18 @@ munipdeath %>% filter( municipio %in% municipios_top$municipio) %>%
     limits=c( min(municipios$date)+140, max(municipios$date)+7),
     expand = c(0,0) 
   ) + 
-  theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
+    axis.text.x = element_text(size = 9, angle = 90),
     axis.ticks.x = element_line(color = "#000000"),
     legend.position =  "top"
   ) +
-  labs(title = paste0("IA14 de COVID-19 por municipio a la semana en Euskadi" ),
-       subtitle = paste0("Con más de ", limite, " IA14 por 1000.000 hab. en la última semana. ",period_eus),
+  labs(title = paste0("IA14  por 1000.000 hab. de COVID-19 por municipio a la semana en Euskadi" ),
+       subtitle = paste0("Municipios ", 
+                         "con más de ", limite, " IA14 y más de ", format(poblacion_min, big.mark = ".", scientific = FALSE), " habitantes. ", period_eus),
        y = "IA14",
        x = "fecha 2020",
        fill = "por semana",
@@ -1882,21 +1993,55 @@ munipdeath %>% filter( municipio %in% municipios_top$municipio) %>%
        caption = caption_provincia)
 dev.off()
 
-
-
+png(filename=paste0("img/spain/euskadi/covid19_municipios-pais-vasco-ia14_rejilla_not-free.png", sep = ""),width = 1200,height = 800)
+munipdeath %>% filter( municipio %in% municipios_top$municipio) %>%
+  ggplot() +
+  geom_col(aes(date, ia14), width= 6) +
+  # scale_fill_manual(values=c("#AAAAAA")  )+
+  # geom_line(aes(date, daily_cases_avg7, group=name, color= ""), size= 1.1 ) +
+  # scale_color_manual(values=c("#565656")  )+
+  facet_wrap( ~municipio) + #, scales = "free_x" , scales = "free_y"
+  scale_y_continuous( labels=function(x) format(round(x, digits = 1), big.mark = ".", scientific = FALSE)
+  ) +
+  scale_x_date(
+    date_breaks = "1 week",
+    date_labels = "%d/%m",
+    limits=c( min(municipios$date)+140, max(municipios$date)+7),
+    expand = c(0,0) 
+  ) + 
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
+  theme(
+    panel.grid.minor.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    axis.text.x = element_text(size = 9, angle = 90),
+    axis.ticks.x = element_line(color = "#000000"),
+    legend.position =  "top"
+  ) +
+  labs(title = paste0("IA14  por 1000.000 hab. de COVID-19 por municipio a la semana en Euskadi" ),
+       subtitle = paste0("Municipios ", 
+                         "con más de ", limite, " IA14 y más de ", format(poblacion_min, big.mark = ".", scientific = FALSE), " habitantes. ", period_eus),
+       y = "IA14",
+       x = "fecha 2020",
+       fill = "por semana",
+       colour = "media",
+       caption = caption_provincia)
+dev.off()
   
-# Plot deaths ---------
-munipdeath <- distinct( munipdeath )  %>% arrange(date) %>% group_by(municipio) %>% mutate(
-  weekly_deaths = fallecidos - lag(fallecidos)
-)
 
 
-# municipios with average more than n per day
-limite <- 1
-municipios_top <- munipdeath %>% top_n(1, date) %>% filter (weekly_deaths > limite ) %>% select (municipio)
+# municipios with more than n per week ----
+limite <- 0
+poblacion_min <- 10000
+# excluidos <- c("IKAZTEGIETA", "HERNIALDE","LOIU",
+#                "NABARNIZ", "MUTILOA","KORTEZUBI","ITSASONDO","LEGUTIO","LARRABETZU")
+excluidos <- c("")
+municipios_top <- munipdeath %>% top_n(1, date) %>% 
+  filter (weekly_deaths > limite & !(municipio %in% excluidos ) ) %>%
+  # filter( poblacion > poblacion_min ) %>%
+  select (municipio)
 
-
-# rejilla municpios ------
+# Muertes rejilla municpios ------
 png(filename=paste0("img/spain/euskadi/covid19_municipios-pais-vasco-muertes_rejilla.png", sep = ""),width = 1200,height = 800)
 munipdeath %>% filter( municipio %in% municipios_top$municipio) %>%
   ggplot() +
@@ -1913,16 +2058,19 @@ munipdeath %>% filter( municipio %in% municipios_top$municipio) %>%
     limits=c( min(municipios$date)+140, max(municipios$date)+7),
     expand = c(0,0) 
   ) + 
-  theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
+  theme_minimal(base_family = "Roboto Condensed",base_size = 16) +
   theme(
     panel.grid.minor.x = element_blank(),
     panel.grid.major.x = element_blank(),
     panel.grid.minor.y = element_blank(),
     axis.ticks.x = element_line(color = "#000000"),
+    axis.text.x = element_text(size = 9, angle = 90),
     legend.position =  "top"
   ) +
-  labs(title = paste0("Fallecidos de COVID-19 por municipio a la semana en Euskadi" ),
-       subtitle = paste0("Con más de ", limite, " muerte en la última semana. ",period_eus),
+  labs(title = paste0("Fallecidos por semana de COVID-19 por municipio en Euskadi" ),
+       subtitle = paste0("Municipios ", 
+                         "con más de ", limite, " muertes semanales en última semana y más de ", format(poblacion_min, big.mark = ".", scientific = FALSE), " habitantes. ", period_eus),
+       
        y = "casos por día",
        x = "fecha 2020",
        fill = "muertes por semana",
