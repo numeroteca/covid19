@@ -1323,7 +1323,7 @@ municipios %>% # filter( name %in% municipios_top$name) %>%
   scale_x_date(
     date_breaks = "15 days",
     date_labels = "%d/%m",
-    limits=c( min(municipios$date)+70, max(municipios$date)+12),
+    limits=c( min(municipios$date)+70, max(municipios$date)+19),
     expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
@@ -1365,7 +1365,7 @@ municipios %>% # filter( name %in% municipios_top$name) %>%
   scale_x_date(
     date_breaks = "15 days",
     date_labels = "%d/%m",
-    limits=c( min(municipios$date)+70, max(municipios$date)+12),
+    limits=c( min(municipios$date)+70, max(municipios$date)+19),
     expand = c(0,0) 
   ) + 
   theme_minimal(base_family = "Roboto Condensed",base_size = 18) +
@@ -2082,7 +2082,7 @@ dev.off()
 
 # 6. Casos de no residentes en Euskadi ----------
 
-period_eus <- "Actualizado 2020-09-22"
+period_eus <- "Actualizado 2020-09-23"
 # Set colors 
 # extends color paletter
 library(RColorBrewer)

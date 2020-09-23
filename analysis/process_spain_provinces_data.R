@@ -271,6 +271,7 @@ data_cases_sp_provinces <- rbind(
 )
 
 rm(valencia)
+
 # Andalucía: Remove existing Andalucia data and add new one from new source ---------------------
 
 # Download Andalucía data from https://www.juntadeandalucia.es/institutodeestadisticaycartografia/badea/operaciones/consulta/anual/38228?CodOper=b3_2314&codConsulta=38228
@@ -2367,7 +2368,7 @@ spain_ccaa <- merge( spain_ccaa,
               ), 
               by.x = "ccaa", by.y = "ccaa"   ) %>% select(
                 ccaa,ine_code,everything()
-              )
+              ) %>% arrange(ccaa, date)
 
 
 # Aggregate by Spain. Max level: ---------------
